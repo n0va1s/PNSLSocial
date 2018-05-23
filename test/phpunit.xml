@@ -1,0 +1,31 @@
+<phpunit backupGlobals="false"
+	backupStaticAttributes="false"
+	bootstrap="../bootstrap.php"
+	cacheTokens="true"
+	colors="true"
+	convertErrorsToException="true"
+	convertNoticesToException="true"
+	convertWarningsToException="true"
+	processIsolation="false"
+	stopOnFailure="false"
+	syntaxCheck="false"
+	verbose="true">
+	<testsuite name="PNSL">
+		<directory>.</directory>
+	</testsuite>
+	<logging>
+		<log type="coverage-html" target="./log/report" charset="UTF-8" yui="true" highlight="true" lowUpperBound="35" highUpperBound="70" />
+		<log type="testdox-html" target="./log/testdocx.html" />
+	</logging>
+	<filter>
+        <whitelist addUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">src</directory>
+            <exclude>
+             <file>bootstrap.php</file>
+            </exclude>
+        </whitelist>
+    </filter>
+</phpunit>
+
+
+

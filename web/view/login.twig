@@ -1,0 +1,35 @@
+{% extends 'leiaute.twig' %}
+
+{% block topo %}
+<!-- Page Header -->
+<!-- Set your background image for this header on the line below. -->
+<header class="page-header" style="background-image: url('{{ asset('topo_reduzido.png', 'img') }}')">
+</header>
+{% endblock %}
+
+{% block conteudo %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-4 col-lg-offset-4">
+            <form class="form-signin" name="frmLogin" action="{{ path('login_check')}}">
+                <h4 class="form-signin-heading">Já é cadastrado?</h4>
+                <label for="email" class="sr-only">Email</label>
+                <input type="email" id="email" class="form-control" placeholder="Email" value="{{ last_username }}" required  data-validation-required-message="Informe o email cadastrado" autofocus>
+                <label for="senha" class="sr-only">Senha</label>
+                <input type="password" id="senha" class="form-control" placeholder="Senha" required data-validation-required-message="Informe a senha cadastrada">
+                <!--<div class="checkbox">
+                    <label><input type="checkbox" value="remember-me"> Remember me</label>
+                </div>-->
+                <br />
+                <center>
+                    <button class="btn btn-primary" type="submit">Acesse</button>
+                    <a href="{{ app.url_generator.generate('loginResponsavel') }}"><button class="btn btn-primary" type="submit">Me cadastrar</button></a>
+                <center>
+            </form>
+            {% if error %}
+                <div class="error">{{ error }}</div>
+            {% endif %}
+        </div>
+    </div>
+</div> 
+{% endblock %}

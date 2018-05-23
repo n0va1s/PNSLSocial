@@ -1,0 +1,56 @@
+.otimo {
+  background-image: url(../img/otimo.png);
+  background-repeat: no-repeat;
+  background-position: center; 
+  background-size: 3em;
+  width: 3em;
+  height: 3em;
+  display: inline-block;
+}
+.bom {
+  background-image: url(../img/bom.png);
+  background-repeat: no-repeat;
+  background-position: center; 
+  background-size: 3em;
+  width: 3em;
+  height: 3em;
+  display: inline-block;
+}
+.ruim {
+  background-image: url(../img/ruim.png);
+  background-repeat: no-repeat;
+  background-position: center; 
+  background-size: 3em;
+  width: 3em;
+  height: 3em;
+  display: inline-block;
+}
+.pessimo {
+  background-image: url(../img/pessimo.png);
+  background-repeat: no-repeat;
+  background-position: center; 
+  background-size: 3em;
+  width: 3em;
+  height: 3em;
+  display: inline-block;
+}
+.duvida {
+  background-image: url(../img/duvida.png);
+  background-repeat: no-repeat;
+  background-position: center; 
+  background-size: 3em;
+  width: 3em;
+  height: 3em;
+  display: inline-block;
+}
+.emoji {
+}
+
+.imagem {
+  width: 3em; 
+  height: 3em;
+}
+
+.imagem img {
+  width: inherit; 
+}

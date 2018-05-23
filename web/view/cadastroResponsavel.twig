@@ -1,0 +1,83 @@
+{% extends 'leiaute.twig' %}
+
+{% block topo %}
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header class="intro-header" style="background-position: 1% 20%; background-image: url('{{ asset('topo_criancas.png', 'img') }}')">
+        <div class="container" style="background-color: rgb(0, 0, 0); opacity: 0.5; width: 100%; height: 100%;">
+            <div class="row">
+                <div class="col-lg-12 col-lg-offset-0 col-md-12 col-md-offset-0">
+                    <div class="site-heading">
+                        <h1>BrinqueCoin</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+{% endblock %}
+
+{% block conteudo %}
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2">
+                <form name="frmQuadro" action="{{ path('responsavelSalvar')}}" method="POST">
+                    <h4>Informações do responsável</h4>
+                    <div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                        <label for="nome" class="sr-only">Nome</label>
+                        <input type="text" name="nome" class="form-control col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6" placeholder="Nome" autofocus required data-validation-required-message="Qual o seu nome?">
+                    </div>
+                    <div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                        <label for="email" class="sr-only">Email</label>
+                        <input type="email" name="email" class="form-control col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6" placeholder="Email" required data-validation-required-message="Qual o seu email?">
+                    </div>
+                    <div class="form-group col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                        <label for="senha" class="sr-only">Senha</label>
+                        <input type="password" name="senha" class="form-control col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4" placeholder="Senha" required data-validation-required-message="Informe uma senha">
+                    </div>
+                    <div class="form-group col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                        <label for="confirmacao" class="sr-only">Confirmação</label>
+                        <input type="password" name="confirmacao" class="form-control col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4" placeholder="Confirmação" required data-validation-required-message="Informe uma senha">
+                    </div>
+                    <div class="form-group col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                        <label for="UF" class="sr-only">UF</label>
+                        <input type="text" name="uf" class="form-control col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4" placeholder="UF" required data-validation-required-message="Onde vc mora?">
+                    </div>
+                    <div class="form-group col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
+                        <label for="genero" class="sr-only">Gênero</label>
+                        <select name="genero" class="form-control col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
+                            <option value="">Gênero</option>
+                            <option value="M">Masculino</option>
+                            <option value="F">Feminino</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="parentesco" class="sr-only">Parentesco</label>
+                        <select name="parentesco" class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4">
+                            <option value="">Parentesco</option>
+                            <option value="P">Pai</option>
+                            <option value="M">Mãe</option>
+                            <option value="A">Avô/Avó</option>
+                            <option value="T">Tio/Tia</option>
+                            <option value="D">Padrinho/Madrinha</option>
+                            <option value="T">Tutor</option>
+                            <option value="O">Outro</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="expectativa" class="sr-only">Sua principal expectativa</label>
+                        <input type="text" name="expectativa" class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6" placeholder="Minha expectativa é..." required data-validation-required-message="O que vc espera desenvolver com seu filho (a)?">
+                    </div>
+                    <div>&nbsp;</div>
+                    <center><button class="btn btn-primary" type="submit">Cadastrar</button><center>
+                    <input type="hidden" name="id" value="{% if id is defined %} {{ id }} {% endif %}">
+                </form>
+                {% if mensagem is defined %}
+                <div class="alert alert-success">
+                    {{ mensagem }}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
