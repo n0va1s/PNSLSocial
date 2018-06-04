@@ -43,7 +43,8 @@ CREATE TABLE contato (
 )ENGINE=InnoDB AUTO_INCREMENT=2096 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
-CREATE TABLE endereco (seq_pessoa INT NOT NULL, 
+CREATE TABLE endereco (
+   seq_pessoa INT NOT NULL, 
    des_logradouro VARCHAR(255) NOT NULL,
    des_bairro VARCHAR(100) NOT NULL, 
    des_cidade VARCHAR(100) NOT NULL, 
@@ -92,7 +93,7 @@ CREATE TABLE acao (
    dat_termino DATE,
    des_acao TEXT NOT NULL, 
    seq_usuario INT NOT NULL,
-   dat_log DATE NOT NULL,                  
+   dat_log DATE NOT NULL,
    PRIMARY KEY(seq_acao),
    FOREIGN KEY (seq_voluntario) REFERENCES pessoa (seq_pessoa),
    FOREIGN KEY (seq_tipo_acao) REFERENCES tipo_acao (seq_tipo_acao),

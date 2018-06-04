@@ -148,7 +148,7 @@ $app->error(function (\Exception $e, Request $request, $code) use ($app) {
 $app->get('/', function () use ($app) {
     return $app['twig']->render('inicio.twig');
 })->bind('index');
-$app->mount('/voluntario', new PNSL\Social\Controller\VoluntarioController($em));
-$app->mount('/acao', new PNSL\Social\Controller\AcaoController($em));
-$app->mount('/turma', new PNSL\Social\Controller\TurmaController($em));
-$app->mount('/atendimento', new PNSL\Social\Controller\AtendimentoController($em));
+//$app->mount('/voluntario', new PNSL\Social\Controller\VoluntarioController($em));
+//$app->mount('/acao', new PNSL\Social\Controller\AcaoController($em));
+//$app->mount('/turma', new PNSL\Social\Controller\TurmaController($em));
+//$app->mount('/atendimento', new PNSL\Social\Controller\AtendimentoController($em));
