@@ -37,15 +37,19 @@ class VoluntarioEntity
     private $estadoCivil;
 
     /**
-     * @ORM\Column(type="string", length=1, name="tip_genero")
-     */
-    private $genero;
-
-    /**
      * @ORM\Column(type="string", length=1, name="ind_assinou_termo")
      */
     private $assinouTermo;
-    
+
+    /**
+     * @ORM\OneToMany(targetEntity="AtendimentoEntity", mappedBy="voluntario")
+     */
+    private $atendimento;
+
+    /**
+     * @ORM\OneToMany(targetEntity="TurmaEntity", mappedBy="voluntario")
+     */
+    private $turma;
 
     /**
      * Get the value of id
@@ -124,26 +128,6 @@ class VoluntarioEntity
     public function setEstadoCivil($estadoCivil)
     {
         $this->estadoCivil = $estadoCivil;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of genero
-     */ 
-    public function getGenero()
-    {
-        return $this->genero;
-    }
-
-    /**
-     * Set the value of genero
-     *
-     * @return  self
-     */ 
-    public function setGenero($genero)
-    {
-        $this->genero = $genero;
 
         return $this;
     }

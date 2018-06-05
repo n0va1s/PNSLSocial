@@ -1,46 +1,56 @@
 <?php
 namespace PNSL\Social\Entity;
 use Doctrine\ORM\Mapping as ORM;
+use PNSL\Social\Entity\AcaoEntity;
 use PNSL\Social\Entity\VoluntarioEntity;
+use PNSL\Social\Entity\ResponsavelEntity;
+use PNSL\Social\Entity\MenorEntity;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="acao")
+ * @ORM\Table(name="atendimento")
  */
-class AcaoEntity
+class AtendimentoEntity
 {
     /**
      * @ORM\Id
      * @ORM\Column(type="integer", name="seq_acao")
-     * @ORM\GeneratedValue
      */
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="VoluntarioEntity", inversedBy="acao")
+     * @ORM\ManyToOne(targetEntity="AcaoEntity", inversedBy="atendimento")
+     * @ORM\JoinColumn(name="seq_acao", referencedColumnName="seq_acao")
+     */
+    private $acao;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="VoluntarioEntity", inversedBy="atendimento")
      * @ORM\JoinColumn(name="seq_voluntario", referencedColumnName="seq_voluntario")
      */
     private $voluntario;
 
     /**
-     * @ORM\Column(type="string", length=255, name="nom_acao")
+     * @ORM\ManyToOne(targetEntity="ResponsavelEntity", inversedBy="atendimento")
+     * @ORM\JoinColumn(name="seq_responsavel", referencedColumnName="seq_responsavel")
      */
-    private $nome;
+    private $responsavel;
 
     /**
-     * @ORM\Column(type="datetime", name="dat_inicio")
+     * @ORM\ManyToOne(targetEntity="MenorEntity", inversedBy="atendimento")
+     * @ORM\JoinColumn(name="seq_menor", referencedColumnName="seq_menor")
      */
-    private $inicio;
+    private $menor;
 
     /**
-     * @ORM\Column(type="datetime", name="dat_termino")
+     * @ORM\Column(type="datetime", name="dat_atendimento")
      */
-    private $termino;
+    private $atendimento;
 
     /**
-     * @ORM\Column(type="text", name="txt_acao")
+     * @ORM\Column(type="text", name="txt_atendimento")
      */
-    private $descricao;
+    private $texto;
 
     /**
      * @ORM\Column(type="string", length=50, name="nom_usuario")
@@ -52,20 +62,11 @@ class AcaoEntity
      */
     private $cadastro;
 
-    /**
-     * @ORM\OneToMany(targetEntity="AtendimentoEntity", mappedBy="acao")
-     */
-    private $atendimento;
-
-    /**
-     * @ORM\OneToMany(targetEntity="TurmaEntity", mappedBy="acao")
-     */
-    private $turma;
-
     public function __construct()
     {
         $this->cadastro = new \Datetime();
     }
+
 
     /**
      * Get the value of id
@@ -83,6 +84,26 @@ class AcaoEntity
     public function setId($id)
     {
         $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of acao
+     */ 
+    public function getAcao()
+    {
+        return $this->acao;
+    }
+
+    /**
+     * Set the value of acao
+     *
+     * @return  self
+     */ 
+    public function setAcao($acao)
+    {
+        $this->acao = $acao;
 
         return $this;
     }
@@ -108,61 +129,61 @@ class AcaoEntity
     }
 
     /**
-     * Get the value of nome
+     * Get the value of responsavel
      */ 
-    public function getNome()
+    public function getResponsavel()
     {
-        return $this->nome;
+        return $this->responsavel;
     }
 
     /**
-     * Set the value of nome
+     * Set the value of responsavel
      *
      * @return  self
      */ 
-    public function setNome($nome)
+    public function setResponsavel($responsavel)
     {
-        $this->nome = $nome;
+        $this->responsavel = $responsavel;
 
         return $this;
     }
 
     /**
-     * Get the value of inicio
+     * Get the value of menor
      */ 
-    public function getInicio()
+    public function getMenor()
     {
-        return $this->inicio;
+        return $this->menor;
     }
 
     /**
-     * Set the value of inicio
+     * Set the value of menor
      *
      * @return  self
      */ 
-    public function setInicio($inicio)
+    public function setMenor($menor)
     {
-        $this->inicio = $inicio;
+        $this->menor = $menor;
 
         return $this;
     }
 
     /**
-     * Get the value of termino
+     * Get the value of atendimento
      */ 
-    public function getTermino()
+    public function getAtendimento()
     {
-        return $this->termino;
+        return $this->atendimento;
     }
 
     /**
-     * Set the value of termino
+     * Set the value of atendimento
      *
      * @return  self
      */ 
-    public function setTermino($termino)
+    public function setAtendimento($atendimento)
     {
-        $this->termino = $termino;
+        $this->atendimento = $atendimento;
 
         return $this;
     }
@@ -214,5 +235,4 @@ class AcaoEntity
     {
         return $this->cadastro;
     }
-
 }

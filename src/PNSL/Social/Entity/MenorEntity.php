@@ -45,8 +45,17 @@ class MenorEntity
      * @ORM\Column(type="string", length=1, name="ind_pode_sair_sozinho")
      */
     private $autorizadoSairSozinho;
-    
 
+    /**
+     * @ORM\OneToMany(targetEntity="AtendimentoEntity", mappedBy="menor")
+     */
+    private $atendimento;
+
+    /**
+     * @ORM\OneToMany(targetEntity="TurmaEntity", mappedBy="menor")
+     */
+    private $turma;
+    
     /**
      * Get the value of id
      */ 

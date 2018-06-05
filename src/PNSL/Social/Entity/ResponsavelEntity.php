@@ -47,6 +47,16 @@ class ResponsavelEntity
     private $autorizouSairSozinho;
 
     /**
+     * @ORM\OneToMany(targetEntity="AtendimentoEntity", mappedBy="responsavel")
+     */
+    private $atendimento;
+
+    /**
+     * @ORM\OneToMany(targetEntity="TurmaEntity", mappedBy="responsavel")
+     */
+    private $turma;
+
+    /**
      * Get the value of id
      */ 
     public function getId()

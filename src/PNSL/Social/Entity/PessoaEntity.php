@@ -40,7 +40,7 @@ class PessoaEntity
     private $endereco;
     
     /**
-     * @ORM\Column(type="string", length=255, name="nom_profissao")
+     * @ORM\Column(type="string", length=255, name="nom_pessoa")
      */
     private $nome;
 

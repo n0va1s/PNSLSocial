@@ -1,46 +1,56 @@
 <?php
 namespace PNSL\Social\Entity;
 use Doctrine\ORM\Mapping as ORM;
+use PNSL\Social\Entity\AcaoEntity;
 use PNSL\Social\Entity\VoluntarioEntity;
+use PNSL\Social\Entity\ResponsavelEntity;
+use PNSL\Social\Entity\MenorEntity;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="acao")
+ * @ORM\Table(name="turma")
  */
-class AcaoEntity
+class TurmaEntity
 {
     /**
      * @ORM\Id
      * @ORM\Column(type="integer", name="seq_acao")
-     * @ORM\GeneratedValue
      */
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="VoluntarioEntity", inversedBy="acao")
+     * @ORM\ManyToOne(targetEntity="AcaoEntity", inversedBy="turma")
+     * @ORM\JoinColumn(name="seq_acao", referencedColumnName="seq_acao")
+     */
+    private $acao;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="VoluntarioEntity", inversedBy="turma")
      * @ORM\JoinColumn(name="seq_voluntario", referencedColumnName="seq_voluntario")
      */
     private $voluntario;
 
     /**
-     * @ORM\Column(type="string", length=255, name="nom_acao")
+     * @ORM\ManyToOne(targetEntity="ResponsavelEntity", inversedBy="turma")
+     * @ORM\JoinColumn(name="seq_responsavel", referencedColumnName="seq_responsavel")
      */
-    private $nome;
+    private $responsavel;
 
     /**
-     * @ORM\Column(type="datetime", name="dat_inicio")
+     * @ORM\ManyToOne(targetEntity="MenorEntity", inversedBy="turma")
+     * @ORM\JoinColumn(name="seq_menor", referencedColumnName="seq_menor")
      */
-    private $inicio;
+    private $menor;
 
     /**
-     * @ORM\Column(type="datetime", name="dat_termino")
+     * @ORM\Column(type="string", length=1, name="tip_situacao")
      */
-    private $termino;
+    private $situacao;
 
     /**
-     * @ORM\Column(type="text", name="txt_acao")
+     * @ORM\Column(type="datetime", name="dat_situacao")
      */
-    private $descricao;
+    private $data;
 
     /**
      * @ORM\Column(type="string", length=50, name="nom_usuario")
@@ -51,16 +61,6 @@ class AcaoEntity
      * @ORM\Column(type="datetime", name="dat_cadastro")
      */
     private $cadastro;
-
-    /**
-     * @ORM\OneToMany(targetEntity="AtendimentoEntity", mappedBy="acao")
-     */
-    private $atendimento;
-
-    /**
-     * @ORM\OneToMany(targetEntity="TurmaEntity", mappedBy="acao")
-     */
-    private $turma;
 
     public function __construct()
     {
@@ -88,6 +88,26 @@ class AcaoEntity
     }
 
     /**
+     * Get the value of acao
+     */ 
+    public function getAcao()
+    {
+        return $this->acao;
+    }
+
+    /**
+     * Set the value of acao
+     *
+     * @return  self
+     */ 
+    public function setAcao($acao)
+    {
+        $this->acao = $acao;
+
+        return $this;
+    }
+
+    /**
      * Get the value of voluntario
      */ 
     public function getVoluntario()
@@ -108,81 +128,81 @@ class AcaoEntity
     }
 
     /**
-     * Get the value of nome
+     * Get the value of responsavel
      */ 
-    public function getNome()
+    public function getResponsavel()
     {
-        return $this->nome;
+        return $this->responsavel;
     }
 
     /**
-     * Set the value of nome
+     * Set the value of responsavel
      *
      * @return  self
      */ 
-    public function setNome($nome)
+    public function setResponsavel($responsavel)
     {
-        $this->nome = $nome;
+        $this->responsavel = $responsavel;
 
         return $this;
     }
 
     /**
-     * Get the value of inicio
+     * Get the value of menor
      */ 
-    public function getInicio()
+    public function getMenor()
     {
-        return $this->inicio;
+        return $this->menor;
     }
 
     /**
-     * Set the value of inicio
+     * Set the value of menor
      *
      * @return  self
      */ 
-    public function setInicio($inicio)
+    public function setMenor($menor)
     {
-        $this->inicio = $inicio;
+        $this->menor = $menor;
 
         return $this;
     }
 
     /**
-     * Get the value of termino
+     * Get the value of situacao
      */ 
-    public function getTermino()
+    public function getSituacao()
     {
-        return $this->termino;
+        return $this->situacao;
     }
 
     /**
-     * Set the value of termino
+     * Set the value of situacao
      *
      * @return  self
      */ 
-    public function setTermino($termino)
+    public function setSituacao($situacao)
     {
-        $this->termino = $termino;
+        $this->situacao = $situacao;
 
         return $this;
     }
 
     /**
-     * Get the value of descricao
+     * Get the value of data
      */ 
-    public function getDescricao()
+    public function getData()
     {
-        return $this->descricao;
+        return $this->data;
     }
 
     /**
-     * Set the value of descricao
+     * Set the value of data
      *
      * @return  self
      */ 
-    public function setDescricao($descricao)
+    public function setData($data)
     {
-        $this->descricao = $descricao;
+        $this->data = $data;
 
         return $this;
     }
