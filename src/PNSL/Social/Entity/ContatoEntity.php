@@ -10,7 +10,7 @@ use PNSL\Social\Entity\PessoaEntity;
 class ContatoEntity
 {
     /**
-     * @ORM\ManyToOne(targetEntity="PessoaEntity", inversedBy="pessoa")
+     * @ORM\ManyToOne(targetEntity="PessoaEntity", inversedBy="contatos")
      * @ORM\JoinColumn(name="seq_pessoa", referencedColumnName="seq_pessoa")
      */
     private $pessoa;
@@ -30,7 +30,7 @@ class ContatoEntity
     /**
      * @ORM\Column(type="string", length=255, name="des_contato")
      */
-    private $descricao;
+    private $contato;
 
     /**
      * Get the value of pessoa
@@ -93,21 +93,21 @@ class ContatoEntity
     }
 
     /**
-     * Get the value of descricao
+     * Get the value of contato
      */ 
-    public function getDescricao()
+    public function getContato()
     {
-        return $this->descricao;
+        return $this->contato;
     }
 
     /**
-     * Set the value of descricao
+     * Set the value of contato
      *
      * @return  self
      */ 
-    public function setDescricao($descricao)
+    public function setContato($contato)
     {
-        $this->descricao = $descricao;
+        $this->contato = $contato;
 
         return $this;
     }

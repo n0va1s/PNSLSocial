@@ -11,10 +11,14 @@ class MenorEntity
 {
     /**
      * @ORM\Id
-     * @ORM\Column(type="integer", name="seq_menor")
-     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer", name="seq_pessoa")
      */
     private $id;
+
+    /**
+     * @ORM\OneToOne(targetEntity="PessoaEntity", mappedBy="menor")
+     */
+    private $pessoa;
 
     /**
      * @ORM\OneToOne(targetEntity="ResponsavelEntity", mappedBy="menor")
@@ -72,6 +76,26 @@ class MenorEntity
     public function setId($id)
     {
         $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of pessoa
+     */ 
+    public function getPessoa()
+    {
+        return $this->pessoa;
+    }
+
+    /**
+     * Set the value of pessoa
+     *
+     * @return  self
+     */ 
+    public function setPessoa($pessoa)
+    {
+        $this->pessoa = $pessoa;
 
         return $this;
     }

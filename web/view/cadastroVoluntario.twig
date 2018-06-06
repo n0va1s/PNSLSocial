@@ -21,7 +21,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2">
-                <form name="frmQuadro" action="{{ path('quadroSalvar')}}" method="POST" class="form-inline">
+                <form name="frmQuadro" action="{{ path('index')}}" method="POST" class="form-inline">
                     <h4>Crie o seu quadro</h4>
                     <div class="form-group col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                         <label for="email" class="sr-only">Email</label>
@@ -31,16 +31,13 @@
                         <label for="tipo" class="sr-only">Tipo de quadro</label>
                         <select name="tipo" class="form-control col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3" required data-validation-required-message="Que tipo de quadro vc quer?">
                             <option value="" disabled selected>Um quadro de</option>
-                            {% for tipo in tipos %}
-                                <option value="{{ tipo.id }}" {% if quadro is defined and quadro.tipo.id == tipo.id %} selected {% endif %}>{{ tipo.descricao }}</option>
-                            {% endfor %} 
+                            
                         </select>
                     </div>
                     <div class="form-group col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3">
                         <select name="genero" class="form-control col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3" required data-validation-required-message="É para um menino ou uma menina? Um homem ou uma mulher?">
                             <option value="" disabled selected>Para</option>
-                            <option value="M" {% if quadro is defined and quadro.genero == 'M' %} selected {% endif %}>o</option>
-                            <option value="F" {% if quadro is defined and quadro.genero == 'F' %} selected {% endif %}>a</option>
+                            
                         </select>
                     </div>
                     <div class="form-group col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
@@ -57,7 +54,7 @@
                     </div>
                     <div>&nbsp;</div>
                     <center><button class="btn btn-primary" type="submit">Criar</button></center>
-                    <input type="hidden" name="id" value="{% if quadro is defined %} {{ quadro.id }} {% endif %}">
+                    <input type="hidden" name="id" value="">
                 </form>
             </div>
         </div>

@@ -26,26 +26,34 @@ class VoluntarioController implements ControllerProviderInterface
             return new VoluntarioService($this->em);
         };
 
+        $ctrl->before(
+            function (Request $request) {
+                if (0 === strpos($request->headers->get('Content-Type'), 'application/json')) {
+                    $data = json_decode($request->getContent(), true);
+                    $request->request->replace(is_array($data) ? $data : array());
+                }
+            }
+        );
+
         $ctrl->get(
             '/', function () use ($app) {
                 return $app['twig']->render(
                     'cadastroVoluntario.twig',
+                    array(), 
                     new Response('Ok', 200)
                 );
             }
-        )->bind('cadastroVoluntario');
+        )->bind('voluntarioCadastrar');
 
         $ctrl->post(
             '/salvar', function (Request $req) use ($app) {
                 $dados = $req->request->all();
                 $voluntario = $app['voluntario_service']->save($dados);
                 if ($voluntario) {
-                    $voluntarios = $app['voluntario_service']->findAll();
-                    return $app['twig']->render(
-                        'cadastroVoluntario.twig',
-                        array('voluntarios'=>$voluntarios, 
-                        'mensagem'=>'Voluntário cadastrado!'),
-                        new Response('Ok', 200)
+                    return new Response(
+                        $app->json(
+                            $voluntario, 201, ['Content-Type' => 'application/json']
+                        )
                     );
                 } else {
                     return $app->abort(
@@ -56,6 +64,24 @@ class VoluntarioController implements ControllerProviderInterface
             }
         )->bind('voluntarioSalvar');
 
+        $ctrl->get(
+            '/listar', function () use ($app) {
+                $voluntarios = $app['voluntario_service']->findAll();
+                if ($voluntarios) {
+                    return new Response(
+                        $app->json(
+                            $voluntarios, 201, ['Content-Type' => 'application/json']
+                        )
+                    );
+                } else {
+                    return $app->abort(
+                        404, 
+                        "Ops... não foi possível cadastrar o voluntário"
+                    );
+                }             
+            }
+        )->bind('voluntarioListar');
+
         $ctrl->delete(
             '/excluir/{id}', function ($id) use ($app) {
                 $voluntario = $app['voluntario_service']->findById($id);
@@ -63,12 +89,10 @@ class VoluntarioController implements ControllerProviderInterface
                     $excluiu = $app['voluntario_service']->delete(
                         $voluntario->getPessoa()->getId()
                     );
-                    $voluntarios = $app['voluntario_service']->findAll();
-                    return $app['twig']->render(
-                        'cadastroVoluntario.twig', 
-                        array('voluntarios'=>$voluntarios,
-                        'mensagem'=>'Voluntário excluído!'), 
-                        new Response('Ok', 200)
+                    return new Response(
+                        $app->json(
+                            $excluiu, 201, ['Content-Type' => 'application/json']
+                        )
                     );
                 } else {
                     return $app->abort(

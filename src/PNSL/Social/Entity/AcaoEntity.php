@@ -18,7 +18,7 @@ class AcaoEntity
 
     /**
      * @ORM\ManyToOne(targetEntity="VoluntarioEntity", inversedBy="acao")
-     * @ORM\JoinColumn(name="seq_voluntario", referencedColumnName="seq_voluntario")
+     * @ORM\JoinColumn(name="seq_voluntario", referencedColumnName="seq_pessoa")
      */
     private $voluntario;
 

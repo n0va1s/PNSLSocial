@@ -26,19 +26,19 @@ class AtendimentoEntity
 
     /**
      * @ORM\ManyToOne(targetEntity="VoluntarioEntity", inversedBy="atendimento")
-     * @ORM\JoinColumn(name="seq_voluntario", referencedColumnName="seq_voluntario")
+     * @ORM\JoinColumn(name="seq_voluntario", referencedColumnName="seq_pessoa")
      */
     private $voluntario;
 
     /**
      * @ORM\ManyToOne(targetEntity="ResponsavelEntity", inversedBy="atendimento")
-     * @ORM\JoinColumn(name="seq_responsavel", referencedColumnName="seq_responsavel")
+     * @ORM\JoinColumn(name="seq_responsavel", referencedColumnName="seq_pessoa")
      */
     private $responsavel;
 
     /**
      * @ORM\ManyToOne(targetEntity="MenorEntity", inversedBy="atendimento")
-     * @ORM\JoinColumn(name="seq_menor", referencedColumnName="seq_menor")
+     * @ORM\JoinColumn(name="seq_menor", referencedColumnName="seq_pessoa")
      */
     private $menor;
 

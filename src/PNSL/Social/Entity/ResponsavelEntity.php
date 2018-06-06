@@ -11,18 +11,18 @@ class ResponsavelEntity
 {
     /**
      * @ORM\Id
-     * @ORM\Column(type="integer", name="seq_responsavel")
+     * @ORM\Column(type="integer", name="seq_pessoa")
      */
     private $id;
 
     /**
      * @ORM\OneToOne(targetEntity="PessoaEntity", inversedBy="responsavel")
-     * @ORM\JoinColumn(name="seq_responsavel", referencedColumnName="seq_pessoa")
+     * @ORM\JoinColumn(name="seq_pessoa", referencedColumnName="seq_pessoa")
      */
     private $pessoa;
 
     /**
-     * @ORM\OneToOne(targetEntity="MenorEntity", mappedBy="pessoa")
+     * @ORM\OneToOne(targetEntity="MenorEntity", mappedBy="responsavel")
      */
     private $menor;
 

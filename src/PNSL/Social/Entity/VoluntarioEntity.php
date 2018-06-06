@@ -11,13 +11,13 @@ class VoluntarioEntity
 {
     /**
      * @ORM\Id
-     * @ORM\Column(type="integer", name="seq_voluntario")
+     * @ORM\Column(type="integer", name="seq_pessoa")
      */
     private $id;
 
     /**
      * @ORM\OneToOne(targetEntity="PessoaEntity", inversedBy="voluntario")
-     * @ORM\JoinColumn(name="seq_voluntario", referencedColumnName="seq_pessoa")
+     * @ORM\JoinColumn(name="seq_pessoa", referencedColumnName="seq_pessoa")
      */
     private $pessoa;
 

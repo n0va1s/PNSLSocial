@@ -19,63 +19,51 @@ class VoluntarioService
     
     public function save($dados)
     {
-        //Pessoa
-        $nome           = $dados->getNome();
-        $genero         = $dados->getGenero();
-        $dataNascimento = $dados->getDataNascimento();
-        $numRG          = $dados->getNumRG();
-        $numCPF         = $dados->getNumCPF();
-        $naturalidade   = $dados->getNaturalidade();
-        $usuario        = $dados->getUsuario();
-        //Voluntario
-        $profissao      = $dados->getProfissao();
-        $estadoCivil    = $dados->getEstadoCivil();
-        $assinouTermo   = $dados->getAssinouTermo();
-        //Contato
-        $tipo           = $dados->getTipo();
-        $contato        = $dados->getDescricao();
-        //Endereco
-        $logradouro     = $dados->getLogradouro();
-        $bairro         = $dados->getBairro();
-        $cidade         = $dados->getCidade();
-        
-        if (empty($id)) {
+        if (empty($dados['id'])) {
             $pessoa = new PessoaEntity();
+            $pessoa->setNome($dados['nome']);
+            $pessoa->setGenero($dados['genero']);
+            $pessoa->setDataNascimento($dados['data_nascimento']);
+            $pessoa->setNumRG($dados['num_rg']);
+            $pessoa->setNumCPF($dados['num_cpf']);
+            $pessoa->setNaturalidade($dados['naturalidade']);
+            $pessoa->setUsuario($dados['usuario']);
+            $this->em->persist($pessoa);
             $voluntario = new VoluntarioEntity();
-            $voluntario->setProfissao($profissao);
-            $voluntario->setEstadoCivil($estadoCivil);
-            $voluntario->setAssinouTermo($assinouTermo);
+            $voluntario->setProfissao($dados['profissao']);
+            $voluntario->setEstadoCivil($dados['estado_civil']);
+            $voluntario->setAssinouTermo($dados['assinou_termo']);
             $pessoa->setVoluntario($voluntario);
             $contato = new ContatoEntity();
-            $contato->setTipo($tipo);
-            $contato->setDescricao($contato);
+            $contato->setTipo($dados['tipo']);
+            $contato->setContato($dados['contato']);
             $pessoa->setContato($contato);
             $endereco = new EnderecoEntity();
-            $endereco->setLogradouro($logradouro);
-            $endereco->setBairro($bairro);
-            $endereco->setCidade($cidade);
+            $endereco->setLogradouro($dados['logradouro']);
+            $endereco->setBairro($dados['bairro']);
+            $endereco->setCidade($dados['cidade']);
             $pessoa->setEndereco($endereco);
-            $this->em->persist($pessoa);
+            
         } else {
             $pessoa = $this->em->getReference('\PNSL\Social\Entity\PessoaEntity', $id);
-            $pessoa->setNome($nome);
-            $pessoa->setGenero($genero);
-            $pessoa->setDataNascimento($dataNascimento);
-            $pessoa->setNumRG($numRG);
-            $pessoa->setNumCPF($numCPF);
-            $pessoa->setNaturalidade($naturalidade);
-            $pessoa->setUsuario($usuario);
+            $pessoa->setNome($dados['nome']);
+            $pessoa->setGenero($dados['genero']);
+            $pessoa->setDataNascimento($dados['data_nascimento']);
+            $pessoa->setNumRG($dados['num_rg']);
+            $pessoa->setNumCPF($dados['num_cpf']);
+            $pessoa->setNaturalidade($dados['naturalidade']);
+            $pessoa->setUsuario($dados['usuario']);
             $voluntario = $pessoa->getVoluntario();
-            $voluntario->setProfissao($profissao);
-            $voluntario->setEstadoCivil($estadoCivil);
-            $voluntario->setAssinouTermo($assinouTermo);
+            $voluntario->setProfissao($dados['profissao']);
+            $voluntario->setEstadoCivil($dados['estado_civil']);
+            $voluntario->setAssinouTermo($dados['assinou_termo']);
             $contato = $pessoa->getContato();
-            $contato->setTipo($tipo);
-            $contato->setDescricao($contato);
+            $contato->setTipo($dados['tipo']);
+            $contato->setDescricao($dados['contato']);
             $endereco = $pessoa->getEndereco();
-            $endereco->setLogradouro($logradouro);
-            $endereco->setBairro($bairro);
-            $endereco->setCidade($cidade);
+            $endereco->setLogradouro($dados['logradouro']);
+            $endereco->setBairro($dados['bairro']);
+            $endereco->setCidade($dados['cidade']);
             $pessoa->setEndereco($endereco);
         }
         return $this->em->flush();

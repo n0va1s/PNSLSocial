@@ -1,6 +1,7 @@
 <?php
 namespace PNSL\Social\Entity;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 use PNSL\Social\Entity\VoluntarioEntity;
 use PNSL\Social\Entity\ResponsavelEntity;
 use PNSL\Social\Entity\ContatoEntity;
@@ -30,14 +31,19 @@ class PessoaEntity
     private $responsavel;
 
     /**
+     * @ORM\OneToOne(targetEntity="MenorEntity", mappedBy="pessoa")
+     */
+    private $menor;
+
+    /**
      * @ORM\OneToMany(targetEntity="ContatoEntity", mappedBy="pessoa")
      */
-    private $contato;
+    private $contatos;
 
     /**
      * @ORM\OneToMany(targetEntity="EnderecoEntity", mappedBy="pessoa")
      */
-    private $endereco;
+    private $enderecos;
     
     /**
      * @ORM\Column(type="string", length=255, name="nom_pessoa")
@@ -81,6 +87,8 @@ class PessoaEntity
 
     public function __construct()
     {
+        $this->contatos = new ArrayCollection();
+        $this->enderecos = new ArrayCollection();
         $this->cadastro = new \Datetime();
     }
 
@@ -120,6 +128,66 @@ class PessoaEntity
    public function setVoluntario($voluntario)
    {
       $this->voluntario = $voluntario;
+
+      return $this;
+   }
+
+   /**
+     * Get the value of responsavel
+     */ 
+    public function getResponsavel()
+    {
+        return $this->responsavel;
+    }
+
+    /**
+     * Set the value of responsavel
+     *
+     * @return  self
+     */ 
+    public function setResponsavel($responsavel)
+    {
+        $this->responsavel = $responsavel;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of contatos
+     */ 
+    public function getContatos()
+    {
+        return $this->contatos;
+    }
+
+    /**
+    * Set the value of array of contatos
+    *
+    * @return  self
+    */ 
+   public function setContato($contato)
+   {
+      $this->contatos->add($contato);
+
+      return $this;
+   }
+
+    /**
+     * Get the value of enderecos
+     */ 
+    public function getEnderecos()
+    {
+        return $this->enderecos;
+    }
+
+    /**
+    * Set the value of array of enderecos
+    *
+    * @return  self
+    */ 
+   public function setEndereco($endereco)
+   {
+      $this->enderecos->add($endereco);
 
       return $this;
    }
