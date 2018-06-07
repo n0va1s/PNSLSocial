@@ -9,13 +9,14 @@ use PNSL\Social\Entity\PessoaEntity;
  */
 class ResponsavelEntity
 {
-    /** @ORM\Id @ORM\Column(type="integer", name="seq_pessoa") */
+    /** @ORM\Column(type="integer", name="seq_pessoa") */
     private $id;
-
-    /** @ORM\OneToOne(targetEntity="PessoaEntity", mappedBy="responsavel", cascade={"persist", "remove"}) */
+    
+    /** @ORM\Id @ORM\OneToOne(targetEntity="PessoaEntity", inversedBy="responsavel") 
+     * @ORM\JoinColumn(name="seq_pessoa", referencedColumnName="seq_pessoa") */
     private $pessoa;
 
-    /** @ORM\OneToOne(targetEntity="MenorEntity", mappedBy="responsavel") */
+    /** @ORM\OneToMany(targetEntity="MenorEntity", mappedBy="pessoa", cascade={"ALL"}) */
     private $menor;
 
     /** @ORM\Column(type="string", length=3, name="tip_parentesco") */

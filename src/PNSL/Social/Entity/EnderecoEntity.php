@@ -9,18 +9,12 @@ use PNSL\Social\Entity\PessoaEntity;
  */
 class EnderecoEntity
 {
-    /** 
-     * @ORM\ManyToOne(targetEntity="PessoaEntity", inversedBy="enderecos") 
-     * @ORM\JoinColumn(name="seq_pessoa", referencedColumnName="seq_pessoa")
-    */
-    private $pessoa;
-
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer", name="seq_endereco")
-     * @ORM\GeneratedValue
-     */
+    /** @ORM\Column(type="integer", name="seq_pessoa") */
     private $id;
+
+    /** @ORM\Id @ORM\OneToOne(targetEntity="PessoaEntity", inversedBy="endereco") 
+     * @ORM\JoinColumn(name="seq_pessoa", referencedColumnName="seq_pessoa") */
+    private $pessoa;
 
     /**
      * @ORM\Column(type="string", length=255, name="des_logradouro")

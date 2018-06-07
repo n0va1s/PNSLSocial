@@ -9,10 +9,11 @@ use PNSL\Social\Entity\PessoaEntity;
  */
 class VoluntarioEntity
 {
-    /** @ORM\Id @ORM\Column(type="integer", name="seq_pessoa") */
+    /** @ORM\Column(type="integer", name="seq_pessoa") */
     private $id;
 
-    /** @ORM\OneToOne(targetEntity="PessoaEntity", mappedBy="voluntario", cascade={"persist", "remove"}) */
+    /** @ORM\Id @ORM\OneToOne(targetEntity="PessoaEntity", inversedBy="voluntario") 
+     * @ORM\JoinColumn(name="seq_pessoa", referencedColumnName="seq_pessoa") */
     private $pessoa;
 
     /** @ORM\OneToMany(targetEntity="AcaoEntity", mappedBy="voluntario") */
@@ -52,7 +53,6 @@ class VoluntarioEntity
 
         return $this;
     }
-
 
     /**
      * Get the value of pessoa

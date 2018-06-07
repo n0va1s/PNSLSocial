@@ -15,19 +15,22 @@ class PessoaEntity
 {
     /** @ORM\Id @ORM\Column(type="integer", name="seq_pessoa") @ORM\GeneratedValue */
     private $id;
-
+    
+    /** @ORM\OneToOne(targetEntity="VoluntarioEntity", mappedBy="pessoa", cascade={"persist", "remove"}) */
     private $voluntario;
-
+    
+    /** @ORM\OneToOne(targetEntity="ResponsavelEntity", mappedBy="pessoa", cascade={"persist", "remove"}) */
     private $responsavel;
-
+    
+    /** @ORM\OneToOne(targetEntity="MenorEntity", mappedBy="pessoa", cascade={"persist", "remove"}) */
     private $menor;
 
-    /** @ORM\OneToMany(targetEntity="ContatoEntity", mappedBy="pessoa", cascade={"ALL"}) */
+    /** @ORM\OneToOne(targetEntity="EnderecoEntity", mappedBy="pessoa", cascade={"persist", "remove"}) */
+    private $endereco;
+
+    /** @ORM\OneToMany(targetEntity="ContatoEntity", mappedBy="pessoa", cascade={"persist", "remove"}) */
     private $contatos;
 
-    /** @ORM\OneToMany(targetEntity="EnderecoEntity", mappedBy="pessoa", cascade={"ALL"}) */
-    private $enderecos;
-    
     /** @ORM\Column(type="string", length=255, name="nom_pessoa") */
     private $nome;
 
@@ -55,7 +58,6 @@ class PessoaEntity
     public function __construct()
     {
         $this->contatos = new ArrayCollection();
-        $this->enderecos = new ArrayCollection();
         $this->cadastro = new \Datetime();
     }
 
@@ -92,7 +94,7 @@ class PessoaEntity
     *
     * @return  self
     */ 
-   public function setVoluntario($voluntario)
+   public function setVoluntario(VoluntarioEntity $voluntario)
    {
       $this->voluntario = $voluntario;
 
@@ -112,12 +114,52 @@ class PessoaEntity
      *
      * @return  self
      */ 
-    public function setResponsavel($responsavel)
+    public function setResponsavel(ResponsavelEntity $responsavel)
     {
         $this->responsavel = $responsavel;
 
         return $this;
     }
+
+    /**
+     * Get the value of menor
+     */ 
+    public function getMenor()
+    {
+        return $this->menor;
+    }
+
+    /**
+     * Set the value of menor
+     *
+     * @return  self
+     */ 
+    public function setMenor(MenorEntity $menor)
+    {
+        $this->menor = $menor;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of endereco
+     */ 
+    public function getEndereco()
+    {
+        return $this->endereco;
+    }
+
+    /**
+    * Set the value of endereco
+    *
+    * @return  self
+    */ 
+   public function setEndereco(EnderecoEntity $endereco)
+   {
+      $this->endereco = $endereco;
+
+      return $this;
+   }
 
     /**
      * Get the value of contatos
@@ -132,32 +174,12 @@ class PessoaEntity
     *
     * @return  self
     */ 
-   public function setContato($contato)
-   {
-      $this->contatos->add($contato);
-
-      return $this;
-   }
-
-    /**
-     * Get the value of enderecos
-     */ 
-    public function getEnderecos()
+    public function setContato($contato)
     {
-        return $this->enderecos;
+        $this->contatos->add($contato);
+
+        return $this;
     }
-
-    /**
-    * Set the value of array of enderecos
-    *
-    * @return  self
-    */ 
-   public function setEndereco($endereco)
-   {
-      $this->enderecos->add($endereco);
-
-      return $this;
-   }
 
     /**
      * Get the value of nome

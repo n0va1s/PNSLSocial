@@ -44,7 +44,6 @@ class VoluntarioService
                 $endereco->setBairro(utf8_encode($dados['bairro']));
                 $endereco->setCidade(utf8_encode($dados['cidade']));
                 $pessoa->setEndereco($endereco);
-                
             } else {
                 $pessoa = $this->em->getReference('\PNSL\Social\Entity\PessoaEntity', $id);
                 $pessoa->setNome(utf8_encode($dados['nome']));
