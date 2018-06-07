@@ -9,46 +9,28 @@ use PNSL\Social\Entity\PessoaEntity;
  */
 class VoluntarioEntity
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer", name="seq_pessoa")
-     */
+    /** @ORM\Id @ORM\Column(type="integer", name="seq_pessoa") */
     private $id;
 
-    /**
-     * @ORM\OneToOne(targetEntity="PessoaEntity", inversedBy="voluntario")
-     * @ORM\JoinColumn(name="seq_pessoa", referencedColumnName="seq_pessoa")
-     */
+    /** @ORM\OneToOne(targetEntity="PessoaEntity", mappedBy="voluntario", cascade={"persist", "remove"}) */
     private $pessoa;
 
-    /**
-     * @ORM\OneToMany(targetEntity="AcaoEntity", mappedBy="voluntario")
-     */
+    /** @ORM\OneToMany(targetEntity="AcaoEntity", mappedBy="voluntario") */
     private $acao;
 
-    /**
-     * @ORM\Column(type="string", length=255, name="nom_profissao")
-     */
+    /** @ORM\Column(type="string", length=255, name="nom_profissao") */
     private $profissao;
 
-    /**
-     * @ORM\Column(type="string", length=1, name="tip_estado_civil")
-     */
+    /** @ORM\Column(type="string", length=1, name="tip_estado_civil") */
     private $estadoCivil;
 
-    /**
-     * @ORM\Column(type="string", length=1, name="ind_assinou_termo")
-     */
+    /** @ORM\Column(type="string", length=1, name="ind_assinou_termo") */
     private $assinouTermo;
 
-    /**
-     * @ORM\OneToMany(targetEntity="AtendimentoEntity", mappedBy="voluntario")
-     */
+    /** @ORM\OneToMany(targetEntity="AtendimentoEntity", mappedBy="voluntario") */
     private $atendimento;
 
-    /**
-     * @ORM\OneToMany(targetEntity="TurmaEntity", mappedBy="voluntario")
-     */
+    /** @ORM\OneToMany(targetEntity="TurmaEntity", mappedBy="voluntario") */
     private $turma;
 
     /**

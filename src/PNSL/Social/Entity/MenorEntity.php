@@ -9,55 +9,34 @@ use PNSL\Social\Entity\ResponsavelEntity;
  */
 class MenorEntity
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer", name="seq_pessoa")
-     */
+    /** @ORM\Id @ORM\Column(type="integer", name="seq_pessoa") */
     private $id;
 
-    /**
-     * @ORM\OneToOne(targetEntity="PessoaEntity", mappedBy="menor")
-     */
+    /** @ORM\OneToOne(targetEntity="PessoaEntity", mappedBy="menor", cascade={"persist", "remove"}) */
     private $pessoa;
 
-    /**
-     * @ORM\OneToOne(targetEntity="ResponsavelEntity", mappedBy="menor")
-     */
+    /** @ORM\OneToOne(targetEntity="ResponsavelEntity", mappedBy="menor") */
     private $responsavel;
 
-    /**
-     * @ORM\Column(type="string", length=255, name="nom_escola")
-     */
+    /** @ORM\Column(type="string", length=255, name="nom_escola") */
     private $escola;
 
-    /**
-     * @ORM\Column(type="integer", length=4, name="num_ano")
-     */
+    /** @ORM\Column(type="integer", length=4, name="num_ano") */
     private $ano;
 
-    /**
-     * @ORM\Column(type="string", length=1, name="tip_turno")
-     */
+    /** @ORM\Column(type="string", length=1, name="tip_turno") */
     private $turno;
 
-    /**
-     * @ORM\Column(type="integer", length=1, name="tip_grau")
-     */
+    /** @ORM\Column(type="integer", length=1, name="tip_grau") */
     private $grau;
 
-    /**
-     * @ORM\Column(type="string", length=1, name="ind_pode_sair_sozinho")
-     */
+    /** @ORM\Column(type="string", length=1, name="ind_pode_sair_sozinho") */
     private $autorizadoSairSozinho;
 
-    /**
-     * @ORM\OneToMany(targetEntity="AtendimentoEntity", mappedBy="menor")
-     */
+    /** @ORM\OneToMany(targetEntity="AtendimentoEntity", mappedBy="menor") */
     private $atendimento;
 
-    /**
-     * @ORM\OneToMany(targetEntity="TurmaEntity", mappedBy="menor")
-     */
+    /** @ORM\OneToMany(targetEntity="TurmaEntity", mappedBy="menor") */
     private $turma;
     
     /**

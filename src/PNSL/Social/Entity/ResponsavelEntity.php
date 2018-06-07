@@ -9,51 +9,31 @@ use PNSL\Social\Entity\PessoaEntity;
  */
 class ResponsavelEntity
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer", name="seq_pessoa")
-     */
+    /** @ORM\Id @ORM\Column(type="integer", name="seq_pessoa") */
     private $id;
 
-    /**
-     * @ORM\OneToOne(targetEntity="PessoaEntity", inversedBy="responsavel")
-     * @ORM\JoinColumn(name="seq_pessoa", referencedColumnName="seq_pessoa")
-     */
+    /** @ORM\OneToOne(targetEntity="PessoaEntity", mappedBy="responsavel", cascade={"persist", "remove"}) */
     private $pessoa;
 
-    /**
-     * @ORM\OneToOne(targetEntity="MenorEntity", mappedBy="responsavel")
-     */
+    /** @ORM\OneToOne(targetEntity="MenorEntity", mappedBy="responsavel") */
     private $menor;
 
-    /**
-     * @ORM\Column(type="string", length=3, name="tip_parentesco")
-     */
+    /** @ORM\Column(type="string", length=3, name="tip_parentesco") */
     private $parentesco;
 
-    /**
-     * @ORM\Column(type="string", length=1, name="ind_empregado")
-     */
+    /** @ORM\Column(type="string", length=1, name="ind_empregado") */
     private $empregado;
 
-    /**
-     * @ORM\Column(type="string", length=1, name="ind_termo_imagem")
-     */
+    /** @ORM\Column(type="string", length=1, name="ind_termo_imagem") */
     private $autorizouImagem;
 
-    /**
-     * @ORM\Column(type="string", length=1, name="ind_autorizou_sair_sozinho")
-     */
+    /** @ORM\Column(type="string", length=1, name="ind_autorizou_sair_sozinho") */
     private $autorizouSairSozinho;
 
-    /**
-     * @ORM\OneToMany(targetEntity="AtendimentoEntity", mappedBy="responsavel")
-     */
+    /** @ORM\OneToMany(targetEntity="AtendimentoEntity", mappedBy="responsavel") */
     private $atendimento;
 
-    /**
-     * @ORM\OneToMany(targetEntity="TurmaEntity", mappedBy="responsavel")
-     */
+    /** @ORM\OneToMany(targetEntity="TurmaEntity", mappedBy="responsavel") */
     private $turma;
 
     /**

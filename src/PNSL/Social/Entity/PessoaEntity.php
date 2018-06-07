@@ -13,76 +13,43 @@ use PNSL\Social\Entity\EnderecoEntity;
  */
 class PessoaEntity
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer", name="seq_pessoa")
-     * @ORM\GeneratedValue
-     */
+    /** @ORM\Id @ORM\Column(type="integer", name="seq_pessoa") @ORM\GeneratedValue */
     private $id;
 
-    /**
-     * @ORM\OneToOne(targetEntity="VoluntarioEntity", mappedBy="pessoa")
-     */
     private $voluntario;
 
-    /**
-     * @ORM\OneToOne(targetEntity="ResponsavelEntity", mappedBy="pessoa")
-     */
     private $responsavel;
 
-    /**
-     * @ORM\OneToOne(targetEntity="MenorEntity", mappedBy="pessoa")
-     */
     private $menor;
 
-    /**
-     * @ORM\OneToMany(targetEntity="ContatoEntity", mappedBy="pessoa")
-     */
+    /** @ORM\OneToMany(targetEntity="ContatoEntity", mappedBy="pessoa", cascade={"ALL"}) */
     private $contatos;
 
-    /**
-     * @ORM\OneToMany(targetEntity="EnderecoEntity", mappedBy="pessoa")
-     */
+    /** @ORM\OneToMany(targetEntity="EnderecoEntity", mappedBy="pessoa", cascade={"ALL"}) */
     private $enderecos;
     
-    /**
-     * @ORM\Column(type="string", length=255, name="nom_pessoa")
-     */
+    /** @ORM\Column(type="string", length=255, name="nom_pessoa") */
     private $nome;
 
-    /**
-     * @ORM\Column(type="string", length=1, name="tip_genero")
-     */
+    /** @ORM\Column(type="string", length=1, name="tip_genero") */
     private $genero;
 
-    /**
-     * @ORM\Column(type="datetime", name="dat_nascimento")
-     */
+    /** @ORM\Column(type="datetime", name="dat_nascimento") */
     private $dataNascimento;
 
-    /**
-     * @ORM\Column(type="string", length=15, name="num_rg")
-     */
+    /** @ORM\Column(type="string", length=15, name="num_rg") */
     private $numRG;
 
-    /**
-     * @ORM\Column(type="string", length=15, name="num_cpf")
-     */
+    /** @ORM\Column(type="string", length=15, name="num_cpf") */
     private $numCPF;
     
-    /**
-     * @ORM\Column(type="string", length=255, name="des_naturalidade")
-     */
+    /** @ORM\Column(type="string", length=255, name="des_naturalidade") */
     private $naturalidade;
 
-    /**
-     * @ORM\Column(type="string", length=50, name="nom_usuario")
-     */
+    /** @ORM\Column(type="string", length=50, name="nom_usuario") */
     private $usuario;
 
-    /**
-     * @ORM\Column(type="datetime", name="dat_cadastro")
-     */
+    /** @ORM\Column(type="datetime", name="dat_cadastro") */
     private $cadastro;
 
     public function __construct()

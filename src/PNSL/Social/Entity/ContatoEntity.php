@@ -9,10 +9,10 @@ use PNSL\Social\Entity\PessoaEntity;
  */
 class ContatoEntity
 {
-    /**
-     * @ORM\ManyToOne(targetEntity="PessoaEntity", inversedBy="contatos")
+    /** 
+     * @ORM\ManyToOne(targetEntity="PessoaEntity", inversedBy="contatos") 
      * @ORM\JoinColumn(name="seq_pessoa", referencedColumnName="seq_pessoa")
-     */
+    */
     private $pessoa;
 
     /**
