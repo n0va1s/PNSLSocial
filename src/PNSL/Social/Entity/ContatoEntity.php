@@ -2,6 +2,7 @@
 namespace PNSL\Social\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use PNSL\Social\Entity\PessoaEntity;
+use PNSL\Social\Entity\TipoContatoEntity;
 
 /**
  * @ORM\Entity
@@ -9,106 +10,25 @@ use PNSL\Social\Entity\PessoaEntity;
  */
 class ContatoEntity
 {
-    /** 
-     * @ORM\ManyToOne(targetEntity="PessoaEntity", inversedBy="contatos") 
-     * @ORM\JoinColumn(name="seq_pessoa", referencedColumnName="seq_pessoa")
-    */
-    private $pessoa;
-
     /**
      * @ORM\Id
-     * @ORM\Column(type="integer", name="seq_contato")
      * @ORM\GeneratedValue
+     * @ORM\Column(type="integer", name="seq_contato")     
      */
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=3, name="tip_contato")
-     */
-    private $tipo;
-
-    /**
-     * @ORM\Column(type="string", length=255, name="des_contato")
-     */
+    /** @ORM\Column(type="string", length=255, name="des_contato") */
     private $contato;
 
     /**
-     * Get the value of pessoa
-     */ 
-    public function getPessoa()
-    {
-        return $this->pessoa;
-    }
+     * @ORM\OneToOne(targetEntity="TipoContatoEntity")
+     * @ORM\JoinColumn(name="seq_tipo_contato", referencedColumnName="seq_tipo_contato", nullable=false)
+     */
+    private $tipo;
 
-    /**
-     * Set the value of pessoa
-     *
-     * @return  self
-     */ 
-    public function setPessoa($pessoa)
-    {
-        $this->pessoa = $pessoa;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of id
-     */ 
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set the value of id
-     *
-     * @return  self
-     */ 
-    public function setId($id)
-    {
-        $this->id = $id;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of tipo
-     */ 
-    public function getTipo()
-    {
-        return $this->tipo;
-    }
-
-    /**
-     * Set the value of tipo
-     *
-     * @return  self
-     */ 
-    public function setTipo($tipo)
-    {
-        $this->tipo = $tipo;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of contato
-     */ 
-    public function getContato()
-    {
-        return $this->contato;
-    }
-
-    /**
-     * Set the value of contato
-     *
-     * @return  self
-     */ 
-    public function setContato($contato)
-    {
-        $this->contato = $contato;
-
-        return $this;
-    }
+    /** 
+     * @ORM\ManyToOne(targetEntity="PessoaEntity", inversedBy="contatos")
+     * @ORM\JoinColumn(name="seq_pessoa", referencedColumnName="seq_pessoa", nullable=false)
+     */
+    private $pessoa;
 }

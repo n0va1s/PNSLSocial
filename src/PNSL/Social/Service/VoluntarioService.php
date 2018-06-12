@@ -20,7 +20,7 @@ class VoluntarioService
     public function save($dados)
     {
         if (is_array($dados)) {
-            if (empty($dados['id'])) {
+            if (empty($dados['id'])) {                
                 $pessoa = new PessoaEntity();
                 $pessoa->setNome(utf8_encode($dados['nome']));
                 $pessoa->setGenero($dados['genero']);
@@ -67,6 +67,8 @@ class VoluntarioService
                 $pessoa->setEndereco($endereco);
             }
             $this->em->flush();
+var_dump($pessoa);
+exit;
             return true;
         } else {
             return false;

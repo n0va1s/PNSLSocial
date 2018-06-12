@@ -19,6 +19,11 @@ $env = getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : 'production';
 $ini_config = parse_ini_file(__DIR__.'/config.ini', true);
 $file_config = $ini_config[$env];
 
+//Configuracao para permitir a carga de dados DoctrineFixturesBundle
+if (in_array($env, ['development', 'test'], true)) {
+    $bundles[] = new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle();
+}
+
 $cache = new Doctrine\Common\Cache\ArrayCache;
 $annotationReader = new Doctrine\Common\Annotations\AnnotationReader;
 

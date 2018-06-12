@@ -9,12 +9,12 @@ use PNSL\Social\Entity\ResponsavelEntity;
  */
 class MenorEntity
 {
-    /** @ORM\Column(type="integer", name="seq_pessoa") */
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer", name="seq_menor")
+     */
     private $id;
-
-    /** @ORM\Id @ORM\OneToOne(targetEntity="PessoaEntity", inversedBy="menor") 
-     * @ORM\JoinColumn(name="seq_pessoa", referencedColumnName="seq_pessoa") */
-    private $pessoa;
 
     /** @ORM\Column(type="string", length=255, name="nom_escola") */
     private $escola;
@@ -31,169 +31,12 @@ class MenorEntity
     /** @ORM\Column(type="string", length=1, name="ind_pode_sair_sozinho") */
     private $autorizadoSairSozinho;
 
-    /** @ORM\OneToMany(targetEntity="AtendimentoEntity", mappedBy="menor") */
-    private $atendimento;
+    /** @ORM\OneToOne(targetEntity="PessoaEntity", mappedBy="menor") */
+    private $pessoa;
 
-    /** @ORM\OneToMany(targetEntity="TurmaEntity", mappedBy="menor") */
-    private $turma;
-    
-    /**
-     * Get the value of id
-     */ 
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set the value of id
-     *
-     * @return  self
-     */ 
-    public function setId($id)
-    {
-        $this->id = $id;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of pessoa
-     */ 
-    public function getPessoa()
-    {
-        return $this->pessoa;
-    }
-
-    /**
-     * Set the value of pessoa
-     *
-     * @return  self
-     */ 
-    public function setPessoa($pessoa)
-    {
-        $this->pessoa = $pessoa;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of responsavel
-     */ 
-    public function getResponsavel()
-    {
-        return $this->responsavel;
-    }
-
-    /**
-     * Set the value of responsavel
-     *
-     * @return  self
-     */ 
-    public function setResponsavel($responsavel)
-    {
-        $this->responsavel = $responsavel;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of escola
-     */ 
-    public function getEscola()
-    {
-        return $this->escola;
-    }
-
-    /**
-     * Set the value of escola
-     *
-     * @return  self
-     */ 
-    public function setEscola($escola)
-    {
-        $this->escola = $escola;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of ano
-     */ 
-    public function getAno()
-    {
-        return $this->ano;
-    }
-
-    /**
-     * Set the value of ano
-     *
-     * @return  self
-     */ 
-    public function setAno($ano)
-    {
-        $this->ano = $ano;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of turno
-     */ 
-    public function getTurno()
-    {
-        return $this->turno;
-    }
-
-    /**
-     * Set the value of turno
-     *
-     * @return  self
-     */ 
-    public function setTurno($turno)
-    {
-        $this->turno = $turno;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of grau
-     */ 
-    public function getGrau()
-    {
-        return $this->grau;
-    }
-
-    /**
-     * Set the value of grau
-     *
-     * @return  self
-     */ 
-    public function setGrau($grau)
-    {
-        $this->grau = $grau;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of autorizadoSairSozinho
-     */ 
-    public function getAutorizadoSairSozinho()
-    {
-        return $this->autorizadoSairSozinho;
-    }
-
-    /**
-     * Set the value of autorizadoSairSozinho
-     *
-     * @return  self
-     */ 
-    public function setAutorizadoSairSozinho($autorizadoSairSozinho)
-    {
-        $this->autorizadoSairSozinho = $autorizadoSairSozinho;
-
-        return $this;
-    }
+    /** 
+     * @ORM\ManyToOne(targetEntity="ResponsavelEntity", inversedBy="menores")
+     * @ORM\JoinColumn(name="seq_responsavel", referencedColumnName="seq_responsavel", nullable=false)
+     */
+    private $responsavel;
 }
