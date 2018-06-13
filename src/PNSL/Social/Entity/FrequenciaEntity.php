@@ -1,148 +1,164 @@
 <?php
 namespace PNSL\Social\Entity;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
+use PNSL\Social\Entity\TurmaEntity;
 use PNSL\Social\Entity\PessoaEntity;
-use PNSL\Social\Entity\MenorEntity;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="responsavel")
+ * @ORM\Table(name="frequencia")
  */
-class ResponsavelEntity
+class FrequenciaEntity
 {
-    /** @ORM\Id @ORM\OneToOne(targetEntity="PessoaEntity")
-     *  @ORM\JoinColumn(name="seq_pessoa", referencedColumnName="seq_pessoa", nullable=false) */
-    private $pessoa;
+    /**
+    * @ORM\Id
+    * @ORM\GeneratedValue
+    * @ORM\Column(type="integer", name="seq_frequencia")
+    */
+    private $id;
 
-    /** @ORM\Column(type="string", length=3, name="tip_parentesco") */
-    private $parentesco;
+    /** @ORM\Column(type="datetime", name="dat_frequencia", nullable=false) */
+    private $data;
 
-    /** @ORM\Column(type="string", name="ind_empregado", columnDefinition="CHAR(1) NOT NULL", options={"default":"N"}) */
-    private $empregado;
+    /** @ORM\Column(type="string", name="ind_presenca", columnDefinition="CHAR(1) NOT NULL", options={"default":"F"}) */
+    private $presenca;
 
-    /** @ORM\Column(type="string", name="ind_termo_imagem", columnDefinition="CHAR(1) NOT NULL", options={"default":"N"}) */
-    private $autorizouImagem;
+    /** @ORM\Column(type="string", name="ind_inativo", columnDefinition="CHAR(1) NOT NULL") */
+    private $inativo;
 
-    /** @ORM\Column(type="string", name="ind_autorizou_sair_sozinho", columnDefinition="CHAR(1) NOT NULL", options={"default":"N"}) */
-    private $autorizouSairSozinho;
+    /**
+     * @ORM\ManyToOne(targetEntity="TurmaEntity", inversedBy="frequencias")
+     * @ORM\JoinColumn(name="seq_turma", referencedColumnName="seq_turma")
+     */
+    private $turma;
 
-    /** @ORM\OneToMany(targetEntity="MenorEntity", mappedBy="responsavel") */
-    private $menores;
+    /**
+     * @ORM\ManyToOne(targetEntity="PessoaEntity", inversedBy="turmas")
+     * @ORM\JoinColumn(name="seq_atendido", referencedColumnName="seq_pessoa")
+     */
+    private $atendido;
 
     /** @ORM\Column(type="string", name="usu_inc", nullable=false) */
     private $usuarioInclusao;
 
     /** @ORM\Column(type="datetime", name="dat_inc", nullable=false) */
     private $dataInclusao;
- 
+
     /** @ORM\Column(type="string", name="usu_alt", nullable=false) */
     private $usuarioAlteracao;
- 
+
     /** @ORM\Column(type="datetime", name="dat_alt", nullable=false) */
     private $dataAlteracao;
 
     public function __construct()
     {
-        $this->menores = new ArrayCollection();
+        $this->data = new \Datetime();
     }
 
     /**
-     * Get the value of pessoa
+     * Get the value of id
      */ 
-    public function getPessoa()
+    public function getId()
     {
-        return $this->pessoa;
+        return $this->id;
     }
 
     /**
-     * Set the value of pessoa
+     * Set the value of id
      *
      * @return  self
      */ 
-    public function setPessoa($pessoa)
+    public function setId($id)
     {
-        $this->pessoa = $pessoa;
+        $this->id = $id;
 
         return $this;
     }
 
     /**
-     * Get the value of parentesco
+     * Get the value of data
      */ 
-    public function getParentesco()
+    public function getData()
     {
-        return $this->parentesco;
+        return $this->data;
     }
 
     /**
-     * Set the value of parentesco
+     * Get the value of presenca
+     */ 
+    public function getPresenca()
+    {
+        return $this->presenca;
+    }
+
+    /**
+     * Set the value of presenca
      *
      * @return  self
      */ 
-    public function setParentesco($parentesco)
+    public function setPresenca($presenca)
     {
-        $this->parentesco = $parentesco;
+        $this->presenca = $presenca;
 
         return $this;
     }
 
     /**
-     * Get the value of empregado
+     * Get the value of inativo
      */ 
-    public function getEmpregado()
+    public function getInativo()
     {
-        return $this->empregado;
+        return $this->inativo;
     }
 
     /**
-     * Set the value of empregado
+     * Set the value of inativo
      *
      * @return  self
      */ 
-    public function setEmpregado($empregado)
+    public function setInativo($inativo)
     {
-        $this->empregado = $empregado;
+        $this->inativo = $inativo;
 
         return $this;
     }
 
     /**
-     * Get the value of autorizouImagem
+     * Get the value of turma
      */ 
-    public function getAutorizouImagem()
+    public function getTurma()
     {
-        return $this->autorizouImagem;
+        return $this->turma;
     }
 
     /**
-     * Set the value of autorizouImagem
+     * Set the value of turma
      *
      * @return  self
      */ 
-    public function setAutorizouImagem($autorizouImagem)
+    public function setTurma(Turma $turma)
     {
-        $this->autorizouImagem = $autorizouImagem;
+        $this->turma = $turma;
 
         return $this;
     }
 
     /**
-     * Get the value of menores
+     * Get the value of atendido
      */ 
-    public function getMenores()
+    public function getAtendido()
     {
-        return $this->menores;
+        return $this->atendido;
     }
 
     /**
-     * Set the value of menores
+     * Set the value of atendido
      *
      * @return  self
      */ 
-    public function setMenores($menores)
+    public function setAtendido(Pessoa $atendido)
     {
-        $this->menores = $menores;
+        $this->atendido = $atendido;
 
         return $this;
     }
