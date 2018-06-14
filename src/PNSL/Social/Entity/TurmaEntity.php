@@ -24,7 +24,7 @@ class TurmaEntity
     /** @ORM\Column(type="datetime", name="dat_inicio", nullable=false) */
     private $dataInicio;
 
-    /** @ORM\Column(type="datetime", name="dat_termino", nullable=false) */
+    /** @ORM\Column(type="datetime", name="dat_termino", nullable=true) */
     private $dataTermino;
 
     /** @ORM\OneToMany(targetEntity="FrequenciaEntity", mappedBy="turma") */

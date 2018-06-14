@@ -19,10 +19,19 @@ class AcaoEntity
     /** @ORM\Column(type="string", length=255, name="nom_acao") */
     private $nome;
 
-    /** @ORM\Column(type="datetime", name="dat_inicio") */
+    /** @ORM\Column(type="string", name="tip_frequencia", columnDefinition="CHAR(1) NOT NULL") */
+    private $frequencia;
+
+    /** @ORM\Column(type="string", name="dia_semana", columnDefinition="CHAR(3) NOT NULL") */
+    private $diaSemana;
+
+    /** @ORM\Column(type="string", name="tip_turno", columnDefinition="CHAR(1) NOT NULL") */
+    private $turno;
+
+    /** @ORM\Column(type="datetime", name="ano_mes_inicio") */
     private $inicio;
 
-    /** @ORM\Column(type="datetime", name="dat_termino") */
+    /** @ORM\Column(type="datetime", name="ano_mes_termino", nullable=true) */
     private $termino;
 
     /** @ORM\Column(type="text", name="txt_acao") */

@@ -16,7 +16,7 @@ class TipoContatoEntity
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=3, name="des_tipo_contato")
+     * @ORM\Column(type="string", length=20, name="des_tipo_contato")
      */
     private $descricao;
 
