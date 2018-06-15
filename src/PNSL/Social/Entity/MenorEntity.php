@@ -9,7 +9,7 @@ use PNSL\Social\Entity\ResponsavelEntity;
  */
 class MenorEntity
 {
-    /** @ORM\Id @ORM\OneToOne(targetEntity="PessoaEntity", inversedBy="menor")
+    /** @ORM\Id @ORM\OneToOne(targetEntity="PessoaEntity")
      *  @ORM\JoinColumn(name="seq_pessoa", referencedColumnName="seq_pessoa", nullable=false) */
     private $pessoa;
     
@@ -19,10 +19,10 @@ class MenorEntity
     /** @ORM\Column(type="integer", length=4, name="num_ano") */
     private $ano;
 
-    /** @ORM\Column(type="string", length=1, name="tip_turno") */
+    /** @ORM\Column(type="string", name="tip_turno", columnDefinition="CHAR(1) NOT NULL") */
     private $turno;
 
-    /** @ORM\Column(type="integer", length=1, name="tip_grau") */
+    /** @ORM\Column(type="string", name="tip_grau", columnDefinition="CHAR(2) NOT NULL") */
     private $grau;
 
     /** @ORM\Column(type="string", name="ind_pode_sair_sozinho", columnDefinition="CHAR(1) NOT NULL", options={"default":"N"}) */
@@ -43,6 +43,12 @@ class MenorEntity
 
     /** @ORM\Column(type="datetime", name="dat_alt", nullable=false) */
     private $dataAlteracao;
+
+    public function __construct()
+    {
+        $this->dataInclusao = new \Datetime();
+        $this->dataAlteracao = new \Datetime();
+    }
 
     /**
      * Get the value of pessoa

@@ -42,12 +42,6 @@ class PessoaEntity
     /** @ORM\Column(type="string", length=3, name="tip_pessoa") */
     private $tipo;
 
-    /**
-     * @ORM\OneToOne(targetEntity="EnderecoEntity", inversedBy="pessoa")
-     * @ORM\JoinColumn(name="seq_endereco", referencedColumnName="seq_endereco", nullable=false)
-     */
-    private $endereco;
-
     /** @ORM\OneToMany(targetEntity="ContatoEntity", mappedBy="pessoa") */
     private $contatos;
 

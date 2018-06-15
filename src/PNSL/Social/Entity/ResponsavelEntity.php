@@ -45,6 +45,8 @@ class ResponsavelEntity
     public function __construct()
     {
         $this->menores = new ArrayCollection();
+        $this->dataInclusao = new \Datetime();
+        $this->dataAlteracao = new \Datetime();
     }
 
     /**

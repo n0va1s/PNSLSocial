@@ -8,12 +8,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class UsuarioEntity
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer", name="seq_usuario")
-     * @ORM\GeneratedValue
-     */
-    private $id;
+    /** @ORM\Id @ORM\OneToOne(targetEntity="PessoaEntity")
+     *  @ORM\JoinColumn(name="seq_pessoa", referencedColumnName="seq_pessoa", nullable=false) */
+    private $pessoa;
 
     /** @ORM\Column(type="string", name="nom_usuario", length=50, unique=true, nullable=false) */
     private $nome;
@@ -32,4 +29,86 @@ class UsuarioEntity
         $this->dataCriacao = new \Datetime();
         $this->dataAtualizacao = new \Datetime();
     }
+
+    /**
+     * Get the value of pessoa
+     */ 
+    public function getPessoa()
+    {
+        return $this->pessoa;
+    }
+
+    /**
+     * Set the value of pessoa
+     *
+     * @return  self
+     */ 
+    public function setPessoa($pessoa)
+    {
+        $this->pessoa = $pessoa;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of nome
+     */ 
+    public function getNome()
+    {
+        return $this->nome;
+    }
+
+    /**
+     * Set the value of nome
+     *
+     * @return  self
+     */ 
+    public function setNome($nome)
+    {
+        $this->nome = $nome;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of senha
+     */ 
+    public function getSenha()
+    {
+        return $this->senha;
+    }
+
+    /**
+     * Set the value of senha
+     *
+     * @return  self
+     */ 
+    public function setSenha($senha)
+    {
+        $this->senha = $senha;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of dataCriacao
+     */ 
+    public function getDataCriacao()
+    {
+        return $this->dataCriacao;
+    }
+
+    /**
+     * Get the value of dataAtualizacao
+     */ 
+    public function getDataAtualizacao()
+    {
+        return $this->dataAtualizacao;
+    }
+
+    /**
+     * Set the value of dataAtualizacao
+     *
+     * @return  self
+     */ 
 }

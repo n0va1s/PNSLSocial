@@ -9,11 +9,9 @@ use PNSL\Social\Entity\PessoaEntity;
  */
 class EnderecoEntity
 {
-    /** 
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer", name="seq_endereco") */
-    private $id;
+    /** @ORM\Id @ORM\OneToOne(targetEntity="PessoaEntity")
+     *  @ORM\JoinColumn(name="seq_pessoa", referencedColumnName="seq_pessoa", nullable=false) */
+    private $pessoa;
 
     /** @ORM\Column(type="string", length=255, name="des_logradouro") */
     private $logradouro;
@@ -24,8 +22,8 @@ class EnderecoEntity
     /** @ORM\Column(type="string", length=100, name="des_cidade") */
     private $cidade;
 
-    /** @ORM\OneToOne(targetEntity="PessoaEntity", mappedBy="pessoa") */
-    private $pessoa;
+    /** @ORM\Column(type="string", name="sig_uf", columnDefinition="CHAR(2) NOT NULL", options={"default":"DF"}) */
+    private $uf;    
 
     /** @ORM\Column(type="string", name="usu_inc", nullable=false) */
     private $usuarioInclusao;
@@ -39,6 +37,11 @@ class EnderecoEntity
     /** @ORM\Column(type="datetime", name="dat_alt", nullable=false) */
     private $dataAlteracao;
 
+    public function __construct()
+    {
+        $this->dataInclusao = new \Datetime();
+        $this->dataAlteracao = new \Datetime();
+    }
 
     /**
      * Get the value of id
@@ -136,6 +139,26 @@ class EnderecoEntity
     public function setPessoa(Pessoa $pessoa)
     {
         $this->pessoa = $pessoa;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of uf
+     */ 
+    public function getUf()
+    {
+        return $this->uf;
+    }
+
+    /**
+     * Set the value of uf
+     *
+     * @return  self
+     */ 
+    public function setUf($uf)
+    {
+        $this->uf = $uf;
 
         return $this;
     }

@@ -53,6 +53,8 @@ class FrequenciaEntity
     public function __construct()
     {
         $this->data = new \Datetime();
+        $this->dataInclusao = new \Datetime();
+        $this->dataAlteracao = new \Datetime();
     }
 
     /**
