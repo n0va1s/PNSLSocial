@@ -23,7 +23,7 @@ class FrequenciaEntity
     /** @ORM\Column(type="string", name="ind_presenca", columnDefinition="CHAR(1) NOT NULL", options={"default":"F"}) */
     private $presenca;
 
-    /** @ORM\Column(type="string", name="ind_inativo", columnDefinition="CHAR(1) NOT NULL") */
+    /** @ORM\Column(type="string", name="ind_inativo", columnDefinition="CHAR(1) NOT NULL", options={"default":"N"}) */
     private $inativo;
 
     /**

@@ -5,7 +5,6 @@ use \Doctrine\ORM\Query;
 use \Doctrine\ORM\Tools\Pagination\Paginator;
 use PNSL\Social\Entity\EnderecoEntity;
 use PNSL\Social\Entity\ContatoEntity;
-use PNSL\Social\Entity\EnderecoEntity;
 
 class EnderecoService
 {

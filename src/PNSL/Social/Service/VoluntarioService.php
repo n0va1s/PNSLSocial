@@ -4,6 +4,7 @@ use \Doctrine\ORM\EntityManager;
 use \Doctrine\ORM\Query;
 use \Doctrine\ORM\Tools\Pagination\Paginator;
 use PNSL\Social\Entity\PessoaEntity;
+use PNSL\Social\Entity\VoluntarioEntity;
 
 class VoluntarioService
 {
@@ -14,25 +15,30 @@ class VoluntarioService
         $this->em = $em;
     }
     
-    public function save($dados)
+    public function save($pessoa_id, $dados)
     {
-        $voluntario = $this->em->getReference('\PNSL\Social\Entity\VoluntarioEntity', $dados['seq_pessoa']);
-        if (empty($voluntario)) {
-            if (empty($voluntario->getId())) {
-                $voluntario = new VoluntarioEntity();
-                $voluntario->setProfissao(utf8_encode($dados['profissao']));
-                $voluntario->setEstadoCivil(utf8_encode($dados['estado_civil']));
-                $voluntario->setAssinouTermo($dados['assinou_termo']);
-                $pessoa->setPessoa($pessoa);
-                $this->em->persist($voluntario);
-            } else {
-                $voluntario->setProfissao(utf8_encode($dados['profissao']));
-                $voluntario->setEstadoCivil(utf8_encode($dados['estado_civil']));
-                $voluntario->setAssinouTermo($dados['assinou_termo']);
-                $pessoa->setPessoa($pessoa);
-            }
-            $this->em->flush();
-            return true;
+        $pessoa = $this->em->getReference(
+            '\PNSL\Social\Entity\PessoaEntity', 
+            $pessoa_id
+        );
+        if (empty($dados['id'])) {
+            $voluntario = new VoluntarioEntity();
+            $voluntario->setPessoa($pessoa);
+            $voluntario->setProfissao(utf8_encode($dados['profissao']));
+            $voluntario->setEstadoCivil(utf8_encode($dados['estado_civil']));
+            $voluntario->setAssinouTermo($dados['assinou_termo']);
+            $voluntario->setUsuarioInclusao($dados['usuario']);
+            $voluntario->setUsuarioAlteracao($dados['usuario']);
+            $this->em->persist($voluntario);
+        } else {
+            $voluntario->setProfissao(utf8_encode($dados['profissao']));
+            $voluntario->setEstadoCivil(utf8_encode($dados['estado_civil']));
+            $voluntario->setAssinouTermo($dados['assinou_termo']);
+            $voluntario->setPessoa($pessoa);
+        }
+        $this->em->flush();
+        if ($voluntario) {
+            return $pessoa_id;
         } else {
             return false;
         }

@@ -63,8 +63,7 @@ class PessoaEntity
     /** @ORM\Column(type="datetime", name="dat_alt", nullable=false) */
     private $dataAlteracao;
 
-    public function __construct()
-    {
+    public function __construct() {
         $this->contatos = new ArrayCollection();
         $this->atendimentos = new ArrayCollection();
         $this->frequencias = new ArrayCollection();
@@ -288,6 +287,26 @@ class PessoaEntity
     public function setEndereco($endereco)
     {
         $this->endereco = $endereco;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of tipo
+     */ 
+    public function getTipo()
+    {
+        return $this->tipo;
+    }
+
+    /**
+     * Set the value of tipo
+     *
+     * @return  self
+     */ 
+    public function setTipo($tipo)
+    {
+        $this->tipo = $tipo;
 
         return $this;
     }

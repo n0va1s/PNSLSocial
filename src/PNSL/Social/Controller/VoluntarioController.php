@@ -5,8 +5,7 @@ use Silex\Api\ControllerProviderInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Doctrine\ORM\EntityManager;
-use Egulias\EmailValidator\EmailValidator;
-use Egulias\EmailValidator\Validation\RFCValidation;
+use PNSL\Social\Service\PessoaService;
 use PNSL\Social\Service\VoluntarioService;
 
 class VoluntarioController implements ControllerProviderInterface
@@ -22,6 +21,9 @@ class VoluntarioController implements ControllerProviderInterface
     {
         //if ($app['security.authorization_checker']->isGranted('ROLE_ADMIN')) {
         $ctrl = $app['controllers_factory'];
+        $app['pessoa_service'] = function () {
+            return new PessoaService($this->em);
+        };
         $app['voluntario_service'] = function () {
             return new VoluntarioService($this->em);
         };
@@ -50,17 +52,15 @@ class VoluntarioController implements ControllerProviderInterface
         $ctrl->post(
             '/salvar', function (Request $req) use ($app) {
                 $dados = $req->request->all();
-                $voluntario = $app['voluntario_service']->save($dados);
-                if ($voluntario) {
+                $pessoa_id = $app['pessoa_service']->save($dados);
+                $voluntario_id = $app['voluntario_service']->save($pessoa_id, $dados);
+                if ($voluntario_id > 0) {
                     return new Response(
-                        $app->json(
-                            $voluntario, 201, ['Content-Type' => 'application/json']
-                        )
+                        $app->json('Voluntário cadastrado com sucesso!', 201)
                     );
                 } else {
                     return $app->abort(
-                        404, 
-                        "Ops... não foi possível cadastrar o voluntário"
+                        404, "Ops... não foi possível cadastrar o voluntário"
                     ); 
                 }
             }

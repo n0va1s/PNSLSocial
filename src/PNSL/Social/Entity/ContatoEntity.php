@@ -19,7 +19,7 @@ class ContatoEntity
     /** @ORM\Column(type="string", length=255, name="des_contato") */
     private $contato;
 
-    /** @ORM\Column(type="string", name="tip_contato", columnDefinition="CHAR(2) NOT NULL") */
+    /** @ORM\Column(type="string", name="tip_contato", columnDefinition="CHAR(3) NOT NULL") */
     private $tipo;
 
     /** 

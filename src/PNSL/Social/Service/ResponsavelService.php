@@ -58,7 +58,7 @@ class ResponsavelService
             'select r from \PNSL\Social\Entity\ResponsavelEntity r 
             join r.pessoa p'
         )->getArrayResult();
-        return $responsavels;
+        return $responsaveis;
     }
     
     public function findById(int $id)

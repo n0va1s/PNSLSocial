@@ -57,7 +57,7 @@ class VoluntarioEntity
      *
      * @return  self
      */ 
-    public function setPessoa(Pessoa $pessoa)
+    public function setPessoa(PessoaEntity $pessoa)
     {
         $this->pessoa = $pessoa;
 
@@ -137,7 +137,7 @@ class VoluntarioEntity
      *
      * @return  self
      */ 
-    public function setAcao(Acao $acao)
+    public function setAcao(AcaoEntity $acao)
     {
         $this->acao = $acao;
 

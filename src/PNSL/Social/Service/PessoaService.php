@@ -4,8 +4,6 @@ use \Doctrine\ORM\EntityManager;
 use \Doctrine\ORM\Query;
 use \Doctrine\ORM\Tools\Pagination\Paginator;
 use PNSL\Social\Entity\PessoaEntity;
-use PNSL\Social\Entity\ContatoEntity;
-use PNSL\Social\Entity\EnderecoEntity;
 
 class PessoaService
 {
@@ -27,7 +25,9 @@ class PessoaService
                 $pessoa->setNumRG($dados['num_rg']);
                 $pessoa->setNumCPF($dados['num_cpf']);
                 $pessoa->setNaturalidade(utf8_encode($dados['naturalidade']));
-                $pessoa->setUsuario(utf8_encode($dados['usuario']));;
+                $pessoa->setTipo($dados['tipo']);
+                $pessoa->setUsuarioInclusao(utf8_encode($dados['usuario']));
+                $pessoa->setUsuarioAlteracao(utf8_encode($dados['usuario']));
                 $this->em->persist($pessoa);
             } else {
                 $pessoa = $this->em->getReference('\PNSL\Social\Entity\PessoaEntity', $id);
@@ -37,10 +37,12 @@ class PessoaService
                 $pessoa->setNumRG($dados['num_rg']);
                 $pessoa->setNumCPF($dados['num_cpf']);
                 $pessoa->setNaturalidade(utf8_encode($dados['naturalidade']));
-                $pessoa->setUsuario(utf8_encode($dados['usuario']));;
+                $pessoa->setTipo($dados['tipo']);
+                $pessoa->setUsuarioInclusao(utf8_encode($dados['usuario']));
+                $pessoa->setUsuarioAlteracao(utf8_encode($dados['usuario']));
             }
             $this->em->flush();
-            return true;
+            return $pessoa->getId();
         } else {
             return false;
         }
