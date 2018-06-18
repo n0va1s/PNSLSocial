@@ -49,15 +49,20 @@ class VoluntarioService
         $voluntario = $this->em->getReference(
             '\PNSL\Social\Entity\VoluntarioEntity', $id
         );
-        $this->em->remove($voluntario);
-        return $this->em->flush();
+        if ($voluntario) {
+            $this->em->remove($voluntario);
+            $this->em->flush();
+            return true;
+        } else {
+            return false;
+        }
     }
     
     public function fetchAll()
     {
         $voluntarios = $this->em->createQuery(
-            'select v from \PNSL\Social\Entity\VoluntarioEntity v 
-            join v.pessoa p'
+            'select v from \PNSL\Social\Entity\VoluntarioEntity v
+            join v.pessoa'
         )->getArrayResult();
         return $voluntarios;
     }

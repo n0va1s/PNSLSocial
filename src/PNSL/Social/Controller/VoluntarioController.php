@@ -56,7 +56,7 @@ class VoluntarioController implements ControllerProviderInterface
                 $voluntario_id = $app['voluntario_service']->save($pessoa_id, $dados);
                 if ($voluntario_id > 0) {
                     return new Response(
-                        $app->json('Voluntário cadastrado com sucesso!', 201)
+                        $app->json(['resultado'=>'Voluntário cadastrado com sucesso!'], 201)
                     );
                 } else {
                     return $app->abort(
@@ -68,7 +68,7 @@ class VoluntarioController implements ControllerProviderInterface
 
         $ctrl->get(
             '/listar', function () use ($app) {
-                $voluntarios = $app['voluntario_service']->findAll();
+                $voluntarios = $app['voluntario_service']->fetchAll();
                 if ($voluntarios) {
                     return new Response(
                         $app->json(
@@ -86,11 +86,8 @@ class VoluntarioController implements ControllerProviderInterface
 
         $ctrl->delete(
             '/excluir/{id}', function ($id) use ($app) {
-                $voluntario = $app['voluntario_service']->findById($id);
-                if ($voluntario) {
-                    $excluiu = $app['voluntario_service']->delete(
-                        $voluntario->getPessoa()->getId()
-                    );
+                if ($id) {
+                    $excluiu = $app['voluntario_service']->delete($id);
                     return new Response(
                         $app->json(
                             $excluiu, 201, ['Content-Type' => 'application/json']

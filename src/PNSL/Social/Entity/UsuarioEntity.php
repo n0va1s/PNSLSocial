@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 class UsuarioEntity
 {
     /** @ORM\Id @ORM\OneToOne(targetEntity="PessoaEntity")
-     *  @ORM\JoinColumn(name="seq_pessoa", referencedColumnName="seq_pessoa", nullable=false) */
+     *  @ORM\JoinColumn(name="seq_pessoa", referencedColumnName="seq_pessoa", nullable=false, onDelete="CASCADE") */
     private $pessoa;
 
     /** @ORM\Column(type="string", name="nom_usuario", length=50, unique=true, nullable=false) */

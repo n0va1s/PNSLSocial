@@ -24,7 +24,7 @@ class ContatoEntity
 
     /** 
      * @ORM\ManyToOne(targetEntity="PessoaEntity", inversedBy="contatos")
-     * @ORM\JoinColumn(name="seq_pessoa", referencedColumnName="seq_pessoa", nullable=false)
+     * @ORM\JoinColumn(name="seq_pessoa", referencedColumnName="seq_pessoa", nullable=false, onDelete="CASCADE")
      */
     private $pessoa;
 

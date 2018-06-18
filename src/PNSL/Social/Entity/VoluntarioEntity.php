@@ -11,7 +11,7 @@ use PNSL\Social\Entity\PessoaEntity;
 class VoluntarioEntity
 {
      /** @ORM\Id @ORM\OneToOne(targetEntity="PessoaEntity")
-     *  @ORM\JoinColumn(name="seq_pessoa", referencedColumnName="seq_pessoa", nullable=false) */
+     *  @ORM\JoinColumn(name="seq_pessoa", referencedColumnName="seq_pessoa", nullable=false, onDelete="CASCADE") */
     private $pessoa;
     
     /** @ORM\Column(type="string", length=255, name="nom_profissao") */
