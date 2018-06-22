@@ -4,6 +4,7 @@ use \Doctrine\ORM\EntityManager;
 use \Doctrine\ORM\Query;
 use \Doctrine\ORM\Tools\Pagination\Paginator;
 use PNSL\Social\Entity\PessoaEntity;
+use PNSL\Social\Entity\MenorEntity;
 
 class MenorService
 {
@@ -14,30 +15,30 @@ class MenorService
         $this->em = $em;
     }
     
-    public function save($dados)
+    public function save($pessoa_id, $dados)
     {
-        $menor = $this->em->getReference(
-            '\PNSL\Social\Entity\MenorEntity', 
-            $dados['seq_pessoa']
+        $pessoa = $this->em->getReference(
+            '\PNSL\Social\Entity\PessoaEntity', 
+            $pessoa_id
         );
-        if (empty($menor)) {
-            if (empty($menor->getId())) {
-                $menor = new MenorEntity(
-                    $dados['escola'], $dados['ano'],
-                    $dados['turno'], $dados['grau'],
-                    $dados['autorizadoSairSozinho'],
-                    new ResponsavelEntity()
-                );
-                $this->em->persist($menor);
-            } else {
-                $menor->setEscola($dados['escola']);
-                $menor->setAno($dados['ano']);
-                $menor->setTurno($dados['turno']);
-                $menor->setGrau($dados['grau']);
-                $menor->setAutorizadoSairSozinho($dados['autorizouSairSozinho']);
-            }
-            $this->em->flush();
-            return true;
+        if (empty($dados['id'])) {
+            $menor = new MenorEntity();
+            $menor->setPessoa($pessoa);
+            $menor->setProfissao(utf8_encode($dados['profissao']));
+            $menor->setEstadoCivil(utf8_encode($dados['estado_civil']));
+            $menor->setAssinouTermo($dados['assinou_termo']);
+            $menor->setUsuarioInclusao($dados['usuario']);
+            $menor->setUsuarioAlteracao($dados['usuario']);
+            $this->em->persist($menor);
+        } else {
+            $menor->setProfissao(utf8_encode($dados['profissao']));
+            $menor->setEstadoCivil(utf8_encode($dados['estado_civil']));
+            $menor->setAssinouTermo($dados['assinou_termo']);
+            $menor->setPessoa($pessoa);
+        }
+        $this->em->flush();
+        if ($menor) {
+            return $pessoa_id;
         } else {
             return false;
         }
@@ -48,15 +49,20 @@ class MenorService
         $menor = $this->em->getReference(
             '\PNSL\Social\Entity\MenorEntity', $id
         );
-        $this->em->remove($menor);
-        return $this->em->flush();
+        if ($menor) {
+            $this->em->remove($menor);
+            $this->em->flush();
+            return true;
+        } else {
+            return false;
+        }
     }
     
     public function fetchAll()
     {
-        $responsaveis = $this->em->createQuery(
-            'select r from \PNSL\Social\Entity\MenorEntity r 
-            join r.pessoa p'
+        $menors = $this->em->createQuery(
+            'select v from \PNSL\Social\Entity\MenorEntity v
+            join v.pessoa'
         )->getArrayResult();
         return $menors;
     }
@@ -64,8 +70,8 @@ class MenorService
     public function findById(int $id)
     {
         $menor = $this->em->createQuery(
-            'select v from \PNSL\Social\Entity\MenorEntity m 
-            join m.pessoa p where p.id = :id'
+            'select v from \PNSL\Social\Entity\MenorEntity v 
+            join v.pessoa p where p.id = :id'
         )->setParameter('id', $id)->getArrayResult();
         return $menor;
     }

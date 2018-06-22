@@ -4,6 +4,7 @@ use \Doctrine\ORM\EntityManager;
 use \Doctrine\ORM\Query;
 use \Doctrine\ORM\Tools\Pagination\Paginator;
 use PNSL\Social\Entity\PessoaEntity;
+use PNSL\Social\Entity\ResponsavelEntity;
 
 class ResponsavelService
 {
@@ -14,30 +15,30 @@ class ResponsavelService
         $this->em = $em;
     }
     
-    public function save($dados)
+    public function save($pessoa_id, $dados)
     {
-        $responsavel = $this->em->getReference(
-            '\PNSL\Social\Entity\ResponsavelEntity', 
-            $dados['seq_pessoa']
+        $pessoa = $this->em->getReference(
+            '\PNSL\Social\Entity\PessoaEntity', 
+            $pessoa_id
         );
-        if (empty($responsavel)) {
-            if (empty($responsavel->getId())) {
-                $responsavel = new ResponsavelEntity();
-                $responsavel->setParentesco($dados['parentesco']);
-                $responsavel->setEmpregado($dados['empregado']);
-                $responsavel->setAutorizouImagem($dados['autorizouImagem']);
-                $responsavel->setAutorizouSairSozinho($dados['autorizouSairSozinho']);
-                $responsavel->setMenores(new MenorEntity());
-                $responsavel->setPessoa($pessoa);
-                $this->em->persist($responsavel);
-            } else {
-                $responsavel->setParentesco($dados['parentesco']);
-                $responsavel->setEmpregado($dados['empregado']);
-                $responsavel->setAutorizouImagem($dados['autorizouImagem']);
-                $responsavel->setAutorizouSairSozinho($dados['autorizouSairSozinho']);
-            }
-            $this->em->flush();
-            return true;
+        if (empty($dados['id'])) {
+            $responsavel = new ResponsavelEntity();
+            $responsavel->setPessoa($pessoa);
+            $responsavel->setProfissao(utf8_encode($dados['profissao']));
+            $responsavel->setEstadoCivil(utf8_encode($dados['estado_civil']));
+            $responsavel->setAssinouTermo($dados['assinou_termo']);
+            $responsavel->setUsuarioInclusao($dados['usuario']);
+            $responsavel->setUsuarioAlteracao($dados['usuario']);
+            $this->em->persist($responsavel);
+        } else {
+            $responsavel->setProfissao(utf8_encode($dados['profissao']));
+            $responsavel->setEstadoCivil(utf8_encode($dados['estado_civil']));
+            $responsavel->setAssinouTermo($dados['assinou_termo']);
+            $responsavel->setPessoa($pessoa);
+        }
+        $this->em->flush();
+        if ($responsavel) {
+            return $pessoa_id;
         } else {
             return false;
         }
@@ -48,17 +49,22 @@ class ResponsavelService
         $responsavel = $this->em->getReference(
             '\PNSL\Social\Entity\ResponsavelEntity', $id
         );
-        $this->em->remove($responsavel);
-        return $this->em->flush();
+        if ($responsavel) {
+            $this->em->remove($responsavel);
+            $this->em->flush();
+            return true;
+        } else {
+            return false;
+        }
     }
     
     public function fetchAll()
     {
-        $responsaveis = $this->em->createQuery(
-            'select r from \PNSL\Social\Entity\ResponsavelEntity r 
-            join r.pessoa p'
+        $responsavels = $this->em->createQuery(
+            'select v from \PNSL\Social\Entity\ResponsavelEntity v
+            join v.pessoa'
         )->getArrayResult();
-        return $responsaveis;
+        return $responsavels;
     }
     
     public function findById(int $id)
