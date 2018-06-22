@@ -1,7 +1,5 @@
 config.ini
 composer.phar
-composer.lock
-Procfile
 /vendor/
 /web/file/
 /web/view/cache/
