@@ -56,7 +56,7 @@ class VoluntarioController implements ControllerProviderInterface
                 $voluntario_id = $app['voluntario_service']->save($pessoa_id, $dados);
                 if ($voluntario_id > 0) {
                     return new Response(
-                        $app->json(['resultado'=>'Voluntário cadastrado com sucesso!'], 201)
+                        $app->json(['id'=>$pessoa_id,'resultado'=>'Tudo certo :)'], 201)
                     );
                 } else {
                     return $app->abort(
@@ -78,7 +78,7 @@ class VoluntarioController implements ControllerProviderInterface
                 } else {
                     return $app->abort(
                         404, 
-                        "Ops... não foi possível cadastrar o voluntário"
+                        "Ops... nenhum voluntário cadastrado"
                     );
                 }             
             }
@@ -89,14 +89,12 @@ class VoluntarioController implements ControllerProviderInterface
                 if ($id) {
                     $excluiu = $app['voluntario_service']->delete($id);
                     return new Response(
-                        $app->json(
-                            $excluiu, 201, ['Content-Type' => 'application/json']
-                        )
+                        $app->json(['id'=>$id,'resultado'=>'Tudo certo :)'], 201)
                     );
                 } else {
                     return $app->abort(
                         404, 
-                        "O voluntário que vc escolheu não existe. Tente novamente."
+                        "Não foi possível excluir"
                     ); 
                 }
             }

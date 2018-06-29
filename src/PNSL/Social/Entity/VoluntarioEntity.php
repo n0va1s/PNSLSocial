@@ -20,19 +20,22 @@ class VoluntarioEntity
     /** @ORM\Column(type="string", name="tip_estado_civil", columnDefinition="CHAR(1) NOT NULL") */
     private $estadoCivil;
 
+     /** @ORM\Column(type="text", name="txt_conhecimento", nullable=true) */
+     private $conhecimento;
+
     /** @ORM\Column(type="string", name="ind_assinou_termo", columnDefinition="CHAR(1) NOT NULL", options={"default":"N"}) */
     private $assinouTermo;
 
     /** @ORM\OneToMany(targetEntity="AcaoEntity", mappedBy="voluntario") */
     private $acao;
 
-    /** @ORM\Column(type="string", name="usu_inc", nullable=false) */
+    /** @ORM\Column(type="string", length=50, name="usu_inc", nullable=false) */
     private $usuarioInclusao;
 
     /** @ORM\Column(type="datetime", name="dat_inc", nullable=false) */
     private $dataInclusao;
 
-    /** @ORM\Column(type="string", name="usu_alt", nullable=false) */
+    /** @ORM\Column(type="string", length=50, name="usu_alt", nullable=false) */
     private $usuarioAlteracao;
 
     /** @ORM\Column(type="datetime", name="dat_alt", nullable=false) */
@@ -103,6 +106,27 @@ class VoluntarioEntity
 
         return $this;
     }
+
+    /**
+     * Get the value of conhecimento
+     */ 
+    public function getConhecimento()
+    {
+        return $this->conhecimento;
+    }
+
+    /**
+     * Set the value of conhecimento
+     *
+     * @return  self
+     */ 
+    public function setConhecimento($conhecimento)
+    {
+        $this->conhecimento = $conhecimento;
+
+        return $this;
+    }
+
 
     /**
      * Get the value of assinouTermo

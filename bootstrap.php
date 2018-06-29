@@ -46,12 +46,12 @@ AnnotationRegistry::registerFile(__DIR__. DIRECTORY_SEPARATOR . 'vendor' . DIREC
 $evm = new Doctrine\Common\EventManager();
 $em = EntityManager::create(
     array(
-        'driver'    => getenv('db.driver'),
-        'host'      => getenv('db.host'),
-        'port'      => getenv('db.port'),
-        'user'      => getenv('db.user'),
-        'password'  => getenv('db.password'),
-        'dbname'    => getenv('db.name'),
+        'driver'    => getenv('db_driver'),
+        'host'      => getenv('db_host'),
+        'port'      => getenv('db_port'),
+        'user'      => getenv('db_user'),
+        'password'  => getenv('db_password'),
+        'dbname'    => getenv('db_name'),
     ),
     $config,
     $evm
@@ -67,7 +67,7 @@ if ('cli' !== php_sapi_name()) {
 */
 
 $app = new \Silex\Application();
-$app['debug'] = getenv('log.enabled');
+$app['debug'] = getenv('log_enabled');
 
 $app->register(new Silex\Provider\TwigServiceProvider(), array(
     'twig.path' => __DIR__.'/web/view',
@@ -78,21 +78,21 @@ $app->register(new Silex\Provider\AssetServiceProvider(), array(
     'assets.version' => 'v1',
     'assets.version_format' => '%s?version=%s',
     'assets.named_packages' => array(
-        'css' => array('version' => 'css2', 'base_path' => getenv('path.css')),
-        'img' => array('base_path' => getenv('path.img')),
-        'js' => array('base_path' => getenv('path.js')),
-        'file' => array('base_path' => getenv('path.file')),
+        'css' => array('version' => 'css2', 'base_path' => getenv('path_css')),
+        'img' => array('base_path' => getenv('path_img')),
+        'js' => array('base_path' => getenv('path_js')),
+        'file' => array('base_path' => getenv('path_file')),
     ),
 ));
 
 $app->register(new Silex\Provider\SwiftmailerServiceProvider(), array(
     'swiftmailer.options' => array(
-        'host'       => getenv('mail.host'),
-        'port'       => getenv('mail.port'),
-        'username'   => getenv('mail.username'),
-        'password'   => getenv('mail.password'),
-        'encryption' => getenv('mail.encryption'),
-        'auth_mode'  => getenv('mail.auth_mode'),
+        'host'       => getenv('mail_host'),
+        'port'       => getenv('mail_port'),
+        'username'   => getenv('mail_username'),
+        'password'   => getenv('mail_password'),
+        'encryption' => getenv('mail_encryption'),
+        'auth_mode'  => getenv('mail_auth_mode'),
     )
 ));
 

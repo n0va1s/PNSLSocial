@@ -38,13 +38,13 @@ class FrequenciaEntity
      */
     private $atendido;
 
-    /** @ORM\Column(type="string", name="usu_inc", nullable=false) */
+    /** @ORM\Column(type="string", length=50, name="usu_inc", nullable=false) */
     private $usuarioInclusao;
 
     /** @ORM\Column(type="datetime", name="dat_inc", nullable=false) */
     private $dataInclusao;
 
-    /** @ORM\Column(type="string", name="usu_alt", nullable=false) */
+    /** @ORM\Column(type="string", length=50, name="usu_alt", nullable=false) */
     private $usuarioAlteracao;
 
     /** @ORM\Column(type="datetime", name="dat_alt", nullable=false) */

@@ -15,7 +15,7 @@ class ResponsavelEntity
      *  @ORM\JoinColumn(name="seq_pessoa", referencedColumnName="seq_pessoa", nullable=false, onDelete="CASCADE") */
     private $pessoa;
 
-    /** @ORM\Column(type="string", length=3, name="tip_parentesco") */
+    /** @ORM\Column(type="string", name="tip_parentesco", columnDefinition="CHAR(3) NOT NULL") */
     private $parentesco;
 
     /** @ORM\Column(type="string", name="ind_empregado", columnDefinition="CHAR(1) NOT NULL", options={"default":"N"}) */
@@ -30,15 +30,15 @@ class ResponsavelEntity
     /** @ORM\OneToMany(targetEntity="MenorEntity", mappedBy="responsavel") */
     private $menores;
 
-    /** @ORM\Column(type="string", name="usu_inc", nullable=false) */
+    /** @ORM\Column(type="string", length=50, name="usu_inc", nullable=false) */
     private $usuarioInclusao;
 
     /** @ORM\Column(type="datetime", name="dat_inc", nullable=false) */
     private $dataInclusao;
- 
-    /** @ORM\Column(type="string", name="usu_alt", nullable=false) */
+
+    /** @ORM\Column(type="string", length=50, name="usu_alt", nullable=false) */
     private $usuarioAlteracao;
- 
+
     /** @ORM\Column(type="datetime", name="dat_alt", nullable=false) */
     private $dataAlteracao;
 
@@ -125,6 +125,26 @@ class ResponsavelEntity
     public function setAutorizouImagem($autorizouImagem)
     {
         $this->autorizouImagem = $autorizouImagem;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of autorizouSairSozinho
+     */ 
+    public function getAutorizouSairSozinho()
+    {
+        return $this->autorizouSairSozinho;
+    }
+
+    /**
+     * Set the value of autorizouSairSozinho
+     *
+     * @return  self
+     */ 
+    public function setAutorizouSairSozinho($autorizouSairSozinho)
+    {
+        $this->autorizouSairSozinho = $autorizouSairSozinho;
 
         return $this;
     }

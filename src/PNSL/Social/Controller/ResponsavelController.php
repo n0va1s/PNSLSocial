@@ -56,11 +56,11 @@ class ResponsavelController implements ControllerProviderInterface
                 $responsavel_id = $app['responsavel_service']->save($pessoa_id, $dados);
                 if ($responsavel_id > 0) {
                     return new Response(
-                        $app->json(['resultado'=>'Responsável cadastrado com sucesso!'], 201)
+                        $app->json(['id'=>$responsavel_id,'resultado'=>'Tudo certo :)'], 201)
                     );
                 } else {
                     return $app->abort(
-                        404, "Ops... não foi possível cadastrar o responsável"
+                        404, "Ops... alguma coisa deu errado :("
                     ); 
                 }
             }
@@ -78,7 +78,7 @@ class ResponsavelController implements ControllerProviderInterface
                 } else {
                     return $app->abort(
                         404, 
-                        "Ops... não foi possível cadastrar o responsavel"
+                        "Ops... nenhum responsável cadastrado."
                     );
                 }             
             }
@@ -89,14 +89,12 @@ class ResponsavelController implements ControllerProviderInterface
                 if ($id) {
                     $excluiu = $app['responsavel_service']->delete($id);
                     return new Response(
-                        $app->json(
-                            $excluiu, 201, ['Content-Type' => 'application/json']
-                        )
+                        $app->json(['id'=>$id,'resultado'=>'Tudo certo :)'], 201)
                     );
                 } else {
                     return $app->abort(
                         404, 
-                        "O responsável que vc escolheu não existe. Tente novamente."
+                        "Não foi possível excluir"
                     ); 
                 }
             }

@@ -34,6 +34,7 @@ class MenorService
             $menor->setProfissao(utf8_encode($dados['profissao']));
             $menor->setEstadoCivil(utf8_encode($dados['estado_civil']));
             $menor->setAssinouTermo($dados['assinou_termo']);
+            $menor->setUsuarioAlteracao($dados['usuario']);
             $menor->setPessoa($pessoa);
         }
         $this->em->flush();

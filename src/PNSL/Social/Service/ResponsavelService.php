@@ -24,17 +24,24 @@ class ResponsavelService
         if (empty($dados['id'])) {
             $responsavel = new ResponsavelEntity();
             $responsavel->setPessoa($pessoa);
-            $responsavel->setProfissao(utf8_encode($dados['profissao']));
-            $responsavel->setEstadoCivil(utf8_encode($dados['estado_civil']));
-            $responsavel->setAssinouTermo($dados['assinou_termo']);
+            $responsavel->setParentesco(utf8_encode($dados['parentesco']));
+            $responsavel->setEmpregado(utf8_encode($dados['empregado']));
+            $responsavel->setAutorizouImagem($dados['autorizouImagem']);
+            $responsavel->setAutorizouSairSozinho($dados['autorizouSairSozinho']);
             $responsavel->setUsuarioInclusao($dados['usuario']);
             $responsavel->setUsuarioAlteracao($dados['usuario']);
             $this->em->persist($responsavel);
         } else {
-            $responsavel->setProfissao(utf8_encode($dados['profissao']));
-            $responsavel->setEstadoCivil(utf8_encode($dados['estado_civil']));
-            $responsavel->setAssinouTermo($dados['assinou_termo']);
+            $responsavel = $this->em->getReference(
+                '\PNSL\Social\Entity\ResponsavelEntity', 
+                $pessoa_id
+            );
             $responsavel->setPessoa($pessoa);
+            $responsavel->setParentesco(utf8_encode($dados['parentesco']));
+            $responsavel->setEmpregado(utf8_encode($dados['empregado']));
+            $responsavel->setAutorizouImagem($dados['autorizouImagem']);
+            $responsavel->setAutorizouSairSozinho($dados['autorizouSairSozinho']);
+            $responsavel->setUsuarioAlteracao($dados['usuario']);
         }
         $this->em->flush();
         if ($responsavel) {

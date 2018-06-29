@@ -26,6 +26,7 @@ class VoluntarioService
             $voluntario->setPessoa($pessoa);
             $voluntario->setProfissao(utf8_encode($dados['profissao']));
             $voluntario->setEstadoCivil(utf8_encode($dados['estado_civil']));
+            $voluntario->setConhecimento($dados['conhecimento']);
             $voluntario->setAssinouTermo($dados['assinou_termo']);
             $voluntario->setUsuarioInclusao($dados['usuario']);
             $voluntario->setUsuarioAlteracao($dados['usuario']);
@@ -33,7 +34,9 @@ class VoluntarioService
         } else {
             $voluntario->setProfissao(utf8_encode($dados['profissao']));
             $voluntario->setEstadoCivil(utf8_encode($dados['estado_civil']));
-            $voluntario->setAssinouTermo($dados['assinou_termo']);
+            $voluntario->setConhecimento($dados['conhecimento']);
+            $voluntario->setAssinouTermo($dados['conhecimento']);
+            $voluntario->setUsuarioAlteracao($dados['usuario']);
             $voluntario->setPessoa($pessoa);
         }
         $this->em->flush();

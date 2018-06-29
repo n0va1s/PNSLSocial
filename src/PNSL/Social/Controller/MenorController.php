@@ -78,7 +78,7 @@ class MenorController implements ControllerProviderInterface
                 } else {
                     return $app->abort(
                         404, 
-                        "Ops... não foi possível cadastrar o menor"
+                        "Ops... nenhum menor cadastrado."
                     );
                 }             
             }
