@@ -1,103 +1,58 @@
-CREATE TABLE usuario (
-   seq_usuario SERIAL PRIMARY KEY, 
-   nom_usuario INT NOT NULL,
-   pwd_usuario VARCHAR(50) NOT NULL
-);
+CREATE TABLE voluntario (seq_pessoa INT NOT NULL, nom_profissao VARCHAR(255) NOT NULL, tip_estado_civil CHAR(1) NOT NULL, txt_conhecimento TEXT DEFAULT NULL, ind_assinou_termo CHAR(1) NOT NULL, usu_inc VARCHAR(50) NOT NULL, dat_inc TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, usu_alt VARCHAR(50) NOT NULL, dat_alt TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, PRIMARY KEY(seq_pessoa));
 
-CREATE TABLE tipo_deficiencia (
-   seq_tipo_deficiencia SERIAL PRIMARY KEY, 
-   des_tipo_deficiencia VARCHAR(255) NOT NULL,
-);
+CREATE TABLE pessoa (seq_pessoa INT NOT NULL, seq_tipo_pessoa INT NOT NULL, nom_pessoa VARCHAR(255) NOT NULL, tip_genero CHAR(1) NOT NULL, dat_nascimento TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, num_rg VARCHAR(15) NOT NULL, num_cpf VARCHAR(15) NOT NULL, des_naturalidade VARCHAR(255) NOT NULL, usu_inc VARCHAR(50) NOT NULL, dat_inc TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, usu_alt VARCHAR(50) NOT NULL, dat_alt TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, PRIMARY KEY(seq_pessoa));
+CREATE UNIQUE INDEX UNIQ_1CDFAB823E0DE7C ON pessoa (seq_tipo_pessoa);
 
-CREATE TABLE tipo_acao (
-   seq_tipo_acao SERIAL PRIMARY KEY,
-   des_tipo_acao VARCHAR(255) NOT NULL
-);
+CREATE TABLE acao (seq_acao INT NOT NULL, seq_tipo_acao INT DEFAULT NULL, seq_voluntario INT DEFAULT NULL, nom_acao VARCHAR(255) NOT NULL, tip_frequencia CHAR(1) NOT NULL, dia_semana CHAR(3) NOT NULL, tip_turno CHAR(1) NOT NULL, ano_mes_inicio TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, ano_mes_termino TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, txt_acao TEXT NOT NULL, usu_inc VARCHAR(50) NOT NULL, dat_inc TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, usu_alt VARCHAR(50) NOT NULL, dat_alt TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, PRIMARY KEY(seq_acao));
+CREATE UNIQUE INDEX UNIQ_49A41C2C6A8AC2E1 ON acao (seq_tipo_acao);
+CREATE INDEX IDX_49A41C2CC2283BE5 ON acao (seq_voluntario);
 
-CREATE TABLE pessoa (
-   seq_pessoa SERIAL PRIMARY KEY,
-   nom_pessoa VARCHAR(255) NOT NULL, 
-   tip_sexo CHAR(1) NOT NULL, 
-   dat_nascimento DATE NOT NULL,
-   num_rg VARCHAR(15),
-   num_cpf VARCHAR(15),
-   des_naturalidade VARCHAR(50),
-   seq_tipo_deficiencia INT,
-   nom_usuario INT NOT NULL,
-   dat_log DATE NOT NULL,
-   FOREIGN KEY (seq_tipo_deficiencia) REFERENCES tipo_deficiencia (seq_tipo_deficiencia)
-);
+CREATE TABLE contato (seq_contato INT NOT NULL, seq_pessoa INT NOT NULL, des_contato VARCHAR(255) NOT NULL, tip_contato CHAR(3) NOT NULL, usu_inc VARCHAR(50) NOT NULL, dat_inc TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, usu_alt VARCHAR(50) NOT NULL, dat_alt TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, PRIMARY KEY(seq_contato));
+CREATE INDEX IDX_C384AB42F07A9077 ON contato (seq_pessoa);
 
-CREATE TABLE contato (
-   seq_contato SERIAL PRIMARY KEY,
-   seq_pessoa INT NOT NULL,
-   tip_contato CHAR(1) NOT NULL, 
-   des_contato VARCHAR(100) NOT NULL, 
-   FOREIGN KEY (seq_pessoa) REFERENCES pessoa (seq_pessoa) ON DELETE CASCADE
-);
+CREATE TABLE frequencia (seq_frequencia INT NOT NULL, seq_turma INT DEFAULT NULL, seq_atendido INT DEFAULT NULL, dat_frequencia TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, ind_presenca CHAR(1) NOT NULL, ind_inativo CHAR(1) NOT NULL, usu_inc VARCHAR(50) NOT NULL, dat_inc TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, usu_alt VARCHAR(50) NOT NULL, dat_alt TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, PRIMARY KEY(seq_frequencia));
+CREATE INDEX IDX_26ED9274EDCBCA67 ON frequencia (seq_turma);
+CREATE INDEX IDX_26ED9274E8618E59 ON frequencia (seq_atendido);
 
-CREATE TABLE endereco (
-   seq_pessoa SERIAL PRIMARY KEY,
-   des_logradouro VARCHAR(255) NOT NULL,
-   des_bairro VARCHAR(100) NOT NULL, 
-   des_cidade VARCHAR(100) NOT NULL, 
-   FOREIGN KEY (seq_pessoa) REFERENCES pessoa (seq_pessoa) ON DELETE CASCADE
-);
+CREATE TABLE tipo (seq_tipo INT NOT NULL, des_tipo VARCHAR(255) NOT NULL, grp_tipo CHAR(3) NOT NULL, PRIMARY KEY(seq_tipo));
 
-CREATE TABLE voluntario (
-   seq_voluntario SERIAL PRIMARY KEY,
-   nom_profissao VARCHAR(255) NOT NULL,
-   tip_estado_civil CHAR(1) NOT NULL,
-   ind_termo CHAR(1) NOT NULL,
-   FOREIGN KEY (seq_voluntario) REFERENCES pessoa (seq_pessoa) ON DELETE CASCADE
-);
+CREATE TABLE atendimento (seq_atendimento INT NOT NULL, seq_acao INT DEFAULT NULL, seq_atendido INT DEFAULT NULL, dat_atendimento TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, txt_atendimento TEXT NOT NULL, usu_inc VARCHAR(50) NOT NULL, dat_inc TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, usu_alt VARCHAR(50) NOT NULL, dat_alt TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, PRIMARY KEY(seq_atendimento));
+CREATE INDEX IDX_3FA50F2C8CAE6F16 ON atendimento (seq_acao);
+CREATE INDEX IDX_3FA50F2CE8618E59 ON atendimento (seq_atendido);
 
+CREATE TABLE usuario (seq_pessoa INT NOT NULL, nom_usuario VARCHAR(50) NOT NULL, pwd_usuario VARCHAR(100) NOT NULL, dat_criacao TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, dat_atualizacao TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, PRIMARY KEY(seq_pessoa));
+CREATE UNIQUE INDEX UNIQ_2265B05DD7EABB95 ON usuario (nom_usuario);
 
-CREATE TABLE responsavel (
-   seq_responsavel SERIAL PRIMARY KEY,
-   tip_parentesco CHAR(1) NOT NULL,
-   ind_trabalha CHAR(1) NOT NULL,
-   ind_termo_imagem CHAR(1) NOT NULL,
-   ind_termo_sair_sozinho CHAR(1) NOT NULL,
-   FOREIGN KEY (seq_responsavel) REFERENCES pessoa (seq_pessoa) ON DELETE CASCADE
-);
+CREATE TABLE endereco (seq_pessoa INT NOT NULL, des_logradouro VARCHAR(255) NOT NULL, des_bairro VARCHAR(100) NOT NULL, des_cidade VARCHAR(100) NOT NULL, sig_uf CHAR(2) NOT NULL, usu_inc VARCHAR(50) NOT NULL, dat_inc TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, usu_alt VARCHAR(50) NOT NULL, dat_alt TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, PRIMARY KEY(seq_pessoa));
 
-CREATE TABLE menor (
-   seq_menor SERIAL PRIMARY KEY,
-   ind_estudante CHAR(1) NOT NULL,
-   nom_escola VARCHAR(100),
-   num_ano SMALLINT,
-   tip_turno CHAR(1),
-   tip_grau CHAR(1),                     
-   ind_sair_sozinho CHAR(1) NOT NULL,
-   FOREIGN KEY (seq_menor) REFERENCES pessoa (seq_pessoa) ON DELETE CASCADE
-);
+CREATE TABLE turma (seq_turma INT NOT NULL, seq_acao INT DEFAULT NULL, des_turma VARCHAR(255) NOT NULL, dat_inicio TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, dat_termino TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, usu_inc VARCHAR(50) NOT NULL, dat_inc TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, usu_alt VARCHAR(50) NOT NULL, dat_alt TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, PRIMARY KEY(seq_turma));
+CREATE INDEX IDX_2B0219A68CAE6F16 ON turma (seq_acao);
 
-CREATE TABLE acao (
-   seq_acao SERIAL PRIMARY KEY,
-   seq_voluntario INT NOT NULL,
-   nom_acao VARCHAR(255) NOT NULL,
-   seq_tipo_acao INT NOT NULL,
-   dat_inicio DATE NOT NULL,
-   dat_termino DATE,
-   des_acao TEXT NOT NULL, 
-   nom_usuario INT NOT NULL,
-   dat_log DATE NOT NULL,
-   FOREIGN KEY (seq_voluntario) REFERENCES pessoa (seq_pessoa),
-   FOREIGN KEY (seq_tipo_acao) REFERENCES tipo_acao (seq_tipo_acao)
-);
+CREATE TABLE responsavel (seq_pessoa INT NOT NULL, tip_parentesco CHAR(3) NOT NULL, ind_empregado CHAR(1) NOT NULL, ind_termo_imagem CHAR(1) NOT NULL, ind_autorizou_sair_sozinho CHAR(1) NOT NULL, usu_inc VARCHAR(50) NOT NULL, dat_inc TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, usu_alt VARCHAR(50) NOT NULL, dat_alt TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, PRIMARY KEY(seq_pessoa));
 
-CREATE TABLE atendimento (
-   seq_acao INT NOT NULL,
-   seq_voluntario INT NOT NULL,
-   seq_responsavel INT,
-   seq_menor INT,
-   dat_atendimento DATE NOT NULL,
-   des_atendimento TEXT NOT NULL,
-   nom_usuario INT NOT NULL,
-   dat_log DATE NOT NULL,
-   PRIMARY KEY(seq_acao, seq_voluntario, dat_atendimento),
-   FOREIGN KEY (seq_voluntario) REFERENCES voluntario (seq_voluntario),
-   FOREIGN KEY (seq_responsavel) REFERENCES responsavel (seq_responsavel),
-   FOREIGN KEY (seq_menor) REFERENCES menor (seq_menor)
-);
+CREATE TABLE menor (seq_pessoa INT NOT NULL, seq_responsavel INT NOT NULL, nom_escola VARCHAR(255) NOT NULL, num_ano INT NOT NULL, tip_turno CHAR(1) NOT NULL, tip_grau CHAR(2) NOT NULL, ind_pode_sair_sozinho CHAR(1) NOT NULL, usu_inc VARCHAR(50) NOT NULL, dat_inc TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, usu_alt VARCHAR(50) NOT NULL, dat_alt TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, PRIMARY KEY(seq_pessoa));
+CREATE INDEX IDX_B55FC2826BE586A0 ON menor (seq_responsavel);
+
+CREATE SEQUENCE pessoa_seq_pessoa_seq INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 START 1 CACHE 1;
+CREATE SEQUENCE acao_seq_acao_seq INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 START 1 CACHE 1;
+CREATE SEQUENCE contato_seq_contato_seq INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 START 1 CACHE 1;
+CREATE SEQUENCE frequencia_seq_frequencia_seq INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 START 1 CACHE 1;
+CREATE SEQUENCE tipo_seq_tipo_seq INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 START 1 CACHE 1;
+CREATE SEQUENCE atendimento_seq_atendimento_seq INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 START 1 CACHE 1;
+CREATE SEQUENCE turma_seq_turma_seq INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 START 1 CACHE 1;
+
+ALTER TABLE voluntario ADD CONSTRAINT FK_216231FEF07A9077 FOREIGN KEY (seq_pessoa) REFERENCES pessoa (seq_pessoa) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE;
+ALTER TABLE pessoa ADD CONSTRAINT FK_1CDFAB823E0DE7C FOREIGN KEY (seq_tipo_pessoa) REFERENCES tipo (seq_tipo) NOT DEFERRABLE INITIALLY IMMEDIATE;
+ALTER TABLE acao ADD CONSTRAINT FK_49A41C2C6A8AC2E1 FOREIGN KEY (seq_tipo_acao) REFERENCES tipo (seq_tipo) NOT DEFERRABLE INITIALLY IMMEDIATE;
+ALTER TABLE acao ADD CONSTRAINT FK_49A41C2CC2283BE5 FOREIGN KEY (seq_voluntario) REFERENCES voluntario (seq_pessoa) NOT DEFERRABLE INITIALLY IMMEDIATE;
+ALTER TABLE contato ADD CONSTRAINT FK_C384AB42F07A9077 FOREIGN KEY (seq_pessoa) REFERENCES pessoa (seq_pessoa) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE;
+ALTER TABLE frequencia ADD CONSTRAINT FK_26ED9274EDCBCA67 FOREIGN KEY (seq_turma) REFERENCES turma (seq_turma) NOT DEFERRABLE INITIALLY IMMEDIATE;
+ALTER TABLE frequencia ADD CONSTRAINT FK_26ED9274E8618E59 FOREIGN KEY (seq_atendido) REFERENCES pessoa (seq_pessoa) NOT DEFERRABLE INITIALLY IMMEDIATE;
+ALTER TABLE atendimento ADD CONSTRAINT FK_3FA50F2C8CAE6F16 FOREIGN KEY (seq_acao) REFERENCES acao (seq_acao) NOT DEFERRABLE INITIALLY IMMEDIATE;
+ALTER TABLE atendimento ADD CONSTRAINT FK_3FA50F2CE8618E59 FOREIGN KEY (seq_atendido) REFERENCES pessoa (seq_pessoa) NOT DEFERRABLE INITIALLY IMMEDIATE;
+ALTER TABLE usuario ADD CONSTRAINT FK_2265B05DF07A9077 FOREIGN KEY (seq_pessoa) REFERENCES pessoa (seq_pessoa) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE;
+ALTER TABLE endereco ADD CONSTRAINT FK_F8E0D60EF07A9077 FOREIGN KEY (seq_pessoa) REFERENCES pessoa (seq_pessoa) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE;
+ALTER TABLE turma ADD CONSTRAINT FK_2B0219A68CAE6F16 FOREIGN KEY (seq_acao) REFERENCES acao (seq_acao) NOT DEFERRABLE INITIALLY IMMEDIATE;
+ALTER TABLE responsavel ADD CONSTRAINT FK_E1630546F07A9077 FOREIGN KEY (seq_pessoa) REFERENCES pessoa (seq_pessoa) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE;
+ALTER TABLE menor ADD CONSTRAINT FK_B55FC282F07A9077 FOREIGN KEY (seq_pessoa) REFERENCES pessoa (seq_pessoa) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE;
+ALTER TABLE menor ADD CONSTRAINT FK_B55FC2826BE586A0 FOREIGN KEY (seq_responsavel) REFERENCES responsavel (seq_pessoa) NOT DEFERRABLE INITIALLY IMMEDIATE;

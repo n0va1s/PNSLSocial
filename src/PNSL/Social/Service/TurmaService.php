@@ -29,7 +29,7 @@ class TurmaService
                 $turma->setDataTermino($dados['termino']);
                 $this->em->persist($turma);
             } else {
-                $turma = $this->em->getReference('\PNSL\Social\Entity\TurmaEntity', $id);
+                $turma = $this->em->getReference('\PNSL\Social\Entity\TurmaEntity', $turma->getId);
                 $turma->setDescricao(utf8_encode($dados['descricao']));
                 $turma->setDataInicio($dados['inicio']);
                 $turma->setDataTermino($dados['termino']);

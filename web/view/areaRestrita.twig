@@ -1,0 +1,56 @@
+{% extends 'leiaute.twig' %}
+
+{% block conteudo %}
+<div id="services" class="container-fluid text-center">
+  <h2>Área restrita</h2>
+  <h4>O lugar onde vc cadastra pessoas, ações, turmas, atendimentos</h4>
+  <br>
+  <div class="row slideanim">
+    <a href="/voluntario">
+      <div class="col-sm-4">
+        <span class="glyphicon glyphicon-wrench logo-small"></span>
+        <h4 style="color:#303030;">HARD WORK</h4>
+        <p>Lorem ipsum dolor sit amet..</p>
+      </div>
+    </a>
+    <a href="/responsavel">
+        <div class="col-sm-4">
+            <span class="glyphicon glyphicon-heart logo-small"></span>
+            <h4>Tipos de Ação</h4>
+            <p>Médica, educação, formação profissional, empreendedorismo</p>
+        </div>
+    </a>
+    <a href="/menor">
+        <div class="col-sm-4">
+            <span class="glyphicon glyphicon-lock logo-small"></span>
+            <h4>Tipos de...</h4>
+            <p>...</p>
+        </div>
+    </a>
+  </div>
+  <br><br>
+  <div class="row slideanim">
+      <a href="/acao">
+          <div class="col-sm-4">
+              <span class="glyphicon glyphicon-leaf logo-small"></span>
+              <h4>GREEN</h4>
+              <p>Lorem ipsum dolor sit amet..</p>
+          </div>
+      </a>
+      <a href="/turma">
+          <div class="col-sm-4">
+              <span class="glyphicon glyphicon-certificate logo-small"></span>
+              <h4>CERTIFIED</h4>
+              <p>Lorem ipsum dolor sit amet..</p>
+          </div>
+      </a>
+      <a href="{{ app.url_generator.generate('tipoCadastrar') }}">
+          <div class="col-sm-4">
+              <span class="glyphicon glyphicon-off logo-small"></span>
+              <h4>Configuração</h4>
+              <p>Cadastre os tipos de pessoas ou de ação que o serão usados em outros cadastros...</p>
+          </div>
+      </a>
+  </div>
+</div>
+{% endblock %}

@@ -37,6 +37,12 @@ class AcaoEntity
     /** @ORM\Column(type="text", name="txt_acao") */
     private $descricao;
 
+    /** 
+     * @ORM\OneToOne(targetEntity="TipoEntity")
+     * @ORM\JoinColumn(name="seq_tipo_acao", referencedColumnName="seq_tipo") 
+     */
+    private $tipo;
+
     /**
      * @ORM\ManyToOne(targetEntity="VoluntarioEntity", inversedBy="acao")
      * @ORM\JoinColumn(name="seq_voluntario", referencedColumnName="seq_pessoa")
@@ -163,6 +169,26 @@ class AcaoEntity
     public function setDescricao($descricao)
     {
         $this->descricao = $descricao;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of tipo
+     */ 
+    public function getTipo()
+    {
+        return $this->tipo;
+    }
+
+    /**
+     * Set the value of tipo
+     *
+     * @return  self
+     */ 
+    public function setTipo($tipo)
+    {
+        $this->tipo = $tipo;
 
         return $this;
     }

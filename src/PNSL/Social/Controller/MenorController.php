@@ -68,11 +68,11 @@ class MenorController implements ControllerProviderInterface
 
         $ctrl->get(
             '/listar', function () use ($app) {
-                $menors = $app['menor_service']->fetchAll();
-                if ($menors) {
+                $menores = $app['menor_service']->fetchAll();
+                if ($menores) {
                     return new Response(
                         $app->json(
-                            $menors, 201, ['Content-Type' => 'application/json']
+                            $menores, 201, ['Content-Type' => 'application/json']
                         )
                     );
                 } else {

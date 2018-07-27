@@ -153,3 +153,5 @@ $app->get('/', function () use ($app) {
 $app->mount('/voluntario', new PNSL\Social\Controller\VoluntarioController($em));
 $app->mount('/responsavel', new PNSL\Social\Controller\ResponsavelController($em));
 $app->mount('/menor', new PNSL\Social\Controller\MenorController($em));
+$app->mount('/tipo', new PNSL\Social\Controller\TipoController($em));
+$app->mount('/site', new PNSL\Social\Controller\SiteController($em));

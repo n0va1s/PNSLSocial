@@ -39,7 +39,8 @@ class PessoaEntity
     /** @ORM\Column(type="string", length=255, name="des_naturalidade") */
     private $naturalidade;
 
-    /** @ORM\Column(type="string", length=3, name="tip_pessoa") */
+    /** @ORM\OneToOne(targetEntity="TipoEntity")
+     *  @ORM\JoinColumn(name="seq_tipo_pessoa", referencedColumnName="seq_tipo", nullable=false) */
     private $tipo;
 
     /** @ORM\OneToMany(targetEntity="ContatoEntity", mappedBy="pessoa") */
