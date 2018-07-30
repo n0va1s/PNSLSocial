@@ -1,62 +1,100 @@
 {% extends 'leiaute.twig' %}
 
-{% block topo %}
-    <!-- Page Header -->
-    <!-- Set your background image for this header on the line below. -->
-    <header class="intro-header" style="background-position: 1% 20%; background-image: url('{{ asset('topo_criancas.png', 'img') }}')">
-        <div class="container" style="background-color: rgb(0, 0, 0); opacity: 0.5; width: 100%; height: 100%;">
-            <div class="row">
-                <div class="col-lg-12 col-lg-offset-0 col-md-12 col-md-offset-0">
-                    <div class="site-heading">
-                        <h1>BrinqueCoin</h1>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
-{% endblock %}
-
 {% block conteudo %}
     <!-- Main Content -->
     <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2">
-                <form name="frmQuadro" action="{{ path('index')}}" method="POST" class="form-inline">
-                    <h4>Crie o seu quadro</h4>
-                    <div class="form-group col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                        <label for="email" class="sr-only">Email</label>
-                        <input type="email" name="email" class="form-control col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" placeholder="seuemail@provedor.com" required data-validation-required-message="Qual o seu email?" value="{% if quadro is defined %}{{ quadro.responsavel }}{% endif %}" autofocus>
-                    </div>
-                    <div class="form-group col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3">
-                        <label for="tipo" class="sr-only">Tipo de quadro</label>
-                        <select name="tipo" class="form-control col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3" required data-validation-required-message="Que tipo de quadro vc quer?">
-                            <option value="" disabled selected>Um quadro de</option>
-                            
-                        </select>
-                    </div>
-                    <div class="form-group col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3">
-                        <select name="genero" class="form-control col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3" required data-validation-required-message="É para um menino ou uma menina? Um homem ou uma mulher?">
-                            <option value="" disabled selected>Para</option>
-                            
-                        </select>
-                    </div>
-                    <div class="form-group col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                        <label for="nome" class="sr-only">Nome</label>
-                        <input type="text" name="crianca" class="form-control col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4" placeholder="Chamado (a)" required data-validation-required-message="Qual o nome dele ou dela?" value="{% if quadro is defined %}{{ quadro.crianca }}{% endif %}">
-                    </div>
-                    <div class="form-group col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
-                        <label for="idade" class="sr-only">Idade</label>
-                        <input type="number" min="3" name="idade" class="form-control col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2" placeholder="10 anos" required data-validation-required-message="Quantos anos ele ou ela tem?" value="{% if quadro is defined %}{{ quadro.idade }}{% endif %}">
-                    </div>
-                    <div class="form-group col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                        <label for="nome" class="sr-only">Recompensa</label>
-                        <input type="text" name="recompensa" class="form-control col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" placeholder="Qual a recompensa combinada?" value="{% if quadro is defined %}{{ quadro.recompensa }}{% endif %}">
-                    </div>
-                    <div>&nbsp;</div>
-                    <center><button class="btn btn-primary" type="submit">Criar</button></center>
-                    <input type="hidden" name="id" value="">
-                </form>
-            </div>
+        <div class="row col-sm-8 col-sm-offset-2">
+            <header>
+                <h2><span class="glyphicon glyphicon-user" aria-hidden="true"></span>Voluntário</h2>
+                <small>pessoas que prestam o serviço social</small>
+            </header>
         </div>
+        <div class="row col-sm-8 col-sm-offset-2">
+            <form name="frmTipo" action="{{ path('tipoSalvar')}}" method="POST">
+                <fieldset>
+                <legend><i class="glyphicon glyphicon-menu-right"></i><b>Dados pessoais</b></legend>
+                    <div class="form-group col-sm-8">
+                        <label for="nome">Nome</label>
+                        <input type="text" id="nome" class="form-control" placeholder="Seu nome completo" autofocus required>
+                    </div>
+                    <div class="form-group form-check-inline col-sm-3 col-sm-offset-1">
+                        <label for="genero" class="form-check-label">Gênero</label><br />
+                        <label class="form-check-label">M
+                            <input type="checkbox" id="genero" class="form-check-input" value="M">
+                        </label>
+                        <label class="form-check-label">F
+                            <input type="checkbox" id="genero" class="form-check-input" value="F">
+                        </label>
+                    </div>
+                    <div class="clearfix">&nbsp;</div>
+                    <div class="form-group col-sm-3">
+                        <label for="dataNascimento">Nascimento</label>
+                        <input type="date" id="dataNascimento" class="form-control" placeholder="dd/mm/aaa" required>
+                    </div>
+                    <div class="form-group col-sm-2">
+                        <label for="numRG">RG</label>
+                        <input type="number" id="numRG" class="form-control" placeholder="9999999" required>
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <label for="numCPF">CPF</label>
+                        <input type="number" id="numCPF" class="form-control" placeholder="999.999.999-99" required>
+                    </div>
+                    <div class="form-group col-sm-4">
+                        <label for="naturalidade">Naturalidade</label>
+                        <input type="text" id="naturalidade" class="form-control" placeholder="Brasília" required>
+                    </div>
+                </fieldset>
+                <fieldset>
+                <legend><i class="glyphicon glyphicon-menu-right"></i><b>Dados do voluntário</b></legend>
+                    <div class="form-group col-sm-6">
+                        <label for="profissao">Profissão</label>
+                        <input type="text" id="profissao" class="form-control" placeholder="Em que vc trabalha" required>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label for="conhecimento">Conhecimentos</label>
+                        <textarea class="form-control" id="conhecimento" rows="5"></textarea>
+                    </div>
+                    <div class="clearfix">&nbsp;</div>
+                    <div class="form-check form-check-inline col-sm-8">
+                        <label class="form-check-label">Estado Civil</label><br />
+                        <label class="form-check-label">Solteiro
+                            <input type="checkbox" id="estadoCivil" class="form-check-input" value="S">
+                        </label>
+                        <label class="form-check-label">Casado
+                            <input type="checkbox" id="estadoCivil" class="form-check-input" value="C">
+                        </label>
+                        <label class="form-check-label">Divorciado
+                            <input type="checkbox" id="estadoCivil" class="form-check-input" value="D">
+                        </label>
+                        <label class="form-check-label">Viúvo
+                            <input type="checkbox" id="estadoCivil" class="form-check-input" value="V8">
+                        </label>
+                    </div>
+                    <div class="form-group form-check-inline col-sm-4">
+                        <label for="assinouTermo" class="form-check-label">Assinou o termo</label><br />
+                        <label class="form-check-label">Sim
+                            <input type="checkbox" id="assinouTermo" class="form-check-input" value="S">
+                        </label>
+                        <label class="form-check-label">Não
+                            <input type="checkbox" id="assinouTermo" class="form-check-input" value="N">
+                        </label>
+                    </div>
+                </fieldset>
+                <div class="form-group col-sm-12 text-center">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="glyphicon glyphicon-ok"> Cadastrar</i>
+                    </button>
+                    <button type="button" class="btn btn-default">
+                        <i class="glyphicon glyphicon-remove"> Limpar</i>
+                    </button>
+                </div>
+                <input type="hidden" id="tipo" value="VOL">
+            </form>
+        </div>
+        {% if mensagem is defined %}
+        <div class="row alert alert-success">
+            {{ mensagem }}
+        </div>
+        {% endif %}
     </div>
 {% endblock %}
