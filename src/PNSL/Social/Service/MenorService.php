@@ -24,16 +24,22 @@ class MenorService
         if (empty($dados['id'])) {
             $menor = new MenorEntity();
             $menor->setPessoa($pessoa);
-            $menor->setProfissao(utf8_encode($dados['profissao']));
-            $menor->setEstadoCivil(utf8_encode($dados['estado_civil']));
-            $menor->setAssinouTermo($dados['assinou_termo']);
+            $menor->setEscola(utf8_encode($dados['escola']));
+            $menor->setAno(utf8_encode($dados['ano']));
+            $menor->setTurno($dados['turno']);
+            $menor->setGrau($dados['grau']);
+            $menor->setAutorizadoSairSozinho($dados['autorizadoSairSozinho']);
+            $menor->setResponsavel($dados['responsavel']);
             $menor->setUsuarioInclusao($dados['usuario']);
             $menor->setUsuarioAlteracao($dados['usuario']);
             $this->em->persist($menor);
         } else {
-            $menor->setProfissao(utf8_encode($dados['profissao']));
-            $menor->setEstadoCivil(utf8_encode($dados['estado_civil']));
-            $menor->setAssinouTermo($dados['assinou_termo']);
+            $menor->setEscola(utf8_encode($dados['escola']));
+            $menor->setAno(utf8_encode($dados['ano']));
+            $menor->setTurno($dados['turno']);
+            $menor->setGrau($dados['grau']);
+            $menor->setAutorizadoSairSozinho($dados['autorizadoSairSozinho']);
+            $menor->setResponsavel($dados['responsavel']);
             $menor->setUsuarioAlteracao($dados['usuario']);
             $menor->setPessoa($pessoa);
         }

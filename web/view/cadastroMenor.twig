@@ -5,12 +5,12 @@
     <div class="container">
         <div class="row col-sm-8 col-sm-offset-2">
             <header>
-                <h2><span class="fa fa-vcard-o" aria-hidden="true"></span>&nbsp;Voluntário</h2>
-                <small>pessoas que prestam o serviço social</small>
+                <h2><span class="fa fa-user" aria-hidden="true"></span>&nbsp;Menor</h2>
+                <small>jovens atendidos pela casa</small>
             </header>
         </div>
         <div class="row col-sm-8 col-sm-offset-2">
-            <form name="frmTipo" action="{{ path('voluntarioSalvar')}}" method="POST">
+            <form name="frmTipo" action="{{ path('menorSalvar')}}" method="POST">
                 <fieldset>
                 <legend><i class="glyphicon glyphicon-menu-right"></i><b>Dados pessoais</b></legend>
                     <div class="form-group col-sm-6">
@@ -45,39 +45,36 @@
                     </div>
                 </fieldset>
                 <fieldset>
-                <legend><i class="glyphicon glyphicon-menu-right"></i><b>Dados do voluntário</b></legend>
+                <legend><i class="glyphicon glyphicon-menu-right"></i><b>Dados do menor</b></legend>
                     <div class="form-group col-sm-6">
-                        <label for="profissao">Profissão</label>
-                        <input type="text" id="profissao" class="form-control" placeholder="Em que vc trabalha" required>
+                        <label for="escola">Escola</label>
+                        <input type="text" id="escola" class="form-control" placeholder="Nome da escola" required>
                     </div>
-                    <div class="form-group col-sm-6">
-                        <label for="conhecimento">Conhecimentos</label>
-                        <textarea class="form-control" id="conhecimento" rows="5"></textarea>
+                    <div class="form-group col-sm-2">
+                        <label for="ano">Ano</label>
+                        <input type="number" id="ano" class="form-control" placeholder="9999" required>
                     </div>
-                    <div class="clearfix">&nbsp;</div>
-                    <div class="form-check form-check-inline col-sm-8">
-                        <label class="form-check-label">Estado Civil</label><br />
-                        <label class="form-check-label">Solteiro
-                            <input type="checkbox" id="estadoCivil" class="form-check-input" value="S">
-                        </label>
-                        <label class="form-check-label">Casado
-                            <input type="checkbox" id="estadoCivil" class="form-check-input" value="C">
-                        </label>
-                        <label class="form-check-label">Divorciado
-                            <input type="checkbox" id="estadoCivil" class="form-check-input" value="D">
-                        </label>
-                        <label class="form-check-label">Viúvo
-                            <input type="checkbox" id="estadoCivil" class="form-check-input" value="V8">
-                        </label>
+                    <div class="form-group col-sm-2">
+                        <label for="turno">Turno</label>
+                        <select class="form-control" id="turno">
+                            <option value="">Selecione</option>
+                            <option value="M">Matutino</option>
+                            <option value="V">Vespertino</option>
+                            <option value="N">Noturno</option>
+                        </select>
                     </div>
-                    <div class="form-group form-check-inline col-sm-4">
-                        <label for="assinouTermo" class="form-check-label">Assinou o termo</label><br />
-                        <label class="form-check-label">Sim
-                            <input type="checkbox" id="assinouTermo" class="form-check-input" value="S">
-                        </label>
-                        <label class="form-check-label">Não
-                            <input type="checkbox" id="assinouTermo" class="form-check-input" value="N">
-                        </label>
+                    <div class="form-group col-sm-2">
+                        <label for="grau">Grau</label>
+                        <select class="form-control" id="grau">
+                            <option value="">Selecione</option>
+                            <option value="1">1º</option>
+                            <option value="2">2º</option>
+                            <option value="3">3º</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="responsavel">Responsável</label>
+                        <input type="text" id="responsavel" class="form-control" placeholder="Pesquise o nome do responsável" required>
                     </div>
                 </fieldset>
                 <div class="form-group col-sm-12 text-center">

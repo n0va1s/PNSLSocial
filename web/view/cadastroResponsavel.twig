@@ -1,83 +1,135 @@
 {% extends 'leiaute.twig' %}
 
-{% block topo %}
-    <!-- Page Header -->
-    <!-- Set your background image for this header on the line below. -->
-    <header class="intro-header" style="background-position: 1% 20%; background-image: url('{{ asset('topo_criancas.png', 'img') }}')">
-        <div class="container" style="background-color: rgb(0, 0, 0); opacity: 0.5; width: 100%; height: 100%;">
-            <div class="row">
-                <div class="col-lg-12 col-lg-offset-0 col-md-12 col-md-offset-0">
-                    <div class="site-heading">
-                        <h1>BrinqueCoin</h1>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
-{% endblock %}
-
 {% block conteudo %}
     <!-- Main Content -->
     <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2">
-                <form name="frmQuadro" action="{{ path('responsavelSalvar')}}" method="POST">
-                    <h4>Informações do responsável</h4>
-                    <div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                        <label for="nome" class="sr-only">Nome</label>
-                        <input type="text" name="nome" class="form-control col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6" placeholder="Nome" autofocus required data-validation-required-message="Qual o seu nome?">
-                    </div>
-                    <div class="form-group col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                        <label for="email" class="sr-only">Email</label>
-                        <input type="email" name="email" class="form-control col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6" placeholder="Email" required data-validation-required-message="Qual o seu email?">
-                    </div>
-                    <div class="form-group col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                        <label for="senha" class="sr-only">Senha</label>
-                        <input type="password" name="senha" class="form-control col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4" placeholder="Senha" required data-validation-required-message="Informe uma senha">
-                    </div>
-                    <div class="form-group col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                        <label for="confirmacao" class="sr-only">Confirmação</label>
-                        <input type="password" name="confirmacao" class="form-control col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4" placeholder="Confirmação" required data-validation-required-message="Informe uma senha">
-                    </div>
-                    <div class="form-group col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                        <label for="UF" class="sr-only">UF</label>
-                        <input type="text" name="uf" class="form-control col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4" placeholder="UF" required data-validation-required-message="Onde vc mora?">
-                    </div>
-                    <div class="form-group col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
-                        <label for="genero" class="sr-only">Gênero</label>
-                        <select name="genero" class="form-control col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">
-                            <option value="">Gênero</option>
-                            <option value="M">Masculino</option>
-                            <option value="F">Feminino</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="parentesco" class="sr-only">Parentesco</label>
-                        <select name="parentesco" class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4">
-                            <option value="">Parentesco</option>
-                            <option value="P">Pai</option>
-                            <option value="M">Mãe</option>
-                            <option value="A">Avô/Avó</option>
-                            <option value="T">Tio/Tia</option>
-                            <option value="D">Padrinho/Madrinha</option>
-                            <option value="T">Tutor</option>
-                            <option value="O">Outro</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="expectativa" class="sr-only">Sua principal expectativa</label>
-                        <input type="text" name="expectativa" class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6" placeholder="Minha expectativa é..." required data-validation-required-message="O que vc espera desenvolver com seu filho (a)?">
-                    </div>
-                    <div>&nbsp;</div>
-                    <center><button class="btn btn-primary" type="submit">Cadastrar</button><center>
-                    <input type="hidden" name="id" value="{% if id is defined %} {{ id }} {% endif %}">
-                </form>
-                {% if mensagem is defined %}
-                <div class="alert alert-success">
-                    {{ mensagem }}
-                </div>
-                {% endif %}
-            </div>
+        <div class="row col-sm-8 col-sm-offset-2">
+            <header>
+                <h2><span class="fa fa-users" aria-hidden="true"></span>&nbsp;Responsável</h2>
+                <small>adultos atendidos pela instituição ou responáveis por menores de idade</small>
+            </header>
         </div>
+        <div class="row col-sm-8 col-sm-offset-2">
+            <form name="frmTipo" action="{{ path('responsavelSalvar')}}" method="POST">
+                <fieldset>
+                <legend><i class="glyphicon glyphicon-menu-right"></i><b>Dados pessoais</b></legend>
+                    <div class="form-group col-sm-6">
+                        <label for="nome">Nome</label>
+                        <input type="text" id="nome" class="form-control" placeholder="Seu nome completo" autofocus required>
+                    </div>
+                    <div class="form-group form-check-inline col-sm-5 col-sm-offset-1">
+                        <label for="genero" class="form-check-label">Sexo</label><br />
+                        <label class="form-check-label">Masculino
+                            <input type="checkbox" id="genero" class="form-check-input" value="M">
+                        </label>
+                        <label class="form-check-label">Feminino
+                            <input type="checkbox" id="genero" class="form-check-input" value="F">
+                        </label>
+                    </div>
+                    <div class="clearfix">&nbsp;</div>
+                    <div class="form-group col-sm-3">
+                        <label for="dataNascimento">Nascimento</label>
+                        <input type="date" id="dataNascimento" class="form-control" placeholder="dd/mm/aaa" required>
+                    </div>
+                    <div class="form-group col-sm-2">
+                        <label for="numRG">RG</label>
+                        <input type="number" id="numRG" class="form-control" placeholder="9999999" required>
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <label for="numCPF">CPF</label>
+                        <input type="number" id="numCPF" class="form-control" placeholder="999.999.999-99" required>
+                    </div>
+                    <div class="form-group col-sm-4">
+                        <label for="naturalidade">Naturalidade</label>
+                        <input type="text" id="naturalidade" class="form-control" placeholder="Brasília" required>
+                    </div>
+                </fieldset>
+                <fieldset>
+                <legend><i class="glyphicon glyphicon-menu-right"></i><b>Dados do responsável</b></legend>
+                    <div class="form-group form-check-inline col-sm-7">
+                        <label for="assinouTermo" class="form-check-label">Parentesco</label><br />
+                        <label class="form-check-label">Pai
+                            <input type="checkbox" id="parentesco" class="form-check-input" value="PAI">
+                        </label>
+                        <label class="form-check-label">Mãe
+                            <input type="checkbox" id="parentesco" class="form-check-input" value="MAE">
+                        </label>
+                        <label class="form-check-label">Avô
+                            <input type="checkbox" id="parentesco" class="form-check-input" value="AVO">
+                        </label>
+                        <label class="form-check-label">Avó
+                            <input type="checkbox" id="parentesco" class="form-check-input" value="AVH">
+                        </label>
+                        <label class="form-check-label">Tio
+                            <input type="checkbox" id="parentesco" class="form-check-input" value="TIO">
+                        </label>
+                        <label class="form-check-label">Tia
+                            <input type="checkbox" id="parentesco" class="form-check-input" value="TIA">
+                        </label>
+                        <label class="form-check-label">Tutor
+                            <input type="checkbox" id="parentesco" class="form-check-input" value="TUT">
+                        </label>
+                        <label class="form-check-label">Tutora
+                            <input type="checkbox" id="parentesco" class="form-check-input" value="TUA">
+                        </label>
+                        <label class="form-check-label">Padrinho
+                            <input type="checkbox" id="parentesco" class="form-check-input" value="PAD">
+                        </label>
+                        <label class="form-check-label">Madrinha
+                            <input type="checkbox" id="parentesco" class="form-check-input" value="MAD">
+                        </label>
+                    </div>
+                    <div class="form-group col-sm-5">
+                        <label for="menor">Menor</label>
+                        <input type="text" id="menor" class="form-control" placeholder="Nome do menor" required>
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button">Pesquisar</button>
+                        </div>
+                    </div>
+                    <div class="clearfix">&nbsp;</div>
+                    <div class="form-group form-check-inline col-sm-4">
+                        <label for="assinouTermo" class="form-check-label">Está empregado</label><br />
+                        <label class="form-check-label">Sim
+                            <input type="checkbox" id="empregado" class="form-check-input" value="S">
+                        </label>
+                        <label class="form-check-label">Não
+                            <input type="checkbox" id="empregado" class="form-check-input" value="N">
+                        </label>
+                    </div>
+                    <div class="form-group form-check-inline col-sm-4">
+                        <label for="assinouTermo" class="form-check-label">Autorizou uso da imagem</label><br />
+                        <label class="form-check-label">Sim
+                            <input type="checkbox" id="assinouTermo" class="form-check-input" value="S">
+                        </label>
+                        <label class="form-check-label">Não
+                            <input type="checkbox" id="assinouTermo" class="form-check-input" value="N">
+                        </label>
+                    </div>
+                    <div class="form-group form-check-inline col-sm-4">
+                        <label for="assinouTermo" class="form-check-label">Autorizou o menor sair sozinho</label><br />
+                        <label class="form-check-label">Sim
+                            <input type="checkbox" id="autorizouSairSozinho" class="form-check-input" value="S">
+                        </label>
+                        <label class="form-check-label">Não
+                            <input type="checkbox" id="autorizouSairSozinho" class="form-check-input" value="N">
+                        </label>
+                    </div>
+                </fieldset>
+                <div class="form-group col-sm-12 text-center">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="glyphicon glyphicon-ok"> Cadastrar</i>
+                    </button>
+                    <button type="button" class="btn btn-default">
+                        <i class="glyphicon glyphicon-remove"> Limpar</i>
+                    </button>
+                </div>
+                <input type="hidden" id="tipo" value="VOL">
+            </form>
+        </div>
+        {% if mensagem is defined %}
+        <div class="row alert alert-success">
+            {{ mensagem }}
+        </div>
+        {% endif %}
     </div>
 {% endblock %}
