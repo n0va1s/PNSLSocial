@@ -27,6 +27,10 @@ class PessoaEntity
     /** @ORM\Column(type="string", name="tip_genero", columnDefinition="CHAR(1) NOT NULL") */
     private $genero;
 
+    /** @ORM\OneToOne(targetEntity="TipoEntity")
+     *  @ORM\JoinColumn(name="seq_tipo_estado_civil", referencedColumnName="seq_tipo", nullable=false) */
+    private $estadoCivil;
+
     /** @ORM\Column(type="datetime", name="dat_nascimento") */
     private $dataNascimento;
 
@@ -36,15 +40,37 @@ class PessoaEntity
     /** @ORM\Column(type="string", length=15, name="num_cpf") */
     private $numCPF;
     
-    /** @ORM\Column(type="string", length=255, name="des_naturalidade") */
-    private $naturalidade;
+    /** @ORM\Column(type="string", length=255, name="des_nacionalidade") */
+    private $nacionalidade;
 
     /** @ORM\OneToOne(targetEntity="TipoEntity")
      *  @ORM\JoinColumn(name="seq_tipo_pessoa", referencedColumnName="seq_tipo", nullable=false) */
-    private $tipo;
+    private $tipoPessoa;
 
-    /** @ORM\OneToMany(targetEntity="ContatoEntity", mappedBy="pessoa") */
-    private $contatos;
+    /** @ORM\Column(type="string", length=255, name="end_des_logradouro", nullable=false) */
+    private $endereco;
+    
+    /** @ORM\Column(type="string", length=50, name="end_nom_cidade", nullable=false) */
+    private $cidade;
+
+    /** @ORM\Column(type="string", length=50, name="end_sig_UF", columnDefinition="CHAR(2) NOT NULL") */
+    private $uf;
+
+    /** @ORM\Column(type="string", length=50, name="eml_principal") */
+    private $email;
+
+    /** @ORM\Column(type="string", length=10, name="tel_principal") */
+    private $telefone;
+
+    /** @ORM\OneToOne(targetEntity="TipoEntity")
+     *  @ORM\JoinColumn(name="seq_tipo_telefone", referencedColumnName="seq_tipo", nullable=false) */
+    private $tipoTelefone;
+
+    ///** @ORM\OneToMany(targetEntity="ContatoEntity", mappedBy="pessoa") */
+    //private $contatos;
+
+    /** @ORM\Column(type="string", length=100, name="nom_profissao") */
+    private $profissao;
 
     /** @ORM\OneToMany(targetEntity="AtendimentoEntity", mappedBy="atendido") */
     private $atendimentos;
@@ -133,6 +159,26 @@ class PessoaEntity
     }
 
     /**
+     * Get the value of estadoCivil
+     */ 
+    public function getEstadoCivil()
+    {
+        return $this->estadoCivil;
+    }
+
+    /**
+     * Set the value of estadoCivil
+     *
+     * @return  self
+     */ 
+    public function setEstadoCivil($estadoCivil)
+    {
+        $this->estadoCivil = $estadoCivil;
+
+        return $this;
+    }
+
+    /**
      * Get the value of dataNascimento
      */ 
     public function getDataNascimento()
@@ -193,81 +239,41 @@ class PessoaEntity
     }
 
     /**
-     * Get the value of naturalidade
+     * Get the value of nacionalidade
      */ 
-    public function getNaturalidade()
+    public function getNacionalidade()
     {
-        return $this->naturalidade;
+        return $this->nacionalidade;
     }
 
     /**
-     * Set the value of naturalidade
+     * Set the value of nacionalidade
      *
      * @return  self
      */ 
-    public function setNaturalidade($naturalidade)
+    public function setNacionalidade($nacionalidade)
     {
-        $this->naturalidade = $naturalidade;
+        $this->nacionalidade = $nacionalidade;
 
         return $this;
     }
 
     /**
-     * Get the value of voluntario
+     * Get the value of tipoPessoa
      */ 
-    public function getVoluntario()
+    public function getTipoPessoa()
     {
-        return $this->voluntario;
+        return $this->tipoPessoa;
     }
 
     /**
-     * Set the value of voluntario
+     * Set the value of tipoPessoa
      *
      * @return  self
      */ 
-    public function setVoluntario($voluntario)
+    public function setTipoPessoa($tipoPessoa)
     {
-        $this->voluntario = $voluntario;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of responsavel
-     */ 
-    public function getResponsavel()
-    {
-        return $this->responsavel;
-    }
-
-    /**
-     * Set the value of responsavel
-     *
-     * @return  self
-     */ 
-    public function setResponsavel($responsavel)
-    {
-        $this->responsavel = $responsavel;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of menor
-     */ 
-    public function getMenor()
-    {
-        return $this->menor;
-    }
-
-    /**
-     * Set the value of menor
-     *
-     * @return  self
-     */ 
-    public function setMenor($menor)
-    {
-        $this->menor = $menor;
+        $this->tipoPessoa = $tipoPessoa;
 
         return $this;
     }
@@ -293,41 +299,125 @@ class PessoaEntity
     }
 
     /**
-     * Get the value of tipo
+     * Get the value of cidade
      */ 
-    public function getTipo()
+    public function getCidade()
     {
-        return $this->tipo;
+        return $this->cidade;
     }
 
     /**
-     * Set the value of tipo
+     * Set the value of cidade
      *
      * @return  self
      */ 
-    public function setTipo($tipo)
+    public function setCidade($cidade)
     {
-        $this->tipo = $tipo;
+        $this->cidade = $cidade;
 
         return $this;
     }
 
     /**
-     * Get the value of contatos
+     * Get the value of uf
      */ 
-    public function getContatos()
+    public function getUf()
     {
-        return $this->contatos;
+        return $this->uf;
     }
 
     /**
-     * Set the value of contatos
+     * Set the value of uf
      *
      * @return  self
      */ 
-    public function setContatos($contatos)
+    public function setUf($uf)
     {
-        $this->contatos = $contatos;
+        $this->uf = $uf;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of email
+     */ 
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * Set the value of email
+     *
+     * @return  self
+     */ 
+    public function setEmail($email)
+    {
+        $emailValido = filter_var($email, FILTER_VALIDATE_EMAIL);
+        if (!$emailValido) {
+            throw new \InvalidArgumentException('O email é inválido', 99);
+        }
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of telefone
+     */ 
+    public function getTelefone()
+    {
+        return $this->telefone;
+    }
+
+    /**
+     * Set the value of telefone
+     *
+     * @return  self
+     */ 
+    public function setTelefone($telefone)
+    {
+        $this->telefone = $telefone;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of tipoTelefone
+     */ 
+    public function getTipoTelefone()
+    {
+        return $this->tipoTelefone;
+    }
+
+    /**
+     * Set the value of tipoTelefone
+     *
+     * @return  self
+     */ 
+    public function setTipoTelefone($tipoTelefone)
+    {
+        $this->tipoTelefone = $tipoTelefone;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of profissao
+     */ 
+    public function getProfissao()
+    {
+        return $this->profissao;
+    }
+
+    /**
+     * Set the value of profissao
+     *
+     * @return  self
+     */ 
+    public function setProfissao($profissao)
+    {
+        $this->profissao = $profissao;
 
         return $this;
     }
@@ -353,21 +443,21 @@ class PessoaEntity
     }
 
     /**
-     * Get the value of turmas
+     * Get the value of frequencias
      */ 
-    public function getTurmas()
+    public function getFrequencias()
     {
-        return $this->turmas;
+        return $this->frequencias;
     }
 
     /**
-     * Set the value of turmas
+     * Set the value of frequencias
      *
      * @return  self
      */ 
-    public function setTurmas($turmas)
+    public function setFrequencias($frequencias)
     {
-        $this->turmas = $turmas;
+        $this->frequencias = $frequencias;
 
         return $this;
     }
@@ -401,6 +491,18 @@ class PessoaEntity
     }
 
     /**
+     * Set the value of dataInclusao
+     *
+     * @return  self
+     */ 
+    public function setDataInclusao($dataInclusao)
+    {
+        $this->dataInclusao = $dataInclusao;
+
+        return $this;
+    }
+
+    /**
      * Get the value of usuarioAlteracao
      */ 
     public function getUsuarioAlteracao()
@@ -426,5 +528,17 @@ class PessoaEntity
     public function getDataAlteracao()
     {
         return $this->dataAlteracao;
+    }
+
+    /**
+     * Set the value of dataAlteracao
+     *
+     * @return  self
+     */ 
+    public function setDataAlteracao($dataAlteracao)
+    {
+        $this->dataAlteracao = $dataAlteracao;
+
+        return $this;
     }
 }

@@ -24,7 +24,7 @@ class PessoaService
                 $pessoa->setDataNascimento(new \DateTime($dados['data_nascimento']));
                 $pessoa->setNumRG($dados['num_rg']);
                 $pessoa->setNumCPF($dados['num_cpf']);
-                $pessoa->setNaturalidade(utf8_encode($dados['naturalidade']));
+                $pessoa->setNacionalidade(utf8_encode($dados['nacionalidade']));
                 $pessoa->setTipo($dados['tipo']);
                 $pessoa->setUsuarioInclusao(utf8_encode($dados['usuario']));
                 $pessoa->setUsuarioAlteracao(utf8_encode($dados['usuario']));
@@ -36,7 +36,7 @@ class PessoaService
                 $pessoa->setDataNascimento(new \DateTime($dados['data_nascimento']));
                 $pessoa->setNumRG($dados['num_rg']);
                 $pessoa->setNumCPF($dados['num_cpf']);
-                $pessoa->setNaturalidade(utf8_encode($dados['naturalidade']));
+                $pessoa->setNacionalidade(utf8_encode($dados['nacionalidade']));
                 $pessoa->setTipo($dados['tipo']);
                 $pessoa->setUsuarioInclusao(utf8_encode($dados['usuario']));
                 $pessoa->setUsuarioAlteracao(utf8_encode($dados['usuario']));

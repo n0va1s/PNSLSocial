@@ -41,31 +41,43 @@ class __TwigTemplate_f437f5b9f1758b894162a1c59ad48ce16e34b5dc7b677536cf5b2a093b2
     </div>
     <br><br>
     <div class=\"row slideanim text-center\">
-        <a href=\"/voluntario\">
+        <a href=\"";
+        // line 13
+        echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("voluntarioCadastrar");
+        echo "\">
             <div class=\"col-sm-4\">
                 <span class=\"fa fa-vcard-o fa-3x\"></span>
                 <h4 style=\"color:#303030;\">Voluntário</h4>
                 <p>pessoas que prestam o serviço social</p>
             </div>
         </a>
-        <a href=\"/responsavel\">
+        <a href=\"";
+        // line 20
+        echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("usuarioCadastrar");
+        echo "\">
             <div class=\"col-sm-4\">
                 <span class=\"fa fa-users fa-3x\"></span>
-                <h4>Responsável</h4>
-                <p>adultos atendidos pela instituição ou responáveis por menores de idade</p>
+                <h4>Usuário</h4>
+                <p>pessoas atendidas pela instituição</p>
             </div>
         </a>
-        <a href=\"/menor\">
+        <a href=\"";
+        // line 27
+        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, (isset($context["app"]) || array_key_exists("app", $context) ? $context["app"] : (function () { throw new Twig_Error_Runtime('Variable "app" does not exist.', 27, $this->source); })()), "url_generator", array()), "generate", array(0 => "tipoCadastrar"), "method"), "html", null, true);
+        echo "\">
             <div class=\"col-sm-4\">
-                <span class=\"fa fa-user fa-3x\"></span>
-                <h4>Menor</h4>
-                <p>jovens atendidos pela casa</p>
+                <span class=\"fa fa-gear fa-3x\"></span>
+                <h4>Configuração</h4>
+                <p>Cadastre alguns dados como parentesco, gênero entre outros</p>
             </div>
         </a>
     </div>
     <br><br>
     <div class=\"row slideanim text-center\">
-        <a href=\"/acao\">
+        <a href=\"";
+        // line 37
+        echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("acaoCadastrar");
+        echo "\">
             <div class=\"col-sm-4\">
                 <span class=\"fa fa-leaf fa-3x\"></span>
                 <h4>Ação</h4>
@@ -89,14 +101,11 @@ class __TwigTemplate_f437f5b9f1758b894162a1c59ad48ce16e34b5dc7b677536cf5b2a093b2
     </div>
     <br><br>
     <div class=\"row slideanim text-center\">
-        <a href=\"";
-        // line 61
-        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, (isset($context["app"]) || array_key_exists("app", $context) ? $context["app"] : (function () { throw new Twig_Error_Runtime('Variable "app" does not exist.', 61, $this->source); })()), "url_generator", array()), "generate", array(0 => "tipoCadastrar"), "method"), "html", null, true);
-        echo "\">
+        <a href=\"/pretacao-contas\">
             <div class=\"col-sm-4\">
-                <span class=\"fa fa-gear fa-3x\"></span>
-                <h4>Configuração</h4>
-                <p>Cadastre os tipos de pessoas ou de ação que o serão usados em outros cadastros...</p>
+                <span class=\"fa fa-info fa-3x\"></span>
+                <h4>Prestação de contas</h4>
+                <p>Relatório para prestação de contas anual</p>
             </div>
         </a>
     </div>
@@ -116,7 +125,7 @@ class __TwigTemplate_f437f5b9f1758b894162a1c59ad48ce16e34b5dc7b677536cf5b2a093b2
 
     public function getDebugInfo()
     {
-        return array (  94 => 61,  35 => 4,  32 => 3,  15 => 1,);
+        return array (  79 => 37,  66 => 27,  56 => 20,  46 => 13,  35 => 4,  32 => 3,  15 => 1,);
     }
 
     public function getSourceContext()
@@ -133,31 +142,31 @@ class __TwigTemplate_f437f5b9f1758b894162a1c59ad48ce16e34b5dc7b677536cf5b2a093b2
     </div>
     <br><br>
     <div class=\"row slideanim text-center\">
-        <a href=\"/voluntario\">
+        <a href=\"{{ path('voluntarioCadastrar') }}\">
             <div class=\"col-sm-4\">
                 <span class=\"fa fa-vcard-o fa-3x\"></span>
                 <h4 style=\"color:#303030;\">Voluntário</h4>
                 <p>pessoas que prestam o serviço social</p>
             </div>
         </a>
-        <a href=\"/responsavel\">
+        <a href=\"{{ path('usuarioCadastrar') }}\">
             <div class=\"col-sm-4\">
                 <span class=\"fa fa-users fa-3x\"></span>
-                <h4>Responsável</h4>
-                <p>adultos atendidos pela instituição ou responáveis por menores de idade</p>
+                <h4>Usuário</h4>
+                <p>pessoas atendidas pela instituição</p>
             </div>
         </a>
-        <a href=\"/menor\">
+        <a href=\"{{ app.url_generator.generate('tipoCadastrar') }}\">
             <div class=\"col-sm-4\">
-                <span class=\"fa fa-user fa-3x\"></span>
-                <h4>Menor</h4>
-                <p>jovens atendidos pela casa</p>
+                <span class=\"fa fa-gear fa-3x\"></span>
+                <h4>Configuração</h4>
+                <p>Cadastre alguns dados como parentesco, gênero entre outros</p>
             </div>
         </a>
     </div>
     <br><br>
     <div class=\"row slideanim text-center\">
-        <a href=\"/acao\">
+        <a href=\"{{ path('acaoCadastrar') }}\">
             <div class=\"col-sm-4\">
                 <span class=\"fa fa-leaf fa-3x\"></span>
                 <h4>Ação</h4>
@@ -181,11 +190,11 @@ class __TwigTemplate_f437f5b9f1758b894162a1c59ad48ce16e34b5dc7b677536cf5b2a093b2
     </div>
     <br><br>
     <div class=\"row slideanim text-center\">
-        <a href=\"{{ app.url_generator.generate('tipoCadastrar') }}\">
+        <a href=\"/pretacao-contas\">
             <div class=\"col-sm-4\">
-                <span class=\"fa fa-gear fa-3x\"></span>
-                <h4>Configuração</h4>
-                <p>Cadastre os tipos de pessoas ou de ação que o serão usados em outros cadastros...</p>
+                <span class=\"fa fa-info fa-3x\"></span>
+                <h4>Prestação de contas</h4>
+                <p>Relatório para prestação de contas anual</p>
             </div>
         </a>
     </div>

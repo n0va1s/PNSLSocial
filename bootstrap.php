@@ -150,8 +150,8 @@ $app->get('/', function () use ($app) {
     return $app['twig']->render('inicio.twig');
 })->bind('index');
 
+$app->mount('/acao', new PNSL\Social\Controller\AcaoController($em));
 $app->mount('/voluntario', new PNSL\Social\Controller\VoluntarioController($em));
-$app->mount('/responsavel', new PNSL\Social\Controller\ResponsavelController($em));
-$app->mount('/menor', new PNSL\Social\Controller\MenorController($em));
-$app->mount('/tipo', new PNSL\Social\Controller\TipoController($em));
+$app->mount('/usuario', new PNSL\Social\Controller\UsuarioController($em));
+$app->mount('/configuracao', new PNSL\Social\Controller\TipoController($em));
 $app->mount('/site', new PNSL\Social\Controller\SiteController($em));

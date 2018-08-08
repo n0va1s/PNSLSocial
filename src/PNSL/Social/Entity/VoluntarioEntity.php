@@ -14,12 +14,6 @@ class VoluntarioEntity
      *  @ORM\JoinColumn(name="seq_pessoa", referencedColumnName="seq_pessoa", nullable=false, onDelete="CASCADE") */
     private $pessoa;
     
-    /** @ORM\Column(type="string", length=255, name="nom_profissao") */
-    private $profissao;
-
-    /** @ORM\Column(type="string", name="tip_estado_civil", columnDefinition="CHAR(1) NOT NULL") */
-    private $estadoCivil;
-
      /** @ORM\Column(type="text", name="txt_conhecimento", nullable=true) */
      private $conhecimento;
 

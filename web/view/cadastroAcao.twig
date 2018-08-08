@@ -5,23 +5,33 @@
     <div class="container">
         <div class="row col-sm-8 col-sm-offset-2">
             <header>
-                <h2><span class="fa fa-vcard-o" aria-hidden="true"></span>&nbsp;Voluntário</h2>
-                <small>pessoas que prestam o serviço social</small>
+                <h2><span class="fa fa-leaf" aria-hidden="true"></span>&nbsp;Ação</h2>
+                <small>ações sociais oferecidas pela instituição</small>
             </header>
         </div>
         <div class="row col-sm-8 col-sm-offset-2">
-            <form name="frmTipo" action="{{ path('voluntarioSalvar')}}" method="POST">
+            <form name="frmTipo" action="{{ path('acaoSalvar')}}" method="POST">
                 <fieldset>
                 <legend><i class="glyphicon glyphicon-menu-right"></i><b>Dados pessoais</b></legend>
-                    <div class="form-group col-sm-3">
-                        <label for="numCPF">CPF</label>
-                        <input type="number" id="numCPF" class="form-control" placeholder="999.999.999-99">
-                    </div>
-                    <div class="form-group col-sm-9">
+                    <div class="form-group col-sm-6">
                         <label for="nome">Nome</label>
                         <input type="text" id="nome" class="form-control" placeholder="Seu nome completo" autofocus required>
                     </div>
-                    <div class="clearfix"></div>
+                    <div class="form-group form-check-inline col-sm-2 col-sm-offset-1">
+                        <label for="genero" class="form-check-label">Sexo</label><br />
+                        <label class="form-check-label">M
+                            <input type="radio" id="genero" name="genero" class="form-check-input" value="M">
+                        </label>
+                        <label class="form-check-label">F
+                            <input type="radio" id="genero" name="genero" class="form-check-input" value="F">
+                        </label>
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <label for="estado_civil" class="form-check-label">Estado Civil</label><br />
+                        <select class="form-control" id="estado_civil" required>
+                            <option value="">Selecione</option>
+                        </select>
+                    </div>
                     <div class="form-group col-sm-3">
                         <label for="dataNascimento">Nascimento</label>
                         <input type="date" id="dataNascimento" class="form-control" placeholder="dd/mm/aaaa" required>
@@ -31,31 +41,12 @@
                         <input type="number" id="numRG" class="form-control" placeholder="9.999.999" required>
                     </div>
                     <div class="form-group col-sm-3">
-                        <label for="estado_civil" class="form-check-label">Estado Civil</label><br />
-                        <select class="form-control" id="estado_civil" required>
-                            <option value="">Selecione</option>
-                        </select>
+                        <label for="numCPF">CPF</label>
+                        <input type="number" id="numCPF" class="form-control" placeholder="999.999.999-99">
                     </div>
                     <div class="form-group col-sm-4">
                         <label for="nacionalidade">Nacionalidade</label>
                         <input type="text" id="naturalidade" class="form-control" placeholder="Brasíleira" required>
-                    </div>
-                    <div class="form-group form-check-inline col-sm-2">
-                        <label for="genero" class="form-check-label">Sexo</label><br />
-                        <label class="form-check-label">M
-                            <input type="radio" id="genero" name="genero" class="form-check-input" value="M">
-                        </label>
-                        <label class="form-check-label">F
-                            <input type="radio" id="genero" name="genero" class="form-check-input" value="F">
-                        </label>
-                    </div>                    
-                    <div class="form-group col-sm-7">
-                        <label for="profissao">Profissão</label>
-                        <input type="text" id="profissao" class="form-control" placeholder="Costureira">
-                    </div>
-                    <div class="form-group col-sm-3">
-                        <label for="nis">NIS</label>
-                        <input type="number" id="nis" class="form-control" placeholder="999999999999">
                     </div>
                 </fieldset>
                 <legend><i class="glyphicon glyphicon-menu-right"></i><b>Endereço</b></legend>
@@ -96,18 +87,22 @@
                 </fieldset>
                 <fieldset>
                 <legend><i class="glyphicon glyphicon-menu-right"></i><b>Dados do voluntário</b></legend>
-                    <div class="form-group col-sm-8">
-                        <label for="conhecimento">Conhecimentos</label>
-                        <textarea class="form-control" id="conhecimento" rows="5" placeholder="Fazer bolos, tirar leite, contabilidade, corrida de rua"></textarea>
+                    <div class="form-group col-sm-4">
+                        <label for="profissao">Profissão</label>
+                        <input type="text" id="profissao" class="form-control" placeholder="Em que vc trabalha" required>
                     </div>
                     <div class="form-group form-check-inline col-sm-3 col-sm-offset-1">
                         <label for="assinouTermo" class="form-check-label">Assinou o termo</label><br />
                         <label class="form-check-label">Sim
-                            <input type="radio" id="assinouTermo" name="assinouTermo" class="form-check-input" value="S">
+                            <input type="checkbox" id="assinouTermo" class="form-check-input" value="S">
                         </label>
                         <label class="form-check-label">Não
-                            <input type="radio" id="assinouTermo" name="assinouTermo" class="form-check-input" value="N" checked="true">
+                            <input type="checkbox" id="assinouTermo" class="form-check-input" value="N">
                         </label>
+                    </div>
+                    <div class="form-group col-sm-4">
+                        <label for="conhecimento">Conhecimentos</label>
+                        <textarea class="form-control" id="conhecimento" rows="5"></textarea>
                     </div>
                 </fieldset>
                 <div class="form-group col-sm-12 text-center">

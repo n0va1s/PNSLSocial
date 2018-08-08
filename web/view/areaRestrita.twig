@@ -10,31 +10,31 @@
     </div>
     <br><br>
     <div class="row slideanim text-center">
-        <a href="/voluntario">
+        <a href="{{ path('voluntarioCadastrar') }}">
             <div class="col-sm-4">
                 <span class="fa fa-vcard-o fa-3x"></span>
                 <h4 style="color:#303030;">Voluntário</h4>
                 <p>pessoas que prestam o serviço social</p>
             </div>
         </a>
-        <a href="/responsavel">
+        <a href="{{ path('usuarioCadastrar') }}">
             <div class="col-sm-4">
                 <span class="fa fa-users fa-3x"></span>
-                <h4>Responsável</h4>
-                <p>adultos atendidos pela instituição ou responáveis por menores de idade</p>
+                <h4>Usuário</h4>
+                <p>pessoas atendidas pela instituição</p>
             </div>
         </a>
-        <a href="/menor">
+        <a href="{{ app.url_generator.generate('tipoCadastrar') }}">
             <div class="col-sm-4">
-                <span class="fa fa-user fa-3x"></span>
-                <h4>Menor</h4>
-                <p>jovens atendidos pela casa</p>
+                <span class="fa fa-gear fa-3x"></span>
+                <h4>Configuração</h4>
+                <p>Cadastre alguns dados como parentesco, gênero entre outros</p>
             </div>
         </a>
     </div>
     <br><br>
     <div class="row slideanim text-center">
-        <a href="/acao">
+        <a href="{{ path('acaoCadastrar') }}">
             <div class="col-sm-4">
                 <span class="fa fa-leaf fa-3x"></span>
                 <h4>Ação</h4>
@@ -58,11 +58,11 @@
     </div>
     <br><br>
     <div class="row slideanim text-center">
-        <a href="{{ app.url_generator.generate('tipoCadastrar') }}">
+        <a href="/pretacao-contas">
             <div class="col-sm-4">
-                <span class="fa fa-gear fa-3x"></span>
-                <h4>Configuração</h4>
-                <p>Cadastre os tipos de pessoas ou de ação que o serão usados em outros cadastros...</p>
+                <span class="fa fa-info fa-3x"></span>
+                <h4>Prestação de contas</h4>
+                <p>Relatório para prestação de contas anual</p>
             </div>
         </a>
     </div>

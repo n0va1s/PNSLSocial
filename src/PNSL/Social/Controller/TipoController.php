@@ -36,10 +36,10 @@ class TipoController implements ControllerProviderInterface
         );
 
         $ctrl->get(
-            '/cadastro', function () use ($app) {
+            '/', function () use ($app) {
                 return $app['twig']->render(
                     'cadastroTipo.twig',
-                    array('dominio'=>$dominio), 
+                    array(), 
                     new Response('Ok', 200)
                 );
             }

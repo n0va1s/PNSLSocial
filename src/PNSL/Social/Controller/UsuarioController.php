@@ -7,8 +7,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Doctrine\ORM\EntityManager;
 use PNSL\Social\Service\PessoaService;
 use PNSL\Social\Service\ResponsavelService;
+use PNSL\Social\Service\MenorService;
 
-class ResponsavelController implements ControllerProviderInterface
+class UsuarioController implements ControllerProviderInterface
 {
     private $em;
     
@@ -25,7 +26,10 @@ class ResponsavelController implements ControllerProviderInterface
             return new PessoaService($this->em);
         };
         $app['responsavel_service'] = function () {
-            return new ResponsavelService($this->em);
+            return new MenorService($this->em);
+        };
+        $app['menor_service'] = function () {
+            return new MenorService($this->em);
         };
 
         $ctrl->before(
@@ -42,63 +46,65 @@ class ResponsavelController implements ControllerProviderInterface
         $ctrl->get(
             '/', function () use ($app) {
                 return $app['twig']->render(
-                    'cadastroResponsavel.twig',
+                    'cadastroUsuario.twig',
                     array(), 
                     new Response('Ok', 200)
                 );
             }
-        )->bind('responsavelCadastrar');
+        )->bind('usuarioCadastrar');
 
         $ctrl->post(
             '/salvar', function (Request $req) use ($app) {
                 $dados = $req->request->all();
                 $pessoa_id = $app['pessoa_service']->save($dados);
-                $responsavel_id = $app['responsavel_service']->save($pessoa_id, $dados);
-                if ($responsavel_id > 0) {
+                $menor_id = $app['menor_service']->save($pessoa_id, $dados);
+                if ($menor_id > 0) {
                     return new Response(
-                        $app->json(['id'=>$responsavel_id,'resultado'=>'Tudo certo :)'], 201)
+                        $app->json(['resultado'=>'Usuário cadastrado com sucesso!'], 201)
                     );
                 } else {
                     return $app->abort(
-                        404, "Ops... alguma coisa deu errado :("
+                        404, "Ops... não foi possível cadastrar o usuário"
                     ); 
                 }
             }
-        )->bind('responsavelSalvar');
+        )->bind('usuarioSalvar');
 
         $ctrl->get(
             '/listar', function () use ($app) {
-                $responsavels = $app['responsavel_service']->fetchAll();
-                if ($responsavels) {
+                $menores = $app['menor_service']->fetchAll();
+                if ($menores) {
                     return new Response(
                         $app->json(
-                            $responsavels, 201, ['Content-Type' => 'application/json']
+                            $menores, 201, ['Content-Type' => 'application/json']
                         )
                     );
                 } else {
                     return $app->abort(
                         404, 
-                        "Ops... nenhum responsável cadastrado."
+                        "Ops... nenhum usuário cadastrado."
                     );
                 }             
             }
-        )->bind('responsavelListar');
+        )->bind('usuarioListar');
 
         $ctrl->delete(
             '/excluir/{id}', function ($id) use ($app) {
                 if ($id) {
-                    $excluiu = $app['responsavel_service']->delete($id);
+                    $excluiu = $app['menor_service']->delete($id);
                     return new Response(
-                        $app->json(['id'=>$id,'resultado'=>'Tudo certo :)'], 201)
+                        $app->json(
+                            $excluiu, 201, ['Content-Type' => 'application/json']
+                        )
                     );
                 } else {
                     return $app->abort(
                         404, 
-                        "Não foi possível excluir"
+                        "O usuário que vc escolheu não existe. Tente novamente."
                     ); 
                 }
             }
-        )->bind('responsavelExcluir')->assert('id', '\d+');
+        )->bind('usuarioExcluir')->assert('id', '\d+');
         
         return $ctrl;
     }
