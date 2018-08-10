@@ -24,11 +24,11 @@
                 <p>pessoas atendidas pela instituição</p>
             </div>
         </a>
-        <a href="{{ app.url_generator.generate('tipoCadastrar') }}">
+        <a href="{{ path('relatorioPrestacaoConta') }}">
             <div class="col-sm-4">
-                <span class="fa fa-gear fa-3x"></span>
-                <h4>Configuração</h4>
-                <p>Cadastre alguns dados como parentesco, gênero entre outros</p>
+                <span class="fa fa-info fa-3x"></span>
+                <h4>Prestação de contas</h4>
+                <p>Relatório para prestação de contas anual</p>
             </div>
         </a>
     </div>
@@ -41,28 +41,18 @@
                 <p>ações sociais oferecidas pela instituição</p>
             </div>
         </a>
-        <a href="/turma">
+        <a href="{{ path('frequenciaCadastrar') }}">
             <div class="col-sm-4">
                 <span class="fa fa-graduation-cap fa-3x"></span>
-                <h4>Turma</h4>
-                <p>ação social realizada em grupo como aulas, oficinas e palestras</p>
+                <h4>Frequência</h4>
+                <p>frequência dos usuários que participam de ações em grupo como: aulas, oficinas e palestras</p>
             </div>
         </a>
-        <a href="/atendimento">
+        <a href="{{ path('atendimentoCadastrar') }}">
             <div class="col-sm-4">
                 <span class="fa fa-user-md fa-3x"></span>
                 <h4>Atendimento</h4>
-                <p>ação social individual como atendimentos por médicos, psicólogos, dentistas, advogados ou empreendedores</p>
-            </div>
-        </a>
-    </div>
-    <br><br>
-    <div class="row slideanim text-center">
-        <a href="/pretacao-contas">
-            <div class="col-sm-4">
-                <span class="fa fa-info fa-3x"></span>
-                <h4>Prestação de contas</h4>
-                <p>Relatório para prestação de contas anual</p>
+                <p>registro dos atendimentos de ações individuais como: médicos, psicólogos, dentistas, advogados ou empreendedores</p>
             </div>
         </a>
     </div>

@@ -240,7 +240,7 @@ class __TwigTemplate_bd713238093af8e81de5885393d5f3e4d39fe83449be3949b2586ebca15
                 <p class=\"copyright text-muted\">Faça parte da nossa comunidade</p>
                 <ul class=\"list-inline text-center\">
                     <li>
-                        <a href=\"https://www.facebook.com/brinquecoin/\">
+                        <a href=\"https://www.facebook.com/impacto-social-na-pratica/\">
                             <span class=\"fa-stack fa-lg\">
                                 <i class=\"fa fa-circle fa-stack-2x\"></i>
                                 <i class=\"fa fa-facebook fa-stack-1x fa-inverse\"></i>
@@ -249,7 +249,7 @@ class __TwigTemplate_bd713238093af8e81de5885393d5f3e4d39fe83449be3949b2586ebca15
                     </li>
                 </ul>
                 <p class=\"copyright text-muted\">
-                <span class=\"fa-stack fa-lg\"><i class=\"fa fa-circle fa-stack-2x\"></i><i class=\"fa fa-envelope fa-stack-1x fa-inverse\"></i></span>brinquecoin@brinquecoin.com</p>
+                <span class=\"fa-stack fa-lg\"><i class=\"fa fa-circle fa-stack-2x\"></i><i class=\"fa fa-envelope fa-stack-1x fa-inverse\"></i></span>impacto@social.com</p>
             </div>
         </div>
     </div>
@@ -382,7 +382,7 @@ class __TwigTemplate_bd713238093af8e81de5885393d5f3e4d39fe83449be3949b2586ebca15
                 <p class=\"copyright text-muted\">Faça parte da nossa comunidade</p>
                 <ul class=\"list-inline text-center\">
                     <li>
-                        <a href=\"https://www.facebook.com/brinquecoin/\">
+                        <a href=\"https://www.facebook.com/impacto-social-na-pratica/\">
                             <span class=\"fa-stack fa-lg\">
                                 <i class=\"fa fa-circle fa-stack-2x\"></i>
                                 <i class=\"fa fa-facebook fa-stack-1x fa-inverse\"></i>
@@ -391,7 +391,7 @@ class __TwigTemplate_bd713238093af8e81de5885393d5f3e4d39fe83449be3949b2586ebca15
                     </li>
                 </ul>
                 <p class=\"copyright text-muted\">
-                <span class=\"fa-stack fa-lg\"><i class=\"fa fa-circle fa-stack-2x\"></i><i class=\"fa fa-envelope fa-stack-1x fa-inverse\"></i></span>brinquecoin@brinquecoin.com</p>
+                <span class=\"fa-stack fa-lg\"><i class=\"fa fa-circle fa-stack-2x\"></i><i class=\"fa fa-envelope fa-stack-1x fa-inverse\"></i></span>impacto@social.com</p>
             </div>
         </div>
     </div>
@@ -422,6 +422,6 @@ class __TwigTemplate_bd713238093af8e81de5885393d5f3e4d39fe83449be3949b2586ebca15
       ga('send', 'pageview');
     </script>
 </body>
-</html>", "leiaute.twig", "/home/85236250110/Documentos/trabalho/public-html/PNSLSocial/web/view/leiaute.twig");
+</html>", "leiaute.twig", "/var/www/html/PNSLSocial/web/view/leiaute.twig");
     }
 }

@@ -10,7 +10,7 @@
             </header>
         </div>
         <div class="row col-sm-8 col-sm-offset-2">
-            <form name="frmTipo" action="{{ path('usuarioSalvar')}}" method="POST">
+            <form name="frmCadastro" action="{{ path('usuarioSalvar')}}" method="POST">
                 <div class="form-group form-check-inline">
                     <label class="form-check-label">Responsável
                         <input type="radio" id="tipo_usuario" name="tipo_usuario" class="form-check-input" value="R" checked="true">
@@ -86,6 +86,7 @@
                         <input type="number" id="cep" class="form-control" placeholder="70000000">
                     </div>
                 </fieldset>
+                <fieldset>
                 <legend><i class="glyphicon glyphicon-menu-right"></i><b>Contato</b></legend>
                     <div class="form-group col-sm-4">
                         <label for="telefone">Telefone</label>

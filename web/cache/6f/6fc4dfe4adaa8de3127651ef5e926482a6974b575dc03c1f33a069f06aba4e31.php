@@ -41,7 +41,7 @@ class __TwigTemplate_855f6e6247118f1cb62f5bfeeb5e5f06c6831d1cac3ab63176a380359b7
             </header>
         </div>
         <div class=\"row col-sm-8 col-sm-offset-2\">
-            <form name=\"frmTipo\" action=\"";
+            <form name=\"frmCadastro\" action=\"";
         // line 13
         echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("voluntarioSalvar");
         echo "\" method=\"POST\">
@@ -92,6 +92,7 @@ class __TwigTemplate_855f6e6247118f1cb62f5bfeeb5e5f06c6831d1cac3ab63176a380359b7
                         <input type=\"number\" id=\"nis\" class=\"form-control\" placeholder=\"999999999999\">
                     </div>
                 </fieldset>
+                <fieldset>
                 <legend><i class=\"glyphicon glyphicon-menu-right\"></i><b>Endereço</b></legend>
                     <div class=\"form-group col-sm-5\">
                         <label for=\"endereco\">Endereço</label>
@@ -112,6 +113,7 @@ class __TwigTemplate_855f6e6247118f1cb62f5bfeeb5e5f06c6831d1cac3ab63176a380359b7
                         <input type=\"number\" id=\"cep\" class=\"form-control\" placeholder=\"70000000\">
                     </div>
                 </fieldset>
+                <fieldset>
                 <legend><i class=\"glyphicon glyphicon-menu-right\"></i><b>Contato</b></legend>
                     <div class=\"form-group col-sm-4\">
                         <label for=\"telefone\">Telefone</label>
@@ -156,18 +158,18 @@ class __TwigTemplate_855f6e6247118f1cb62f5bfeeb5e5f06c6831d1cac3ab63176a380359b7
             </form>
         </div>
         ";
-        // line 124
+        // line 126
         if (array_key_exists("mensagem", $context)) {
-            // line 125
+            // line 127
             echo "        <div class=\"row alert alert-success\">
             ";
-            // line 126
-            echo twig_escape_filter($this->env, (isset($context["mensagem"]) || array_key_exists("mensagem", $context) ? $context["mensagem"] : (function () { throw new Twig_Error_Runtime('Variable "mensagem" does not exist.', 126, $this->source); })()), "html", null, true);
+            // line 128
+            echo twig_escape_filter($this->env, (isset($context["mensagem"]) || array_key_exists("mensagem", $context) ? $context["mensagem"] : (function () { throw new Twig_Error_Runtime('Variable "mensagem" does not exist.', 128, $this->source); })()), "html", null, true);
             echo "
         </div>
         ";
         }
-        // line 129
+        // line 131
         echo "    </div>
 ";
     }
@@ -184,7 +186,7 @@ class __TwigTemplate_855f6e6247118f1cb62f5bfeeb5e5f06c6831d1cac3ab63176a380359b7
 
     public function getDebugInfo()
     {
-        return array (  171 => 129,  165 => 126,  162 => 125,  160 => 124,  46 => 13,  35 => 4,  32 => 3,  15 => 1,);
+        return array (  173 => 131,  167 => 128,  164 => 127,  162 => 126,  46 => 13,  35 => 4,  32 => 3,  15 => 1,);
     }
 
     public function getSourceContext()
@@ -201,7 +203,7 @@ class __TwigTemplate_855f6e6247118f1cb62f5bfeeb5e5f06c6831d1cac3ab63176a380359b7
             </header>
         </div>
         <div class=\"row col-sm-8 col-sm-offset-2\">
-            <form name=\"frmTipo\" action=\"{{ path('voluntarioSalvar')}}\" method=\"POST\">
+            <form name=\"frmCadastro\" action=\"{{ path('voluntarioSalvar')}}\" method=\"POST\">
                 <fieldset>
                 <legend><i class=\"glyphicon glyphicon-menu-right\"></i><b>Dados pessoais</b></legend>
                     <div class=\"form-group col-sm-3\">
@@ -249,6 +251,7 @@ class __TwigTemplate_855f6e6247118f1cb62f5bfeeb5e5f06c6831d1cac3ab63176a380359b7
                         <input type=\"number\" id=\"nis\" class=\"form-control\" placeholder=\"999999999999\">
                     </div>
                 </fieldset>
+                <fieldset>
                 <legend><i class=\"glyphicon glyphicon-menu-right\"></i><b>Endereço</b></legend>
                     <div class=\"form-group col-sm-5\">
                         <label for=\"endereco\">Endereço</label>
@@ -269,6 +272,7 @@ class __TwigTemplate_855f6e6247118f1cb62f5bfeeb5e5f06c6831d1cac3ab63176a380359b7
                         <input type=\"number\" id=\"cep\" class=\"form-control\" placeholder=\"70000000\">
                     </div>
                 </fieldset>
+                <fieldset>
                 <legend><i class=\"glyphicon glyphicon-menu-right\"></i><b>Contato</b></legend>
                     <div class=\"form-group col-sm-4\">
                         <label for=\"telefone\">Telefone</label>
@@ -319,6 +323,6 @@ class __TwigTemplate_855f6e6247118f1cb62f5bfeeb5e5f06c6831d1cac3ab63176a380359b7
         {% endif %}
     </div>
 {% endblock %}
-", "cadastroVoluntario.twig", "/home/85236250110/Documentos/trabalho/public-html/PNSLSocial/web/view/cadastroVoluntario.twig");
+", "cadastroVoluntario.twig", "/var/www/html/PNSLSocial/web/view/cadastroVoluntario.twig");
     }
 }

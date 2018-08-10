@@ -63,12 +63,12 @@ class __TwigTemplate_f437f5b9f1758b894162a1c59ad48ce16e34b5dc7b677536cf5b2a093b2
         </a>
         <a href=\"";
         // line 27
-        echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, (isset($context["app"]) || array_key_exists("app", $context) ? $context["app"] : (function () { throw new Twig_Error_Runtime('Variable "app" does not exist.', 27, $this->source); })()), "url_generator", array()), "generate", array(0 => "tipoCadastrar"), "method"), "html", null, true);
+        echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("relatorioPrestacaoConta");
         echo "\">
             <div class=\"col-sm-4\">
-                <span class=\"fa fa-gear fa-3x\"></span>
-                <h4>Configuração</h4>
-                <p>Cadastre alguns dados como parentesco, gênero entre outros</p>
+                <span class=\"fa fa-info fa-3x\"></span>
+                <h4>Prestação de contas</h4>
+                <p>Relatório para prestação de contas anual</p>
             </div>
         </a>
     </div>
@@ -84,28 +84,24 @@ class __TwigTemplate_f437f5b9f1758b894162a1c59ad48ce16e34b5dc7b677536cf5b2a093b2
                 <p>ações sociais oferecidas pela instituição</p>
             </div>
         </a>
-        <a href=\"/turma\">
+        <a href=\"";
+        // line 44
+        echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("frequenciaCadastrar");
+        echo "\">
             <div class=\"col-sm-4\">
                 <span class=\"fa fa-graduation-cap fa-3x\"></span>
-                <h4>Turma</h4>
-                <p>ação social realizada em grupo como aulas, oficinas e palestras</p>
+                <h4>Frequência</h4>
+                <p>frequência dos usuários que participam de ações em grupo como: aulas, oficinas e palestras</p>
             </div>
         </a>
-        <a href=\"/atendimento\">
+        <a href=\"";
+        // line 51
+        echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("atendimentoCadastrar");
+        echo "\">
             <div class=\"col-sm-4\">
                 <span class=\"fa fa-user-md fa-3x\"></span>
                 <h4>Atendimento</h4>
-                <p>ação social individual como atendimentos por médicos, psicólogos, dentistas, advogados ou empreendedores</p>
-            </div>
-        </a>
-    </div>
-    <br><br>
-    <div class=\"row slideanim text-center\">
-        <a href=\"/pretacao-contas\">
-            <div class=\"col-sm-4\">
-                <span class=\"fa fa-info fa-3x\"></span>
-                <h4>Prestação de contas</h4>
-                <p>Relatório para prestação de contas anual</p>
+                <p>registro dos atendimentos de ações individuais como: médicos, psicólogos, dentistas, advogados ou empreendedores</p>
             </div>
         </a>
     </div>
@@ -125,7 +121,7 @@ class __TwigTemplate_f437f5b9f1758b894162a1c59ad48ce16e34b5dc7b677536cf5b2a093b2
 
     public function getDebugInfo()
     {
-        return array (  79 => 37,  66 => 27,  56 => 20,  46 => 13,  35 => 4,  32 => 3,  15 => 1,);
+        return array (  99 => 51,  89 => 44,  79 => 37,  66 => 27,  56 => 20,  46 => 13,  35 => 4,  32 => 3,  15 => 1,);
     }
 
     public function getSourceContext()
@@ -156,11 +152,11 @@ class __TwigTemplate_f437f5b9f1758b894162a1c59ad48ce16e34b5dc7b677536cf5b2a093b2
                 <p>pessoas atendidas pela instituição</p>
             </div>
         </a>
-        <a href=\"{{ app.url_generator.generate('tipoCadastrar') }}\">
+        <a href=\"{{ path('relatorioPrestacaoConta') }}\">
             <div class=\"col-sm-4\">
-                <span class=\"fa fa-gear fa-3x\"></span>
-                <h4>Configuração</h4>
-                <p>Cadastre alguns dados como parentesco, gênero entre outros</p>
+                <span class=\"fa fa-info fa-3x\"></span>
+                <h4>Prestação de contas</h4>
+                <p>Relatório para prestação de contas anual</p>
             </div>
         </a>
     </div>
@@ -173,32 +169,22 @@ class __TwigTemplate_f437f5b9f1758b894162a1c59ad48ce16e34b5dc7b677536cf5b2a093b2
                 <p>ações sociais oferecidas pela instituição</p>
             </div>
         </a>
-        <a href=\"/turma\">
+        <a href=\"{{ path('frequenciaCadastrar') }}\">
             <div class=\"col-sm-4\">
                 <span class=\"fa fa-graduation-cap fa-3x\"></span>
-                <h4>Turma</h4>
-                <p>ação social realizada em grupo como aulas, oficinas e palestras</p>
+                <h4>Frequência</h4>
+                <p>frequência dos usuários que participam de ações em grupo como: aulas, oficinas e palestras</p>
             </div>
         </a>
-        <a href=\"/atendimento\">
+        <a href=\"{{ path('atendimentoCadastrar') }}\">
             <div class=\"col-sm-4\">
                 <span class=\"fa fa-user-md fa-3x\"></span>
                 <h4>Atendimento</h4>
-                <p>ação social individual como atendimentos por médicos, psicólogos, dentistas, advogados ou empreendedores</p>
-            </div>
-        </a>
-    </div>
-    <br><br>
-    <div class=\"row slideanim text-center\">
-        <a href=\"/pretacao-contas\">
-            <div class=\"col-sm-4\">
-                <span class=\"fa fa-info fa-3x\"></span>
-                <h4>Prestação de contas</h4>
-                <p>Relatório para prestação de contas anual</p>
+                <p>registro dos atendimentos de ações individuais como: médicos, psicólogos, dentistas, advogados ou empreendedores</p>
             </div>
         </a>
     </div>
 </div>
-{% endblock %}", "areaRestrita.twig", "/home/85236250110/Documentos/trabalho/public-html/PNSLSocial/web/view/areaRestrita.twig");
+{% endblock %}", "areaRestrita.twig", "/var/www/html/PNSLSocial/web/view/areaRestrita.twig");
     }
 }

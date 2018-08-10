@@ -41,7 +41,7 @@ class __TwigTemplate_1568984b06ddcb96e3e38818dda66e2ad8b3ce3ae65ece870a0fd530ac4
             </header>
         </div>
         <div class=\"row col-sm-8 col-sm-offset-2\">
-            <form name=\"frmTipo\" action=\"";
+            <form name=\"frmCadastro\" action=\"";
         // line 13
         echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("usuarioSalvar");
         echo "\" method=\"POST\">
@@ -82,7 +82,7 @@ class __TwigTemplate_1568984b06ddcb96e3e38818dda66e2ad8b3ce3ae65ece870a0fd530ac4
                         <label for=\"nacionalidade\">Nacionalidade</label>
                         <input type=\"text\" id=\"naturalidade\" class=\"form-control\" placeholder=\"Brasíleira\" required>
                     </div>
-                    <div class=\"form-group form-check-inline col-sm-2 col-sm-offset-1\">
+                    <div class=\"form-group form-check-inline col-sm-2\">
                         <label for=\"genero\" class=\"form-check-label\">Sexo</label><br />
                         <label class=\"form-check-label\">M
                             <input type=\"radio\" id=\"genero\" name=\"genero\" class=\"form-check-input\" value=\"M\">
@@ -91,7 +91,7 @@ class __TwigTemplate_1568984b06ddcb96e3e38818dda66e2ad8b3ce3ae65ece870a0fd530ac4
                             <input type=\"radio\" id=\"genero\" name=\"genero\" class=\"form-check-input\" value=\"F\">
                         </label>
                     </div>                    
-                    <div class=\"form-group col-sm-6\">
+                    <div class=\"form-group col-sm-7\">
                         <label for=\"profissao\">Profissão</label>
                         <input type=\"text\" id=\"profissao\" class=\"form-control\" placeholder=\"Costureira\">
                     </div>
@@ -298,7 +298,7 @@ class __TwigTemplate_1568984b06ddcb96e3e38818dda66e2ad8b3ce3ae65ece870a0fd530ac4
             </header>
         </div>
         <div class=\"row col-sm-8 col-sm-offset-2\">
-            <form name=\"frmTipo\" action=\"{{ path('usuarioSalvar')}}\" method=\"POST\">
+            <form name=\"frmCadastro\" action=\"{{ path('usuarioSalvar')}}\" method=\"POST\">
                 <div class=\"form-group form-check-inline\">
                     <label class=\"form-check-label\">Responsável
                         <input type=\"radio\" id=\"tipo_usuario\" name=\"tipo_usuario\" class=\"form-check-input\" value=\"R\" checked=\"true\">
@@ -336,7 +336,7 @@ class __TwigTemplate_1568984b06ddcb96e3e38818dda66e2ad8b3ce3ae65ece870a0fd530ac4
                         <label for=\"nacionalidade\">Nacionalidade</label>
                         <input type=\"text\" id=\"naturalidade\" class=\"form-control\" placeholder=\"Brasíleira\" required>
                     </div>
-                    <div class=\"form-group form-check-inline col-sm-2 col-sm-offset-1\">
+                    <div class=\"form-group form-check-inline col-sm-2\">
                         <label for=\"genero\" class=\"form-check-label\">Sexo</label><br />
                         <label class=\"form-check-label\">M
                             <input type=\"radio\" id=\"genero\" name=\"genero\" class=\"form-check-input\" value=\"M\">
@@ -345,7 +345,7 @@ class __TwigTemplate_1568984b06ddcb96e3e38818dda66e2ad8b3ce3ae65ece870a0fd530ac4
                             <input type=\"radio\" id=\"genero\" name=\"genero\" class=\"form-check-input\" value=\"F\">
                         </label>
                     </div>                    
-                    <div class=\"form-group col-sm-6\">
+                    <div class=\"form-group col-sm-7\">
                         <label for=\"profissao\">Profissão</label>
                         <input type=\"text\" id=\"profissao\" class=\"form-control\" placeholder=\"Costureira\">
                     </div>
@@ -513,6 +513,6 @@ class __TwigTemplate_1568984b06ddcb96e3e38818dda66e2ad8b3ce3ae65ece870a0fd530ac4
         {% endif %}
     </div>
 {% endblock %}
-", "cadastroUsuario.twig", "/home/85236250110/Documentos/trabalho/public-html/PNSLSocial/web/view/cadastroUsuario.twig");
+", "cadastroUsuario.twig", "/var/www/html/PNSLSocial/web/view/cadastroUsuario.twig");
     }
 }

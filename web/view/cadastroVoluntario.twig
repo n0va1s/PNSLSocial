@@ -10,7 +10,7 @@
             </header>
         </div>
         <div class="row col-sm-8 col-sm-offset-2">
-            <form name="frmTipo" action="{{ path('voluntarioSalvar')}}" method="POST">
+            <form name="frmCadastro" action="{{ path('voluntarioSalvar')}}" method="POST">
                 <fieldset>
                 <legend><i class="glyphicon glyphicon-menu-right"></i><b>Dados pessoais</b></legend>
                     <div class="form-group col-sm-3">
@@ -58,6 +58,7 @@
                         <input type="number" id="nis" class="form-control" placeholder="999999999999">
                     </div>
                 </fieldset>
+                <fieldset>
                 <legend><i class="glyphicon glyphicon-menu-right"></i><b>Endereço</b></legend>
                     <div class="form-group col-sm-5">
                         <label for="endereco">Endereço</label>
@@ -78,6 +79,7 @@
                         <input type="number" id="cep" class="form-control" placeholder="70000000">
                     </div>
                 </fieldset>
+                <fieldset>
                 <legend><i class="glyphicon glyphicon-menu-right"></i><b>Contato</b></legend>
                     <div class="form-group col-sm-4">
                         <label for="telefone">Telefone</label>

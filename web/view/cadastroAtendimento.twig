@@ -1,0 +1,51 @@
+{% extends 'leiaute.twig' %}
+
+{% block conteudo %}
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row col-sm-8 col-sm-offset-2">
+            <header>
+                <h2><span class="fa fa-user-md" aria-hidden="true"></span>&nbsp;Atendimento</h2>
+                <small>registro dos atendimentos de ações individuais como: médicos, psicólogos, dentistas, advogados ou empreendedores</small>
+            </header>
+        </div>
+        <div class="row col-sm-8 col-sm-offset-2">
+            <form name="frmCadastro" action="{{ path('atendimentoSalvar')}}" method="POST">
+                <fieldset>
+                <legend><i class="glyphicon glyphicon-menu-right"></i><b>Ação social</b></legend>
+                    <div class="form-group">
+                        <select class="form-control" id="acao_social" required>
+                            <option value="">Selecione</option>
+                        </select>
+                    </div>
+                </fieldset>
+                <fieldset>
+                <legend><i class="glyphicon glyphicon-menu-right"></i><b>Dados do atendimento</b></legend>
+                    <div class="form-group col-sm-9">
+                        <label for="usuario">Usuário</label>
+                        <select class="form-control" id="usuario" required>
+                            <option value="">Selecione</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <label for="data">Dia</label>
+                        <input type="date" id="data" class="form-control" placeholder="dd/mm/aaaa" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="atendimento">Atendimento</label>
+                        <textarea id="atendimento" class="form-control" rows=10 placeholder="Descreva o atendimento" required></textarea>
+                    </div>
+                </fieldset>
+                <div class="form-group col-sm-12 text-center">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="glyphicon glyphicon-ok"> Cadastrar</i>
+                    </button>
+                    <button type="button" class="btn btn-default">
+                        <i class="glyphicon glyphicon-remove"> Limpar</i>
+                    </button>
+                </div>
+                <input type="hidden" id="tipo" value="VOL">
+            </form>
+        </div>
+    </div>
+{% endblock %}

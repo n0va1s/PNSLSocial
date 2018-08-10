@@ -1,0 +1,58 @@
+{% extends 'leiaute.twig' %}
+
+{% block conteudo %}
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row col-sm-8 col-sm-offset-2">
+            <header>
+                <h2><span class="fa fa-graduation-cap" aria-hidden="true"></span>&nbsp;Frequência</h2>
+                <small>frequência dos usuários que participam de ações em grupo como: aulas, oficinas e palestras</small>
+            </header>
+        </div>
+        <div class="row col-sm-8 col-sm-offset-2">
+            <form name="frmCadastro" action="{{ path('frequenciaSalvar')}}" method="POST">
+                <fieldset>
+                <legend><i class="glyphicon glyphicon-menu-right"></i><b>Ação social</b></legend>
+                    <div class="form-group">
+                        <select class="form-control" id="acao_social" required>
+                            <option value="">Selecione</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <table class="table table-responsive table-hover">
+                        <caption>Registre a frequência</caption>
+                            <thead class="thead-light">
+                                <tr>
+                                    <th class="col-sm-5">Usuário</th>
+                                    <th class="col-sm-5">Responsável</th>
+                                    <th class="col-sm-2"><center>Dia</center></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Fulano</td>
+                                    <td>Pai do Fulano</td>
+                                    <td><input type="date" id="dataFrequencia" class="form-control" placeholder="dd/mm/aaaa" required></td>
+                                </tr>
+                                <tr>
+                                    <td>Beltrano</td>
+                                    <td></td>
+                                    <td><input type="date" id="dataFrequencia" class="form-control" placeholder="dd/mm/aaaa" required></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </fieldset>
+                <div class="form-group col-sm-12 text-center">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="glyphicon glyphicon-ok"> Cadastrar</i>
+                    </button>
+                    <button type="button" class="btn btn-default">
+                        <i class="glyphicon glyphicon-remove"> Limpar</i>
+                    </button>
+                </div>
+                <input type="hidden" id="tipo" value="VOL">
+            </form>
+        </div>
+    </div>
+{% endblock %}
