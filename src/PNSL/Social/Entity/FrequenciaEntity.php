@@ -17,26 +17,20 @@ class FrequenciaEntity
     */
     private $id;
 
+     /**
+     * @ORM\ManyToOne(targetEntity="AcaoEntity", inversedBy="frequencia")
+     * @ORM\JoinColumn(name="seq_acao", referencedColumnName="seq_acao")
+     */
+    private $acao;
+
+     /**
+     * @ORM\ManyToOne(targetEntity="UsuarioEntity", inversedBy="frequencia")
+     * @ORM\JoinColumn(name="seq_usuario", referencedColumnName="seq_usuario")
+     */
+    private $usuario;
+
     /** @ORM\Column(type="datetime", name="dat_frequencia", nullable=false) */
     private $data;
-
-    /** @ORM\Column(type="string", name="ind_presenca", columnDefinition="CHAR(1) NOT NULL", options={"default":"F"}) */
-    private $presenca;
-
-    /** @ORM\Column(type="string", name="ind_inativo", columnDefinition="CHAR(1) NOT NULL", options={"default":"N"}) */
-    private $inativo;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="TurmaEntity", inversedBy="frequencias")
-     * @ORM\JoinColumn(name="seq_turma", referencedColumnName="seq_turma")
-     */
-    private $turma;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="PessoaEntity", inversedBy="turmas")
-     * @ORM\JoinColumn(name="seq_atendido", referencedColumnName="seq_pessoa")
-     */
-    private $atendido;
 
     /** @ORM\Column(type="string", length=50, name="usu_inc", nullable=false) */
     private $usuarioInclusao;
@@ -52,7 +46,6 @@ class FrequenciaEntity
 
     public function __construct()
     {
-        $this->data = new \Datetime();
         $this->dataInclusao = new \Datetime();
         $this->dataAlteracao = new \Datetime();
     }
@@ -78,6 +71,46 @@ class FrequenciaEntity
     }
 
     /**
+     * Get the value of acao
+     */ 
+    public function getAcao()
+    {
+        return $this->acao;
+    }
+
+    /**
+     * Set the value of acao
+     *
+     * @return  self
+     */ 
+    public function setAcao($acao)
+    {
+        $this->acao = $acao;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of usuario
+     */ 
+    public function getUsuario()
+    {
+        return $this->usuario;
+    }
+
+    /**
+     * Set the value of usuario
+     *
+     * @return  self
+     */ 
+    public function setUsuario($usuario)
+    {
+        $this->usuario = $usuario;
+
+        return $this;
+    }
+
+    /**
      * Get the value of data
      */ 
     public function getData()
@@ -86,81 +119,13 @@ class FrequenciaEntity
     }
 
     /**
-     * Get the value of presenca
-     */ 
-    public function getPresenca()
-    {
-        return $this->presenca;
-    }
-
-    /**
-     * Set the value of presenca
+     * Set the value of data
      *
      * @return  self
      */ 
-    public function setPresenca($presenca)
+    public function setData($data)
     {
-        $this->presenca = $presenca;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of inativo
-     */ 
-    public function getInativo()
-    {
-        return $this->inativo;
-    }
-
-    /**
-     * Set the value of inativo
-     *
-     * @return  self
-     */ 
-    public function setInativo($inativo)
-    {
-        $this->inativo = $inativo;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of turma
-     */ 
-    public function getTurma()
-    {
-        return $this->turma;
-    }
-
-    /**
-     * Set the value of turma
-     *
-     * @return  self
-     */ 
-    public function setTurma(Turma $turma)
-    {
-        $this->turma = $turma;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of atendido
-     */ 
-    public function getAtendido()
-    {
-        return $this->atendido;
-    }
-
-    /**
-     * Set the value of atendido
-     *
-     * @return  self
-     */ 
-    public function setAtendido(Pessoa $atendido)
-    {
-        $this->atendido = $atendido;
+        $this->data = $data;
 
         return $this;
     }

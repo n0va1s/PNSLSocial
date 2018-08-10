@@ -75,6 +75,40 @@ class __TwigTemplate_f0d4576e31285857b7f5a0ad7e8a36bb93c32f9680288fed3d07e0aa2ec
                         <label for=\"pre-requisito\">Pré-requisito</label>
                         <input type=\"text\" id=\"pre-requisito\" class=\"form-control\" placeholder=\"estar na 4ª série, ter feito informática básica\">
                     </div>
+                    <div class=\"form-group form-check-inline col-sm-8\">
+                        <label for=\"dia\" class=\"form-check-label\">Dia</label><br />
+                        <label class=\"form-check-label\">Seg
+                            <input type=\"checkbox\" id=\"dia\" class=\"form-check-input\" value=\"Seg\">
+                        </label>
+                        <label class=\"form-check-label\">Ter
+                            <input type=\"checkbox\" id=\"dia\" class=\"form-check-input\" value=\"Ter\">
+                        </label>
+                        <label class=\"form-check-label\">Qua
+                            <input type=\"checkbox\" id=\"dia\" class=\"form-check-input\" value=\"Qua\">
+                        </label>
+                        <label class=\"form-check-label\">Qui
+                            <input type=\"checkbox\" id=\"dia\" class=\"form-check-input\" value=\"Qui\">
+                        </label>
+                        <label class=\"form-check-label\">Sex
+                            <input type=\"checkbox\" id=\"dia\" class=\"form-check-input\" value=\"Sex\">
+                        </label>
+                        <label class=\"form-check-label\">Sáb
+                            <input type=\"checkbox\" id=\"dia\" class=\"form-check-input\" value=\"Sab\">
+                        </label>
+                        <label class=\"form-check-label\">Dom
+                            <input type=\"checkbox\" id=\"dia\" class=\"form-check-input\" value=\"Dom\">
+                        </label>
+                    </div>   
+                    <div class=\"form-group col-sm-2\">
+                        <label for=\"horario\">Horário</label>
+                        <input type=\"time\" id=\"horario\" class=\"form-control\" placeholder=\"12:00\">
+                    </div>
+                    <div class=\"form-group col-sm-2\">
+                        <label for=\"turno\">Turno</label>
+                        <select class=\"form-control\" id=\"turno\" required>
+                            <option value=\"\">Selecione</option>
+                        </select>
+                    </div>
                     <div class=\"form-group\">
                         <label for=\"voluntario\">Voluntário</label>
                         <select class=\"form-control\" id=\"voluntario\" required>
@@ -102,18 +136,18 @@ class __TwigTemplate_f0d4576e31285857b7f5a0ad7e8a36bb93c32f9680288fed3d07e0aa2ec
             </form>
         </div>
         ";
-        // line 70
+        // line 104
         if (array_key_exists("mensagem", $context)) {
-            // line 71
+            // line 105
             echo "        <div class=\"row alert alert-success\">
             ";
-            // line 72
-            echo twig_escape_filter($this->env, (isset($context["mensagem"]) || array_key_exists("mensagem", $context) ? $context["mensagem"] : (function () { throw new Twig_Error_Runtime('Variable "mensagem" does not exist.', 72, $this->source); })()), "html", null, true);
+            // line 106
+            echo twig_escape_filter($this->env, (isset($context["mensagem"]) || array_key_exists("mensagem", $context) ? $context["mensagem"] : (function () { throw new Twig_Error_Runtime('Variable "mensagem" does not exist.', 106, $this->source); })()), "html", null, true);
             echo "
         </div>
         ";
         }
-        // line 75
+        // line 109
         echo "    </div>
 ";
     }
@@ -130,7 +164,7 @@ class __TwigTemplate_f0d4576e31285857b7f5a0ad7e8a36bb93c32f9680288fed3d07e0aa2ec
 
     public function getDebugInfo()
     {
-        return array (  117 => 75,  111 => 72,  108 => 71,  106 => 70,  46 => 13,  35 => 4,  32 => 3,  15 => 1,);
+        return array (  151 => 109,  145 => 106,  142 => 105,  140 => 104,  46 => 13,  35 => 4,  32 => 3,  15 => 1,);
     }
 
     public function getSourceContext()
@@ -178,6 +212,40 @@ class __TwigTemplate_f0d4576e31285857b7f5a0ad7e8a36bb93c32f9680288fed3d07e0aa2ec
                         <label for=\"pre-requisito\">Pré-requisito</label>
                         <input type=\"text\" id=\"pre-requisito\" class=\"form-control\" placeholder=\"estar na 4ª série, ter feito informática básica\">
                     </div>
+                    <div class=\"form-group form-check-inline col-sm-8\">
+                        <label for=\"dia\" class=\"form-check-label\">Dia</label><br />
+                        <label class=\"form-check-label\">Seg
+                            <input type=\"checkbox\" id=\"dia\" class=\"form-check-input\" value=\"Seg\">
+                        </label>
+                        <label class=\"form-check-label\">Ter
+                            <input type=\"checkbox\" id=\"dia\" class=\"form-check-input\" value=\"Ter\">
+                        </label>
+                        <label class=\"form-check-label\">Qua
+                            <input type=\"checkbox\" id=\"dia\" class=\"form-check-input\" value=\"Qua\">
+                        </label>
+                        <label class=\"form-check-label\">Qui
+                            <input type=\"checkbox\" id=\"dia\" class=\"form-check-input\" value=\"Qui\">
+                        </label>
+                        <label class=\"form-check-label\">Sex
+                            <input type=\"checkbox\" id=\"dia\" class=\"form-check-input\" value=\"Sex\">
+                        </label>
+                        <label class=\"form-check-label\">Sáb
+                            <input type=\"checkbox\" id=\"dia\" class=\"form-check-input\" value=\"Sab\">
+                        </label>
+                        <label class=\"form-check-label\">Dom
+                            <input type=\"checkbox\" id=\"dia\" class=\"form-check-input\" value=\"Dom\">
+                        </label>
+                    </div>   
+                    <div class=\"form-group col-sm-2\">
+                        <label for=\"horario\">Horário</label>
+                        <input type=\"time\" id=\"horario\" class=\"form-control\" placeholder=\"12:00\">
+                    </div>
+                    <div class=\"form-group col-sm-2\">
+                        <label for=\"turno\">Turno</label>
+                        <select class=\"form-control\" id=\"turno\" required>
+                            <option value=\"\">Selecione</option>
+                        </select>
+                    </div>
                     <div class=\"form-group\">
                         <label for=\"voluntario\">Voluntário</label>
                         <select class=\"form-control\" id=\"voluntario\" required>
@@ -211,6 +279,6 @@ class __TwigTemplate_f0d4576e31285857b7f5a0ad7e8a36bb93c32f9680288fed3d07e0aa2ec
         {% endif %}
     </div>
 {% endblock %}
-", "cadastroAcao.twig", "/var/www/html/PNSLSocial/web/view/cadastroAcao.twig");
+", "cadastroAcao.twig", "/home/85236250110/Documentos/trabalho/public-html/PNSLSocial/web/view/cadastroAcao.twig");
     }
 }

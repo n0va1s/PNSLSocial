@@ -24,10 +24,10 @@ class AtendimentoEntity
     private $acao;
 
     /**
-     * @ORM\ManyToOne(targetEntity="PessoaEntity", inversedBy="atendimentos")
-     * @ORM\JoinColumn(name="seq_atendido", referencedColumnName="seq_pessoa")
+     * @ORM\ManyToOne(targetEntity="UsuarioEntity", inversedBy="atendimento")
+     * @ORM\JoinColumn(name="seq_usuario", referencedColumnName="seq_usuario")
      */
-    private $atendido;
+    private $usuario;
 
     /** @ORM\Column(type="datetime", name="dat_atendimento") */
     private $dataAtendimento;
@@ -49,7 +49,6 @@ class AtendimentoEntity
 
     public function __construct()
     {
-        $this->cadastro = new \Datetime();
         $this->dataInclusao = new \Datetime();
         $this->dataAlteracao = new \Datetime();
     }

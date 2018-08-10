@@ -19,41 +19,62 @@ class AcaoEntity
     /** @ORM\Column(type="string", length=255, name="nom_acao") */
     private $nome;
 
-    /** @ORM\Column(type="string", name="tip_frequencia", columnDefinition="CHAR(1) NOT NULL") */
-    private $frequencia;
-
-    /** @ORM\Column(type="string", name="dia_semana", columnDefinition="CHAR(3) NOT NULL") */
-    private $diaSemana;
-
-    /** @ORM\Column(type="string", name="tip_turno", columnDefinition="CHAR(1) NOT NULL") */
-    private $turno;
-
     /** @ORM\Column(type="datetime", name="ano_mes_inicio") */
     private $inicio;
 
     /** @ORM\Column(type="datetime", name="ano_mes_termino", nullable=true) */
     private $termino;
 
-    /** @ORM\Column(type="text", name="txt_acao") */
-    private $descricao;
+    /** @ORM\Column(type="string", length=255, name="des_publico_alvo") */
+    private $publicoAlvo;
 
+    /** @ORM\Column(type="string", length=255, name="des_pre_requisito") */
+    private $preRequisito;
+
+    /** @ORM\Column(type="string", name="ind_segunda", columnDefinition="CHAR(1) NOT NULL") */
+    private $segunda;
+
+    /** @ORM\Column(type="string", name="ind_terca", columnDefinition="CHAR(1) NOT NULL") */
+    private $terca;
+
+    /** @ORM\Column(type="string", name="ind_quarta", columnDefinition="CHAR(1) NOT NULL") */
+    private $quarta;
+
+    /** @ORM\Column(type="string", name="ind_quinta", columnDefinition="CHAR(1) NOT NULL") */
+    private $quinta;
+
+    /** @ORM\Column(type="string", name="ind_sexta", columnDefinition="CHAR(1) NOT NULL") */
+    private $sexta;
+
+    /** @ORM\Column(type="string", name="ind_sabado", columnDefinition="CHAR(1) NOT NULL") */
+    private $sabado;
+
+    /** @ORM\Column(type="string", name="ind_domingo", columnDefinition="CHAR(1) NOT NULL") */
+    private $domingo;
+
+    /** @ORM\Column(type="time", name="hor_acao") */
+    private $horario;
+
+    /** @ORM\Column(type="string", name="tip_turno", columnDefinition="CHAR(1) NOT NULL") */
+    private $turno;
+
+     /**
+     * @ORM\ManyToOne(targetEntity="VoluntarioEntity", inversedBy="acao")
+     * @ORM\JoinColumn(name="seq_voluntario", referencedColumnName="seq_voluntario")
+     */
+    private $voluntario;
+    
     /** 
      * @ORM\OneToOne(targetEntity="TipoEntity")
      * @ORM\JoinColumn(name="seq_tipo_acao", referencedColumnName="seq_tipo") 
      */
     private $tipo;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="VoluntarioEntity", inversedBy="acao")
-     * @ORM\JoinColumn(name="seq_voluntario", referencedColumnName="seq_pessoa")
-     */
-    private $voluntario;
+    /** @ORM\OneToMany(targetEntity="FrequenciaEntity", mappedBy="acao") */
+    private $frequencia;
 
-    /** @ORM\OneToMany(targetEntity="AtendimentoEntity", mappedBy="atendimento") */
+    /** @ORM\OneToMany(targetEntity="AtendimentoEntity", mappedBy="acao") */
     private $atendimento;
-
-    /** @ORM\OneToMany(targetEntity="TurmaEntity", mappedBy="turma") */
-    private $turma;
 
     /** @ORM\Column(type="string", length=50, name="usu_inc", nullable=false) */
     private $usuarioInclusao;
@@ -154,41 +175,221 @@ class AcaoEntity
     }
 
     /**
-     * Get the value of descricao
+     * Get the value of publicoAlvo
      */ 
-    public function getDescricao()
+    public function getPublicoAlvo()
     {
-        return $this->descricao;
+        return $this->publicoAlvo;
     }
 
     /**
-     * Set the value of descricao
+     * Set the value of publicoAlvo
      *
      * @return  self
      */ 
-    public function setDescricao($descricao)
+    public function setPublicoAlvo($publicoAlvo)
     {
-        $this->descricao = $descricao;
+        $this->publicoAlvo = $publicoAlvo;
 
         return $this;
     }
 
     /**
-     * Get the value of tipo
+     * Get the value of preRequisito
      */ 
-    public function getTipo()
+    public function getPreRequisito()
     {
-        return $this->tipo;
+        return $this->preRequisito;
     }
 
     /**
-     * Set the value of tipo
+     * Set the value of preRequisito
      *
      * @return  self
      */ 
-    public function setTipo($tipo)
+    public function setPreRequisito($preRequisito)
     {
-        $this->tipo = $tipo;
+        $this->preRequisito = $preRequisito;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of segunda
+     */ 
+    public function getSegunda()
+    {
+        return $this->segunda;
+    }
+
+    /**
+     * Set the value of segunda
+     *
+     * @return  self
+     */ 
+    public function setSegunda($segunda)
+    {
+        $this->segunda = $segunda;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of terca
+     */ 
+    public function getTerca()
+    {
+        return $this->terca;
+    }
+
+    /**
+     * Set the value of terca
+     *
+     * @return  self
+     */ 
+    public function setTerca($terca)
+    {
+        $this->terca = $terca;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of quarta
+     */ 
+    public function getQuarta()
+    {
+        return $this->quarta;
+    }
+
+    /**
+     * Set the value of quarta
+     *
+     * @return  self
+     */ 
+    public function setQuarta($quarta)
+    {
+        $this->quarta = $quarta;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of quinta
+     */ 
+    public function getQuinta()
+    {
+        return $this->quinta;
+    }
+
+    /**
+     * Set the value of quinta
+     *
+     * @return  self
+     */ 
+    public function setQuinta($quinta)
+    {
+        $this->quinta = $quinta;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of sexta
+     */ 
+    public function getSexta()
+    {
+        return $this->sexta;
+    }
+
+    /**
+     * Set the value of sexta
+     *
+     * @return  self
+     */ 
+    public function setSexta($sexta)
+    {
+        $this->sexta = $sexta;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of sabado
+     */ 
+    public function getSabado()
+    {
+        return $this->sabado;
+    }
+
+    /**
+     * Set the value of sabado
+     *
+     * @return  self
+     */ 
+    public function setSabado($sabado)
+    {
+        $this->sabado = $sabado;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of domingo
+     */ 
+    public function getDomingo()
+    {
+        return $this->domingo;
+    }
+
+    /**
+     * Set the value of domingo
+     *
+     * @return  self
+     */ 
+    public function setDomingo($domingo)
+    {
+        $this->domingo = $domingo;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of horario
+     */ 
+    public function getHorario()
+    {
+        return $this->horario;
+    }
+
+    /**
+     * Set the value of horario
+     *
+     * @return  self
+     */ 
+    public function setHorario($horario)
+    {
+        $this->horario = $horario;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of turno
+     */ 
+    public function getTurno()
+    {
+        return $this->turno;
+    }
+
+    /**
+     * Set the value of turno
+     *
+     * @return  self
+     */ 
+    public function setTurno($turno)
+    {
+        $this->turno = $turno;
 
         return $this;
     }
@@ -214,41 +415,21 @@ class AcaoEntity
     }
 
     /**
-     * Get the value of atendimento
+     * Get the value of tipo
      */ 
-    public function getAtendimento()
+    public function getTipo()
     {
-        return $this->atendimento;
+        return $this->tipo;
     }
 
     /**
-     * Set the value of atendimento
+     * Set the value of tipo
      *
      * @return  self
      */ 
-    public function setAtendimento($atendimento)
+    public function setTipo($tipo)
     {
-        $this->atendimento = $atendimento;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of turma
-     */ 
-    public function getTurma()
-    {
-        return $this->turma;
-    }
-
-    /**
-     * Set the value of turma
-     *
-     * @return  self
-     */ 
-    public function setTurma($turma)
-    {
-        $this->turma = $turma;
+        $this->tipo = $tipo;
 
         return $this;
     }
