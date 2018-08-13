@@ -60,7 +60,7 @@ class AcaoEntity
 
      /**
      * @ORM\ManyToOne(targetEntity="VoluntarioEntity", inversedBy="acao")
-     * @ORM\JoinColumn(name="seq_voluntario", referencedColumnName="seq_voluntario")
+     * @ORM\JoinColumn(name="seq_voluntario", referencedColumnName="seq_pessoa")
      */
     private $voluntario;
     
@@ -71,10 +71,13 @@ class AcaoEntity
     private $tipo;
 
     /** @ORM\OneToMany(targetEntity="FrequenciaEntity", mappedBy="acao") */
-    private $frequencia;
+    private $frequencias;
 
     /** @ORM\OneToMany(targetEntity="AtendimentoEntity", mappedBy="acao") */
-    private $atendimento;
+    private $atendimentos;
+
+    /** @ORM\OneToMany(targetEntity="TurmaEntity", mappedBy="acao") */
+    private $turmas;
 
     /** @ORM\Column(type="string", length=50, name="usu_inc", nullable=false) */
     private $usuarioInclusao;
@@ -90,6 +93,9 @@ class AcaoEntity
 
     public function __construct()
     {
+        $this->frequencias = new ArrayCollection();
+        $this->atendimentos = new ArrayCollection();
+        $this->turmas = new ArrayCollection();
         $this->dataInclusao = new \Datetime();
         $this->dataAlteracao = new \Datetime();
     }

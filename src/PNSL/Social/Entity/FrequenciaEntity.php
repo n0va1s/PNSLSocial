@@ -25,9 +25,9 @@ class FrequenciaEntity
 
      /**
      * @ORM\ManyToOne(targetEntity="UsuarioEntity", inversedBy="frequencia")
-     * @ORM\JoinColumn(name="seq_usuario", referencedColumnName="seq_usuario")
+     * @ORM\JoinColumn(name="seq_pessoa", referencedColumnName="seq_pessoa")
      */
-    private $usuario;
+    private $pessoa;
 
     /** @ORM\Column(type="datetime", name="dat_frequencia", nullable=false) */
     private $data;
@@ -91,21 +91,21 @@ class FrequenciaEntity
     }
 
     /**
-     * Get the value of usuario
+     * Get the value of pessoa
      */ 
-    public function getUsuario()
+    public function getPessoa()
     {
-        return $this->usuario;
+        return $this->pessoa;
     }
 
     /**
-     * Set the value of usuario
+     * Set the value of pessoa
      *
      * @return  self
      */ 
-    public function setUsuario($usuario)
+    public function setPessoa($pessoa)
     {
-        $this->usuario = $usuario;
+        $this->pessoa = $pessoa;
 
         return $this;
     }

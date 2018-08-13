@@ -78,6 +78,9 @@ class PessoaEntity
     /** @ORM\OneToMany(targetEntity="FrequenciaEntity", mappedBy="atendido") */
     private $frequencias;
     
+    /** @ORM\OneToMany(targetEntity="TurmaEntity", mappedBy="pessoa") */
+    private $turmas;
+
     /** @ORM\Column(type="string", length=50, name="usu_inc", nullable=false) */
     private $usuarioInclusao;
 
@@ -94,6 +97,7 @@ class PessoaEntity
         $this->contatos = new ArrayCollection();
         $this->atendimentos = new ArrayCollection();
         $this->frequencias = new ArrayCollection();
+        $this->turmas = new ArrayCollection();
         $this->dataInclusao = new \Datetime();
         $this->dataAlteracao = new \Datetime();
     }

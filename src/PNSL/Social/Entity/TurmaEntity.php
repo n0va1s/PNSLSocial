@@ -18,17 +18,20 @@ class TurmaEntity
     */
     private $id;
 
-    /** @ORM\Column(type="string", length=255, name="des_turma") */
-    private $descricao;
+    /**
+     * @ORM\ManyToOne(targetEntity="AcaoEntity", inversedBy="turma")
+     * @ORM\JoinColumn(name="seq_acao", referencedColumnName="seq_acao")
+     */
+    private $acao;
 
-    /** @ORM\Column(type="datetime", name="dat_inicio", nullable=false) */
-    private $dataInicio;
+    /**
+     * @ORM\ManyToOne(targetEntity="PessoaEntity", inversedBy="turma")
+     * @ORM\JoinColumn(name="seq_pessoa", referencedColumnName="seq_pessoa")
+     */
+    private $pessoa;
 
-    /** @ORM\Column(type="datetime", name="dat_termino", nullable=true) */
-    private $dataTermino;
-
-    /** @ORM\OneToMany(targetEntity="FrequenciaEntity", mappedBy="turma") */
-    private $frequencia;
+    /** @ORM\Column(type="string", name="tip_situacao", columnDefinition="CHAR(1) NOT NULL") */
+    private $situacao;
 
     /** @ORM\Column(type="string", length=50, name="usu_inc", nullable=false) */
     private $usuarioInclusao;
@@ -42,16 +45,8 @@ class TurmaEntity
     /** @ORM\Column(type="datetime", name="dat_alt", nullable=false) */
     private $dataAlteracao;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="AcaoEntity", inversedBy="turma")
-     * @ORM\JoinColumn(name="seq_acao", referencedColumnName="seq_acao")
-     */
-    private $acao;
-
     public function __construct()
     {
-        $this->dataInicio = new \Datetime();
-        $this->dataTermino = new \Datetime();
         $this->dataInclusao = new \Datetime();
         $this->dataAlteracao = new \Datetime();
     }
@@ -77,85 +72,65 @@ class TurmaEntity
     }
 
     /**
-     * Get the value of descricao
+     * Get the value of acao
      */ 
-    public function getDescricao()
+    public function getAcao()
     {
-        return $this->descricao;
+        return $this->acao;
     }
 
     /**
-     * Set the value of descricao
+     * Set the value of acao
      *
      * @return  self
      */ 
-    public function setDescricao($descricao)
+    public function setAcao($acao)
     {
-        $this->descricao = $descricao;
+        $this->acao = $acao;
 
         return $this;
     }
 
     /**
-     * Get the value of dataInicio
+     * Get the value of pessoa
      */ 
-    public function getDataInicio()
+    public function getPessoa()
     {
-        return $this->dataInicio;
+        return $this->pessoa;
     }
 
     /**
-     * Set the value of dataInicio
+     * Set the value of pessoa
      *
      * @return  self
      */ 
-    public function setDataInicio($dataInicio)
+    public function setPessoa($pessoa)
     {
-        $this->dataInicio = $dataInicio;
+        $this->pessoa = $pessoa;
 
         return $this;
     }
 
     /**
-     * Get the value of dataTermino
+     * Get the value of situacao
      */ 
-    public function getDataTermino()
+    public function getSituacao()
     {
-        return $this->dataTermino;
+        return $this->situacao;
     }
 
     /**
-     * Set the value of dataTermino
+     * Set the value of situacao
      *
      * @return  self
      */ 
-    public function setDataTermino($dataTermino)
+    public function setSituacao($situacao)
     {
-        $this->dataTermino = $dataTermino;
+        $this->situacao = $situacao;
 
         return $this;
     }
-
-    /**
-     * Get the value of frequencia
-     */ 
-    public function getFrequencia()
-    {
-        return $this->frequencia;
-    }
-
-    /**
-     * Set the value of frequencia
-     *
-     * @return  self
-     */ 
-    public function setFrequencia($frequencia)
-    {
-        $this->frequencia = $frequencia;
-
-        return $this;
-    }
-
+    
     /**
      * Get the value of usuarioInclusao
      */ 

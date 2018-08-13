@@ -24,10 +24,10 @@ class AtendimentoEntity
     private $acao;
 
     /**
-     * @ORM\ManyToOne(targetEntity="UsuarioEntity", inversedBy="atendimento")
-     * @ORM\JoinColumn(name="seq_usuario", referencedColumnName="seq_usuario")
+     * @ORM\ManyToOne(targetEntity="PessoaEntity", inversedBy="atendimento")
+     * @ORM\JoinColumn(name="seq_pessoa", referencedColumnName="seq_pessoa")
      */
-    private $usuario;
+    private $pessoa;
 
     /** @ORM\Column(type="datetime", name="dat_atendimento") */
     private $dataAtendimento;
@@ -94,21 +94,21 @@ class AtendimentoEntity
     }
 
     /**
-     * Get the value of atendido
+     * Get the value of pessoa
      */ 
-    public function getAtendido()
+    public function getPessoa()
     {
-        return $this->atendido;
+        return $this->pessoa;
     }
 
     /**
-     * Set the value of atendido
+     * Set the value of pessoa
      *
      * @return  self
      */ 
-    public function setAtendido(Pessoa $atendido)
+    public function setPessoa($pessoa)
     {
-        $this->atendido = $atendido;
+        $this->pessoa = $pessoa;
 
         return $this;
     }
