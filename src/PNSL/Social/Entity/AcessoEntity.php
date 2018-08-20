@@ -1,36 +1,25 @@
 <?php
 namespace PNSL\Social\Entity;
 use Doctrine\ORM\Mapping as ORM;
-use PNSL\Social\Entity\TurmaEntity;
-use PNSL\Social\Entity\PessoaEntity;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="frequencia")
+ * @ORM\Table(name="acesso")
  */
-class FrequenciaEntity
+class AcessoEntity
 {
-    /**
-    * @ORM\Id
-    * @ORM\GeneratedValue
-    * @ORM\Column(type="integer", name="seq_frequencia")
-    */
-    private $id;
-
-     /**
-     * @ORM\ManyToOne(targetEntity="AcaoEntity", inversedBy="frequencia")
-     * @ORM\JoinColumn(name="seq_acao", referencedColumnName="seq_acao")
-     */
-    private $acao;
-
-     /**
-     * @ORM\ManyToOne(targetEntity="PessoaEntity", inversedBy="frequencia")
-     * @ORM\JoinColumn(name="seq_pessoa", referencedColumnName="seq_pessoa")
-     */
+    /** @ORM\Id @ORM\OneToOne(targetEntity="PessoaEntity")
+     *  @ORM\JoinColumn(name="seq_pessoa", referencedColumnName="seq_pessoa", nullable=false, onDelete="CASCADE") */
     private $pessoa;
 
-    /** @ORM\Column(type="datetime", name="dat_frequencia", nullable=false) */
-    private $data;
+    /** @ORM\Column(type="string", name="nom_usuario", length=50, unique=true) */
+    private $nome;
+
+    /** @ORM\Column(type="string", name="pwd_usuario", length=100) */
+    private $senha;
+
+    /** @ORM\Column(type="string", name="tip_perfil", length=3) */
+    private $perfil;
 
     /** @ORM\Column(type="string", length=50, name="usu_inc", nullable=false) */
     private $usuarioInclusao;
@@ -42,52 +31,12 @@ class FrequenciaEntity
     private $usuarioAlteracao;
 
     /** @ORM\Column(type="datetime", name="dat_alt", nullable=false) */
-    private $dataAlteracao;
+    private $dataAlteracao;    
 
     public function __construct()
     {
         $this->dataInclusao = new \Datetime();
         $this->dataAlteracao = new \Datetime();
-    }
-
-    /**
-     * Get the value of id
-     */ 
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set the value of id
-     *
-     * @return  self
-     */ 
-    public function setId($id)
-    {
-        $this->id = $id;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of acao
-     */ 
-    public function getAcao()
-    {
-        return $this->acao;
-    }
-
-    /**
-     * Set the value of acao
-     *
-     * @return  self
-     */ 
-    public function setAcao($acao)
-    {
-        $this->acao = $acao;
-
-        return $this;
     }
 
     /**
@@ -111,21 +60,61 @@ class FrequenciaEntity
     }
 
     /**
-     * Get the value of data
+     * Get the value of nome
      */ 
-    public function getData()
+    public function getNome()
     {
-        return $this->data;
+        return $this->nome;
     }
 
     /**
-     * Set the value of data
+     * Set the value of nome
      *
      * @return  self
      */ 
-    public function setData($data)
+    public function setNome($nome)
     {
-        $this->data = $data;
+        $this->nome = $nome;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of senha
+     */ 
+    public function getSenha()
+    {
+        return $this->senha;
+    }
+
+    /**
+     * Set the value of senha
+     *
+     * @return  self
+     */ 
+    public function setSenha($senha)
+    {
+        $this->senha = $senha;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of perfil
+     */ 
+    public function getPerfil()
+    {
+        return $this->perfil;
+    }
+
+    /**
+     * Set the value of perfil
+     *
+     * @return  self
+     */ 
+    public function setPerfil($perfil)
+    {
+        $this->perfil = $perfil;
 
         return $this;
     }
@@ -156,7 +145,7 @@ class FrequenciaEntity
     public function getDataInclusao()
     {
         return $this->dataInclusao;
-    }    
+    }
 
     /**
      * Get the value of usuarioAlteracao
@@ -176,13 +165,5 @@ class FrequenciaEntity
         $this->usuarioAlteracao = $usuarioAlteracao;
 
         return $this;
-    }
-
-    /**
-     * Get the value of dataAlteracao
-     */ 
-    public function getDataAlteracao()
-    {
-        return $this->dataAlteracao;
     }
 }

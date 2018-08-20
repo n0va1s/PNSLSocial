@@ -32,14 +32,30 @@ class RelatorioController implements ControllerProviderInterface
         );
 
         $ctrl->get(
-            '/', function () use ($app) {
+            '/anual/html', function () use ($app) {
                 return $app['twig']->render(
                     'relatorioPrestacaoConta.twig',
                     array(), 
                     new Response('Ok', 200)
                 );
             }
-        )->bind('relatorioPrestacaoConta');
+        )->bind('relatorioPrestacaoContaHTML');
+
+        $ctrl->get(
+            '/anual/json', function () use ($app) {
+                $dados = $app['relatorio_service']->relatorioAnual();
+                if ($dados) {
+                    $app->json(
+                        $dados, 201, ['Content-Type' => 'application/json']
+                    );
+                } else {
+                    return $app->abort(
+                        404, 
+                        "Ops... não há dados para o relatório"
+                    );
+                }                
+            }
+        )->bind('relatorioPrestacaoContaJSON');
         
         return $ctrl;
     }

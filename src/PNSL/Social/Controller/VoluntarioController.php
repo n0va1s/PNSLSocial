@@ -41,10 +41,15 @@ class VoluntarioController implements ControllerProviderInterface
 
         $ctrl->get(
             '/', function () use ($app) {
+                $estados_civis = $app['tipo_service']->findByGrupo('CIV');
+                $tipos_telefone = $app['tipo_service']->findByGrupo('FON');
+                $voluntarios = $app['voluntario_service']->fetchAll();
                 return $app['twig']->render(
                     'cadastroVoluntario.twig',
-                    array(), 
-                    new Response('Ok', 200)
+                    array('estados_civis'=>$estados_civis, 
+                    'tipos_telefone'=>$tipos_telefone,
+                    'voluntarios'=>$voluntarios), 
+                    new Response('OK', 200)
                 );
             }
         )->bind('voluntarioCadastrar');
@@ -52,49 +57,70 @@ class VoluntarioController implements ControllerProviderInterface
         $ctrl->post(
             '/salvar', function (Request $req) use ($app) {
                 $dados = $req->request->all();
-                $pessoa_id = $app['pessoa_service']->save($dados);
-                $voluntario_id = $app['voluntario_service']->save($pessoa_id, $dados);
-                if ($voluntario_id > 0) {
-                    return new Response(
-                        $app->json(['id'=>$pessoa_id,'resultado'=>'Tudo certo :)'], 201)
+                $pessoa = $app['pessoa_service']->save($dados);
+                $voluntario = $app['voluntario_service']->save($pessoa, $dados);
+                if ($voluntario) {
+                    return $app->redirect(
+                        $app['url_generator']
+                        ->generate('voluntarioCadastrar')
                     );
                 } else {
-                    return $app->abort(
-                        404, "Ops... não foi possível cadastrar o voluntário"
-                    ); 
+                    return $app->redirect(
+                        $app['url_generator']
+                        ->generate('voluntarioCadastrar')
+                    );
                 }
             }
         )->bind('voluntarioSalvar');
 
         $ctrl->get(
-            '/listar', function () use ($app) {
-                $voluntarios = $app['voluntario_service']->fetchAll();
-                if ($voluntarios) {
-                    return new Response(
-                        $app->json(
-                            $voluntarios, 201, ['Content-Type' => 'application/json']
-                        )
-                    );
+            '/editar/{id}', function ($id) use ($app) {
+                if ($id) {
+                    $estados_civis = $app['tipo_service']->findByGrupo('CIV');
+                    $tipos_telefone = $app['tipo_service']->findByGrupo('FON');
+                    $voluntario = $app['voluntario_service']->findById($id);                    
+                    if ($voluntario) {                        
+                        return $app['twig']->render(
+                            'cadastroVoluntario.twig',
+                            array('estados_civis'=>$estados_civis, 
+                            'tipos_telefone'=>$tipos_telefone,
+                            'voluntario'=>$voluntario), 
+                            new Response('OK', 200)
+                        );
+                    } else {
+                        return $app->redirect(
+                            $app['url_generator']
+                            ->generate('voluntarioCadastrar')
+                        );
+                    }
                 } else {
                     return $app->abort(
-                        404, 
-                        "Ops... nenhum voluntário cadastrado"
-                    );
-                }             
+                        500, 
+                        "Não encontrei o voluntário para excluir"
+                    ); 
+                }
             }
-        )->bind('voluntarioListar');
+        )->bind('voluntarioEditar')->assert('id', '\d+');
 
-        $ctrl->delete(
+        $ctrl->get(
             '/excluir/{id}', function ($id) use ($app) {
                 if ($id) {
                     $excluiu = $app['voluntario_service']->delete($id);
-                    return new Response(
-                        $app->json(['id'=>$id,'resultado'=>'Tudo certo :)'], 201)
-                    );
+                    if ($excluiu) {                        
+                        return $app->redirect(
+                            $app['url_generator']
+                            ->generate('voluntarioCadastrar')
+                        );
+                    } else {
+                        return $app->redirect(
+                            $app['url_generator']
+                            ->generate('voluntarioCadastrar')
+                        );
+                    }
                 } else {
                     return $app->abort(
-                        404, 
-                        "Não foi possível excluir"
+                        500, 
+                        "Não encontrei o voluntário para excluir"
                     ); 
                 }
             }

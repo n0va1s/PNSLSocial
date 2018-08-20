@@ -15,33 +15,27 @@ class VoluntarioService
         $this->em = $em;
     }
     
-    public function save($pessoa_id, $dados)
+    public function save($pessoa, $dados)
     {
-        $pessoa = $this->em->getReference(
-            '\PNSL\Social\Entity\PessoaEntity', 
-            $pessoa_id
-        );
         if (empty($dados['id'])) {
             $voluntario = new VoluntarioEntity();
             $voluntario->setPessoa($pessoa);
-            $voluntario->setProfissao(utf8_encode($dados['profissao']));
-            $voluntario->setEstadoCivil(utf8_encode($dados['estado_civil']));
             $voluntario->setConhecimento($dados['conhecimento']);
             $voluntario->setAssinouTermo($dados['assinou_termo']);
-            $voluntario->setUsuarioInclusao($dados['usuario']);
-            $voluntario->setUsuarioAlteracao($dados['usuario']);
+            $voluntario->setUsuarioInclusao('usuarioInc');
+            $voluntario->setUsuarioAlteracao('usuarioAlt');
             $this->em->persist($voluntario);
         } else {
-            $voluntario->setProfissao(utf8_encode($dados['profissao']));
-            $voluntario->setEstadoCivil(utf8_encode($dados['estado_civil']));
-            $voluntario->setConhecimento($dados['conhecimento']);
-            $voluntario->setAssinouTermo($dados['conhecimento']);
-            $voluntario->setUsuarioAlteracao($dados['usuario']);
+            $voluntario = $this->em->getReference('\PNSL\Social\Entity\VoluntarioEntity', $dados['id']);
             $voluntario->setPessoa($pessoa);
+            $voluntario->setConhecimento($dados['conhecimento']);
+            $voluntario->setAssinouTermo($dados['assinou_termo']);
+            $voluntario->setUsuarioAlteracao('usuarioAlt');
         }
+        //Insere no banco de dados a pessoa e o voluntario
         $this->em->flush();
         if ($voluntario) {
-            return $pessoa_id;
+            return $voluntario;
         } else {
             return false;
         }
@@ -50,7 +44,7 @@ class VoluntarioService
     public function delete(int $id)
     {
         $voluntario = $this->em->getReference(
-            '\PNSL\Social\Entity\VoluntarioEntity', $id
+            '\PNSL\Social\Entity\PessoaEntity', $id
         );
         if ($voluntario) {
             $this->em->remove($voluntario);
@@ -64,8 +58,8 @@ class VoluntarioService
     public function fetchAll()
     {
         $voluntarios = $this->em->createQuery(
-            'select v from \PNSL\Social\Entity\VoluntarioEntity v
-            join v.pessoa'
+            'select p, v from \PNSL\Social\Entity\VoluntarioEntity v 
+            join v.pessoa p order by p.nome ASC'
         )->getArrayResult();
         return $voluntarios;
     }
@@ -73,9 +67,12 @@ class VoluntarioService
     public function findById(int $id)
     {
         $voluntario = $this->em->createQuery(
-            'select v from \PNSL\Social\Entity\VoluntarioEntity v 
-            join v.pessoa p where p.id = :id'
+            'select p, v, tt, es from \PNSL\Social\Entity\VoluntarioEntity v 
+            join v.pessoa p
+            join p.tipoTelefone tt
+            join p.estadoCivil es
+            where p.id = :id'
         )->setParameter('id', $id)->getArrayResult();
-        return $voluntario;
+        return $voluntario[0]; //TODO: substituir o array pelo getSingleResult. Ao usar travou
     }
 }

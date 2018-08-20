@@ -29,6 +29,8 @@ class FrequenciaService
                 $frequencia->setInativo($dados['inativo']);
                 $frequencia->setTurma(new TurmaEntity());
                 $frequencia->setAtendido(new PessoaEntity());
+                $frequencia->setUsuarioInclusao(utf8_encode($dados['usuario']));
+                $frequencia->setUsuarioAlteracao(utf8_encode($dados['usuario']));
                 $this->em->persist($frequencia);
             } else {
                 $frequencia = $this->em->getReference(
@@ -40,6 +42,7 @@ class FrequenciaService
                 $frequencia->setInativo($dados['inativo']);
                 $frequencia->setTurma(new TurmaEntity());
                 $frequencia->setAtendido(new PessoaEntity());
+                $frequencia->setUsuarioAlteracao(utf8_encode($dados['usuario']));
             }
             $this->em->flush();
             return true;

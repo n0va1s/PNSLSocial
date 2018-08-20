@@ -32,12 +32,12 @@
                     </div>
                 </fieldset>
             </form>
+            {% if resultado is defined %}
+            <div class="col-sm-12 text-center alert alert-success">
+                {{ resultado }}
+            </div>
+            {% endif %}
         </div>
-        {% if mensagem is defined %}
-        <div class="row alert alert-success">
-            {{ mensagem }}
-        </div>
-        {% endif %}
         <div class="row col-sm-8 col-sm-offset-2">
             <table class="table table-responsive table-hover">
             <caption>Configurações cadastradas</caption>

@@ -28,6 +28,8 @@ class AtendimentoService
                 $atendimento->setatendido(new PessoaEntity());
                 $atendimento->setDataAtendimento($dados['dataAtendimento']);
                 $atendimento->setTexto(utf8_encode($dados['texto']));
+                $atendimento->setUsuarioInclusao(utf8_encode($dados['usuario']));
+                $atendimento->setUsuarioAlteracao(utf8_encode($dados['usuario']));
                 $this->em->persist($atendimento);
             } else {
                 $atendimento = $this->em->getReference('\PNSL\Social\Entity\AtendimentoEntity', $id);
@@ -35,6 +37,7 @@ class AtendimentoService
                 $atendimento->setatendido(new PessoaEntity());
                 $atendimento->setDataAtendimento($dados['dataAtendimento']);
                 $atendimento->setTexto(utf8_encode($dados['texto']));
+                $atendimento->setUsuarioAlteracao(utf8_encode($dados['usuario']));
             }
             $this->em->flush();
             return true;

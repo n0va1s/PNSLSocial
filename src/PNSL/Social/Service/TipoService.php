@@ -62,4 +62,12 @@ class TipoService
         )->setParameter('id', $id)->getArrayResult();
         return $tipo;
     }
+
+    public function findByGrupo($grupo)
+    {
+        $tipos = $this->em->createQuery(
+            'select t from \PNSL\Social\Entity\TipoEntity t where t.grupo = :grupo'
+        )->setParameter('grupo', $grupo)->getArrayResult();
+        return $tipos;
+    }
 }

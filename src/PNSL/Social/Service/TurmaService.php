@@ -27,12 +27,15 @@ class TurmaService
                 $turma->setDescricao(utf8_encode($dados['descricao']));
                 $turma->setDataInicio($dados['inicio']);
                 $turma->setDataTermino($dados['termino']);
+                $turma->setUsuarioInclusao(utf8_encode($dados['usuario']));
+                $turma->setUsuarioAlteracao(utf8_encode($dados['usuario']));
                 $this->em->persist($turma);
             } else {
                 $turma = $this->em->getReference('\PNSL\Social\Entity\TurmaEntity', $turma->getId);
                 $turma->setDescricao(utf8_encode($dados['descricao']));
                 $turma->setDataInicio($dados['inicio']);
                 $turma->setDataTermino($dados['termino']);
+                $turma->setUsuarioAlteracao(utf8_encode($dados['usuario']));
             }
             $this->em->flush();
             return true;

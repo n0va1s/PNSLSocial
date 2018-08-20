@@ -91,96 +91,25 @@ VALUES (1,3,'2018-02-19','P','N','n0va1s',now(),'n0va1s',now());
 INSERT INTO frequencia(seq_turma, seq_atendido, dat_frequencia, ind_presenca, ind_inativo, usu_inc, dat_inc, usu_alt, dat_alt) 
 VALUES (1,3,'2018-02-26','F','N','n0va1s',now(),'n0va1s',now());
 
---UF
-INSERT INTO tipo (des_tipo, grp_tipo) 
-VALUES ('AC','UF');
-INSERT INTO tipo (des_tipo, grp_tipo) 
-VALUES ('AL','UF');
-INSERT INTO tipo (des_tipo, grp_tipo) 
-VALUES ('AM','UF');
-INSERT INTO tipo (des_tipo, grp_tipo) 
-VALUES ('AP','UF');
-INSERT INTO tipo (des_tipo, grp_tipo) 
-VALUES ('BA','UF');
-INSERT INTO tipo (des_tipo, grp_tipo) 
-VALUES ('CE','UF');
-INSERT INTO tipo (des_tipo, grp_tipo) 
-VALUES ('DF','UF');
-INSERT INTO tipo (des_tipo, grp_tipo) 
-VALUES ('ES','UF');
-INSERT INTO tipo (des_tipo, grp_tipo) 
-VALUES ('GO','UF');
-INSERT INTO tipo (des_tipo, grp_tipo) 
-VALUES ('MA','UF');
-INSERT INTO tipo (des_tipo, grp_tipo) 
-VALUES ('MG','UF');
-INSERT INTO tipo (des_tipo, grp_tipo) 
-VALUES ('MS','UF');
-INSERT INTO tipo (des_tipo, grp_tipo) 
-VALUES ('MT','UF');
-INSERT INTO tipo (des_tipo, grp_tipo) 
-VALUES ('PA','UF');
-INSERT INTO tipo (des_tipo, grp_tipo) 
-VALUES ('PB','UF');
-INSERT INTO tipo (des_tipo, grp_tipo) 
-VALUES ('PE','UF');
-INSERT INTO tipo (des_tipo, grp_tipo) 
-VALUES ('PI','UF');
-INSERT INTO tipo (des_tipo, grp_tipo) 
-VALUES ('PR','UF');
-INSERT INTO tipo (des_tipo, grp_tipo) 
-VALUES ('RJ','UF');
-INSERT INTO tipo (des_tipo, grp_tipo) 
-VALUES ('RN','UF');
-INSERT INTO tipo (des_tipo, grp_tipo) 
-VALUES ('RO','UF');
-INSERT INTO tipo (des_tipo, grp_tipo) 
-VALUES ('RR','UF');
-INSERT INTO tipo (des_tipo, grp_tipo) 
-VALUES ('RS','UF');
-INSERT INTO tipo (des_tipo, grp_tipo) 
-VALUES ('SC','UF');
-INSERT INTO tipo (des_tipo, grp_tipo) 
-VALUES ('SE','UF');
-INSERT INTO tipo (des_tipo, grp_tipo) 
-VALUES ('SP','UF');
-INSERT INTO tipo (des_tipo, grp_tipo) 
-VALUES ('TO','UF');
-
---Sexo
-INSERT INTO tipo (des_tipo, grp_tipo) 
-VALUES ('Masculino','SEX');
-INSERT INTO tipo (des_tipo, grp_tipo) 
-VALUES ('Feminino','SEX');
-
---ESTADO CIVIL
-INSERT INTO tipo (des_tipo, grp_tipo) 
-VALUES ('Casado(a)','CIV');
-INSERT INTO tipo (des_tipo, grp_tipo) 
-VALUES ('Solteiro(a)','CIV');
-INSERT INTO tipo (des_tipo, grp_tipo) 
-VALUES ('Divorciado(a)','CIV');
-INSERT INTO tipo (des_tipo, grp_tipo) 
-VALUES ('Viúvo(a)','CIV');
-
---PARENTESCO
-INSERT INTO tipo (des_tipo, grp_tipo) 
-VALUES ('Pai','PÁR');
-INSERT INTO tipo (des_tipo, grp_tipo) 
-VALUES ('Mãe','PÁR');
-INSERT INTO tipo (des_tipo, grp_tipo) 
-VALUES ('Avó','PÁR');
-INSERT INTO tipo (des_tipo, grp_tipo) 
-VALUES ('Avô','PÁR');
-INSERT INTO tipo (des_tipo, grp_tipo) 
-VALUES ('Tio','PÁR');
-INSERT INTO tipo (des_tipo, grp_tipo) 
-VALUES ('Tia','PÁR');
-INSERT INTO tipo (des_tipo, grp_tipo) 
-VALUES ('Tutor','PÁR');
-INSERT INTO tipo (des_tipo, grp_tipo) 
-VALUES ('Tutora','PÁR');
-INSERT INTO tipo (des_tipo, grp_tipo) 
-VALUES ('Padrinho','PÁR');
-INSERT INTO tipo (des_tipo, grp_tipo) 
-VALUES ('Madrinha','PÁR');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Solteiro(a)','CIV');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Casado(a)','CIV');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Divorciado(a)','CIV');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('União Estável','CIV');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Viúvo(a)','CIV');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('M','SEX');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('F','SEX');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Celular','FON');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Fixo','FON');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Recado','FON');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Voluntário','PES');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Usuário','PES');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Pai','PRT');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Mãe','PRT');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Avó','PRT');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Avô','PRT');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Tio','PRT');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Tia','PRT');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Tutor','PRT');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Tutora','PRT');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Padrinho','PRT');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Madrinha','PRT');

@@ -10,8 +10,10 @@ use PNSL\Social\Entity\PessoaEntity;
  */
 class VoluntarioEntity
 {
-     /** @ORM\Id @ORM\OneToOne(targetEntity="PessoaEntity")
-     *  @ORM\JoinColumn(name="seq_pessoa", referencedColumnName="seq_pessoa", nullable=false, onDelete="CASCADE") */
+     /** 
+     * @ORM\Id 
+     * @ORM\OneToOne(targetEntity="PessoaEntity", inversedBy="voluntario")
+     * @ORM\JoinColumn(name="seq_pessoa", referencedColumnName="seq_pessoa", nullable=false) */
     private $pessoa;
     
      /** @ORM\Column(type="text", name="txt_conhecimento", nullable=true) */
@@ -57,7 +59,6 @@ class VoluntarioEntity
     public function setPessoa(PessoaEntity $pessoa)
     {
         $this->pessoa = $pessoa;
-
         return $this;
     }
 
@@ -77,7 +78,6 @@ class VoluntarioEntity
     public function setProfissao($profissao)
     {
         $this->profissao = $profissao;
-
         return $this;
     }
 
@@ -96,9 +96,12 @@ class VoluntarioEntity
      */ 
     public function setEstadoCivil($estadoCivil)
     {
-        $this->estadoCivil = $estadoCivil;
-
-        return $this;
+        if (empty($estadoCivil)) {
+            throw new \InvalidArgumentException('O estado civil é obrigatório', 99);
+        } else {
+            $this->estadoCivil = $estadoCivil;
+            return $this;
+        }
     }
 
     /**
@@ -116,9 +119,12 @@ class VoluntarioEntity
      */ 
     public function setConhecimento($conhecimento)
     {
-        $this->conhecimento = $conhecimento;
-
-        return $this;
+        if (empty($conhecimento)) {
+            throw new \InvalidArgumentException('O estado civil é obrigatório', 99);
+        } else {
+            $this->conhecimento = $conhecimento;
+            return $this;
+        }
     }
 
 
@@ -132,34 +138,17 @@ class VoluntarioEntity
 
     /**
      * Set the value of assinouTermo
-     *
+     * 
      * @return  self
      */ 
     public function setAssinouTermo($assinouTermo)
     {
-        $this->assinouTermo = $assinouTermo;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of acao
-     */ 
-    public function getAcao()
-    {
-        return $this->acao;
-    }
-
-    /**
-     * Set the value of acao
-     *
-     * @return  self
-     */ 
-    public function setAcao(AcaoEntity $acao)
-    {
-        $this->acao = $acao;
-
-        return $this;
+        if (empty($assinouTermo)) {
+            $this->assinouTermo = 'N';
+        } else {
+            $this->assinouTermo = $assinouTermo;
+            return $this;
+        }
     }
 
     /**

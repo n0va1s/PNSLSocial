@@ -52,6 +52,7 @@ $em = EntityManager::create(
         'user'      => getenv('db_user'),
         'password'  => getenv('db_password'),
         'dbname'    => getenv('db_name'),
+        'charset'   => 'utf8',
     ),
     $config,
     $evm
@@ -145,6 +146,7 @@ $app->error(function (\Exception $e, Request $request, $code) use ($app) {
     return new Response($message);
 });
 */
+
 //Menu
 $app->get('/', function () use ($app) {
     return $app['twig']->render('inicio.twig');

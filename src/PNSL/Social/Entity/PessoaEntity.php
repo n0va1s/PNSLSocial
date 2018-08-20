@@ -2,11 +2,6 @@
 namespace PNSL\Social\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
-use PNSL\Social\Entity\VoluntarioEntity;
-use PNSL\Social\Entity\ResponsavelEntity;
-use PNSL\Social\Entity\MenorEntity;
-use PNSL\Social\Entity\EnderecoEntity;
-use PNSL\Social\Entity\ContatoEntity;
 
  /**
  * @ORM\Entity
@@ -21,56 +16,67 @@ class PessoaEntity
      * @ORM\Column(type="integer", name="seq_pessoa") */
     private $id;
 
-    /** @ORM\Column(type="string", length=255, name="nom_pessoa") */
+    /** @ORM\Column(type="string", length=255, name="nom_pessoa", nullable=false) */
     private $nome;
 
-    /** @ORM\Column(type="string", name="tip_genero", columnDefinition="CHAR(1) NOT NULL") */
-    private $genero;
+    /** @ORM\Column(type="string", name="tip_sexo", columnDefinition="CHAR(1) NOT NULL") */
+    private $sexo;
 
-    /** @ORM\OneToOne(targetEntity="TipoEntity")
+    /** @ORM\ManyToOne(targetEntity="TipoEntity")
      *  @ORM\JoinColumn(name="seq_tipo_estado_civil", referencedColumnName="seq_tipo", nullable=false) */
     private $estadoCivil;
 
-    /** @ORM\Column(type="datetime", name="dat_nascimento") */
+    /** @ORM\Column(type="date", name="dat_nascimento", nullable=false) */
     private $dataNascimento;
 
-    /** @ORM\Column(type="string", length=15, name="num_rg") */
-    private $numRG;
+    /** @ORM\Column(type="string", length=15, name="num_rg", nullable=true) */
+    private $RG;
 
-    /** @ORM\Column(type="string", length=15, name="num_cpf") */
-    private $numCPF;
+    /** @ORM\Column(type="string", length=15, name="num_cpf", unique=true, nullable=false) */
+    private $CPF;
     
-    /** @ORM\Column(type="string", length=255, name="des_nacionalidade") */
+    /** @ORM\Column(type="string", length=255, name="des_nacionalidade", nullable=false) */
     private $nacionalidade;
 
-    /** @ORM\OneToOne(targetEntity="TipoEntity")
-     *  @ORM\JoinColumn(name="seq_tipo_pessoa", referencedColumnName="seq_tipo", nullable=false) */
+    /** @ORM\Column(type="string", name="tip_pessoa", columnDefinition="CHAR(3) NOT NULL") */
     private $tipoPessoa;
 
-    /** @ORM\Column(type="string", length=255, name="end_des_logradouro", nullable=false) */
+    /** @ORM\Column(type="string", length=255, name="end_des_logradouro", nullable=false, nullable=false) */
     private $endereco;
     
-    /** @ORM\Column(type="string", length=50, name="end_nom_cidade", nullable=false) */
+    /** @ORM\Column(type="string", length=50, name="end_nom_cidade", nullable=false, nullable=false) */
     private $cidade;
 
-    /** @ORM\Column(type="string", length=50, name="end_sig_UF", columnDefinition="CHAR(2) NOT NULL") */
+    /** @ORM\Column(type="string", name="end_sig_UF", columnDefinition="CHAR(2) NOT NULL") */
     private $uf;
+    
+    /** @ORM\Column(type="string", length=10, name="end_num_CEP", nullable=false) */
+    private $CEP;
 
-    /** @ORM\Column(type="string", length=50, name="eml_principal") */
+    /** @ORM\Column(type="string", length=50, name="eml_principal", nullable=false) */
     private $email;
 
-    /** @ORM\Column(type="string", length=10, name="tel_principal") */
+    /** @ORM\Column(type="string", length=15, name="tel_principal", nullable=false) */
     private $telefone;
 
-    /** @ORM\OneToOne(targetEntity="TipoEntity")
+    /** @ORM\ManyToOne(targetEntity="TipoEntity")
      *  @ORM\JoinColumn(name="seq_tipo_telefone", referencedColumnName="seq_tipo", nullable=false) */
     private $tipoTelefone;
 
-    ///** @ORM\OneToMany(targetEntity="ContatoEntity", mappedBy="pessoa") */
-    //private $contatos;
-
-    /** @ORM\Column(type="string", length=100, name="nom_profissao") */
+    /** @ORM\Column(type="string", length=100, name="nom_profissao", nullable=true) */
     private $profissao;
+
+    /** @ORM\Column(type="string", length=15, name="num_NIS", nullable=true) */
+    private $NIS;
+
+    /**
+     * @ORM\OneToOne(targetEntity="PessoaEntity")
+     * @ORM\JoinColumn(name="seq_responsavel", referencedColumnName="seq_pessoa", nullable=true)
+     */
+    private $responsavel;
+
+    /** @ORM\OneToOne(targetEntity="VoluntarioEntity", mappedBy="pessoa", cascade={"remove"}) */
+    private $voluntario;
 
     /** @ORM\OneToMany(targetEntity="AtendimentoEntity", mappedBy="atendido") */
     private $atendimentos;
@@ -94,7 +100,6 @@ class PessoaEntity
     private $dataAlteracao;
 
     public function __construct() {
-        $this->contatos = new ArrayCollection();
         $this->atendimentos = new ArrayCollection();
         $this->frequencias = new ArrayCollection();
         $this->turmas = new ArrayCollection();
@@ -117,9 +122,12 @@ class PessoaEntity
      */ 
     public function setId($id)
     {
-        $this->id = $id;
-
-        return $this;
+        if (empty($id)) {
+            throw new \InvalidArgumentException('O ID é obrigatório', 99);
+        } else {
+            $this->id = $id;
+            return $this;
+        }
     }
 
     /**
@@ -137,29 +145,35 @@ class PessoaEntity
      */ 
     public function setNome($nome)
     {
-        $this->nome = $nome;
-
-        return $this;
+        if (empty($nome)) {
+            throw new \InvalidArgumentException('O nome é obrigatório', 99);
+        } else {
+            $this->nome = $nome;
+            return $this;
+        }
     }
 
     /**
-     * Get the value of genero
+     * Get the value of sexo
      */ 
-    public function getGenero()
+    public function getSexo()
     {
-        return $this->genero;
+        return $this->sexo;
     }
 
     /**
-     * Set the value of genero
+     * Set the value of sexo
      *
      * @return  self
      */ 
-    public function setGenero($genero)
+    public function setSexo($sexo)
     {
-        $this->genero = $genero;
-
-        return $this;
+        if (empty($sexo)) {
+            throw new \InvalidArgumentException('O sexo é obrigatório', 99);
+        } else {
+            $this->sexo = $sexo;
+            return $this;
+        }
     }
 
     /**
@@ -177,9 +191,12 @@ class PessoaEntity
      */ 
     public function setEstadoCivil($estadoCivil)
     {
-        $this->estadoCivil = $estadoCivil;
-
-        return $this;
+        if (empty($estadoCivil)) {
+            throw new \InvalidArgumentException('O estado civil é obrigatório', 99);
+        } else {
+            $this->estadoCivil = $estadoCivil;
+            return $this;
+        }
     }
 
     /**
@@ -197,49 +214,62 @@ class PessoaEntity
      */ 
     public function setDataNascimento($dataNascimento)
     {
-        $this->dataNascimento = $dataNascimento;
-
-        return $this;
+        if (empty($dataNascimento)) {
+            throw new \InvalidArgumentException('A data de nascimento é obrigatória', 99);
+        } else {
+            if (substr_count($dataNascimento, "/") == 2) {
+                list($dia, $mes, $ano) = explode("/", $dataNascimento);
+                $this->dataNascimento = new \DateTime(
+                    date_format(date_create($ano."-".$mes."-".$dia), "Y-m-d")
+                );
+            } else {
+                throw new \InvalidArgumentException('A data de nascimento é inválida', 99);
+            }
+            return $this;
+        }
     }
 
     /**
-     * Get the value of numRG
+     * Get the value of RG
      */ 
-    public function getNumRG()
+    public function getRG()
     {
-        return $this->numRG;
+        return $this->RG;
     }
 
     /**
-     * Set the value of numRG
+     * Set the value of RG
      *
      * @return  self
      */ 
-    public function setNumRG($numRG)
+    public function setRG($RG)
     {
-        $this->numRG = $numRG;
+        $this->RG = $RG;
 
         return $this;
     }
 
     /**
-     * Get the value of numCPF
+     * Get the value of CPF
      */ 
-    public function getNumCPF()
+    public function getCPF()
     {
-        return $this->numCPF;
+        return $this->CPF;
     }
 
     /**
-     * Set the value of numCPF
+     * Set the value of CPF
      *
      * @return  self
      */ 
-    public function setNumCPF($numCPF)
+    public function setCPF($CPF)
     {
-        $this->numCPF = $numCPF;
-
-        return $this;
+        if (empty($CPF)) {
+            throw new \InvalidArgumentException('O CPF é obrigatório', 99);
+        } else {
+            $this->CPF = $CPF;
+            return $this;
+        }
     }
 
     /**
@@ -257,9 +287,12 @@ class PessoaEntity
      */ 
     public function setNacionalidade($nacionalidade)
     {
-        $this->nacionalidade = $nacionalidade;
-
-        return $this;
+        if (empty($nacionalidade)) {
+            throw new \InvalidArgumentException('A nacionalidade é obrigatória', 99);
+        } else {
+            $this->nacionalidade = $nacionalidade;
+            return $this;
+        }
     }
 
     /**
@@ -277,9 +310,12 @@ class PessoaEntity
      */ 
     public function setTipoPessoa($tipoPessoa)
     {
-        $this->tipoPessoa = $tipoPessoa;
-
-        return $this;
+        if (empty($tipoPessoa)) {
+            throw new \InvalidArgumentException('O tipo de pessoa é obrigatório', 99);
+        } else {
+            $this->tipoPessoa = $tipoPessoa;
+            return $this;
+        }
     }
 
     /**
@@ -297,9 +333,12 @@ class PessoaEntity
      */ 
     public function setEndereco($endereco)
     {
-        $this->endereco = $endereco;
-
-        return $this;
+        if (empty($endereco)) {
+            throw new \InvalidArgumentException('O endereço é obrigatório', 99);
+        } else {
+            $this->endereco = $endereco;
+            return $this;
+        }
     }
 
     /**
@@ -317,9 +356,12 @@ class PessoaEntity
      */ 
     public function setCidade($cidade)
     {
-        $this->cidade = $cidade;
-
-        return $this;
+        if (empty($cidade)) {
+            throw new \InvalidArgumentException('A cidade é obrigatória', 99);
+        } else {
+            $this->cidade = $cidade;
+            return $this;
+        }
     }
 
     /**
@@ -337,9 +379,35 @@ class PessoaEntity
      */ 
     public function setUf($uf)
     {
-        $this->uf = $uf;
+        if (empty($uf)) {
+            throw new \InvalidArgumentException('A uf é obrigatória', 99);
+        } else {
+            $this->uf = $uf;
+            return $this;
+        }
+    }
 
-        return $this;
+    /**
+     * Get the value of CEP
+     */ 
+    public function getCEP()
+    {
+        return $this->CEP;
+    }
+
+    /**
+     * Set the value of CEP
+     *
+     * @return  self
+     */ 
+    public function setCEP($CEP)
+    {
+        if (empty($CEP)) {
+            throw new \InvalidArgumentException('O CEP é obrigatório', 99);
+        } else {
+            $this->CEP = $CEP;
+            return $this;
+        }
     }
 
     /**
@@ -357,13 +425,16 @@ class PessoaEntity
      */ 
     public function setEmail($email)
     {
-        $emailValido = filter_var($email, FILTER_VALIDATE_EMAIL);
-        if (!$emailValido) {
-            throw new \InvalidArgumentException('O email é inválido', 99);
+        if (empty($email)) {
+            throw new \InvalidArgumentException('O email é obrigatório', 99);
+        } else {
+            $emailValido = filter_var($email, FILTER_VALIDATE_EMAIL);
+            if (!$emailValido) {
+                throw new \InvalidArgumentException('O email é inválido', 99);
+            }
+            $this->email = $email;
+            return $this;
         }
-        $this->email = $email;
-
-        return $this;
     }
 
     /**
@@ -381,9 +452,12 @@ class PessoaEntity
      */ 
     public function setTelefone($telefone)
     {
-        $this->telefone = $telefone;
-
-        return $this;
+        if (empty($telefone)) {
+            throw new \InvalidArgumentException('O telefone é obrigatório', 99);
+        } else {
+            $this->telefone = $telefone;
+            return $this;
+        }
     }
 
     /**
@@ -401,9 +475,12 @@ class PessoaEntity
      */ 
     public function setTipoTelefone($tipoTelefone)
     {
-        $this->tipoTelefone = $tipoTelefone;
-
-        return $this;
+        if (empty($tipoTelefone)) {
+            throw new \InvalidArgumentException('O tipo de telefone é obrigatório', 99);
+        } else {
+            $this->tipoTelefone = $tipoTelefone;
+            return $this;
+        }
     }
 
     /**
@@ -422,7 +499,44 @@ class PessoaEntity
     public function setProfissao($profissao)
     {
         $this->profissao = $profissao;
+        return $this;
+    }
 
+    /**
+     * Get the value of NIS
+     */ 
+    public function getNIS()
+    {
+        return $this->NIS;
+    }
+
+    /**
+     * Set the value of NIS
+     *
+     * @return  self
+     */ 
+    public function setNIS($NIS)
+    {
+        $this->NIS = $NIS;
+        return $this;
+    }
+
+    /**
+     * Get the value of responsavel
+     */ 
+    public function getResponsavel()
+    {
+        return $this->responsavel;
+    }
+
+    /**
+     * Set the value of responsavel
+     *
+     * @return  self
+     */ 
+    public function setResponsavel($responsavel)
+    {
+        $this->responsavel = $responsavel;
         return $this;
     }
 
@@ -435,35 +549,11 @@ class PessoaEntity
     }
 
     /**
-     * Set the value of atendimentos
-     *
-     * @return  self
-     */ 
-    public function setAtendimentos($atendimentos)
-    {
-        $this->atendimentos = $atendimentos;
-
-        return $this;
-    }
-
-    /**
      * Get the value of frequencias
      */ 
     public function getFrequencias()
     {
         return $this->frequencias;
-    }
-
-    /**
-     * Set the value of frequencias
-     *
-     * @return  self
-     */ 
-    public function setFrequencias($frequencias)
-    {
-        $this->frequencias = $frequencias;
-
-        return $this;
     }
 
     /**
@@ -481,9 +571,12 @@ class PessoaEntity
      */ 
     public function setUsuarioInclusao($usuarioInclusao)
     {
-        $this->usuarioInclusao = $usuarioInclusao;
-
-        return $this;
+        if (empty($usuarioInclusao)) {
+            throw new \InvalidArgumentException('O usuário de inclusão é obrigatório', 99);
+        } else {
+            $this->usuarioInclusao = $usuarioInclusao;
+            return $this;
+        }
     }
 
     /**
@@ -501,9 +594,12 @@ class PessoaEntity
      */ 
     public function setDataInclusao($dataInclusao)
     {
-        $this->dataInclusao = $dataInclusao;
-
-        return $this;
+        if (empty($dataInclusao)) {
+            throw new \InvalidArgumentException('A data de inclusão é obrigatória', 99);
+        } else {
+            $this->dataInclusao = $dataInclusao;
+            return $this;
+        }
     }
 
     /**
@@ -521,9 +617,12 @@ class PessoaEntity
      */ 
     public function setUsuarioAlteracao($usuarioAlteracao)
     {
-        $this->usuarioAlteracao = $usuarioAlteracao;
-
-        return $this;
+        if (empty($usuarioAlteracao)) {
+            throw new \InvalidArgumentException('O usuário de alteração é obrigatório', 99);
+        } else {
+            $this->usuarioAlteracao = $usuarioAlteracao;
+            return $this;
+        }
     }
 
     /**
@@ -541,8 +640,11 @@ class PessoaEntity
      */ 
     public function setDataAlteracao($dataAlteracao)
     {
-        $this->dataAlteracao = $dataAlteracao;
-
-        return $this;
+        if (empty($dataAlteracao)) {
+            throw new \InvalidArgumentException('A data de alteração é obrigatória', 99);
+        } else {
+            $this->dataAlteracao = $dataAlteracao;
+            return $this;
+        }
     }
 }

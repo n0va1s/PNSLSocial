@@ -31,6 +31,8 @@ class AcaoService
                 $acao->setTermino($dados['termino']);
                 $acao->setDescricao($dados['descricao']);
                 $acao->setVoluntario(new VoluntarioEntity());
+                $acao->setUsuarioInclusao(utf8_encode($dados['usuario']));
+                $acao->setUsuarioAlteracao(utf8_encode($dados['usuario']));
                 $this->em->persist($acao);
             } else {
                 $acao->setParentesco($dados['parentesco']);
@@ -41,6 +43,7 @@ class AcaoService
                 $acao->setInicio($dados['inicio']);
                 $acao->setTermino($dados['termino']);
                 $acao->setDescricao($dados['descricao']);
+                $acao->setUsuarioAlteracao(utf8_encode($dados['usuario']));
                 $acao->setVoluntario(new VoluntarioEntity());
             }
             $this->em->flush();

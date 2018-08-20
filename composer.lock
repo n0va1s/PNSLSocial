@@ -907,16 +907,16 @@
         },
         {
             "name": "egulias/email-validator",
-            "version": "2.1.4",
+            "version": "2.1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/egulias/EmailValidator.git",
-                "reference": "8790f594151ca6a2010c6218e09d96df67173ad3"
+                "reference": "54859fabea8b3beecbb1a282888d5c990036b9e3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/egulias/EmailValidator/zipball/8790f594151ca6a2010c6218e09d96df67173ad3",
-                "reference": "8790f594151ca6a2010c6218e09d96df67173ad3",
+                "url": "https://api.github.com/repos/egulias/EmailValidator/zipball/54859fabea8b3beecbb1a282888d5c990036b9e3",
+                "reference": "54859fabea8b3beecbb1a282888d5c990036b9e3",
                 "shasum": ""
             },
             "require": {
@@ -960,7 +960,7 @@
                 "validation",
                 "validator"
             ],
-            "time": "2018-04-10T10:11:19+00:00"
+            "time": "2018-08-16T20:49:45+00:00"
         },
         {
             "name": "gedmo/doctrine-extensions",
@@ -2629,16 +2629,16 @@
         },
         {
             "name": "composer/xdebug-handler",
-            "version": "1.1.0",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/xdebug-handler.git",
-                "reference": "c919dc6c62e221fc6406f861ea13433c0aa24f08"
+                "reference": "e1809da56ce1bd1b547a752936817341ac244d8e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/xdebug-handler/zipball/c919dc6c62e221fc6406f861ea13433c0aa24f08",
-                "reference": "c919dc6c62e221fc6406f861ea13433c0aa24f08",
+                "url": "https://api.github.com/repos/composer/xdebug-handler/zipball/e1809da56ce1bd1b547a752936817341ac244d8e",
+                "reference": "e1809da56ce1bd1b547a752936817341ac244d8e",
                 "shasum": ""
             },
             "require": {
@@ -2669,7 +2669,7 @@
                 "Xdebug",
                 "performance"
             ],
-            "time": "2018-04-11T15:42:36+00:00"
+            "time": "2018-08-16T10:54:23+00:00"
         },
         {
             "name": "doctrine/data-fixtures",
@@ -3118,16 +3118,16 @@
         },
         {
             "name": "heroku/heroku-buildpack-php",
-            "version": "v142",
+            "version": "v143",
             "source": {
                 "type": "git",
                 "url": "https://github.com/heroku/heroku-buildpack-php.git",
-                "reference": "6a2c921a0d691223a5b92b764ae986fda15b90d6"
+                "reference": "1cdd477661d3da7434efe5fedcb42d7b42503b8d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/heroku/heroku-buildpack-php/zipball/6a2c921a0d691223a5b92b764ae986fda15b90d6",
-                "reference": "6a2c921a0d691223a5b92b764ae986fda15b90d6",
+                "url": "https://api.github.com/repos/heroku/heroku-buildpack-php/zipball/1cdd477661d3da7434efe5fedcb42d7b42503b8d",
+                "reference": "1cdd477661d3da7434efe5fedcb42d7b42503b8d",
                 "shasum": ""
             },
             "bin": [
@@ -3158,7 +3158,7 @@
                 "nginx",
                 "php"
             ],
-            "time": "2018-08-08T00:56:54+00:00"
+            "time": "2018-08-17T16:27:37+00:00"
         },
         {
             "name": "jdorn/sql-formatter",

@@ -62,7 +62,7 @@ class TipoController implements ControllerProviderInterface
         )->bind('tipoSalvar');
 
         $ctrl->get(
-            '/listar', function ($dominio) use ($app) {
+            '/listar', function () use ($app) {
                 $registros = $app['tipo_service']->fetchAll();
                 if ($registros) {
                     return new Response(
@@ -78,6 +78,24 @@ class TipoController implements ControllerProviderInterface
                 }             
             }
         )->bind('tipoListar');
+
+        $ctrl->get(
+            '/listar/{grupo}', function ($grupo) use ($app) {
+                $registros = $app['tipo_service']->findByGrupo($grupo);
+                if ($registros) {
+                    return new Response(
+                        $app->json(
+                            $registros, 201, ['Content-Type' => 'application/json']
+                        )
+                    );
+                } else {
+                    return $app->abort(
+                        404, 
+                        "Ops... nenhuma configuração cadastrada"
+                    );
+                }             
+            }
+        )->bind('tipoListarPorGrupo');
 
         $ctrl->delete(
             '/excluir/{id}', function ($id) use ($app) {
