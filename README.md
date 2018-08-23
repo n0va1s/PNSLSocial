@@ -9,18 +9,23 @@ Uma plataforma para gerenciar as ações sociais de instituições sociais.
 **Diferente** daquelas planilhas salvas em vários lugares e enviadas por email, permite a gestão de: voluntários, usuários, ação social, frequência, atendimento, emitir certificados e prestar as contas anuais.
 
 # Desenvolvedores
-André Portilho (frontend)
-João Paulo Novais (backend)
+Felipe Toscano
+João Paulo Novais
 
 # Instalação
-* Baixar arquivos
+* Baixe arquivos
 > git clone
 * Vá para a pasta da aplicação
-> cd quadro_magico
-* Criar o banco de dados (MySQL)
-> sudo php bin/doctrine-silex orm:schema-tool:create
-* Executar os scripts disponíveis em /src/../SQL
-* Baixar os componentes
+> cd PNSLSocial
+* Baixe os componentes
 > composer update
-* Executar o servidor de aplicação
+* Crie o banco de dados (MySQL)
+> sudo php bin/doctrine-silex orm:schema-tool:create
+* Configure a aplicação
+> mv config-SAMPLE.in config.ini
+> vi config.ini
+* Insira primeiros valores do banco de dados
+> mysql -u root -p;
+> mysql source /src/../SQL/insert.sql
+* Execute o servidor de aplicação
 > php -S localhost:1234 -t web/
