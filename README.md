@@ -1,15 +1,26 @@
-# PNSLSocial
-Sistema de gestão (ERP) de voluntários e ações sociais da Casa São José, instituto ligado à [Paróquina Nossa Senhora do Lago](http://www.nossasenhoradolago.org.br "Site da Paróquia  Nossa Senhora do Lago")
+# Definição
+Uma plataforma para gerenciar as ações sociais de instituições sociais.
 
-# Funcionalidades
-* Cadastro de voluntários 
-* Cadastro de ações sociais em grupo
-* Cadastro de ações sociais médicas
-* Cadastro de pessoas atendidas
-* Cadastro de responsáveis por menores
-* Termo de compromisso
-* Prestação de contas
+# Proposta
+**Para** instituições sociais <br />
+**Que** buscam gerir suas ações sociais <br />
+**O** social <br />
+**É** um sistema <br />
+**Diferente** daquelas planilhas salvas em vários lugares e enviadas por email, permite a gestão de: voluntários, usuários, ação social, frequência, atendimento, emitir certificados e prestar as contas anuais.
 
 # Desenvolvedores
 André Portilho (frontend)
 João Paulo Novais (backend)
+
+# Instalação
+* Baixar arquivos
+> git clone
+* Vá para a pasta da aplicação
+> cd quadro_magico
+* Criar o banco de dados (MySQL)
+> sudo php bin/doctrine-silex orm:schema-tool:create
+* Executar os scripts disponíveis em /src/../SQL
+* Baixar os componentes
+> composer update
+* Executar o servidor de aplicação
+> php -S localhost:1234 -t web/
