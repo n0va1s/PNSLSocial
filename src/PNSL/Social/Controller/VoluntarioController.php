@@ -43,11 +43,13 @@ class VoluntarioController implements ControllerProviderInterface
             '/', function () use ($app) {
                 $estados_civis = $app['tipo_service']->findByGrupo('CIV');
                 $tipos_telefone = $app['tipo_service']->findByGrupo('FON');
+                $ufs = $app['tipo_service']->findByGrupo('UF');
                 $voluntarios = $app['voluntario_service']->fetchAll();
                 return $app['twig']->render(
                     'cadastroVoluntario.twig',
                     array('estados_civis'=>$estados_civis, 
                     'tipos_telefone'=>$tipos_telefone,
+                    'ufs'=>$ufs,
                     'voluntarios'=>$voluntarios), 
                     new Response('OK', 200)
                 );
@@ -78,12 +80,14 @@ class VoluntarioController implements ControllerProviderInterface
                 if ($id) {
                     $estados_civis = $app['tipo_service']->findByGrupo('CIV');
                     $tipos_telefone = $app['tipo_service']->findByGrupo('FON');
+                    $ufs = $app['tipo_service']->findByGrupo('UF');
                     $voluntario = $app['voluntario_service']->findById($id);                    
                     if ($voluntario) {                        
                         return $app['twig']->render(
                             'cadastroVoluntario.twig',
                             array('estados_civis'=>$estados_civis, 
                             'tipos_telefone'=>$tipos_telefone,
+                            'ufs'=>$ufs,
                             'voluntario'=>$voluntario), 
                             new Response('OK', 200)
                         );

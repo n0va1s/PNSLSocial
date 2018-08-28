@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Doctrine\ORM\EntityManager;
 use PNSL\Social\Service\PessoaService;
 use PNSL\Social\Service\ResponsavelService;
-use PNSL\Social\Service\MenorService;
+use PNSL\Social\Service\EscolaService;
 
 class UsuarioController implements ControllerProviderInterface
 {
@@ -25,11 +25,9 @@ class UsuarioController implements ControllerProviderInterface
         $app['pessoa_service'] = function () {
             return new PessoaService($this->em);
         };
-        $app['responsavel_service'] = function () {
-            return new MenorService($this->em);
-        };
-        $app['menor_service'] = function () {
-            return new MenorService($this->em);
+
+        $app['escola_service'] = function () {
+            return new EscolaService($this->em);
         };
 
         $ctrl->before(
@@ -45,10 +43,23 @@ class UsuarioController implements ControllerProviderInterface
 
         $ctrl->get(
             '/', function () use ($app) {
+                $estados_civis = $app['tipo_service']->findByGrupo('CIV');
+                $tipos_telefone = $app['tipo_service']->findByGrupo('FON');
+                $parentescos = $app['tipo_service']->findByGrupo('PRT');
+                $turnos = $app['tipo_service']->findByGrupo('TRN');
+                $graus = $app['tipo_service']->findByGrupo('GRA');
+                $ufs = $app['tipo_service']->findByGrupo('UF');
+                $usuarios = $app['pessoa_service']->fetchAll();
                 return $app['twig']->render(
                     'cadastroUsuario.twig',
-                    array(), 
-                    new Response('Ok', 200)
+                    array('estados_civis'=>$estados_civis, 
+                    'tipos_telefone'=>$tipos_telefone,
+                    'parentescos'=>$parentescos,
+                    'turnos'=>$turnos,
+                    'graus'=>$graus,
+                    'ufs'=>$ufs,
+                    'usuarios'=>$usuarios), 
+                    new Response('OK', 200)
                 );
             }
         )->bind('usuarioCadastrar');
@@ -56,52 +67,35 @@ class UsuarioController implements ControllerProviderInterface
         $ctrl->post(
             '/salvar', function (Request $req) use ($app) {
                 $dados = $req->request->all();
-                $pessoa_id = $app['pessoa_service']->save($dados);
-                $menor_id = $app['menor_service']->save($pessoa_id, $dados);
-                if ($menor_id > 0) {
-                    return new Response(
-                        $app->json(['resultado'=>'Usuário cadastrado com sucesso!'], 201)
+                $pessoa = $app['pessoa_service']->save($dados);
+                $escola = $app['escola_service']->save($pessoa, $dados);
+                if ($pessoa) {
+                    return $app->redirect(
+                        $app['url_generator']
+                        ->generate('usuarioCadastrar')
                     );
                 } else {
-                    return $app->abort(
-                        404, "Ops... não foi possível cadastrar o usuário"
-                    ); 
+                    return $app->redirect(
+                        $app['url_generator']
+                        ->generate('usuarioCadastrar')
+                    );
                 }
             }
         )->bind('usuarioSalvar');
-
-        $ctrl->get(
-            '/listar', function () use ($app) {
-                $menores = $app['menor_service']->fetchAll();
-                if ($menores) {
-                    return new Response(
-                        $app->json(
-                            $menores, 201, ['Content-Type' => 'application/json']
-                        )
-                    );
-                } else {
-                    return $app->abort(
-                        404, 
-                        "Ops... nenhum usuário cadastrado."
-                    );
-                }             
-            }
-        )->bind('usuarioListar');
 
         $ctrl->delete(
             '/excluir/{id}', function ($id) use ($app) {
                 if ($id) {
                     $excluiu = $app['menor_service']->delete($id);
-                    return new Response(
-                        $app->json(
-                            $excluiu, 201, ['Content-Type' => 'application/json']
-                        )
+                    return $app->redirect(
+                        $app['url_generator']
+                        ->generate('usuarioCadastrar')
                     );
                 } else {
-                    return $app->abort(
-                        404, 
-                        "O usuário que vc escolheu não existe. Tente novamente."
-                    ); 
+                    return $app->redirect(
+                        $app['url_generator']
+                        ->generate('usuarioCadastrar')
+                    );
                 }
             }
         )->bind('usuarioExcluir')->assert('id', '\d+');

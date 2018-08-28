@@ -9,7 +9,7 @@ Uma plataforma para gerenciar as ações sociais de instituições sociais.
 **Diferente** daquelas planilhas salvas em vários lugares e enviadas por email, permite a gestão de: voluntários, usuários, ação social, frequência, atendimento, emitir certificados e prestar as contas anuais.
 
 # Desenvolvedores
-Felipe Toscano
+Felipe Toscano <br />
 João Paulo Novais
 
 # Instalação

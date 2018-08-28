@@ -90,19 +90,23 @@ INSERT INTO frequencia(seq_turma, seq_atendido, dat_frequencia, ind_presenca, in
 VALUES (1,3,'2018-02-19','P','N','n0va1s',now(),'n0va1s',now());
 INSERT INTO frequencia(seq_turma, seq_atendido, dat_frequencia, ind_presenca, ind_inativo, usu_inc, dat_inc, usu_alt, dat_alt) 
 VALUES (1,3,'2018-02-26','F','N','n0va1s',now(),'n0va1s',now());
-
+--Estado Civil
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Solteiro(a)','CIV');
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Casado(a)','CIV');
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Divorciado(a)','CIV');
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('União Estável','CIV');
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Viúvo(a)','CIV');
+--Sexo
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('M','SEX');
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('F','SEX');
+--Tipos de telefone
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Celular','FON');
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Fixo','FON');
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Recado','FON');
+--Tipos de pessoa
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Voluntário','PES');
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Usuário','PES');
+--Parentesco
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Pai','PRT');
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Mãe','PRT');
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Avó','PRT');
@@ -113,3 +117,40 @@ INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Tutor','PRT');
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Tutora','PRT');
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Padrinho','PRT');
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Madrinha','PRT');
+--Turno
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Matutino','TRN');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Vespertino','TRN');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Noturno','TRN');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Integral','TRN');
+--Grau
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('1º','GRA');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('2º','GRA');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('3º','GRA');
+--UF
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('AC','UF');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('AL','UF');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('AM','UF');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('AP','UF');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('BA','UF');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('CE','UF');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('DF','UF');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('ES','UF');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('GO','UF');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('MA','UF');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('MG','UF');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('MS','UF');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('MT','UF');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('PA','UF');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('PB','UF');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('PE','UF');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('PI','UF');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('PR','UF');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('RJ','UF');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('RN','UF');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('RO','UF');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('RR','UF');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('RS','UF');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('SC','UF');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('SE','UF');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('SP','UF');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('TO','UF');
