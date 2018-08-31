@@ -12,81 +12,93 @@
         <div class="row col-sm-8 col-sm-offset-2">
             <form name="frmCadastro" action="{{ path('acaoSalvar')}}" method="POST">
                 <div class="form-group form-check-inline">
-                    <label class="form-check-label">Atendimento
-                        <input type="radio" id="tipo_acao" name="tipo_acao" class="form-check-input" value="A" checked="true">
+                    {% for tipo in tipos_acao %}
+                    <label class="form-check-label">{{ tipo.descricao }}
+                        <input type="radio" name="tipo_acao" name="tipo_acao" class="form-check-input" value="{{ tipo.id }}">
                     </label>
-                    <label class="form-check-label">Turma
-                        <input type="radio" id="tipo_acao" name="tipo_acao" class="form-check-input" value="T">
-                    </label>
+                    {% endfor %} 
                 </div>
                 <fieldset>
                 <legend><i class="glyphicon glyphicon-menu-right"></i><b>Dados básicos</b></legend>
                     <div class="form-group col-sm-6">
-                        <label for="nome">Nome</label>
-                        <input type="text" id="nome" class="form-control" placeholder="O nome da ação social" autofocus required>
+                        <label for="acao">Nome</label>
+                        <input type="text" name="acao" class="form-control" placeholder="O nome da ação social" required>
                     </div>
                     <div class="form-group col-sm-3">
                         <label for="inicio">Início</label>
-                        <input type="date" id="inicio" class="form-control" placeholder="dd/mm/aaaa" required>
+                        <input type="date" name="inicio" class="form-control" placeholder="dd/mm/aaaa" required>
                     </div>
                     <div class="form-group col-sm-3">
                         <label for="termino">Término</label>
-                        <input type="date" id="termino" class="form-control" placeholder="dd/mm/aaaa" required>
+                        <input type="date" name="termino" class="form-control" placeholder="dd/mm/aaaa">
                     </div>
                     <div class="form-group col-sm-6">
                         <label for="publico-alvo">Público-alvo</label>
-                        <input type="text" id="publico-alvo" class="form-control" placeholder="adolescentes, maiores de 12 anos e de ambos os sexos">
+                        <input type="text" name="publico-alvo" class="form-control" placeholder="adolescentes, maiores de 12 anos e de ambos os sexos">
                     </div>
                     <div class="form-group col-sm-6">
                         <label for="pre-requisito">Pré-requisito</label>
-                        <input type="text" id="pre-requisito" class="form-control" placeholder="estar na 4ª série, ter feito informática básica">
+                        <input type="text" name="pre-requisito" class="form-control" placeholder="estar na 4ª série, ter feito informática básica">
                     </div>
                     <div class="form-group form-check-inline col-sm-8">
                         <label for="dia" class="form-check-label">Dia</label><br />
                         <label class="form-check-label">Seg
-                            <input type="checkbox" id="dia" class="form-check-input" value="Seg">
+                            <input type="checkbox" name="segunda" class="form-check-input" value="Seg">
                         </label>
                         <label class="form-check-label">Ter
-                            <input type="checkbox" id="dia" class="form-check-input" value="Ter">
+                            <input type="checkbox" name="terca" class="form-check-input" value="Ter">
                         </label>
                         <label class="form-check-label">Qua
-                            <input type="checkbox" id="dia" class="form-check-input" value="Qua">
+                            <input type="checkbox" name="quarta" class="form-check-input" value="Qua">
                         </label>
                         <label class="form-check-label">Qui
-                            <input type="checkbox" id="dia" class="form-check-input" value="Qui">
+                            <input type="checkbox" name="quinta" class="form-check-input" value="Qui">
                         </label>
                         <label class="form-check-label">Sex
-                            <input type="checkbox" id="dia" class="form-check-input" value="Sex">
+                            <input type="checkbox" name="sexta" class="form-check-input" value="Sex">
                         </label>
                         <label class="form-check-label">Sáb
-                            <input type="checkbox" id="dia" class="form-check-input" value="Sab">
+                            <input type="checkbox" name="sabado" class="form-check-input" value="Sab">
                         </label>
                         <label class="form-check-label">Dom
-                            <input type="checkbox" id="dia" class="form-check-input" value="Dom">
+                            <input type="checkbox" name="domingo" class="form-check-input" value="Dom">
                         </label>
                     </div>   
                     <div class="form-group col-sm-2">
-                        <label for="horario">Horário</label>
-                        <input type="time" id="horario" class="form-control" placeholder="12:00">
+                        <label for="horario">Entrada</label>
+                        <input type="time" name="entrada" class="form-control" placeholder="09:00">
+                    </div>
+                    <div class="form-group col-sm-2">
+                        <label for="horario">Saída</label>
+                        <input type="time" name="saida" class="form-control" placeholder="12:00">
                     </div>
                     <div class="form-group col-sm-2">
                         <label for="turno">Turno</label>
-                        <select class="form-control" id="turno" required>
+                        <select class="form-control" name="turno" required>
                             <option value="">Selecione</option>
+                            {% for turno in turnos %}
+                            <option value="{{ turno.id }}" {% if acao is defined and acao.turno.id == turno.id %} selected {% endif %}>{{ turno.descricao }}</option>
+                            {% endfor %}
                         </select>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group col-sm-10">
                         <label for="voluntario">Voluntário</label>
-                        <select class="form-control" id="voluntario" required>
+                        <select class="form-control" name="voluntario" required>
                             <option value="">Selecione</option>
+                            {% for voluntario in voluntarios %}
+                            <option value="{{ voluntario.pessoa.id }}" {% if acao is defined and acao.voluntario.pessoa.id == voluntario.pessoa.id %} selected {% endif %}>{{ voluntario.pessoa.nome }}</option>
+                            {% endfor %} 
                         </select>
                     </div>
                 </fieldset>
-                <fieldset disabled>
+                <fieldset>
                 <legend><i class="glyphicon glyphicon-menu-right"></i><b>Usuários</b></legend>
                     <div class="form-group">
-                        <select class="form-control" id="usuario" required>
+                        <select class="form-control" name="usuario">
                             <option value="">Selecione</option>
+                            {% for usuario in usuarios %}
+                            <option value="{{ usuario.id }}" {% if acao is defined and acao.usuario.id == usuario.id %} selected {% endif %}>{{ usuario.nome }}</option>
+                            {% endfor %} 
                         </select>
                     </div>
                 </fieldset>
@@ -98,12 +110,13 @@
                         <i class="glyphicon glyphicon-remove"> Limpar</i>
                     </button>
                 </div>
-                <input type="hidden" id="tipo" value="VOL">
+                <input type="hidden" name="id" value="{% if acao is defined %}{{ acao.id }}{% endif %}">
             </form>
         </div>
-        {% if mensagem is defined %}
-        <div class="row alert alert-success">
-            {{ mensagem }}
+        <input type="hidden" name="id" >                
+        {% if resultado is defined %}
+        <div class="col-sm-12 text-center alert alert-success">
+            {{ resultado }}
         </div>
         {% endif %}
     </div>

@@ -1,6 +1,7 @@
 <?php
 namespace PNSL\Social\Entity;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 use PNSL\Social\Entity\VoluntarioEntity;
 
 /**
@@ -19,10 +20,10 @@ class AcaoEntity
     /** @ORM\Column(type="string", length=255, name="nom_acao") */
     private $nome;
 
-    /** @ORM\Column(type="datetime", name="ano_mes_inicio") */
+    /** @ORM\Column(type="datetime", name="dat_inicio") */
     private $inicio;
 
-    /** @ORM\Column(type="datetime", name="ano_mes_termino", nullable=true) */
+    /** @ORM\Column(type="datetime", name="dat_termino", nullable=true) */
     private $termino;
 
     /** @ORM\Column(type="string", length=255, name="des_publico_alvo") */
@@ -52,9 +53,12 @@ class AcaoEntity
     /** @ORM\Column(type="string", name="ind_domingo", columnDefinition="CHAR(1) NOT NULL") */
     private $domingo;
 
-    /** @ORM\Column(type="time", name="hor_acao") */
-    private $horario;
+    /** @ORM\Column(type="time", name="hor_entrada") */
+    private $entrada;
 
+    /** @ORM\Column(type="time", name="hor_saida") */
+    private $saida;
+    
     /** @ORM\Column(type="string", name="tip_turno", columnDefinition="CHAR(1) NOT NULL") */
     private $turno;
 
@@ -65,13 +69,10 @@ class AcaoEntity
     private $voluntario;
     
     /** 
-     * @ORM\OneToOne(targetEntity="TipoEntity")
+     * @ORM\ManyToOne(targetEntity="TipoEntity")
      * @ORM\JoinColumn(name="seq_tipo_acao", referencedColumnName="seq_tipo") 
      */
     private $tipo;
-
-    /** @ORM\OneToMany(targetEntity="FrequenciaEntity", mappedBy="acao") */
-    private $frequencias;
 
     /** @ORM\OneToMany(targetEntity="AtendimentoEntity", mappedBy="acao") */
     private $atendimentos;
@@ -93,7 +94,6 @@ class AcaoEntity
 
     public function __construct()
     {
-        $this->frequencias = new ArrayCollection();
         $this->atendimentos = new ArrayCollection();
         $this->turmas = new ArrayCollection();
         $this->dataInclusao = new \Datetime();
@@ -135,9 +135,13 @@ class AcaoEntity
      */ 
     public function setNome($nome)
     {
-        $this->nome = $nome;
-
-        return $this;
+        if (empty($nome)) {
+            throw new \InvalidArgumentException('O nome da ação é obrigatória', 99);
+        } else {
+            $this->nome = $nome;
+            return $this;
+        }
+        
     }
 
     /**
@@ -155,9 +159,19 @@ class AcaoEntity
      */ 
     public function setInicio($inicio)
     {
-        $this->inicio = $inicio;
-
-        return $this;
+        if (empty($inicio)) {
+            throw new \InvalidArgumentException('A data de início é obrigatória', 99);
+        } else {
+            if (substr_count($inicio, "/") == 2) {
+                list($dia, $mes, $ano) = explode("/", $inicio);
+                $this->inicio = new \DateTime(
+                    date_format(date_create($ano."-".$mes."-".$dia), "Y-m-d")
+                );
+            } else {
+                throw new \InvalidArgumentException('A data de início é inválida', 99);
+            }
+            return $this;
+        }        
     }
 
     /**
@@ -175,8 +189,18 @@ class AcaoEntity
      */ 
     public function setTermino($termino)
     {
-        $this->termino = $termino;
-
+        if (empty($termino)) {
+            $this->termino = null;
+        } else {
+            if (substr_count($termino, "/") == 2) {
+                list($dia, $mes, $ano) = explode("/", $termino);
+                $this->termino = new \DateTime(
+                    date_format(date_create($ano."-".$mes."-".$dia), "Y-m-d")
+                );
+            } else {
+                throw new \InvalidArgumentException('A data de início é inválida', 99);
+            }
+        }        
         return $this;
     }
 
@@ -195,9 +219,12 @@ class AcaoEntity
      */ 
     public function setPublicoAlvo($publicoAlvo)
     {
-        $this->publicoAlvo = $publicoAlvo;
-
-        return $this;
+        if (empty($publicoAlvo)) {
+            throw new \InvalidArgumentException('O público é obrigatório', 99);
+        } else {
+            $this->publicoAlvo = $publicoAlvo;
+            return $this;
+        }
     }
 
     /**
@@ -215,9 +242,12 @@ class AcaoEntity
      */ 
     public function setPreRequisito($preRequisito)
     {
-        $this->preRequisito = $preRequisito;
-
-        return $this;
+        if (empty($preRequisito)) {
+            throw new \InvalidArgumentException('O pré-requisito é obrigatório', 99);
+        } else {
+            $this->preRequisito = $preRequisito;
+            return $this;
+        }
     }
 
     /**
@@ -235,8 +265,11 @@ class AcaoEntity
      */ 
     public function setSegunda($segunda)
     {
-        $this->segunda = $segunda;
-
+        if (empty($segunda)) {
+            $this->segunda = 'N';
+        } else {
+            $this->segunda = 'S';
+        }
         return $this;
     }
 
@@ -255,8 +288,11 @@ class AcaoEntity
      */ 
     public function setTerca($terca)
     {
-        $this->terca = $terca;
-
+        if (empty($terca)) {
+            $this->terca = 'N';
+        } else {
+            $this->terca = 'S';
+        }
         return $this;
     }
 
@@ -275,8 +311,11 @@ class AcaoEntity
      */ 
     public function setQuarta($quarta)
     {
-        $this->quarta = $quarta;
-
+        if (empty($quarta)) {
+            $this->quarta = 'N';
+        } else {
+            $this->quarta = 'S';
+        }
         return $this;
     }
 
@@ -295,8 +334,11 @@ class AcaoEntity
      */ 
     public function setQuinta($quinta)
     {
-        $this->quinta = $quinta;
-
+        if (empty($quinta)) {
+            $this->quinta = 'N';
+        } else {
+            $this->quinta = 'S';
+        }
         return $this;
     }
 
@@ -315,8 +357,11 @@ class AcaoEntity
      */ 
     public function setSexta($sexta)
     {
-        $this->sexta = $sexta;
-
+        if (empty($sexta)) {
+            $this->sexta = 'N';
+        } else {
+            $this->sexta = 'S';
+        }
         return $this;
     }
 
@@ -335,8 +380,11 @@ class AcaoEntity
      */ 
     public function setSabado($sabado)
     {
-        $this->sabado = $sabado;
-
+        if (empty($sabado)) {
+            $this->sabado = 'N';
+        } else {
+            $this->sabado = 'S';
+        }
         return $this;
     }
 
@@ -355,28 +403,72 @@ class AcaoEntity
      */ 
     public function setDomingo($domingo)
     {
-        $this->domingo = $domingo;
+        if (empty($domingo)) {
+            $this->domingo = 'N';
+        } else {
+            $this->domingo = 'S';
+        }
+        return $this;
+    }
 
+        /**
+     * Get the value of entrada
+     */ 
+    public function getEntrada()
+    {
+        return $this->entrada;
+    }
+
+    /**
+     * Set the value of entrada
+     *
+     * @return  self
+     */ 
+    public function setEntrada($entrada)
+    {
+        if (empty($entrada)) {
+            throw new \InvalidArgumentException('A hora de entrada é obrigatória', 99);
+        } else {
+            
+            if (substr_count($entrada, ":") == 1) {
+                list($hora, $minuto) = explode(":", $entrada);
+                $this->entrada = new \DateTime(
+                    date_format(date_create($hora.":".$minuto), "h:i")
+                );
+            } else {
+                throw new \InvalidArgumentException('O horário de entrada é inválido', 99);
+            }
+        }        
         return $this;
     }
 
     /**
-     * Get the value of horario
+     * Get the value of saida
      */ 
-    public function getHorario()
+    public function getSaida()
     {
-        return $this->horario;
+        return $this->saida;
     }
 
     /**
-     * Set the value of horario
+     * Set the value of saida
      *
      * @return  self
      */ 
-    public function setHorario($horario)
+    public function setSaida($saida)
     {
-        $this->horario = $horario;
-
+        if (empty($saida)) {
+            throw new \InvalidArgumentException('A hora de saída é obrigatória', 99);
+        } else {
+            if (substr_count($saida, ":") == 1) {
+                list($hora, $minuto) = explode(":", $saida);
+                $this->saida = new \DateTime(
+                    date_format(date_create($hora.":".$minuto), "h:i")
+                );
+            } else {
+                throw new \InvalidArgumentException('O horário de saída é inválido', 99);
+            }
+        }        
         return $this;
     }
 
@@ -395,9 +487,12 @@ class AcaoEntity
      */ 
     public function setTurno($turno)
     {
-        $this->turno = $turno;
-
-        return $this;
+        if (empty($turno)) {
+            throw new \InvalidArgumentException('O turno é obrigatório', 99);
+        } else {
+            $this->turno = $turno;
+            return $this;
+        }
     }
 
     /**
@@ -415,9 +510,12 @@ class AcaoEntity
      */ 
     public function setVoluntario($voluntario)
     {
-        $this->voluntario = $voluntario;
-
-        return $this;
+        if (empty($voluntario)) {
+            throw new \InvalidArgumentException('O voluntário é obrigatório', 99);
+        } else {
+            $this->voluntario = $voluntario;
+            return $this;
+        }
     }
 
     /**
@@ -435,9 +533,12 @@ class AcaoEntity
      */ 
     public function setTipo($tipo)
     {
-        $this->tipo = $tipo;
-
-        return $this;
+        if (empty($tipo)) {
+            throw new \InvalidArgumentException('O tipo de ação é obrigatório', 99);
+        } else {
+            $this->tipo = $tipo;
+            return $this;
+        }
     }
 
     /**
@@ -456,7 +557,6 @@ class AcaoEntity
     public function setUsuarioInclusao($usuarioInclusao)
     {
         $this->usuarioInclusao = $usuarioInclusao;
-
         return $this;
     }
 
@@ -484,7 +584,6 @@ class AcaoEntity
     public function setUsuarioAlteracao($usuarioAlteracao)
     {
         $this->usuarioAlteracao = $usuarioAlteracao;
-
         return $this;
     }
 

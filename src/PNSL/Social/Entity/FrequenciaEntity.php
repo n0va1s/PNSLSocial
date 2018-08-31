@@ -18,16 +18,10 @@ class FrequenciaEntity
     private $id;
 
      /**
-     * @ORM\ManyToOne(targetEntity="AcaoEntity", inversedBy="frequencia")
-     * @ORM\JoinColumn(name="seq_acao", referencedColumnName="seq_acao")
+     * @ORM\ManyToOne(targetEntity="TurmaEntity", inversedBy="frequencias")
+     * @ORM\JoinColumn(name="seq_turma", referencedColumnName="seq_turma")
      */
-    private $acao;
-
-     /**
-     * @ORM\ManyToOne(targetEntity="PessoaEntity", inversedBy="frequencia")
-     * @ORM\JoinColumn(name="seq_pessoa", referencedColumnName="seq_pessoa")
-     */
-    private $pessoa;
+    private $turma;
 
     /** @ORM\Column(type="datetime", name="dat_frequencia", nullable=false) */
     private $data;

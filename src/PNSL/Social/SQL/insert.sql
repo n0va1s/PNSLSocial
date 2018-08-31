@@ -154,3 +154,6 @@ INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('SC','UF');
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('SE','UF');
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('SP','UF');
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('TO','UF');
+--Tipo de acao
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Individual','TPA');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Grupo','TPA');

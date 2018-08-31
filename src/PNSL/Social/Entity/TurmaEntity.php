@@ -33,6 +33,9 @@ class TurmaEntity
     /** @ORM\Column(type="string", name="tip_situacao", columnDefinition="CHAR(1) NOT NULL") */
     private $situacao;
 
+    /** @ORM\OneToMany(targetEntity="FrequenciaEntity", mappedBy="turma") */
+    private $frequencias;
+
     /** @ORM\Column(type="string", length=50, name="usu_inc", nullable=false) */
     private $usuarioInclusao;
 
@@ -47,6 +50,7 @@ class TurmaEntity
 
     public function __construct()
     {
+        $this->frequencias = new ArrayCollection();
         $this->dataInclusao = new \Datetime();
         $this->dataAlteracao = new \Datetime();
     }
