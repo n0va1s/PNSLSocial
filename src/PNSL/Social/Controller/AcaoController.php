@@ -40,15 +40,23 @@ class AcaoController implements ControllerProviderInterface
         $ctrl->get(
             '/', function () use ($app) {
                 $tipos_acao = $app['tipo_service']->findByGrupo('TPÀ');
+                $publicos_alvo = $app['tipo_service']->findByGrupo('PUB');
+                $faixas_etarias = $app['tipo_service']->findByGrupo('ETA');
                 $turnos = $app['tipo_service']->findByGrupo('TRN');
+                $dias = $app['tipo_service']->findByGrupo('SEM');
                 $voluntarios = $app['voluntario_service']->fetchAll();
                 $usuarios = $app['pessoa_service']->fetchAll();
+                $acoes = $app['acao_service']->fetchAll();
                 return $app['twig']->render(
                     'cadastroAcao.twig',
                     array('tipos_acao'=>$tipos_acao,
+                    'publicos_alvo'=>$publicos_alvo,
+                    'faixas_etarias'=>$faixas_etarias,
                     'turnos'=>$turnos,
+                    'dias'=>$dias,
                     'voluntarios'=>$voluntarios,
-                    'usuarios'=>$usuarios), 
+                    'usuarios'=>$usuarios,
+                    'acoes'=>$acoes), 
                     new Response('OK', 200)
                 );
             }
@@ -74,9 +82,10 @@ class AcaoController implements ControllerProviderInterface
 
         $ctrl->post(
             '/usuario', function (Request $req) use ($app) {
-                $voluntario = $req->request->all();
-                $adicionou = $app['acao_service']->addVoluntario($dados);
-                if ($adicionou) {
+                $acao = $req->request->get('acao');
+                $usuario = $req->request->get('usuario');
+                $turma = $app['acao_service']->addTurma($acao, $usuario);
+                if ($turma) {
                     return $app->redirect(
                         $app['url_generator']
                         ->generate('acaoCadastrar')
@@ -90,7 +99,46 @@ class AcaoController implements ControllerProviderInterface
             }
         )->bind('acaoAdicionarUsuario');
 
-        $ctrl->delete(
+        $ctrl->get(
+            '/editar/{id}', function ($id) use ($app) {
+                if ($id) {
+                    $acao = $app['acao_service']->findById($id);
+                    if ($acao) {
+                        $tipos_acao = $app['tipo_service']->findByGrupo('TPÀ');
+                        $publicos_alvo = $app['tipo_service']->findByGrupo('PUB');
+                        $faixas_etarias = $app['tipo_service']->findByGrupo('ETA');
+                        $turnos = $app['tipo_service']->findByGrupo('TRN');
+                        $dias = $app['tipo_service']->findByGrupo('SEM');
+                        $voluntarios = $app['voluntario_service']->fetchAll();
+                        $usuarios = $app['pessoa_service']->fetchAll();
+                        return $app['twig']->render(
+                            'cadastroAcao.twig',
+                            array('tipos_acao'=>$tipos_acao,
+                            'publicos_alvo'=>$publicos_alvo,
+                            'faixas_etarias'=>$faixas_etarias,
+                            'turnos'=>$turnos,
+                            'dias'=>$dias,
+                            'voluntarios'=>$voluntarios,
+                            'usuarios'=>$usuarios,
+                            'acao'=>$acao), 
+                            new Response('OK', 200)
+                        );
+                    } else {
+                        return $app->redirect(
+                            $app['url_generator']
+                            ->generate('acaoCadastrar')
+                        );
+                    }
+                } else {
+                    return $app->abort(
+                        500, 
+                        "Não encontrei a ação para excluir"
+                    ); 
+                }
+            }
+        )->bind('acaoEditar')->assert('id', '\d+');
+
+        $ctrl->get(
             '/excluir/{id}', function ($id) use ($app) {
                 if ($id) {
                     $excluiu = $app['acao_service']->delete($id);

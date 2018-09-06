@@ -26,32 +26,26 @@ class AcaoEntity
     /** @ORM\Column(type="datetime", name="dat_termino", nullable=true) */
     private $termino;
 
-    /** @ORM\Column(type="string", length=255, name="des_publico_alvo") */
+    /** 
+     * @ORM\ManyToOne(targetEntity="TipoEntity")
+     * @ORM\JoinColumn(name="seq_tipo_publico_alvo", referencedColumnName="seq_tipo") 
+     */
     private $publicoAlvo;
+
+    /** 
+     * @ORM\ManyToOne(targetEntity="TipoEntity")
+     * @ORM\JoinColumn(name="seq_tipo_faixa_etaria", referencedColumnName="seq_tipo") 
+     */
+    private $faixaEtaria;
 
     /** @ORM\Column(type="string", length=255, name="des_pre_requisito") */
     private $preRequisito;
 
-    /** @ORM\Column(type="string", name="ind_segunda", columnDefinition="CHAR(1) NOT NULL") */
-    private $segunda;
-
-    /** @ORM\Column(type="string", name="ind_terca", columnDefinition="CHAR(1) NOT NULL") */
-    private $terca;
-
-    /** @ORM\Column(type="string", name="ind_quarta", columnDefinition="CHAR(1) NOT NULL") */
-    private $quarta;
-
-    /** @ORM\Column(type="string", name="ind_quinta", columnDefinition="CHAR(1) NOT NULL") */
-    private $quinta;
-
-    /** @ORM\Column(type="string", name="ind_sexta", columnDefinition="CHAR(1) NOT NULL") */
-    private $sexta;
-
-    /** @ORM\Column(type="string", name="ind_sabado", columnDefinition="CHAR(1) NOT NULL") */
-    private $sabado;
-
-    /** @ORM\Column(type="string", name="ind_domingo", columnDefinition="CHAR(1) NOT NULL") */
-    private $domingo;
+    /** 
+     * @ORM\ManyToOne(targetEntity="TipoEntity")
+     * @ORM\JoinColumn(name="seq_tipo_dia_semana", referencedColumnName="seq_tipo") 
+     */
+    private $diaSemana;
 
     /** @ORM\Column(type="time", name="hor_entrada") */
     private $entrada;
@@ -59,7 +53,10 @@ class AcaoEntity
     /** @ORM\Column(type="time", name="hor_saida") */
     private $saida;
     
-    /** @ORM\Column(type="string", name="tip_turno", columnDefinition="CHAR(1) NOT NULL") */
+    /** 
+     * @ORM\ManyToOne(targetEntity="TipoEntity")
+     * @ORM\JoinColumn(name="seq_tipo_turno", referencedColumnName="seq_tipo") 
+     */
     private $turno;
 
      /**
@@ -219,12 +216,29 @@ class AcaoEntity
      */ 
     public function setPublicoAlvo($publicoAlvo)
     {
-        if (empty($publicoAlvo)) {
-            throw new \InvalidArgumentException('O público é obrigatório', 99);
-        } else {
-            $this->publicoAlvo = $publicoAlvo;
-            return $this;
-        }
+        $this->publicoAlvo = $publicoAlvo;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of faixaEtaria
+     */ 
+    public function getFaixaEtaria()
+    {
+        return $this->faixaEtaria;
+    }
+
+    /**
+     * Set the value of faixaEtaria
+     *
+     * @return  self
+     */ 
+    public function setFaixaEtaria($faixaEtaria)
+    {
+        $this->faixaEtaria = $faixaEtaria;
+
+        return $this;
     }
 
     /**
@@ -251,167 +265,26 @@ class AcaoEntity
     }
 
     /**
-     * Get the value of segunda
+     * Get the value of diaSemana
      */ 
-    public function getSegunda()
+    public function getDiaSemana()
     {
-        return $this->segunda;
+        return $this->diaSemana;
     }
 
     /**
-     * Set the value of segunda
+     * Set the value of diaSemana
      *
      * @return  self
      */ 
-    public function setSegunda($segunda)
+    public function setDiaSemana($diaSemana)
     {
-        if (empty($segunda)) {
-            $this->segunda = 'N';
-        } else {
-            $this->segunda = 'S';
-        }
+        $this->diaSemana = $diaSemana;
+
         return $this;
     }
 
     /**
-     * Get the value of terca
-     */ 
-    public function getTerca()
-    {
-        return $this->terca;
-    }
-
-    /**
-     * Set the value of terca
-     *
-     * @return  self
-     */ 
-    public function setTerca($terca)
-    {
-        if (empty($terca)) {
-            $this->terca = 'N';
-        } else {
-            $this->terca = 'S';
-        }
-        return $this;
-    }
-
-    /**
-     * Get the value of quarta
-     */ 
-    public function getQuarta()
-    {
-        return $this->quarta;
-    }
-
-    /**
-     * Set the value of quarta
-     *
-     * @return  self
-     */ 
-    public function setQuarta($quarta)
-    {
-        if (empty($quarta)) {
-            $this->quarta = 'N';
-        } else {
-            $this->quarta = 'S';
-        }
-        return $this;
-    }
-
-    /**
-     * Get the value of quinta
-     */ 
-    public function getQuinta()
-    {
-        return $this->quinta;
-    }
-
-    /**
-     * Set the value of quinta
-     *
-     * @return  self
-     */ 
-    public function setQuinta($quinta)
-    {
-        if (empty($quinta)) {
-            $this->quinta = 'N';
-        } else {
-            $this->quinta = 'S';
-        }
-        return $this;
-    }
-
-    /**
-     * Get the value of sexta
-     */ 
-    public function getSexta()
-    {
-        return $this->sexta;
-    }
-
-    /**
-     * Set the value of sexta
-     *
-     * @return  self
-     */ 
-    public function setSexta($sexta)
-    {
-        if (empty($sexta)) {
-            $this->sexta = 'N';
-        } else {
-            $this->sexta = 'S';
-        }
-        return $this;
-    }
-
-    /**
-     * Get the value of sabado
-     */ 
-    public function getSabado()
-    {
-        return $this->sabado;
-    }
-
-    /**
-     * Set the value of sabado
-     *
-     * @return  self
-     */ 
-    public function setSabado($sabado)
-    {
-        if (empty($sabado)) {
-            $this->sabado = 'N';
-        } else {
-            $this->sabado = 'S';
-        }
-        return $this;
-    }
-
-    /**
-     * Get the value of domingo
-     */ 
-    public function getDomingo()
-    {
-        return $this->domingo;
-    }
-
-    /**
-     * Set the value of domingo
-     *
-     * @return  self
-     */ 
-    public function setDomingo($domingo)
-    {
-        if (empty($domingo)) {
-            $this->domingo = 'N';
-        } else {
-            $this->domingo = 'S';
-        }
-        return $this;
-    }
-
-        /**
      * Get the value of entrada
      */ 
     public function getEntrada()

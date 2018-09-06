@@ -1,6 +1,7 @@
 <?php
 namespace PNSL\Social\Entity;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 use PNSL\Social\Entity\AcaoEntity;
 use PNSL\Social\Entity\VoluntarioEntity;
 use PNSL\Social\Entity\PessoaEntity;
@@ -71,7 +72,6 @@ class TurmaEntity
     public function setId($id)
     {
         $this->id = $id;
-
         return $this;
     }
 
@@ -90,9 +90,12 @@ class TurmaEntity
      */ 
     public function setAcao($acao)
     {
-        $this->acao = $acao;
-
-        return $this;
+        if (empty($acao)) {
+            throw new \InvalidArgumentException('A ação é obrigatória', 99);
+        } else {
+            $this->acao = $acao;
+            return $this;
+        }
     }
 
     /**
@@ -110,9 +113,12 @@ class TurmaEntity
      */ 
     public function setPessoa($pessoa)
     {
-        $this->pessoa = $pessoa;
-
-        return $this;
+        if (empty($pessoa)) {
+            throw new \InvalidArgumentException('O usuário é obrigatório', 99);
+        } else {
+            $this->pessoa = $pessoa;
+            return $this;
+        }
     }
 
     /**
@@ -130,9 +136,12 @@ class TurmaEntity
      */ 
     public function setSituacao($situacao)
     {
-        $this->situacao = $situacao;
-
-        return $this;
+        if (empty($situacao)) {
+            $this->situacao = 'A';
+        } else {
+            $this->situacao = $situacao;
+            return $this;
+        }
     }
     
     /**
@@ -151,7 +160,6 @@ class TurmaEntity
     public function setUsuarioInclusao($usuarioInclusao)
     {
         $this->usuarioInclusao = $usuarioInclusao;
-
         return $this;
     }
 
@@ -179,7 +187,6 @@ class TurmaEntity
     public function setUsuarioAlteracao($usuarioAlteracao)
     {
         $this->usuarioAlteracao = $usuarioAlteracao;
-
         return $this;
     }
 

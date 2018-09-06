@@ -11,66 +11,58 @@
         </div>
         <div class="row col-sm-8 col-sm-offset-2">
             <form name="frmCadastro" action="{{ path('acaoSalvar')}}" method="POST">
-                <div class="form-group form-check-inline">
-                    {% for tipo in tipos_acao %}
-                    <label class="form-check-label">{{ tipo.descricao }}
-                        <input type="radio" name="tipo_acao" name="tipo_acao" class="form-check-input" value="{{ tipo.id }}">
-                    </label>
-                    {% endfor %} 
-                </div>
                 <fieldset>
                 <legend><i class="glyphicon glyphicon-menu-right"></i><b>Dados básicos</b></legend>
                     <div class="form-group col-sm-6">
                         <label for="acao">Nome</label>
-                        <input type="text" name="acao" class="form-control" placeholder="O nome da ação social" required>
+                        <input type="text" name="acao" class="form-control" placeholder="O nome da ação social" value="{% if acao is defined %}{{ acao.nome }}{% endif %}" required>
                     </div>
+                    <div class="form-group form-check-inline col-sm-5 col-sm-offset-1">
+                        <label for="dia" class="form-check-label">Tipo</label><br />
+                        {% for tipo in tipos_acao %}
+                        <label class="form-check-label">{{ tipo.descricao }}
+                            <input type="radio" name="tipo_acao" name="tipo_acao" class="form-check-input" required value="{{ tipo.id }}" {% if acao is defined and acao.tipo.id == tipo.id %} checked="true" {% endif %}>
+                        </label>
+                        {% endfor %} 
+                    </div>
+                    <div class="clearfix"></div>
                     <div class="form-group col-sm-3">
                         <label for="inicio">Início</label>
-                        <input type="date" name="inicio" class="form-control" placeholder="dd/mm/aaaa" required>
+                        <input type="date" name="inicio" class="form-control" placeholder="dd/mm/aaaa" required value="{% if acao is defined %}{{ acao.inicio | date("d/m/Y")}}{% endif %}">
                     </div>
                     <div class="form-group col-sm-3">
                         <label for="termino">Término</label>
-                        <input type="date" name="termino" class="form-control" placeholder="dd/mm/aaaa">
-                    </div>
-                    <div class="form-group col-sm-6">
-                        <label for="publico-alvo">Público-alvo</label>
-                        <input type="text" name="publico-alvo" class="form-control" placeholder="adolescentes, maiores de 12 anos e de ambos os sexos">
+                        <input type="date" name="termino" class="form-control" placeholder="dd/mm/aaaa" value="{% if acao is defined %}{{ acao.termino | date("d/m/Y")}}{% endif %}">
                     </div>
                     <div class="form-group col-sm-6">
                         <label for="pre-requisito">Pré-requisito</label>
-                        <input type="text" name="pre-requisito" class="form-control" placeholder="estar na 4ª série, ter feito informática básica">
+                        <input type="text" name="pre_requisito" class="form-control" placeholder="estar na 4ª série, ter feito informática básica" value="{% if acao is defined %}{{ acao.preRequisito}}{% endif %}">
                     </div>
-                    <div class="form-group form-check-inline col-sm-8">
-                        <label for="dia" class="form-check-label">Dia</label><br />
-                        <label class="form-check-label">Seg
-                            <input type="checkbox" name="segunda" class="form-check-input" value="Seg">
-                        </label>
-                        <label class="form-check-label">Ter
-                            <input type="checkbox" name="terca" class="form-check-input" value="Ter">
-                        </label>
-                        <label class="form-check-label">Qua
-                            <input type="checkbox" name="quarta" class="form-check-input" value="Qua">
-                        </label>
-                        <label class="form-check-label">Qui
-                            <input type="checkbox" name="quinta" class="form-check-input" value="Qui">
-                        </label>
-                        <label class="form-check-label">Sex
-                            <input type="checkbox" name="sexta" class="form-check-input" value="Sex">
-                        </label>
-                        <label class="form-check-label">Sáb
-                            <input type="checkbox" name="sabado" class="form-check-input" value="Sab">
-                        </label>
-                        <label class="form-check-label">Dom
-                            <input type="checkbox" name="domingo" class="form-check-input" value="Dom">
-                        </label>
-                    </div>   
+                    <div class="form-group col-sm-3">
+                        <label for="publico_alvo" class="form-check-label">Público-alvo</label><br />
+                        <select class="form-control" name="publico_alvo" required>
+                            <option value="">Selecione</option>
+                            {% for publico in publicos_alvo %}
+                            <option value="{{ publico.id }}" {% if acao is defined and acao.publicoAlvo.id == publico.id %} selected {% endif %}>{{ publico.descricao }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <label for="faixa_etaria" class="form-check-label">Faixa etária</label><br />
+                        <select class="form-control" name="faixa_etaria" required>
+                            <option value="">Selecione</option>
+                            {% for faixa in faixas_etarias %}
+                            <option value="{{ faixa.id }}" {% if acao is defined and acao.faixaEtaria.id == faixa.id %} selected {% endif %}>{{ faixa.descricao }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
                     <div class="form-group col-sm-2">
                         <label for="horario">Entrada</label>
-                        <input type="time" name="entrada" class="form-control" placeholder="09:00">
+                        <input type="time" name="entrada" class="form-control" placeholder="09:00" value="{% if acao is defined %}{{acao.entrada | date("h:i")}}{% endif %}">
                     </div>
                     <div class="form-group col-sm-2">
                         <label for="horario">Saída</label>
-                        <input type="time" name="saida" class="form-control" placeholder="12:00">
+                        <input type="time" name="saida" class="form-control" placeholder="12:00" value="{% if acao is defined %}{{acao.saida | date("h:i")}}{% endif %}">
                     </div>
                     <div class="form-group col-sm-2">
                         <label for="turno">Turno</label>
@@ -81,6 +73,15 @@
                             {% endfor %}
                         </select>
                     </div>
+                    <div class="form-group col-sm-2">
+                        <label for="dia" class="form-check-label">Dia</label><br />
+                        <select class="form-control" name="dia_semana" required>
+                            <option value="">Selecione</option>
+                            {% for dia in dias %}
+                            <option value="{{ dia.id }}" {% if acao is defined and acao.diaSemana.id == dia.id %} selected {% endif %}>{{ dia.descricao }}</option>
+                            {% endfor %}
+                        </select>                        
+                    </div>   
                     <div class="form-group col-sm-10">
                         <label for="voluntario">Voluntário</label>
                         <select class="form-control" name="voluntario" required>
@@ -91,17 +92,24 @@
                         </select>
                     </div>
                 </fieldset>
+                {% if acao is defined and acao.tipo.descricao == 'Grupo' %}
                 <fieldset>
                 <legend><i class="glyphicon glyphicon-menu-right"></i><b>Usuários</b></legend>
-                    <div class="form-group">
-                        <select class="form-control" name="usuario">
+                    <div class="form-group-lg col-sm-10">
+                        <select class="form-control" id="usuario" name="usuario">
                             <option value="">Selecione</option>
                             {% for usuario in usuarios %}
-                            <option value="{{ usuario.id }}" {% if acao is defined and acao.usuario.id == usuario.id %} selected {% endif %}>{{ usuario.nome }}</option>
+                            <option value="{{ usuario.id }}">{{ usuario.nome }}</option>
                             {% endfor %} 
                         </select>
                     </div>
+                    <div class="form-group col-sm-1 col-sm-offset-1">
+                        <button id="btnAdicionar" type="button" class="btn btn-warning" >
+                            <i class="glyphicon glyphicon-plus"></i>
+                        </button>
+                    </div>
                 </fieldset>
+                {% endif %}
                 <div class="form-group col-sm-12 text-center">
                     <button type="submit" class="btn btn-primary">
                         <i class="glyphicon glyphicon-ok"> Cadastrar</i>
@@ -110,14 +118,46 @@
                         <i class="glyphicon glyphicon-remove"> Limpar</i>
                     </button>
                 </div>
-                <input type="hidden" name="id" value="{% if acao is defined %}{{ acao.id }}{% endif %}">
+                <input type="hidden" id="id" name="id" value="{% if acao is defined %}{{ acao.id }}{% endif %}">
             </form>
         </div>
-        <input type="hidden" name="id" >                
         {% if resultado is defined %}
         <div class="col-sm-12 text-center alert alert-success">
             {{ resultado }}
         </div>
+        {% endif %}
+        {% if acoes is defined %}
+        <div class="row col-sm-8 col-sm-offset-2">
+            <table class="table table-responsive table-hover">
+            <caption>Ações cadastradas</caption>
+                <thead class="thead-light">
+                    <tr>
+                        <th class="col-sm-4">Ação</th>
+                        <th class="col-sm-2">Início</th>
+                        <th class="col-sm-4">Voluntário</th>
+                        <th class="col-sm-1 text-center">Alterar</th>
+                        <th class="col-sm-1 text-center">Excluir</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if acoes  | length > 0 %}
+                    {% for acao in acoes %}
+                     <tr>
+                        <td>{{ acao.nome }}</td>
+                        <td>{{ acao.inicio | date("d/m/Y") }}</td>
+                        <td>{{ acao.voluntario.pessoa.nome }}</td>
+                        <td><a href="{{ path('acaoEditar',{'id':acao.id}) }}"><span class="text-center glyphicon glyphicon-pencil"></span></a></td>
+                        <td><a href="{{ path('acaoExcluir',{'id':acao.id}) }}"><span class="text-center glyphicon glyphicon-trash"></span></a></td>
+                    </tr>
+                    {% endfor %}
+                    {% else %}
+                    <tr>
+                        <td colspan="5">Nenhuma ação cadastrada</td>
+                    </tr>
+                    {% endif %}                    
+                </tbody>
+            </table>
+        </div> 
         {% endif %}
     </div>
 {% endblock %}

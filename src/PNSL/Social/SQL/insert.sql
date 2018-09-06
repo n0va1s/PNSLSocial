@@ -157,3 +157,21 @@ INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('TO','UF');
 --Tipo de acao
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Individual','TPA');
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Grupo','TPA');
+--Publico-alvo
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Masculino','PUB');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Feminino','PUB');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Ambos','PUB');
+--Faixa-etaria
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Infantil (6 a 11 anos) ','ETA');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Adolescente (12 a 17 anos)','ETA');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Jovem (18 a 23 anos)','ETA');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Adulto (> 24 anos)','ETA');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Todas as idades','ETA');
+--Semana
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Seg','SEM');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Ter','SEM');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Qua ','SEM');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Qui','SEM');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Sex','SEM');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Sáb','SEM');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Dom','SEM');

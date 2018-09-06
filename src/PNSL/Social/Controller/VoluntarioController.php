@@ -78,11 +78,12 @@ class VoluntarioController implements ControllerProviderInterface
         $ctrl->get(
             '/editar/{id}', function ($id) use ($app) {
                 if ($id) {
-                    $estados_civis = $app['tipo_service']->findByGrupo('CIV');
-                    $tipos_telefone = $app['tipo_service']->findByGrupo('FON');
-                    $ufs = $app['tipo_service']->findByGrupo('UF');
-                    $voluntario = $app['voluntario_service']->findById($id);                    
+                    $voluntario = $app['voluntario_service']->findById($id);
                     if ($voluntario) {                        
+                        $estados_civis = $app['tipo_service']->findByGrupo('CIV');
+                        $tipos_telefone = $app['tipo_service']->findByGrupo('FON');
+                        $ufs = $app['tipo_service']->findByGrupo('UF');
+                    
                         return $app['twig']->render(
                             'cadastroVoluntario.twig',
                             array('estados_civis'=>$estados_civis, 
