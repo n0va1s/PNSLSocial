@@ -130,6 +130,35 @@ class VoluntarioController implements ControllerProviderInterface
                 }
             }
         )->bind('voluntarioExcluir')->assert('id', '\d+');
+
+        $ctrl->get(
+            '/assinar/{id}', function ($id) use ($app) {
+                if ($id) {
+                    $voluntario = $app['voluntario_service']->findById($id);
+                    if ($voluntario) {                        
+                        $estados_civis = $app['tipo_service']->findByGrupo('CIV');
+                        $tipos_telefone = $app['tipo_service']->findByGrupo('FON');
+                        $ufs = $app['tipo_service']->findByGrupo('UF');
+                    
+                        return $app['twig']->render(
+                            'termoVoluntario.twig',
+                            array('voluntario'=>$voluntario), 
+                            new Response('OK', 200)
+                        );
+                    } else {
+                        return $app->redirect(
+                            $app['url_generator']
+                            ->generate('voluntarioCadastrar')
+                        );
+                    }
+                } else {
+                    return $app->abort(
+                        500, 
+                        "Não encontrei o voluntário para excluir"
+                    ); 
+                }
+            }
+        )->bind('voluntarioAssinar')->assert('id', '\d+');
         
         return $ctrl;
     }

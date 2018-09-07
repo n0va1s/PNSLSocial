@@ -139,6 +139,33 @@ class AcaoController implements ControllerProviderInterface
         )->bind('acaoEditar')->assert('id', '\d+');
 
         $ctrl->get(
+            '/certificar/{acao}/{voluntario}', function ($acao, $voluntario) use ($app) {
+                if ($id) {
+                    $acao = $app['acao_service']->findById($acao);
+                    $usuario = $app['voluntario_service']->findById($voluntario);
+                    if ($acao) {
+                        return $app['twig']->render(
+                            'certificadoVoluntario.twig',
+                            array('acao'=>$acao,
+                            'usuario'=>$usuario), 
+                            new Response('OK', 200)
+                        );
+                    } else {
+                        return $app->redirect(
+                            $app['url_generator']
+                            ->generate('acaoCadastrar')
+                        );
+                    }
+                } else {
+                    return $app->abort(
+                        500, 
+                        "Não encontrei a ação para excluir"
+                    ); 
+                }
+            }
+        )->bind('acaoCertificar')->assert('id', '\d+');
+
+        $ctrl->get(
             '/excluir/{id}', function ($id) use ($app) {
                 if ($id) {
                     $excluiu = $app['acao_service']->delete($id);

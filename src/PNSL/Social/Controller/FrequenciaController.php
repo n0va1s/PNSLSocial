@@ -48,14 +48,16 @@ class FrequenciaController implements ControllerProviderInterface
         $ctrl->post(
             '/salvar', function (Request $req) use ($app) {
                 $dados = $req->request->all();
-                $frequencia_id = $app['frequencia_service']->save($dados);
-                if ($frequencia_id > 0) {
-                    return new Response(
-                        $app->json(['resultado'=>"Frequência cadastrada com sucesso!"], 201)
+                $frequencia = $app['frequencia_service']->save($dados);
+                if ($frequencia) {
+                    return $app->redirect(
+                        $app['url_generator']
+                        ->generate('frequenciaCadastrar')
                     );
                 } else {
-                    return $app->abort(
-                        404, "Ops... não foi possível cadastrar a frequência"
+                    return $app->redirect(
+                        $app['url_generator']
+                        ->generate('frequenciaCadastrar')
                     ); 
                 }
             }
@@ -63,18 +65,17 @@ class FrequenciaController implements ControllerProviderInterface
 
         $ctrl->get(
             '/listar', function ($dominio) use ($app) {
-                $registros = $app['frequencia_service']->fetchAll();
-                if ($registros) {
-                    return new Response(
-                        $app->json(
-                            $registros, 201, ['Content-Type' => 'application/json']
-                        )
+                $frequencias = $app['frequencia_service']->fetchAll();
+                if ($frequencias) {
+                    return $app->redirect(
+                        $app['url_generator']
+                        ->generate('frequenciaCadastrar')
                     );
                 } else {
-                    return $app->abort(
-                        404, 
-                        "Ops... nenhuma frequência cadastrada"
-                    );
+                    return $app->redirect(
+                        $app['url_generator']
+                        ->generate('frequenciaCadastrar')
+                    ); 
                 }             
             }
         )->bind('frequenciaListar');
@@ -83,19 +84,52 @@ class FrequenciaController implements ControllerProviderInterface
             '/excluir/{id}', function ($id) use ($app) {
                 if ($id) {
                     $excluiu = $app['frequencia_service']->delete($id);
-                    return new Response(
-                        $app->json(
-                            $excluiu, 201, ['Content-Type' => 'application/json']
-                        )
-                    );
+                    if ($excluiu) {
+                        return $app->redirect(
+                            $app['url_generator']
+                            ->generate('frequenciaCadastrar')
+                        );
+                    } else {
+                        return $app->redirect(
+                            $app['url_generator']
+                            ->generate('frequenciaCadastrar')
+                        ); 
+                    }
                 } else {
                     return $app->abort(
-                        404, 
+                        500, 
                         "A frequência que vc escolheu não existe. Tente novamente."
                     ); 
                 }
             }
         )->bind('frequenciaExcluir')->assert('id', '\d+');
+
+        $ctrl->get(
+            '/certificar/{acao}/{usuario}', function ($acao, $usuario) use ($app) {
+                if ($id) {
+                    $acao = $app['acao_service']->findById($acao);
+                    $usuario = $app['pessoa_service']->findById($usuario);
+                    if ($acao) {
+                        return $app['twig']->render(
+                            'certificadoParticipacao.twig',
+                            array('acao'=>$acao,
+                            'usuario'=>$usuario), 
+                            new Response('OK', 200)
+                        );
+                    } else {
+                        return $app->redirect(
+                            $app['url_generator']
+                            ->generate('acaoCadastrar')
+                        );
+                    }
+                } else {
+                    return $app->abort(
+                        500, 
+                        "Não encontei o certificado para emitir"
+                    ); 
+                }
+            }
+        )->bind('frequenciaCertificar')->assert('id', '\d+');
         
         return $ctrl;
     }

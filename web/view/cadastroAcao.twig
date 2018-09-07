@@ -137,6 +137,7 @@
                         <th class="col-sm-4">Voluntário</th>
                         <th class="col-sm-1 text-center">Alterar</th>
                         <th class="col-sm-1 text-center">Excluir</th>
+                        <th class="col-sm-1 text-center">Certificado</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -148,6 +149,7 @@
                         <td>{{ acao.voluntario.pessoa.nome }}</td>
                         <td><a href="{{ path('acaoEditar',{'id':acao.id}) }}"><span class="text-center glyphicon glyphicon-pencil"></span></a></td>
                         <td><a href="{{ path('acaoExcluir',{'id':acao.id}) }}"><span class="text-center glyphicon glyphicon-trash"></span></a></td>
+                        <td><a href="{{ path('acaoCertificar',{'id':acao.id}) }}"><span class="text-center glyphicon glyphicon-certificate"></span></a></td>
                     </tr>
                     {% endfor %}
                     {% else %}

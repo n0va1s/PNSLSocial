@@ -150,6 +150,7 @@
                         <th class="col-sm-2">Email</th>
                         <th class="col-sm-1 text-center">Alterar</th>
                         <th class="col-sm-1 text-center">Excluir</th>
+                        <th class="col-sm-1 text-center">Termo</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -161,6 +162,7 @@
                         <td>{{ voluntario.pessoa.email }}</td>
                         <td><a href="{{ path('voluntarioEditar',{'id':voluntario.pessoa.id}) }}"><span class="text-center glyphicon glyphicon-pencil"></span></a></td>
                         <td><a href="{{ path('voluntarioExcluir',{'id':voluntario.pessoa.id}) }}"><span class="text-center glyphicon glyphicon-trash"></span></a></td>
+                        <td><a href="{{ path('voluntarioAssinar',{'id':voluntario.pessoa.id}) }}"><span class="text-center glyphicon glyphicon-thumbs-up"></span></a></td>
                     </tr>
                     {% endfor %}
                     {% else %}

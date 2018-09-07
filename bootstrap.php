@@ -15,9 +15,9 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 //Buscar as variaveis do arquivo de configuracao
-//$env = getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : 'production';
-//$ini_config = parse_ini_file(__DIR__.'/config.ini', true);
-//$file_config = $ini_config[$env];
+$env = getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : 'production';
+$ini_config = parse_ini_file(__DIR__.'/config.ini', true);
+$file_config = $ini_config[$env];
 
 $cache = new Doctrine\Common\Cache\ArrayCache;
 $annotationReader = new Doctrine\Common\Annotations\AnnotationReader;
@@ -46,12 +46,12 @@ AnnotationRegistry::registerFile(__DIR__. DIRECTORY_SEPARATOR . 'vendor' . DIREC
 $evm = new Doctrine\Common\EventManager();
 $em = EntityManager::create(
     array(
-        'driver'    => getenv('db_driver'),
-        'host'      => getenv('db_host'),
-        'port'      => getenv('db_port'),
-        'user'      => getenv('db_user'),
-        'password'  => getenv('db_password'),
-        'dbname'    => getenv('db_name'),
+        'driver'    => $file_config['db.driver'],
+        'host'      => $file_config['db.host'],
+        'port'      => $file_config['db.port'],
+        'user'      => $file_config['db.user'],
+        'password'  => $file_config['db.password'],
+        'dbname'    => $file_config['db.name'],
         'charset'   => 'utf8',
     ),
     $config,
@@ -68,7 +68,7 @@ if ('cli' !== php_sapi_name()) {
 */
 
 $app = new \Silex\Application();
-$app['debug'] = getenv('log_enabled');
+$app['debug'] = $file_config['log.enabled'];
 
 $app->register(new Silex\Provider\TwigServiceProvider(), array(
     'twig.path' => __DIR__.'/web/view',
@@ -79,21 +79,21 @@ $app->register(new Silex\Provider\AssetServiceProvider(), array(
     'assets.version' => 'v1',
     'assets.version_format' => '%s?version=%s',
     'assets.named_packages' => array(
-        'css' => array('version' => 'css2', 'base_path' => getenv('path_css')),
-        'img' => array('base_path' => getenv('path_img')),
-        'js' => array('base_path' => getenv('path_js')),
-        'file' => array('base_path' => getenv('path_file')),
+        'css' => array('version' => 'css2', 'base_path' => $file_config['path.css']),
+        'img' => array('base_path' => $file_config['path.img']),
+        'js' => array('base_path' => $file_config['path.js']),
+        'file' => array('base_path' => $file_config['path.file']),
     ),
 ));
 
 $app->register(new Silex\Provider\SwiftmailerServiceProvider(), array(
     'swiftmailer.options' => array(
-        'host'       => getenv('mail_host'),
-        'port'       => getenv('mail_port'),
-        'username'   => getenv('mail_username'),
-        'password'   => getenv('mail_password'),
-        'encryption' => getenv('mail_encryption'),
-        'auth_mode'  => getenv('mail_auth_mode'),
+        'host'       => $file_config['mail.host'],
+        'port'       => $file_config['mail.port'],
+        'username'   => $file_config['mail.username'],
+        'password'   => $file_config['mail.password'],
+        'encryption' => $file_config['mail.encryption'],
+        'auth_mode'  => $file_config['mail.auth_mode'],
     )
 ));
 
