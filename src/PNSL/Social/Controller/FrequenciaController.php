@@ -37,9 +37,12 @@ class FrequenciaController implements ControllerProviderInterface
 
         $ctrl->get(
             '/', function () use ($app) {
+                $acoes = $app['acao_service']->fetchAll();
+                $turma = $app['frequencia_service']->fetchAll();
                 return $app['twig']->render(
                     'cadastroFrequencia.twig',
-                    array(), 
+                    array('acoes'=>$acoes,
+                    'turma'=>$turma), 
                     new Response('Ok', 200)
                 );
             }

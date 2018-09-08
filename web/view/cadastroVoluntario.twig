@@ -108,18 +108,9 @@
                 </fieldset>
                 <fieldset>
                 <legend><i class="glyphicon glyphicon-menu-right"></i><b>Dados do voluntário</b></legend>
-                    <div class="form-group col-sm-8">
+                    <div class="form-group col-sm-12">
                         <label for="conhecimento">Conhecimentos</label>
                         <textarea class="form-control" name="conhecimento" rows="5" placeholder="Fazer bolos, tirar leite, contabilidade, corrida de rua" required>{% if voluntario is defined %}{{ voluntario.conhecimento }}{% endif %}</textarea>
-                    </div>
-                    <div class="form-group form-check-inline col-sm-3 col-sm-offset-1">
-                        <label for="assinou_termo" class="form-check-label">Assinou o termo</label><br />
-                        <label class="form-check-label">Sim
-                            <input type="radio" name="assinou_termo" class="form-check-input" value="S" {% if voluntario is defined and voluntario.assinouTermo == 'S' %} checked="true" {% endif %}>
-                        </label>
-                        <label class="form-check-label">Não
-                            <input type="radio" name="assinou_termo" class="form-check-input" value="N" {% if voluntario is defined and voluntario.assinouTermo == 'N' %} checked="true" {% endif %}>
-                        </label>
                     </div>
                 </fieldset>
                 <div class="form-group col-sm-12 text-center">

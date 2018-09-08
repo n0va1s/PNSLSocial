@@ -147,9 +147,9 @@
                         <td>{{ acao.nome }}</td>
                         <td>{{ acao.inicio | date("d/m/Y") }}</td>
                         <td>{{ acao.voluntario.pessoa.nome }}</td>
-                        <td><a href="{{ path('acaoEditar',{'id':acao.id}) }}"><span class="text-center glyphicon glyphicon-pencil"></span></a></td>
-                        <td><a href="{{ path('acaoExcluir',{'id':acao.id}) }}"><span class="text-center glyphicon glyphicon-trash"></span></a></td>
-                        <td><a href="{{ path('acaoCertificar',{'id':acao.id}) }}"><span class="text-center glyphicon glyphicon-certificate"></span></a></td>
+                        <td><center><a href="{{ path('acaoEditar',{'id':acao.id}) }}"><span class="glyphicon glyphicon-pencil"></span></a></center></td>
+                        <td><center><a href="{{ path('acaoExcluir',{'id':acao.id}) }}"><span class="glyphicon glyphicon-trash"></span></a></center></td>
+                        <td><center><a href="{{ path('acaoCertificar',{'acao':acao.id, 'voluntario':acao.voluntario.pessoa.id}) }}"><span class="glyphicon glyphicon-certificate"></span></a></center></td>
                     </tr>
                     {% endfor %}
                     {% else %}

@@ -83,10 +83,49 @@ class UsuarioController implements ControllerProviderInterface
             }
         )->bind('usuarioSalvar');
 
-        $ctrl->delete(
+        $ctrl->get(
+            '/editar/{id}', function ($id) use ($app) {
+                if ($id) {
+                    $usuario = $app['pessoa_service']->findById($id);
+                    if ($usuario) {                        
+                        $estados_civis = $app['tipo_service']->findByGrupo('CIV');
+                        $tipos_telefone = $app['tipo_service']->findByGrupo('FON');
+                        $parentescos = $app['tipo_service']->findByGrupo('PRT');
+                        $turnos = $app['tipo_service']->findByGrupo('TRN');
+                        $graus = $app['tipo_service']->findByGrupo('GRA');
+                        $ufs = $app['tipo_service']->findByGrupo('UF');
+                        $usuarios = $app['pessoa_service']->fetchAll();
+                        return $app['twig']->render(
+                            'cadastroUsuario.twig',
+                            array('estados_civis'=>$estados_civis, 
+                            'tipos_telefone'=>$tipos_telefone,
+                            'parentescos'=>$parentescos,
+                            'turnos'=>$turnos,
+                            'graus'=>$graus,
+                            'ufs'=>$ufs,
+                            'usuario'=>$usuario,
+                            'usuarios'=>$usuarios), 
+                            new Response('OK', 200)
+                        );
+                    } else {
+                        return $app->redirect(
+                            $app['url_generator']
+                            ->generate('usuarioCadastrar')
+                        );
+                    }
+                } else {
+                    return $app->abort(
+                        500, 
+                        "Não encontrei o usuário para excluir"
+                    ); 
+                }
+            }
+        )->bind('usuarioEditar')->assert('id', '\d+');
+
+        $ctrl->get(
             '/excluir/{id}', function ($id) use ($app) {
                 if ($id) {
-                    $excluiu = $app['menor_service']->delete($id);
+                    $excluiu = $app['pessoa_service']->delete($id);
                     return $app->redirect(
                         $app['url_generator']
                         ->generate('usuarioCadastrar')

@@ -75,6 +75,10 @@ class PessoaEntity
      */
     private $responsavel;
 
+    /** @ORM\ManyToOne(targetEntity="TipoEntity")
+    *  @ORM\JoinColumn(name="seq_tipo_parentesco", referencedColumnName="seq_tipo", nullable=false) */
+    private $parentesco;
+
     /** @ORM\OneToOne(targetEntity="VoluntarioEntity", mappedBy="pessoa", cascade={"remove"}) */
     private $voluntario;
 
@@ -538,6 +542,26 @@ class PessoaEntity
     public function setResponsavel($responsavel)
     {
         $this->responsavel = $responsavel;
+        return $this;
+    }
+
+    /**
+     * Get the value of parentesco
+     */ 
+    public function getParentesco()
+    {
+        return $this->parentesco;
+    }
+
+    /**
+     * Set the value of parentesco
+     *
+     * @return  self
+     */ 
+    public function setParentesco($parentesco)
+    {
+        $this->parentesco = $parentesco;
+
         return $this;
     }
 

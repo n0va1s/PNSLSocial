@@ -15,94 +15,94 @@
                 <legend><i class="glyphicon glyphicon-menu-right"></i><b>Dados pessoais</b></legend>
                     <div class="form-group col-sm-3">
                         <label for="CPF_pessoa">CPF</label>
-                        <input type="text" name="CPF_pessoa" class="form-control" placeholder="999.999.999-99" required autofocus value="{% if pessoa is defined %}{{ pessoa.CPF }}{% endif %}">
+                        <input type="text" name="CPF_pessoa" class="form-control" placeholder="999.999.999-99" required autofocus value="{% if usuario is defined %}{{ usuario.CPF }}{% endif %}">
                     </div>
                     <div class="form-group col-sm-9">
                         <label for="nome_pessoa">Nome</label>
-                        <input type="text" name="nome_pessoa" class="form-control" placeholder="Seu nome completo" required value="{% if pessoa is defined %}{{ pessoa.nome }}{% endif %}">
+                        <input type="text" name="nome_pessoa" class="form-control" placeholder="Seu nome completo" required value="{% if usuario is defined %}{{ usuario.nome }}{% endif %}">
                     </div>
                     <div class="clearfix"></div>
                     <div class="form-group col-sm-3">
                         <label for="nascimento_pessoa">Nascimento</label>
-                        <input type="date" name="nascimento_pessoa" class="form-control" placeholder="dd/mm/aaaa" required value="{% if pessoa is defined %}{{ pessoa.dataNascimento | date("d/m/Y") }}{% endif %}">
+                        <input type="date" name="nascimento_pessoa" class="form-control" placeholder="dd/mm/aaaa" required value="{% if usuario is defined %}{{ usuario.dataNascimento | date("d/m/Y") }}{% endif %}">
                     </div>
                     <div class="form-group col-sm-2">
                         <label for="RG_pessoa">RG</label>
-                        <input type="text" name="RG_pessoa" class="form-control" placeholder="9.999.999" value="{% if pessoa is defined %}{{ pessoa.RG }}{% endif %}">
+                        <input type="text" name="RG_pessoa" class="form-control" placeholder="9.999.999" value="{% if usuario is defined %}{{ usuario.RG }}{% endif %}">
                     </div>
                     <div class="form-group col-sm-3">
                         <label for="estado_civil_pessoa" class="form-check-label">Estado Civil</label><br />
                         <select class="form-control" name="estado_civil_pessoa" required>
                             <option value="">Selecione</option>
                             {% for estado_civil in estados_civis %}
-                            <option value="{{ estado_civil.id }}" {% if pessoa is defined and pessoa.estadoCivil.id == estado_civil.id %} selected {% endif %}>{{ estado_civil.descricao }}</option>
+                            <option value="{{ estado_civil.id }}" {% if usuario is defined and usuario.estadoCivil.id == estado_civil.id %} selected {% endif %}>{{ estado_civil.descricao }}</option>
                             {% endfor %} 
                         </select>
                     </div>
                     <div class="form-group col-sm-4">
                         <label for="nacionalidade_pessoa">Nacionalidade</label>
-                        <input type="text" name="nacionalidade_pessoa" class="form-control" placeholder="Brasíleira" required value="{% if pessoa is defined %}{{ pessoa.nacionalidade }}{% endif %}">
+                        <input type="text" name="nacionalidade_pessoa" class="form-control" placeholder="Brasíleira" required value="{% if usuario is defined %}{{ usuario.nacionalidade }}{% endif %}">
                     </div>
                     <div class="form-group form-check-inline col-sm-2">
                         <label for="sexo_pessoa" class="form-check-label">Sexo</label><br />
                         <label class="form-check-label">M
-                            <input type="radio" name="sexo_pessoa" class="form-check-input" value="M" {% if pessoa is defined and pessoa.sexo == 'M' %} checked="true" {% endif %}>
+                            <input type="radio" name="sexo_pessoa" class="form-check-input" value="M" {% if usuario is defined and usuario.sexo == 'M' %} checked="true" {% endif %}>
                         </label>
                         <label class="form-check-label">F
-                            <input type="radio" name="sexo_pessoa" class="form-check-input" value="F" {% if pessoa is defined and pessoa.sexo == 'F' %} checked="true" {% endif %}>
+                            <input type="radio" name="sexo_pessoa" class="form-check-input" value="F" {% if usuario is defined and usuario.sexo == 'F' %} checked="true" {% endif %}>
                         </label>
                     </div>                    
                     <div class="form-group col-sm-7">
                         <label for="profissao_pessoa">Profissão</label>
-                        <input type="text" name="profissao_pessoa" class="form-control" placeholder="Costureira" value="{% if pessoa is defined %}{{ pessoa.profissao }}{% endif %}">
+                        <input type="text" name="profissao_pessoa" class="form-control" placeholder="Costureira" value="{% if usuario is defined %}{{ usuario.profissao }}{% endif %}">
                     </div>
                     <div class="form-group col-sm-3">
                         <label for="NIS_pessoa">NIS</label>
-                        <input type="text" name="NIS_pessoa" class="form-control" placeholder="999999999999" value="{% if pessoa is defined %}{{ pessoa.NIS }}{% endif %}">
+                        <input type="text" name="NIS_pessoa" class="form-control" placeholder="999999999999" value="{% if usuario is defined %}{{ usuario.NIS }}{% endif %}">
                     </div>
                 </fieldset>
                 <fieldset>
                 <legend><i class="glyphicon glyphicon-menu-right"></i><b>Endereço</b></legend>
                     <div class="form-group col-sm-5">
                         <label for="endereco_pessoa">Endereço</label>
-                        <input type="text" name="endereco_pessoa" class="form-control" placeholder="SQN 915 Bloco A Apt 108" required value="{% if pessoa is defined %}{{ pessoa.endereco }}{% endif %}">
+                        <input type="text" name="endereco_pessoa" class="form-control" placeholder="SQN 915 Bloco A Apt 108" required value="{% if usuario is defined %}{{ usuario.endereco }}{% endif %}">
                     </div>
                     <div class="form-group col-sm-4">
                         <label for="cidade_pessoa">Cidade</label>
-                        <input type="text" name="cidade_pessoa" class="form-control" placeholder="Asa Norte" required value="{% if pessoa is defined %}{{ pessoa.cidade }}{% endif %}">
+                        <input type="text" name="cidade_pessoa" class="form-control" placeholder="Asa Norte" required value="{% if usuario is defined %}{{ usuario.cidade }}{% endif %}">
                     </div>
                     <div class="form-group col-sm-1">
                         <label for="UF_pessoa">UF</label>
                         <select class="form-control" name="UF_pessoa" required>
                             <option value="">Selecione</option>
                             {% for uf in ufs %}
-                            <option value="{{ uf.id }}" {% if pessoa is defined and pessoa.uf.id == uf.id %} selected {% endif %}>{{ uf.descricao }}</option>
+                            <option value="{{ uf.id }}" {% if usuario is defined and usuario.uf == uf.id %} selected {% endif %}>{{ uf.descricao }}</option>
                             {% endfor %}
                         </select>
                     </div>
                     <div class="form-group col-sm-2">
                         <label for="CEP_pessoa">CEP</label>
-                        <input type="text" name="CEP_pessoa" class="form-control" placeholder="70000000" required value="{% if pessoa is defined %}{{ pessoa.CEP }}{% endif %}">
+                        <input type="text" name="CEP_pessoa" class="form-control" placeholder="70000000" required value="{% if usuario is defined %}{{ usuario.CEP }}{% endif %}">
                     </div>
                 </fieldset>
                 <fieldset>
                 <legend><i class="glyphicon glyphicon-menu-right"></i><b>Contato</b></legend>
                     <div class="form-group col-sm-4">
                         <label for="telefone_pessoa">Telefone</label>
-                        <input type="text" name="telefone_pessoa" class="form-control" placeholder="61999998888" required value="{% if pessoa is defined %}{{ pessoa.telefone }}{% endif %}">
+                        <input type="text" name="telefone_pessoa" class="form-control" placeholder="61999998888" required value="{% if usuario is defined %}{{ usuario.telefone }}{% endif %}">
                     </div>
                     <div class="form-group col-sm-2">
                         <label for="tipo_telefone_pessoa">Tipo</label>
                         <select class="form-control" name="tipo_telefone_pessoa" required>
                             <option value="">Selecione</option>
                             {% for tipo_telefone in tipos_telefone %}
-                            <option value="{{ tipo_telefone.id }}" {% if pessoa is defined and pessoa.tipoTelefone.id == tipo_telefone.id %} selected {% endif %}>{{ tipo_telefone.descricao }}</option>
+                            <option value="{{ tipo_telefone.id }}" {% if usuario is defined and usuario.tipoTelefone.id == tipo_telefone.id %} selected {% endif %}>{{ tipo_telefone.descricao }}</option>
                             {% endfor %} 
                         </select>
                     </div>
                     <div class="form-group col-sm-6">
                         <label for="email_pessoa">Email</label>
-                        <input type="email" name="email_pessoa" class="form-control" placeholder="xxx@email.com" required value="{% if pessoa is defined %}{{ pessoa.email }}{% endif %}">
+                        <input type="email" name="email_pessoa" class="form-control" placeholder="xxx@email.com" required value="{% if usuario is defined %}{{ usuario.email }}{% endif %}">
                     </div>
                 </fieldset>
                 <fieldset>
@@ -116,7 +116,7 @@
                         <select class="form-control" name="parentesco_responsavel">
                             <option value="">Selecione</option>
                             {% for parentesco in parentescos %}
-                            <option value="{{ parentesco.id }}" {% if pessoa is defined and pessoa.parentesco.id == parentesco.id %} selected {% endif %}>{{ parentesco.descricao }}</option>
+                            <option value="{{ parentesco.id }}" {% if usuario is defined and usuario.parentesco.id == parentesco.id %} selected {% endif %}>{{ parentesco.descricao }}</option>
                             {% endfor %} 
                         </select>
                     </div>
@@ -125,7 +125,7 @@
                         <select class="form-control" name="estado_civil_responsavel">
                             <option value="">Selecione</option>
                             {% for estado_civil in estados_civis %}
-                            <option value="{{ estado_civil.id }}" {% if pessoa is defined and pessoa.estadoCivil.id == estado_civil.id %} selected {% endif %}>{{ estado_civil.descricao }}</option>
+                            <option value="{{ estado_civil.id }}" {% if usuario is defined and usuario.estadoCivil.id == estado_civil.id %} selected {% endif %}>{{ estado_civil.descricao }}</option>
                             {% endfor %} 
                         </select>
                     </div>
@@ -141,11 +141,11 @@
                     
                     <div class="form-group col-sm-7">
                         <label for="profissao_responsavel">Profissão</label>
-                        <input type="text" name="profissao_responsavel" class="form-control" placeholder="Costureira" value="{% if pessoa is defined %}{{ pessoa.profissao }}{% endif %}">
+                        <input type="text" name="profissao_responsavel" class="form-control" placeholder="Costureira" value="{% if usuario is defined %}{{ usuario.profissao }}{% endif %}">
                     </div>
                     <div class="form-group col-sm-3">
                         <label for="NIS_responsavel">NIS</label>
-                        <input type="text" name="NIS_responsavel" class="form-control" placeholder="999999999999" value="{% if pessoa is defined %}{{ pessoa.NIS }}{% endif %}">
+                        <input type="text" name="NIS_responsavel" class="form-control" placeholder="999999999999" value="{% if usuario is defined %}{{ usuario.NIS }}{% endif %}">
                     </div>
                     <div class="form-group col-sm-3">
                         <label for="telefone_responsavel">Telefone</label>
@@ -156,7 +156,7 @@
                         <select class="form-control" name="tipo_telefone_responsavel">
                             <option value="">Selecione</option>
                             {% for tipo_telefone in tipos_telefone %}
-                            <option value="{{ tipo_telefone.id }}" {% if pessoa is defined and pessoa.tipoTelefone.id == tipo_telefone.id %} selected {% endif %}>{{ tipo_telefone.descricao }}</option>
+                            <option value="{{ tipo_telefone.id }}" {% if usuario is defined and usuario.tipoTelefone.id == tipo_telefone.id %} selected {% endif %}>{{ tipo_telefone.descricao }}</option>
                             {% endfor %} 
                         </select>
                     </div>
@@ -193,7 +193,7 @@
                         <select class="form-control" name="UF_responsavel">
                             <option value="">Selecione</option>
                             {% for uf in ufs %}
-                            <option value="{{ uf.id }}" {% if pessoa is defined and pessoa.uf.id == uf.id %} selected {% endif %}>{{ uf.descricao }}</option>
+                            <option value="{{ uf.id }}" {% if usuario is defined and usuario.uf.id == uf.id %} selected {% endif %}>{{ uf.descricao }}</option>
                             {% endfor %}
                         </select>
                     </div>
@@ -206,18 +206,18 @@
                 <legend><i class="glyphicon glyphicon-menu-right"></i><b>Dados escolares</b></legend>
                     <div class="form-group col-sm-6">
                         <label for="escola">Escola</label>
-                        <input type="text" name="escola" class="form-control" placeholder="Nome da escola" value="{% if pessoa is defined %}{{ pessoa.escola.escola }}{% endif %}">
+                        <input type="text" name="escola" class="form-control" placeholder="Nome da escola" value="{% if usuario is defined %}{{ usuario.escola.escola }}{% endif %}">
                     </div>
                     <div class="form-group col-sm-2">
                         <label for="ano">Ano</label>
-                        <input type="text" name="ano" class="form-control" placeholder="9999" value="{% if pessoa is defined %}{{ pessoa.escola.ano }}{% endif %}">
+                        <input type="text" name="ano" class="form-control" placeholder="9999" value="{% if usuario is defined %}{{ usuario.escola.ano }}{% endif %}">
                     </div>
                     <div class="form-group col-sm-2">
                         <label for="turno">Turno</label>
                         <select class="form-control" name="turno">
                             <option value="">Selecione</option>
                             {% for turno in turnos %}
-                            <option value="{{ turno.id }}" {% if pessoa is defined and pessoa.escola.turno.id == turno.id %} selected {% endif %}>{{ turno.descricao }}</option>
+                            <option value="{{ turno.id }}" {% if usuario is defined and usuario.escola.turno.id == turno.id %} selected {% endif %}>{{ turno.descricao }}</option>
                             {% endfor %}
                         </select>
                     </div>
@@ -226,7 +226,7 @@
                         <select class="form-control" name="grau">
                             <option value="">Selecione</option>
                             {% for grau in graus %}
-                            <option value="{{ grau.id }}" {% if pessoa is defined and pessoa.escola.grau.id == grau.id %} selected {% endif %}>{{ grau.descricao }}</option>
+                            <option value="{{ grau.id }}" {% if usuario is defined and usuario.escola.grau.id == grau.id %} selected {% endif %}>{{ grau.descricao }}</option>
                             {% endfor %}
                         </select>
                     </div>
@@ -239,13 +239,49 @@
                         <i class="glyphicon glyphicon-remove"> Limpar</i>
                     </button>
                 </div>
-                <input type="hidden" name="id" value="{% if pessoa is defined %}{{ pessoa.id }}{% endif %}">                
+                <input type="hidden" name="id" value="{% if usuario is defined %}{{ usuario.id }}{% endif %}">                
+                <input type="hidden" name="tipo_pessoa" value="USU">
             </form>
         </div>
         {% if mensagem is defined %}
         <div class="row alert alert-success">
             {{ mensagem }}
         </div>
+        {% endif %}
+        {% if usuarios is defined %}
+        <div class="row col-sm-8 col-sm-offset-2">
+            <table class="table table-responsive table-hover">
+            <caption>Usuários cadastrados</caption>
+                <thead class="thead-light">
+                    <tr>
+                        <th class="col-sm-6">Nome</th>
+                        <th class="col-sm-2">Telefone</th>
+                        <th class="col-sm-2">Email</th>
+                        <th class="col-sm-2">Tipo</th>
+                        <th class="col-sm-1 text-center">Alterar</th>
+                        <th class="col-sm-1 text-center">Excluir</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if usuarios  | length > 0%}
+                    {% for usuario in usuarios %}
+                     <tr>
+                        <td>{{ usuario.nome }}</td>
+                        <td>{{ usuario.telefone }}</td>
+                        <td>{{ usuario.email }}</td>
+                        <td>{{ usuario.tipoPessoa }}</td>
+                        <td><a href="{{ path('usuarioEditar',{'id':usuario.id}) }}"><span class="text-center glyphicon glyphicon-pencil"></span></a></td>
+                        <td><a href="{{ path('usuarioExcluir',{'id':usuario.id}) }}"><span class="text-center glyphicon glyphicon-trash"></span></a></td>
+                    </tr>
+                    {% endfor %}
+                    {% else %}
+                    <tr>
+                        <td colspan="5">Nenhum usuário cadastrado</td>
+                    </tr>
+                    {% endif %}                    
+                </tbody>
+            </table>
+        </div> 
         {% endif %}
     </div>
 {% endblock %}

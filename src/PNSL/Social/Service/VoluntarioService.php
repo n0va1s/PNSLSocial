@@ -21,7 +21,7 @@ class VoluntarioService
             $voluntario = new VoluntarioEntity();
             $voluntario->setPessoa($pessoa);
             $voluntario->setConhecimento($dados['conhecimento']);
-            $voluntario->setAssinouTermo($dados['assinou_termo']);
+            $voluntario->setAssinouTermo('N');
             $voluntario->setUsuarioInclusao('usuarioInc');
             $voluntario->setUsuarioAlteracao('usuarioAlt');
             $this->em->persist($voluntario);
@@ -29,7 +29,7 @@ class VoluntarioService
             $voluntario = $this->em->getReference('\PNSL\Social\Entity\VoluntarioEntity', $dados['id']);
             $voluntario->setPessoa($pessoa);
             $voluntario->setConhecimento($dados['conhecimento']);
-            $voluntario->setAssinouTermo($dados['assinou_termo']);
+            $voluntario->setAssinouTermo('N');
             $voluntario->setUsuarioAlteracao('usuarioAlt');
         }
         //Insere no banco de dados a pessoa e o voluntario

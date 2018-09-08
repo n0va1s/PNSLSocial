@@ -139,8 +139,31 @@ class AcaoController implements ControllerProviderInterface
         )->bind('acaoEditar')->assert('id', '\d+');
 
         $ctrl->get(
-            '/certificar/{acao}/{voluntario}', function ($acao, $voluntario) use ($app) {
+            '/obter/{id}', function ($id) use ($app) {
                 if ($id) {
+                    $acao = $app['acao_service']->findById($id);
+                    if ($acao) {
+                        return $app->json(
+                            $acao, 201, ['Content-Type' => 'application/json']
+                        );
+                    } else {
+                        return $app->abort(
+                            500, 
+                            "Não encontrei a ação"
+                        );
+                    }
+                } else {
+                    return $app->abort(
+                        500, 
+                        "Não encontrei a ação"
+                    ); 
+                }
+            }
+        )->bind('acaoObter')->assert('id', '\d+');
+
+        $ctrl->get(
+            '/certificar/{acao}/{voluntario}', function ($acao, $voluntario) use ($app) {
+                if ($acao) {
                     $acao = $app['acao_service']->findById($acao);
                     $usuario = $app['voluntario_service']->findById($voluntario);
                     if ($acao) {
@@ -159,7 +182,7 @@ class AcaoController implements ControllerProviderInterface
                 } else {
                     return $app->abort(
                         500, 
-                        "Não encontrei a ação para excluir"
+                        "Não consegui gerar o certificado"
                     ); 
                 }
             }
