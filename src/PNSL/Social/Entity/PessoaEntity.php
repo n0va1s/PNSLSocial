@@ -217,6 +217,7 @@ class PessoaEntity
         if (empty($dataNascimento)) {
             throw new \InvalidArgumentException('A data de nascimento é obrigatória', 99);
         } else {
+            //TODO:verificar o tipo da data
             if (substr_count($dataNascimento, "/") == 2) {
                 list($dia, $mes, $ano) = explode("/", $dataNascimento);
                 $this->dataNascimento = new \DateTime(

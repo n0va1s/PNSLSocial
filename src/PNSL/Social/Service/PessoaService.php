@@ -81,6 +81,7 @@ class PessoaService
                             $dados['tipo_telefone_responsavel']
                         )
                     );
+                    $this->em->persist($responsavel);
                     $pessoa->setResponsavel($responsavel);
                 }
                 $this->em->persist($pessoa);
@@ -118,8 +119,7 @@ class PessoaService
             }
             //A transacao conclui no cadastro do usuario (Pessoa) caso nao
             //haja o cadastro do responsavel ou da escola
-            if (!empty($dados['nome_responsavel']) || empty($dados['escola'])) {
-                $this->em->persist($responsavel);
+            if (!empty($dados['nome_responsavel']) || !empty($dados['escola'])) {
                 $this->em->flush();
             }
             return $pessoa;
