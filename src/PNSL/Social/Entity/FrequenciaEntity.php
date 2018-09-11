@@ -17,12 +17,12 @@ class FrequenciaEntity
     */
     private $id;
 
-     /**
-     * @ORM\ManyToOne(targetEntity="TurmaEntity", inversedBy="frequencias")
+    /**
+     * @ORM\ManyToOne(targetEntity="TurmaEntity", inversedBy="turma")
      * @ORM\JoinColumn(name="seq_turma", referencedColumnName="seq_turma")
      */
     private $turma;
-
+    
     /** @ORM\Column(type="datetime", name="dat_frequencia", nullable=false) */
     private $data;
 
@@ -37,6 +37,12 @@ class FrequenciaEntity
 
     /** @ORM\Column(type="datetime", name="dat_alt", nullable=false) */
     private $dataAlteracao;
+
+    /** @ORM\Column(type="string", length=50, name="usu_exc", nullable=true) */
+    private $usuarioExclusao;
+
+    /** @ORM\Column(type="datetime", name="dat_exc", nullable=true) */
+    private $dataExclusao;
 
     public function __construct()
     {
@@ -65,42 +71,21 @@ class FrequenciaEntity
     }
 
     /**
-     * Get the value of acao
+     * Get the value of turma
      */ 
-    public function getAcao()
+    public function getTurma()
     {
-        return $this->acao;
+        return $this->turma;
     }
 
     /**
-     * Set the value of acao
+     * Set the value of turma
      *
      * @return  self
      */ 
-    public function setAcao($acao)
+    public function setTurma($turma)
     {
-        $this->acao = $acao;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of pessoa
-     */ 
-    public function getPessoa()
-    {
-        return $this->pessoa;
-    }
-
-    /**
-     * Set the value of pessoa
-     *
-     * @return  self
-     */ 
-    public function setPessoa($pessoa)
-    {
-        $this->pessoa = $pessoa;
-
+        $this->turma = $turma;
         return $this;
     }
 
@@ -119,9 +104,19 @@ class FrequenciaEntity
      */ 
     public function setData($data)
     {
-        $this->data = $data;
-
-        return $this;
+        if (empty($data)) {
+            throw new \InvalidArgumentException('A data é obrigatória', 99);
+        } else {
+            if (substr_count($data, "/") == 2) {
+                list($dia, $mes, $ano) = explode("/", $data);
+                $this->data = new \DateTime(
+                    date_format(date_create($ano."-".$mes."-".$dia), "Y-m-d")
+                );
+            } else {
+                throw new \InvalidArgumentException('A data é inválida', 99);
+            }
+            return $this;
+        }
     }
 
     /**
@@ -140,7 +135,6 @@ class FrequenciaEntity
     public function setUsuarioInclusao($usuarioInclusao)
     {
         $this->usuarioInclusao = $usuarioInclusao;
-
         return $this;
     }
 
@@ -168,7 +162,6 @@ class FrequenciaEntity
     public function setUsuarioAlteracao($usuarioAlteracao)
     {
         $this->usuarioAlteracao = $usuarioAlteracao;
-
         return $this;
     }
 
@@ -178,5 +171,24 @@ class FrequenciaEntity
     public function getDataAlteracao()
     {
         return $this->dataAlteracao;
+    }
+
+    /**
+     * Set the value of usuarioExclusao
+     *
+     * @return  self
+     */ 
+    public function setUsuarioExclusao($usuarioExclusao)
+    {
+        $this->usuarioExclusao = $usuarioExclusao;
+        return $this;
+    }
+
+    /**
+     * Get the value of dataExclusao
+     */ 
+    public function getDataExclusao()
+    {
+        return $this->dataExclusao;
     }
 }

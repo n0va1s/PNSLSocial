@@ -31,7 +31,13 @@ class AcessoEntity
     private $usuarioAlteracao;
 
     /** @ORM\Column(type="datetime", name="dat_alt", nullable=false) */
-    private $dataAlteracao;    
+    private $dataAlteracao;
+    
+    /** @ORM\Column(type="string", length=50, name="usu_exc", nullable=true) */
+    private $usuarioExclusao;
+
+    /** @ORM\Column(type="datetime", name="dat_exc", nullable=true) */
+    private $dataExclusao;
 
     public function __construct()
     {
@@ -165,5 +171,24 @@ class AcessoEntity
         $this->usuarioAlteracao = $usuarioAlteracao;
 
         return $this;
+    }
+
+    /**
+     * Set the value of usuarioExclusao
+     *
+     * @return  self
+     */ 
+    public function setUsuarioExclusao($usuarioExclusao)
+    {
+        $this->usuarioExclusao = $usuarioExclusao;
+        return $this;
+    }
+
+    /**
+     * Get the value of dataExclusao
+     */ 
+    public function getDataExclusao()
+    {
+        return $this->dataExclusao;
     }
 }

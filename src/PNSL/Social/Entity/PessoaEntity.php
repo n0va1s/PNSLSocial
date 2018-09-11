@@ -75,8 +75,8 @@ class PessoaEntity
      */
     private $responsavel;
 
-    /** @ORM\ManyToOne(targetEntity="TipoEntity")
-    *  @ORM\JoinColumn(name="seq_tipo_parentesco", referencedColumnName="seq_tipo", nullable=false) */
+    /** @ORM\OneToOne(targetEntity="TipoEntity")
+     *  @ORM\JoinColumn(name="seq_tipo_parentesco", referencedColumnName="seq_tipo", nullable=true) */
     private $parentesco;
 
     /** @ORM\OneToOne(targetEntity="VoluntarioEntity", mappedBy="pessoa", cascade={"remove"}) */
@@ -102,6 +102,12 @@ class PessoaEntity
 
     /** @ORM\Column(type="datetime", name="dat_alt", nullable=false) */
     private $dataAlteracao;
+
+    /** @ORM\Column(type="string", length=50, name="usu_exc", nullable=true) */
+    private $usuarioExclusao;
+
+    /** @ORM\Column(type="datetime", name="dat_exc", nullable=true) */
+    private $dataExclusao;
 
     public function __construct() {
         $this->atendimentos = new ArrayCollection();
@@ -671,5 +677,24 @@ class PessoaEntity
             $this->dataAlteracao = $dataAlteracao;
             return $this;
         }
+    }
+
+    /**
+     * Set the value of usuarioExclusao
+     *
+     * @return  self
+     */ 
+    public function setUsuarioExclusao($usuarioExclusao)
+    {
+        $this->usuarioExclusao = $usuarioExclusao;
+        return $this;
+    }
+
+    /**
+     * Get the value of dataExclusao
+     */ 
+    public function getDataExclusao()
+    {
+        return $this->dataExclusao;
     }
 }

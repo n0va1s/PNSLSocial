@@ -90,31 +90,6 @@ class AcaoService
         }
     }
 
-    public function addTurma($acao, $usuario)
-    {
-        $acao = $this->em->getReference(
-            '\PNSL\Social\Entity\AcaoEntity', 
-            $acao
-        );
-        $usuario = $this->em->getReference(
-            '\PNSL\Social\Entity\PessoaEntity', 
-            $usuario
-        );
-        $turma = new TurmaEntity();
-        $turma->setAcao($acao);
-        $turma->setPessoa($usuario);
-        $turma->setSituacao('A');
-        $turma->setUsuarioInclusao('usuarioInc');
-        $turma->setUsuarioAlteracao('usuarioAlt');
-        $this->em->persist($turma);
-        $this->em->flush();
-        if ($turma) {
-            return $turma;
-        } else {
-            return false;
-        }
-    }
-    
     public function delete(int $id)
     {
         $acao = $this->em->getReference(
@@ -153,5 +128,42 @@ class AcaoService
             where a.id = :id'
         )->setParameter('id', $id)->getArrayResult();
         return $acao[0];
+    }
+
+    public function addTurma($acao, $usuario)
+    {
+        $acao = $this->em->getReference(
+            '\PNSL\Social\Entity\AcaoEntity', 
+            $acao
+        );
+        $usuario = $this->em->getReference(
+            '\PNSL\Social\Entity\PessoaEntity', 
+            $usuario
+        );
+        $turma = new TurmaEntity();
+        $turma->setAcao($acao);
+        $turma->setPessoa($usuario);
+        $turma->setSituacao('A');
+        $turma->setUsuarioInclusao('usuarioInc');
+        $turma->setUsuarioAlteracao('usuarioAlt');
+        $this->em->persist($turma);
+        $this->em->flush();
+        if ($turma) {
+            return $turma;
+        } else {
+            return false;
+        }
+    }
+
+    public function findTurmaByAcao(int $id)
+    {
+        $turma = $this->em->createQuery(
+            'select t, p, a
+            from \PNSL\Social\Entity\TurmaEntity t
+            inner join t.pessoa p
+            inner join t.acao a
+            where a.id = :id'
+        )->setParameter('id', $id)->getArrayResult();
+        return $turma;
     }
 }

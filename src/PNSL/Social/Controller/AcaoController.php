@@ -45,7 +45,7 @@ class AcaoController implements ControllerProviderInterface
                 $turnos = $app['tipo_service']->findByGrupo('TRN');
                 $dias = $app['tipo_service']->findByGrupo('SEM');
                 $voluntarios = $app['voluntario_service']->fetchAll();
-                $usuarios = $app['pessoa_service']->fetchAll();
+                $usuarios = $app['pessoa_service']->findUsuarios();
                 $acoes = $app['acao_service']->fetchAll();
                 return $app['twig']->render(
                     'cadastroAcao.twig',
@@ -110,7 +110,7 @@ class AcaoController implements ControllerProviderInterface
                         $turnos = $app['tipo_service']->findByGrupo('TRN');
                         $dias = $app['tipo_service']->findByGrupo('SEM');
                         $voluntarios = $app['voluntario_service']->fetchAll();
-                        $usuarios = $app['pessoa_service']->fetchAll();
+                        $usuarios = $app['pessoa_service']->findUsuarios();
                         return $app['twig']->render(
                             'cadastroAcao.twig',
                             array('tipos_acao'=>$tipos_acao,

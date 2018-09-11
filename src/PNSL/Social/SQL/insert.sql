@@ -90,23 +90,23 @@ INSERT INTO frequencia(seq_turma, seq_atendido, dat_frequencia, ind_presenca, in
 VALUES (1,3,'2018-02-19','P','N','n0va1s',now(),'n0va1s',now());
 INSERT INTO frequencia(seq_turma, seq_atendido, dat_frequencia, ind_presenca, ind_inativo, usu_inc, dat_inc, usu_alt, dat_alt) 
 VALUES (1,3,'2018-02-26','F','N','n0va1s',now(),'n0va1s',now());
---Estado Civil
+#Estado Civil
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Solteiro(a)','CIV');
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Casado(a)','CIV');
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Divorciado(a)','CIV');
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('União Estável','CIV');
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Viúvo(a)','CIV');
---Sexo
+#Sexo
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('M','SEX');
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('F','SEX');
---Tipos de telefone
+#Tipos de telefone
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Celular','FON');
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Fixo','FON');
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Recado','FON');
---Tipos de pessoa
+#Tipos de pessoa
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Voluntário','PES');
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Usuário','PES');
---Parentesco
+#Parentesco
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Pai','PRT');
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Mãe','PRT');
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Avó','PRT');
@@ -117,16 +117,16 @@ INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Tutor','PRT');
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Tutora','PRT');
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Padrinho','PRT');
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Madrinha','PRT');
---Turno
+#Turno
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Matutino','TRN');
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Vespertino','TRN');
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Noturno','TRN');
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Integral','TRN');
---Grau
+#Grau
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('1º','GRA');
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('2º','GRA');
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('3º','GRA');
---UF
+#UF
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('AC','UF');
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('AL','UF');
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('AM','UF');
@@ -154,24 +154,24 @@ INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('SC','UF');
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('SE','UF');
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('SP','UF');
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('TO','UF');
---Tipo de acao
+#Tipo de acao
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Individual','TPA');
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Grupo','TPA');
---Publico-alvo
+#Publico-alvo
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Masculino','PUB');
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Feminino','PUB');
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Ambos','PUB');
---Faixa-etaria
+#Faixa-etaria
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Infantil (6 a 11 anos) ','ETA');
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Adolescente (12 a 17 anos)','ETA');
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Jovem (18 a 23 anos)','ETA');
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Adulto (> 24 anos)','ETA');
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Todas as idades','ETA');
---Semana
-INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Seg','SEM');
-INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Ter','SEM');
-INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Qua ','SEM');
-INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Qui','SEM');
-INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Sex','SEM');
-INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Sáb','SEM');
-INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Dom','SEM');
+#Semana
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Segunda','SEM');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Terça','SEM');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Quarta ','SEM');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Quinta','SEM');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Sexta','SEM');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Sábado','SEM');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Domingo','SEM');

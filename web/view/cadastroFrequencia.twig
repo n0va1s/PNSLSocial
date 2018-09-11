@@ -10,78 +10,102 @@
             </header>
         </div>
         <div class="row col-sm-8 col-sm-offset-2">
-            <form name="frmCadastro" action="{{ path('frequenciaSalvar')}}" method="POST">
+            <form name="frmConsulta" action="{{ path('frequenciaObterTurma')}}" method="POST">
                 <fieldset>
                 <legend><i class="glyphicon glyphicon-menu-right"></i><b>Ação social</b></legend>
-                    <div class="form-group">
+                    <div class="form-group-lg col-sm-11">
                         <select class="form-control" id="acao" name="acao" required>
                             <option value="">Selecione</option>
                             {% for acao in acoes %}
-                            <option value="{{ acao.id }}">{{ acao.nome }}</option>
+                            <option value="{{ acao.id }}" {% if acao is defined and acao.id == acao.id %}selected{% endif %} >{{ acao.nome }}</option>
                             {% endfor %}
                         </select>
                     </div>
-                    <div class="row">
-                        <fieldset>
-                        <legend><i class="glyphicon glyphicon-menu-right"></i><b>Dados da ação social</b></legend>
-                            <div class="form-group col-sm-6">
-                                <label for="voluntario">Voluntário</label>
-                                <input type="text" name="voluntario" id="voluntario" class="form-control" readonly>
-                            </div>
-                            <div class="form-group col-sm-2">
-                                <label for="entrada">Entrada</label>
-                                <input type="text" name="entrada" id="entrada" class="form-control" readonly>
-                            </div>
-                            <div class="form-group col-sm-2">
-                                <label for="saida">Saída</label>
-                                <input type="text" name="saida" id="saida" class="form-control" readonly>
-                            </div>
-                            <div class="form-group col-sm-2">
-                                <label for="situacao">Situação</label>
-                                <input type="text" name="situacao" id="situacao" class="form-control" readonly>
-                            </div>
-                            <div class="form-group col-sm-4">
-                                <label for="dia">Dia</label>
-                                <input type="text" name="dia" id="dia" class="form-control" readonly>
-                            </div>
-                            <div class="form-group col-sm-4">
-                                <label for="turno">Turno</label>
-                                <input type="text" name="turno" id="turno" class="form-control" readonly>
-                            </div>
-                            <div class="form-group col-sm-2">
-                                <label for="inicio">Início</label>
-                                <input type="text" name="inicio" id="inicio" class="form-control" readonly>
-                            </div>
-                            <div class="form-group col-sm-2">
-                                <label for="termino">Término</label>
-                                <input type="text" name="termino" id="termino" class="form-control" readonly>
-                            </div>
-                        </legend>
-                    </div>
-                    <div class="row">
-                        <table class="table table-responsive table-hover">
-                        <caption>Registre a frequência</caption>
-                            <thead class="thead-light">
-                                <tr>
-                                    <th class="col-sm-5">Usuário</th>
-                                    <th class="col-sm-4">Responsável</th>
-                                    <th class="col-sm-2"><center>Dia</center></th>
-                                    <th class="col-sm-1"><center>Certificado</center></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    {% for usuario in turma %}
-                                    <td>usuario.nome</td>
-                                    <td>usuario.responsavel</td>
-                                    <td><input type="date" id="dataFrequencia" class="form-control" placeholder="dd/mm/aaaa" required></td>
-                                    <td><a href="{{ path('frequenciaCertificar',{'acao':acao.id, 'usuario':usuario.id}) }}"><span class="text-center glyphicon glyphicon-certificate"></span></a></td>
-                                    {% endfor %}
-                                </tr>
-                            </tbody>
-                        </table>
+                    <div class="form-group col-sm-1">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="glyphicon glyphicon-search"></i>
+                        </button>
                     </div>
                 </fieldset>
+            </form>
+            <form name="frmCadastro" action="{{ path('frequenciaSalvar')}}" method="POST">
+                <div class="row">
+                    <fieldset>
+                    <legend><i class="glyphicon glyphicon-menu-right"></i><b>Dados da ação social</b></legend>
+                        <div class="form-group col-sm-6">
+                            <label for="voluntario">Voluntário</label>
+                            <input type="text" name="voluntario" id="voluntario" class="form-control" value="{% if acao is defined %}{{ acao.voluntario.pessoa.nome}}{% endif %}" readonly>
+                        </div>
+                        <div class="form-group col-sm-2">
+                            <label for="entrada">Entrada</label>
+                            <input type="text" name="entrada" id="entrada" class="form-control" value="{% if acao is defined %}{{ acao.entrada | date ('h:i')}}{% endif %}" readonly>
+                        </div>
+                        <div class="form-group col-sm-2">
+                            <label for="saida">Saída</label>
+                            <input type="text" name="saida" id="saida" class="form-control" value="{% if acao is defined %}{{ acao.saida | date ('h:i')}}{% endif %}" readonly>
+                        </div>
+                        <div class="form-group col-sm-2">
+                            <label for="situacao">Situação</label>
+                            <input type="text" name="situacao" id="situacao" class="form-control" value="{% if acao is defined and acao.dataExclusao is null %}Ativo{% else %}Inativo{% endif %}" readonly>
+                        </div>
+                        <div class="form-group col-sm-4">
+                            <label for="dia">Dia</label>
+                            <input type="text" name="dia" id="dia" class="form-control" value="{% if acao is defined %}{{ acao.diaSemana.descricao }}{% endif %}" readonly>
+                        </div>
+                        <div class="form-group col-sm-4">
+                            <label for="turno">Turno</label>
+                            <input type="text" name="turno" id="turno" class="form-control" value="{% if acao is defined %}{{ acao.turno.descricao }}{% endif %}" readonly>
+                        </div>
+                        <div class="form-group col-sm-2">
+                            <label for="inicio">Início</label>
+                            <input type="text" name="inicio" id="inicio" class="form-control" value="{% if acao is defined %}{{ acao.inicio.date | date('d/m/Y')}}{% endif %}" readonly>
+                        </div>
+                        <div class="form-group col-sm-2">
+                            <label for="termino">Término</label>
+                            <input type="text" name="termino" id="termino" class="form-control" value="{% if acao is defined %}{{ acao.termino.date  | date('d/m/Y')}}{% endif %}" readonly>
+                        </div>
+                    </legend>
+                </div>
+                {% if turma is defined %}
+                <div class="row">
+                    <table class="table table-responsive table-hover">
+                    <caption>Registre a frequência</caption>
+                        <thead class="thead-light">
+                            <tr>
+                                <th class="col-sm-5">Usuário</th>
+                                <th class="col-sm-2">Telefone</th>
+                                <th class="col-sm-2"><center>Dia</center></th>
+                                <th class="col-sm-1"><center>Certificar</center></th>
+                                <th class="col-sm-1"><center>Evadir</center></th>
+                                <th class="col-sm-1"><center>Excluir</center></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% if turma | length > 0 %}
+                            {% for aluno in turma %}
+                            <tr>
+                                <td>{{ aluno.pessoa.nome }}</td>
+                                <td>{{ aluno.pessoa.telefone }}</td>
+                                <td>
+                                    <input type="date" id="dataFrequencia[]" name="dataFrequencia[]" class="form-control" placeholder="dd/mm/aaaa" value="{{"now"|date("d/m/Y")}}">
+                                    <input type="hidden" id="turma[]" name="turma[]" value="{{ aluno.id }}">
+                                </td>
+                                <td><a href="{{ path('frequenciaCertificar',{'acao':acao.id, 'usuario':aluno.pessoa.id }) }}"><span class="glyphicon glyphicon-certificate"></span></a></td>
+                                <td><a href="{{ path('frequenciaCertificar',{'acao':acao.id, 'usuario':aluno.pessoa.id }) }}"><span class="glyphicon glyphicon-ban-circle"></span></a></td>
+                                <td><a href="{{ path('frequenciaCertificar',{'acao':acao.id, 'usuario':aluno.pessoa.id }) }}"><span class="glyphicon glyphicon-trash"></span></a></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                        {% else %}
+                        <tbody>
+                            <tr>
+                                <td colspan="3">Nenhuma pessoa cadastrada na turma</td>
+                            </tr>
+                        </tbody>
+                        {% endif %}
+                    </table>
+                </div>
+                {% endif %}
                 <div class="form-group col-sm-12 text-center">
                     <button type="submit" class="btn btn-primary">
                         <i class="glyphicon glyphicon-ok"> Salvar</i>
@@ -90,7 +114,6 @@
                         <i class="glyphicon glyphicon-remove"> Limpar</i>
                     </button>
                 </div>
-                <input type="hidden" id="tipo" value="VOL">
             </form>
         </div>
     </div>

@@ -38,20 +38,51 @@ class FrequenciaController implements ControllerProviderInterface
         $ctrl->get(
             '/', function () use ($app) {
                 $acoes = $app['acao_service']->fetchAll();
-                $turma = $app['frequencia_service']->fetchAll();
                 return $app['twig']->render(
                     'cadastroFrequencia.twig',
-                    array('acoes'=>$acoes,
-                    'turma'=>$turma), 
+                    array('acoes'=>$acoes),
                     new Response('Ok', 200)
                 );
             }
         )->bind('frequenciaCadastrar');
 
         $ctrl->post(
+            '/turma', function (Request $req) use ($app) {
+                $id = $req->request->get('acao');
+                if ($id) {
+                    $acoes = $app['acao_service']->fetchAll();
+                    $acao = $app['acao_service']->findById($id);
+                    $turma = $app['acao_service']->findTurmaByAcao($id);
+                    return $app['twig']->render(
+                        'cadastroFrequencia.twig',
+                        array('acoes'=>$acoes,
+                        'turma'=>$turma,
+                        'acao'=>$acao),
+                        new Response('Ok', 200)
+                    );
+                } else {
+                    return $app->abort(
+                        500, 
+                        "Não sei que ação vc escolheu."
+                    );
+                }
+                
+            }
+        )->bind('frequenciaObterTurma');
+
+        $ctrl->post(
             '/salvar', function (Request $req) use ($app) {
                 $dados = $req->request->all();
-                $frequencia = $app['frequencia_service']->save($dados);
+                //Organizei os dados da frequecia em um array com
+                //turma (acao + aluno) e data
+                foreach ($dados['turma'] as $turma) {
+                    $presenca['turma']  = $turma;
+                    foreach ($dados['dataFrequencia'] as $data) {
+                        $presenca['data'] = $data;
+                    }
+                    $frequencia[] = $presenca;
+                }
+                $frequencia = $app['frequencia_service']->save($frequencia);
                 if ($frequencia) {
                     return $app->redirect(
                         $app['url_generator']
@@ -66,22 +97,35 @@ class FrequenciaController implements ControllerProviderInterface
             }
         )->bind('frequenciaSalvar');
 
-        $ctrl->get(
-            '/listar', function ($dominio) use ($app) {
-                $frequencias = $app['frequencia_service']->fetchAll();
-                if ($frequencias) {
-                    return $app->redirect(
-                        $app['url_generator']
-                        ->generate('frequenciaCadastrar')
-                    );
+        $ctrl->post(
+            '/pesquisar', function (Request $req) use ($app) {
+                $id = $req->request->get('acao');
+                if ($id) {
+                    $acao = $app['acao_service']->findById($id);
+                    if ($acao) {
+                        $acoes = $app['acao_service']->fetchAll();
+                        $turma = $app['frequencia_service']->fetchAll();
+                        return $app['twig']->render(
+                            'cadastroFrequencia.twig',
+                            array('acoes'=>$acoes,
+                            'acao'=>$acao,
+                            'turma'=>$turma), 
+                            new Response('Ok', 200)
+                        );
+                    } else {
+                        return $app->redirect(
+                            $app['url_generator']
+                            ->generate('frequenciaCadastrar')
+                        ); 
+                    }             
                 } else {
-                    return $app->redirect(
-                        $app['url_generator']
-                        ->generate('frequenciaCadastrar')
-                    ); 
-                }             
+                    return $app->abort(
+                        500, 
+                        "Não sei que ação vc escolheu."
+                    );
+                }
             }
-        )->bind('frequenciaListar');
+        )->bind('frequenciaPesquisar');
 
         $ctrl->delete(
             '/excluir/{id}', function ($id) use ($app) {

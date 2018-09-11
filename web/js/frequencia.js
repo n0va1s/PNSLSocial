@@ -1,4 +1,4 @@
-$(document).ready(function() {
+/*$(document).ready(function() {
     $('#acao').change(function(event) {
         event.preventDefault();
         var acao = $('#acao').val();
@@ -14,4 +14,4 @@ $(document).ready(function() {
             $('#termino').val(acao.termino.date);
         });
     });
-});
+});*/

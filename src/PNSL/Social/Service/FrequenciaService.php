@@ -17,38 +17,24 @@ class FrequenciaService
     
     public function save($dados)
     {
-        $frequencia = $this->em->getReference(
-            '\PNSL\Social\Entity\FrequenciaEntity', 
-            $dados['seq_frequencia']
-        );
-        if ($frequencia) {
-            if (empty($frequencia->getId)) {
+        foreach ($dados as $valor) {
+            $turma = $this->em->getReference(
+                '\PNSL\Social\Entity\TurmaEntity', 
+                $valor['turma']
+            );
+            if ($turma) {
                 $frequencia = new FrequenciaEntity();
-                $frequencia->setData($dados['data']);
-                $frequencia->setPresenca($dados['presenca']);
-                $frequencia->setInativo($dados['inativo']);
-                $frequencia->setTurma(new TurmaEntity());
-                $frequencia->setAtendido(new PessoaEntity());
-                $frequencia->setUsuarioInclusao(utf8_encode($dados['usuario']));
-                $frequencia->setUsuarioAlteracao(utf8_encode($dados['usuario']));
+                $frequencia->setData($valor['data']);
+                $frequencia->setUsuarioInclusao('usuarioInc');
+                $frequencia->setUsuarioAlteracao('usuarioAlt');
                 $this->em->persist($frequencia);
+                $frequencia->setTurma($turma);
+                $this->em->flush();
             } else {
-                $frequencia = $this->em->getReference(
-                    '\PNSL\Social\Entity\FrequenciaEntity', 
-                    $id
-                );
-                $frequencia->setData($dados['data']);
-                $frequencia->setPresenca($dados['presenca']);
-                $frequencia->setInativo($dados['inativo']);
-                $frequencia->setTurma(new TurmaEntity());
-                $frequencia->setAtendido(new PessoaEntity());
-                $frequencia->setUsuarioAlteracao(utf8_encode($dados['usuario']));
+                return false;
             }
-            $this->em->flush();
-            return true;
-        } else {
-            return false;
         }
+        return true;
     }
     
     public function delete(int $id)
