@@ -127,7 +127,7 @@ class FrequenciaController implements ControllerProviderInterface
             }
         )->bind('frequenciaPesquisar');
 
-        $ctrl->delete(
+        $ctrl->get(
             '/excluir/{id}', function ($id) use ($app) {
                 if ($id) {
                     $excluiu = $app['frequencia_service']->delete($id);
@@ -152,17 +152,54 @@ class FrequenciaController implements ControllerProviderInterface
         )->bind('frequenciaExcluir')->assert('id', '\d+');
 
         $ctrl->get(
-            '/certificar/{acao}/{usuario}', function ($acao, $usuario) use ($app) {
+            '/evadir/{id}', function ($id) use ($app) {
                 if ($id) {
-                    $acao = $app['acao_service']->findById($acao);
-                    $usuario = $app['pessoa_service']->findById($usuario);
+                    $acao = $app['acao_service']->evadirTurma($id);
                     if ($acao) {
-                        return $app['twig']->render(
-                            'certificadoParticipacao.twig',
-                            array('acao'=>$acao,
-                            'usuario'=>$usuario), 
-                            new Response('OK', 200)
+                        return $app->redirect(
+                            $app['url_generator']
+                            ->generate('frequenciaCadastrar')
                         );
+                    } else {
+                        return $app->redirect(
+                            $app['url_generator']
+                            ->generate('frequenciaCadastrar')
+                        ); 
+                    }
+                } else {
+                    return $app->abort(
+                        500, 
+                        "A frequência que vc escolheu não existe. Tente novamente."
+                    ); 
+                }
+            }
+        )->bind('frequenciaEvadir')->assert('id', '\d+');
+
+        $ctrl->get(
+            '/certificar/{id}', function ($id) use ($app) {
+                if ($id) {
+                    $frequencia = $app['frequencia_service']->findByTurma($id);
+                    if ($frequencia) {
+                        $assinou = $app['voluntario_service']->assinarTermo(
+                            $frequencia
+                            ->getTurma()
+                            ->getAcao()
+                            ->getVoluntario()
+                            ->getPessoa()
+                            ->getId()
+                        );
+                        if ($assinou) {
+                            return $app['twig']->render(
+                                'certificadoParticipacao.twig',
+                                array('frequencia'=>$frequencia), 
+                                new Response('OK', 200)
+                            );
+                        } else {
+                            return $app->abort(
+                                500, 
+                                "Não consegui assinar o termo do voluntario"
+                            );
+                        }
                     } else {
                         return $app->redirect(
                             $app['url_generator']

@@ -16,25 +16,24 @@ class TipoService
     
     public function save($dados)
     {
-        $tipo = $this->em->getReference(
-            '\PNSL\Social\Entity\TipoEntity', 
-            $dados['seq_tipo']
-        );
-        if ($tipo) {
-            if (empty($tipo->getId)) {
-                $tipo = new TipoEntity();
-                $tipo->setDescricao(utf8_encode($dados['descricao']));
-                $tipo->setGrupo($dados['grupo']);
-                $this->em->persist($tipo);
-            } else {
-                $tipo = $this->em->getReference('\PNSL\Social\Entity\TipoEntity', $tipo->getId);
-                $tipo->setDescricao(utf8_encode($dados['descricao']));
-                $tipo->setGrupo($dados['grupo']);
-            }
-            $this->em->flush();
-            return $tipo->getId;
+        if (empty($dados['id'])) {
+            $tipo = new TipoEntity();
+            $tipo->setDescricao($dados['descricao']);
+            $tipo->setGrupo($dados['grupo']);
+            $this->em->persist($tipo);
         } else {
-            return 0;
+            $tipo = $this->em->getReference(
+                '\PNSL\Social\Entity\TipoEntity', 
+                $dados['id']
+            );
+            $tipo->setDescricao($dados['descricao']);
+            $tipo->setGrupo($dados['grupo']);
+        }
+        $this->em->flush();
+        if ($tipo) {
+            return $tipo;
+        } else {
+            return false;
         }
     }
     
@@ -59,7 +58,7 @@ class TipoService
     {
         $tipo = $this->em->createQuery(
             'select t from \PNSL\Social\Entity\TipoEntity t where t.id = :id'
-        )->setParameter('id', $id)->getArrayResult();
+        )->setParameter('id', $id)->getOneOrNullResult();
         return $tipo;
     }
 

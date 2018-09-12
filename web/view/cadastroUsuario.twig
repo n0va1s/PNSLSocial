@@ -258,8 +258,6 @@
                         <th class="col-sm-2">Telefone</th>
                         <th class="col-sm-2">Email</th>
                         <th class="col-sm-2">Tipo</th>
-                        <th class="col-sm-1 text-center">Alterar</th>
-                        <th class="col-sm-1 text-center">Excluir</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -270,8 +268,8 @@
                         <td>{{ usuario.telefone }}</td>
                         <td>{{ usuario.email }}</td>
                         <td>{{ usuario.tipoPessoa }}</td>
-                        <td><a href="{{ path('usuarioEditar',{'id':usuario.id}) }}"><span class="text-center glyphicon glyphicon-pencil"></span></a></td>
-                        <td><a href="{{ path('usuarioExcluir',{'id':usuario.id}) }}"><span class="text-center glyphicon glyphicon-trash"></span></a></td>
+                        <td><a data-toggle="tooltip" data-placement="top" title="Alteração" href="{{ path('usuarioEditar',{'id':usuario.id}) }}"><span class="text-center glyphicon glyphicon-pencil"></span></a></td>
+                        <td><a data-toggle="tooltip" data-placement="top" title="Exclusão" href="{{ path('usuarioExcluir',{'id':usuario.id}) }}"><span class="text-center glyphicon glyphicon-trash"></span></a></td>
                     </tr>
                     {% endfor %}
                     {% else %}

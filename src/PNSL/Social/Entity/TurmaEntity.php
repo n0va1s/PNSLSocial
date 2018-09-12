@@ -205,6 +205,14 @@ class TurmaEntity
     }
 
     /**
+     * Get the value of usuarioExclusao
+     */ 
+    public function getUsuarioExclusao()
+    {
+        return $this->usuarioExclusao;
+    }
+
+    /**
      * Set the value of usuarioExclusao
      *
      * @return  self
@@ -221,5 +229,27 @@ class TurmaEntity
     public function getDataExclusao()
     {
         return $this->dataExclusao;
+    }
+
+    /**
+     * Set the value of dataExclusao
+     *
+     * @return  self
+     */ 
+    public function setDataExclusao($dataExclusao = null)
+    {
+        if (empty($dataExclusao)) {
+            $this->dataExclusao = new \Datetime();
+        } else {
+            if (substr_count($dataExclusao, "/") == 2) {
+                list($dia, $mes, $ano) = explode("/", $dataExclusao);
+                $this->dataExclusao = new \DateTime(
+                    date_format(date_create($ano."-".$mes."-".$dia), "Y-m-d")
+                );
+            } else {
+                throw new \InvalidArgumentException('A data é inválida', 99);
+            }
+        }
+        return $this;
     }
 }

@@ -74,7 +74,7 @@
                     <div class="form-group col-sm-1">
                         <label for="UF_pessoa">UF</label>
                         <select class="form-control" name="UF_pessoa" required>
-                            <option value="" disabled>Selecione</option>
+                            <option value="">Selecione</option>
                             {% for uf in ufs %}
                             <option value="{{ uf.id }}" {% if pessoa is defined and pessoa.uf.id == uf.id %} selected {% endif %}>{{ uf.descricao }}</option>
                             {% endfor %}
@@ -139,9 +139,6 @@
                         <th class="col-sm-6">Nome</th>
                         <th class="col-sm-2">Telefone</th>
                         <th class="col-sm-2">Email</th>
-                        <th class="col-sm-1 text-center">Alterar</th>
-                        <th class="col-sm-1 text-center">Excluir</th>
-                        <th class="col-sm-1 text-center">Termo</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -151,9 +148,8 @@
                         <td>{{ voluntario.pessoa.nome }}</td>
                         <td>{{ voluntario.pessoa.telefone }}</td>
                         <td>{{ voluntario.pessoa.email }}</td>
-                        <td><a href="{{ path('voluntarioEditar',{'id':voluntario.pessoa.id}) }}"><span class="text-center glyphicon glyphicon-pencil"></span></a></td>
-                        <td><a href="{{ path('voluntarioExcluir',{'id':voluntario.pessoa.id}) }}"><span class="text-center glyphicon glyphicon-trash"></span></a></td>
-                        <td><a href="{{ path('voluntarioAssinar',{'id':voluntario.pessoa.id}) }}"><span class="text-center glyphicon glyphicon-thumbs-up"></span></a></td>
+                        <td><a data-toggle="tooltip" data-placement="top" title="Alteração" href="{{ path('voluntarioEditar',{'id':voluntario.pessoa.id}) }}"><span class="text-center glyphicon glyphicon-pencil"></span></a></td>
+                        <td><a data-toggle="tooltip" data-placement="top" title="Exclusão" href="{{ path('voluntarioExcluir',{'id':voluntario.pessoa.id}) }}"><span class="text-center glyphicon glyphicon-trash"></span></a></td>
                     </tr>
                     {% endfor %}
                     {% else %}

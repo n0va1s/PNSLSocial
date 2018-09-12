@@ -75,9 +75,6 @@
                                 <th class="col-sm-5">Usuário</th>
                                 <th class="col-sm-2">Telefone</th>
                                 <th class="col-sm-2"><center>Dia</center></th>
-                                <th class="col-sm-1"><center>Certificar</center></th>
-                                <th class="col-sm-1"><center>Evadir</center></th>
-                                <th class="col-sm-1"><center>Excluir</center></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -90,9 +87,9 @@
                                     <input type="date" id="dataFrequencia[]" name="dataFrequencia[]" class="form-control" placeholder="dd/mm/aaaa" value="{{"now"|date("d/m/Y")}}">
                                     <input type="hidden" id="turma[]" name="turma[]" value="{{ aluno.id }}">
                                 </td>
-                                <td><a href="{{ path('frequenciaCertificar',{'acao':acao.id, 'usuario':aluno.pessoa.id }) }}"><span class="glyphicon glyphicon-certificate"></span></a></td>
-                                <td><a href="{{ path('frequenciaCertificar',{'acao':acao.id, 'usuario':aluno.pessoa.id }) }}"><span class="glyphicon glyphicon-ban-circle"></span></a></td>
-                                <td><a href="{{ path('frequenciaCertificar',{'acao':acao.id, 'usuario':aluno.pessoa.id }) }}"><span class="glyphicon glyphicon-trash"></span></a></td>
+                                <td><a data-toggle="tooltip" data-placement="top" title="Certificado" href="{{ path('frequenciaCertificar',{'id':aluno.id }) }}"><span class="glyphicon glyphicon-certificate"></span></a></td>
+                                <td><a data-toggle="tooltip" data-placement="top" title="Desistência" href="{{ path('frequenciaEvadir',{'id':aluno.id }) }}"><span class="glyphicon glyphicon-ban-circle"></span></a></td>
+                                <td><a data-toggle="tooltip" data-placement="top" title="Exclusão" href="{{ path('frequenciaExcluir',{'id':aluno.id}) }}"><span class="glyphicon glyphicon-trash"></span></a></td>
                             </tr>
                             {% endfor %}
                         </tbody>

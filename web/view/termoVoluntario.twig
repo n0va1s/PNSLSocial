@@ -5,26 +5,32 @@
 
 {% block conteudo %}
     <!-- Main Content -->
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2">
-                <header>
-                    <h2 class="text-center"></span>&nbsp;Acordo de Trabalho de Voluntariado</h2>
-                </header>
-                <p>
-                    A <b>Casa São José</b> inscrita sob o CNPJ: <b>999.999.0001/99</b>, presidida por 
-                    <b>Pe. Norbey Londono Buitrago</b> declara para os devidos fins que
-                    as informações abaixo são verdadeiras e dizem respeito ao ano de <b>2017</b>.
-                </p>
-            </div>
-        </div>        
-    </div>
+    <div class="container" style="margin-top:10px; margin-bottom:10px; width:800px; height:100%; font-family:Arial; font-size:14pt">
+        <div class="text-center"><img src="{{ asset('logo_casa_sao_jose.jpg', 'img') }}"></div>
+        <header><h2 class="text-center">Termos de Adesão ao Serviço Voluntário</h2></header>
+        <p>
+            O trabalho voluntário a ser desempenhado junto à <b>Associação Cristã do Lago Norte - ACLN</b> é atividade não remunerada, regida pela Lei 9608 de 18/12/1998,
+            coerente com as finalidades previstas no Estatuto da mesma, registrado no cartório de 1º Ofício de Pessoas Jurídicas e não gera vínculo empregatício nem funcional,
+            ou qualquer obrigação de natureza trabalhista, previdenciária ou afins.
+        </p>
+        <h4>Informações da ação:</h4>
+        <p>
+            Nome: <b>{{ acao.nome }}</b> <br />
+            Carga horária: <b>{{acao.cargaHoraria}}</b> <br />
+            Horário:<b>{{ acao.entrada | date('h:i') }} - {{ acao.saida | date('h:i') }}</b><br />    
+            Início:<b>{{ acao.inicio | date('h:i') }}</b> Término: <b>{{ acao.termino | date('h:i') }}</b><br />
+            Local: <b>Casa São José, Lago Norte, Varjão - DF</b>
+        </p>
+        <p>
+            Eu, <b>{{acao.voluntario.pessoa.nome}}</b>, declaro estar ciente do que preceituam a Lei 9608 de 18/02/1998 e o Estatuto da Associação Cristã do Lago Norte - ACLN e que aceito atuar como voluntário, nos termos do presente instrumento.
+        </p>
+        <p class="text-center">Brasília, {{"now"|date("d/m/Y")}}</p>
+        <p class="text-center col-sm-6">_________________ <br /> Presidente da ACLN</p>
+        <p class="text-center col-sm-6">_________________ <br /> Voluntário(a)</p>
+    </div>        
 {% endblock %}
 
 {% block rodape %}
-<p class="text-center">
-    Emitido por <b>Fulano de Tal</b> as 21:43 do dia 10/04/2018
-</p>
 {% endblock rodape %}
 
 {% block contato %}

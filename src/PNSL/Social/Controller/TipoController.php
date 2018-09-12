@@ -37,9 +37,10 @@ class TipoController implements ControllerProviderInterface
 
         $ctrl->get(
             '/', function () use ($app) {
+                $tipos = $app['tipo_service']->fetchAll();
                 return $app['twig']->render(
                     'cadastroTipo.twig',
-                    array(), 
+                    array('tipos'=>$tipos), 
                     new Response('Ok', 200)
                 );
             }
@@ -48,67 +49,51 @@ class TipoController implements ControllerProviderInterface
         $ctrl->post(
             '/salvar', function (Request $req) use ($app) {
                 $dados = $req->request->all();
-                $tipo_id = $app['tipo_service']->save($dados);
-                if ($tipo_id > 0) {
-                    return new Response(
-                        $app->json(['resultado'=>"Configuração cadastrada com sucesso!"], 201)
+                $tipo = $app['tipo_service']->save($dados);
+                if ($tipo) {
+                    return $app->redirect(
+                        $app['url_generator']
+                        ->generate('tipoCadastrar')
                     );
                 } else {
-                    return $app->abort(
-                        404, "Ops... não foi possível cadastrar a configuração"
-                    ); 
+                    return $app->redirect(
+                        $app['url_generator']
+                        ->generate('tipoCadastrar')
+                    );
                 }
             }
         )->bind('tipoSalvar');
 
         $ctrl->get(
-            '/listar', function () use ($app) {
-                $registros = $app['tipo_service']->fetchAll();
-                if ($registros) {
-                    return new Response(
-                        $app->json(
-                            $registros, 201, ['Content-Type' => 'application/json']
-                        )
+            '/editar/{id}', function ($id) use ($app) {
+                $tipo = $app['tipo_service']->findById($id);
+                if ($tipo) {
+                    return $app['twig']->render(
+                        'cadastroTipo.twig',
+                        array('tipos'=>$tipos,
+                            'tipo'=>$tipo), 
+                        new Response('Ok', 200)
                     );
                 } else {
-                    return $app->abort(
-                        404, 
-                        "Ops... nenhuma configuração cadastrada"
+                    return $app->redirect(
+                        $app['url_generator']
+                        ->generate('tipoCadastrar')
                     );
-                }             
+                }
             }
-        )->bind('tipoListar');
-
-        $ctrl->get(
-            '/listar/{grupo}', function ($grupo) use ($app) {
-                $registros = $app['tipo_service']->findByGrupo($grupo);
-                if ($registros) {
-                    return new Response(
-                        $app->json(
-                            $registros, 201, ['Content-Type' => 'application/json']
-                        )
-                    );
-                } else {
-                    return $app->abort(
-                        404, 
-                        "Ops... nenhuma configuração cadastrada"
-                    );
-                }             
-            }
-        )->bind('tipoListarPorGrupo');
+        )->bind('tipoEditar');
 
         $ctrl->delete(
             '/excluir/{id}', function ($id) use ($app) {
                 if ($id) {
                     $excluiu = $app['tipo_service']->delete($id);
-                    return new Response(
-                        $app->json(
-                            $excluiu, 201, ['Content-Type' => 'application/json']
-                        )
+                    return $app->redirect(
+                        $app['url_generator']
+                        ->generate('tipoCadastrar')
                     );
                 } else {
                     return $app->abort(
-                        404, 
+                        500, 
                         "A configuração que vc escolheu não existe. Tente novamente."
                     ); 
                 }

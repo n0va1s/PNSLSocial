@@ -14,13 +14,13 @@
                 <fieldset>
                     <div class="form-group col-sm-6">
                         <label for="descricao">Descrição</label>
-                        <input type="text" id="descricao" class="form-control" placeholder="Voluntário" autofocus required>
+                        <input type="text" name="descricao" class="form-control" placeholder="Voluntário" value="{% if tipo is defined %}{{tipo.descricao}}{% endif %}" autofocus required>
                     </div>
                     <div class="form-group col-sm-2 col-sm-offset-2">
                         <label for="grupo">Grupo
                             <span data-toggle="tooltip" data-placement="right" title="3 letras maiúsculas" class="glyphicon glyphicon-question-sign"></span> 
                         </label>
-                        <input type="text" name="grupo" class=" form-control" placeholder="VOL" required>
+                        <input type="text" name="grupo" class=" form-control" placeholder="VOL" value="{% if tipo is defined %}{{tipo.grupo}}{% endif %}" required>
                     </div>
                     <div class="form-group col-sm-12 text-center">
                         <button type="submit" class="btn btn-primary">
@@ -31,6 +31,7 @@
                         </button>
                     </div>
                 </fieldset>
+                <input type="hidden" name="id" value="{% if tipo is defined %}{{tipo.id}}{% endif %}">
             </form>
             {% if resultado is defined %}
             <div class="col-sm-12 text-center alert alert-success">
@@ -43,26 +44,30 @@
             <caption>Configurações cadastradas</caption>
                 <thead class="thead-light">
                     <tr>
+                        <th class="col-sm-7">ID</th>
                         <th class="col-sm-7">Descrição</th>
                         <th class="col-sm-2">Grupo</th>
-                        <th class="col-sm-1"><center>Alterar</center></th>
-                        <th class="col-sm-1"><center>Excluir</center></th>
                     </tr>
                 </thead>
                 <tbody>
+                {% if tipos | length > 0 %}
+                    {% for tipo in tipos %}
                     <tr>
-                        <td>Voluntário</td>
-                        <td>VOL</td>
-                        <td><center><span class="glyphicon glyphicon-pencil"></span></center></td>
-                        <td><center><span class="glyphicon glyphicon-trash"></span></center></td>
+                        <td>{{tipo.id}}</td>
+                        <td>{{tipo.descricao}}</td>
+                        <td>{{tipo.grupo}}</td>
+                        <td><a data-toggle="tooltip" data-placement="top" title="Alteração" href="{{ path('tipoEditar',{'id':tipo.id}) }}"><span class="text-center glyphicon glyphicon-pencil"></span></a></td>
+                        <td><a data-toggle="tooltip" data-placement="top" title="Exclusão" href="{{ path('tipoExcluir',{'id':tipo.id}) }}"><span class="text-center glyphicon glyphicon-trash"></span></a></td>
                     </tr>
+                    {% endfor %}
+                </tbody>
+                {% else %}
+                <tbody>
                     <tr>
-                        <td>Responsável</td>
-                        <td>RES</td>
-                        <td><center><span class="glyphicon glyphicon-pencil"></span></center></td>
-                        <td><center><span class="glyphicon glyphicon-trash"></span></center></td>
+                        <td colspan="4">Nada cadastrado</td>
                     </tr>
                 </tbody>
+                {% endif %}
             </table>
         </div> 
     </div>

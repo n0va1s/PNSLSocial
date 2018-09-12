@@ -45,11 +45,16 @@ class FrequenciaService
         $this->em->remove($frequencia);
         return $this->em->flush();
     }
-    
+
     public function fetchAll()
     {
         $frequencias = $this->em->createQuery(
-            'select f from \PNSL\Social\Entity\FrequenciaEntity f '
+            'select f 
+            from \PNSL\Social\Entity\FrequenciaEntity f
+            join turma t
+            join t.acao a
+            join t.pessoa p
+            where a.dataExclusao is null'
         )->getArrayResult();
         return $frequencias;
     }
@@ -59,6 +64,20 @@ class FrequenciaService
         $frequencia = $this->em->createQuery(
             'select f from \PNSL\Social\Entity\FrequenciaEntity f where f.id = :id'
         )->setParameter('id', $id)->getArrayResult();
+        return $frequencia;
+    }
+
+    public function findByTurma(int $id)
+    {
+        $frequencia = $this->em->createQuery(
+            'select f, t, a, p, v
+            from \PNSL\Social\Entity\FrequenciaEntity f 
+            join f.turma t
+            join t.acao a
+            join a.voluntario v
+            join t.pessoa p
+            where f.id = :id'
+        )->setParameter('id', $id)->getOneOrNullResult();
         return $frequencia;
     }
 }

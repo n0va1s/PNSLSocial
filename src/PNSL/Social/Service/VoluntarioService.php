@@ -75,4 +75,25 @@ class VoluntarioService
         )->setParameter('id', $id)->getArrayResult();
         return $voluntario[0]; //TODO: substituir o array pelo getSingleResult. Ao usar travou
     }
+
+    public function assinarTermo(int $id)
+    {
+        if ($id) {
+            $voluntario = $this->em->getReference(
+                '\PNSL\Social\Entity\VoluntarioEntity', $id
+            );
+            if ($voluntario) {
+                $voluntario->setAssinouTermo('S');
+                $voluntario->setUsuarioAlteracao('usuarioAlt2');
+                $this->em->persist($voluntario);
+                $this->em->flush();
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+        
+    }
 }

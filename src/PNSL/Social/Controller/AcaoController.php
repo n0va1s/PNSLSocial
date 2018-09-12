@@ -164,8 +164,7 @@ class AcaoController implements ControllerProviderInterface
         $ctrl->get(
             '/certificar/{acao}/{voluntario}', function ($acao, $voluntario) use ($app) {
                 if ($acao) {
-                    $acao = $app['acao_service']->findById($acao);
-                    $usuario = $app['voluntario_service']->findById($voluntario);
+                    $acao = $app['acao_service']->findByVoluntario($voluntario, $acao);
                     if ($acao) {
                         return $app['twig']->render(
                             'certificadoVoluntario.twig',
@@ -187,6 +186,31 @@ class AcaoController implements ControllerProviderInterface
                 }
             }
         )->bind('acaoCertificar')->assert('id', '\d+');
+
+        $ctrl->get(
+            '/assinar/{acao}/{voluntario}', function ($acao, $voluntario) use ($app) {
+                if ($acao) {
+                    $acao = $app['acao_service']->findByVoluntario($voluntario, $acao);
+                    if ($acao) {
+                        return $app['twig']->render(
+                            'termoVoluntario.twig',
+                            array('acao'=>$acao), 
+                            new Response('OK', 200)
+                        );
+                    } else {
+                        return $app->redirect(
+                            $app['url_generator']
+                            ->generate('voluntarioCadastrar')
+                        );
+                    }
+                } else {
+                    return $app->abort(
+                        500, 
+                        "Não consegui gerar o termo"
+                    ); 
+                }
+            }
+        )->bind('acaoAssinar')->assert('id', '\d+');
 
         $ctrl->get(
             '/excluir/{id}', function ($id) use ($app) {

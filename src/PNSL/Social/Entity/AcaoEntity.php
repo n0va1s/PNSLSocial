@@ -41,6 +41,9 @@ class AcaoEntity
     /** @ORM\Column(type="string", length=255, name="des_pre_requisito") */
     private $preRequisito;
 
+    /** @ORM\Column(type="integer", name="val_carga_horaria") */
+    private $cargaHoraria;
+
     /** 
      * @ORM\ManyToOne(targetEntity="TipoEntity")
      * @ORM\JoinColumn(name="seq_tipo_dia_semana", referencedColumnName="seq_tipo") 
@@ -271,6 +274,26 @@ class AcaoEntity
     }
 
     /**
+     * Get the value of cargaHoraria
+     */ 
+    public function getCargaHoraria()
+    {
+        return $this->cargaHoraria;
+    }
+
+    /**
+     * Set the value of cargaHoraria
+     *
+     * @return  self
+     */ 
+    public function setCargaHoraria($cargaHoraria)
+    {
+        $this->cargaHoraria = $cargaHoraria;
+
+        return $this;
+    }
+
+    /**
      * Get the value of diaSemana
      */ 
     public function getDiaSemana()
@@ -475,6 +498,14 @@ class AcaoEntity
     }
 
     /**
+     * Get the value of usuarioExclusao
+     */ 
+    public function getUsuarioExclusao()
+    {
+        return $this->usuarioExclusao;
+    }
+
+    /**
      * Set the value of usuarioExclusao
      *
      * @return  self
@@ -491,5 +522,27 @@ class AcaoEntity
     public function getDataExclusao()
     {
         return $this->dataExclusao;
+    }
+
+    /**
+     * Set the value of dataExclusao
+     *
+     * @return  self
+     */ 
+    public function setDataExclusao($dataExclusao = null)
+    {
+        if (empty($dataExclusao)) {
+            $this->dataExclusao = new \Datetime();
+        } else {
+            if (substr_count($dataExclusao, "/") == 2) {
+                list($dia, $mes, $ano) = explode("/", $dataExclusao);
+                $this->dataExclusao = new \DateTime(
+                    date_format(date_create($ano."-".$mes."-".$dia), "Y-m-d")
+                );
+            } else {
+                throw new \InvalidArgumentException('A data é inválida', 99);
+            }
+        }
+        return $this;
     }
 }

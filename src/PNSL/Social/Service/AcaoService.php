@@ -53,6 +53,7 @@ class AcaoService
             $acao->setPublicoAlvo($publico_alvo);
             $acao->setFaixaEtaria($faixa_etaria);
             $acao->setPreRequisito($dados['pre_requisito']);
+            $acao->setCargaHoraria($dados['carga_horaria']);
             $acao->setEntrada($dados['entrada']);
             $acao->setSaida($dados['saida']);
             $acao->setDiaSemana($dia_semana);
@@ -73,6 +74,7 @@ class AcaoService
             $acao->setPublicoAlvo($publico_alvo);
             $acao->setFaixaEtaria($faixa_etaria);
             $acao->setPreRequisito($dados['pre_requisito']);
+            $acao->setCargaHoraria($dados['carga_horaria']);
             $acao->setEntrada($dados['entrada']);
             $acao->setSaida($dados['saida']);
             $acao->setDiaSemana($dia_semana);
@@ -126,8 +128,28 @@ class AcaoService
             join a.faixaEtaria fa
             join a.diaSemana di
             where a.id = :id'
-        )->setParameter('id', $id)->getArrayResult();
-        return $acao[0];
+        )->setParameter('id', $id)->getOneOrNullResult();
+        return $acao;
+    }
+
+    public function findByVoluntario(int $voluntario, int $acao)
+    {
+        $acoes = $this->em->createQuery(
+            'select a, v, p, ta, tu, pa, fa, di from \PNSL\Social\Entity\AcaoEntity a 
+            join a.voluntario v 
+            join v.pessoa p
+            join a.tipo ta
+            join a.turno tu
+            join a.publicoAlvo pa
+            join a.faixaEtaria fa
+            join a.diaSemana di
+            where a.voluntario = :voluntario
+            and a.id = :acao'
+        )
+        ->setParameter('voluntario', $voluntario)
+        ->setParameter('acao', $acao)
+        ->getOneOrNullResult();
+        return $acoes;
     }
 
     public function addTurma($acao, $usuario)
@@ -165,5 +187,21 @@ class AcaoService
             where a.id = :id'
         )->setParameter('id', $id)->getArrayResult();
         return $turma;
+    }
+
+    public function evadirTurma(int $id)
+    {
+        $turma = $this->em->getReference(
+            '\PNSL\Social\Entity\TurmaEntity', $id
+        );
+        $turma->setUsuarioExclusao('usuarioExc');
+        $turma->setDataExclusao();
+        $this->em->persist($turma);
+        $this->em->flush();
+        if ($turma) {
+            return $turma;
+        } else {
+            return false;
+        }
     }
 }
