@@ -33,9 +33,16 @@ class RelatorioController implements ControllerProviderInterface
 
         $ctrl->get(
             '/anual/html', function () use ($app) {
+                $acoes_tipo = $app['acao_service']->consolidarTipo();
+                $pessoas_estado_civil = $app['pessoa_service']->consolidarEstadoCivil();
+// echo "<pre>";
+// print_r($acoes_tipo);
+// echo "</pre>";
+// exit;                
                 return $app['twig']->render(
                     'relatorioPrestacaoConta.twig',
-                    array(), 
+                    array('acoes'=>$acoes,
+                    'pessoas'=>pessoas), 
                     new Response('Ok', 200)
                 );
             }

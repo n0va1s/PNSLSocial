@@ -1,0 +1,24 @@
+{% extends 'leiaute.twig' %}
+
+{% block topo %}
+{% endblock %}
+
+{% block conteudo %}
+    <!-- Main Content -->
+    <div class="container" style="border: 10px solid #000066; margin-top:10px; margin-bottom:5px; width:640px; height:640px">
+        <div class="text-center"><img src="{{ asset('logo_casa_sao_jose.jpg', 'img') }}"></div>
+        <header><h2 class="text-center">Certificado de Comparecimento</h2></header>
+        <p>
+            Certificamos que <b>{{atendimento.pessoa.nome}}</b> foi atendido pelo voluntário <b>{{atendimento.acao.voluntario.pessoa.nome }}</b> 
+            na Casa São José (Associação Cristã do Lago Norte - ACLN), Varjão, Brasília-DF, no dia {{"now"|date("d/m/Y")}} no período {{atendimento.acao.turno}}
+        </p>
+        <p class="text-center col-sm-4">____________ <br /> Presidente da ACLN</p>
+        <p class="text-center col-sm-4">____________ <br /> Voluntário(a)</p>
+    </div>        
+{% endblock %}
+
+{% block rodape %}
+{% endblock rodape %}
+
+{% block contato %}
+{% endblock contato %}

@@ -17,7 +17,7 @@
                         <select class="form-control" id="acao" name="acao" required>
                             <option value="">Selecione</option>
                             {% for acao in acoes %}
-                            <option value="{{ acao.id }}" {% if acao is defined and acao.id == acao.id %}selected{% endif %} >{{ acao.nome }}</option>
+                            <option value="{{ acao.id }}">{{ acao.nome }}</option>
                             {% endfor %}
                         </select>
                     </div>

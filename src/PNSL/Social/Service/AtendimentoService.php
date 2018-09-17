@@ -4,7 +4,8 @@ use \Doctrine\ORM\EntityManager;
 use \Doctrine\ORM\Query;
 use \Doctrine\ORM\Tools\Pagination\Paginator;
 use PNSL\Social\Entity\AcaoEntity;
-use PNSL\Social\Entity\TurmaEntity;
+use PNSL\Social\Entity\AtendimentoEntity;
+use PNSL\Social\Entity\UsuarioEntity;
 
 class AtendimentoService
 {
@@ -17,30 +18,37 @@ class AtendimentoService
     
     public function save($dados)
     {
-        $atendimento = $this->em->getReference(
-            '\PNSL\Social\Entity\AtendimentoEntity', 
-            $dados['seq_atendimento']
+        $acao = $this->em->getReference(
+            '\PNSL\Social\Entity\AcaoEntity', 
+            $dados['acao']
         );
+        $usuario = $this->em->getReference(
+            '\PNSL\Social\Entity\PessoaEntity', 
+            $dados['usuario']
+        );
+        if (empty($dados['id'])) {
+            $atendimento = new AtendimentoEntity();
+            $atendimento->setAcao($acao);
+            $atendimento->setPessoa($usuario);
+            $atendimento->setDataAtendimento($dados['data']);
+            $atendimento->setTexto($dados['atendimento']);
+            $atendimento->setUsuarioInclusao('usuarioInc');
+            $atendimento->setUsuarioAlteracao('usuarioAlt');
+            $this->em->persist($atendimento);
+        } else {
+            $atendimento = $this->em->getReference(
+                '\PNSL\Social\Entity\AtendimentoEntity',
+                $dados['id']
+            );
+            $atendimento->setAcao($acao);
+            $atendimento->setPessoa($usuario);
+            $atendimento->setDataAtendimento($dados['data']);
+            $atendimento->setTexto($dados['atendimento']);
+            $atendimento->setUsuarioAlteracao('usuarioAlt');
+        }
         if ($atendimento) {
-            if (empty($atendimento->getId)) {
-                $atendimento = new AtendimentoEntity();
-                $atendimento->setAcao(new AcaoEntity());
-                $atendimento->setatendido(new PessoaEntity());
-                $atendimento->setDataAtendimento($dados['dataAtendimento']);
-                $atendimento->setTexto(utf8_encode($dados['texto']));
-                $atendimento->setUsuarioInclusao(utf8_encode($dados['usuario']));
-                $atendimento->setUsuarioAlteracao(utf8_encode($dados['usuario']));
-                $this->em->persist($atendimento);
-            } else {
-                $atendimento = $this->em->getReference('\PNSL\Social\Entity\AtendimentoEntity', $id);
-                $atendimento->setAcao(new AcaoEntity());
-                $atendimento->setatendido(new PessoaEntity());
-                $atendimento->setDataAtendimento($dados['dataAtendimento']);
-                $atendimento->setTexto(utf8_encode($dados['texto']));
-                $atendimento->setUsuarioAlteracao(utf8_encode($dados['usuario']));
-            }
             $this->em->flush();
-            return true;
+            return $atendimento;                
         } else {
             return false;
         }
@@ -58,7 +66,11 @@ class AtendimentoService
     public function fetchAll()
     {
         $atendimentos = $this->em->createQuery(
-            'select a from \PNSL\Social\Entity\AtendimentoEntity a '
+            'select at, ps, ac, vo, pe from \PNSL\Social\Entity\AtendimentoEntity at 
+            join at.pessoa ps
+            join at.acao ac
+            join ac.voluntario vo
+            join vo.pessoa pe'
         )->getArrayResult();
         return $atendimentos;
     }
@@ -66,8 +78,11 @@ class AtendimentoService
     public function findById(int $id)
     {
         $atendimento = $this->em->createQuery(
-            'select p from \PNSL\Social\Entity\AtendimentoEntity a where a.id = :id'
-        )->setParameter('id', $id)->getArrayResult();
+            'select t, a, p from \PNSL\Social\Entity\AtendimentoEntity t
+            join t.acao a
+            join t.pessoa p
+            where t.id = :id'
+        )->setParameter('id', $id)->getOneOrNullResult();
         return $atendimento;
     }
 }

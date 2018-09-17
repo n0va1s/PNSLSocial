@@ -75,7 +75,6 @@ class AtendimentoEntity
     public function setId($id)
     {
         $this->id = $id;
-
         return $this;
     }
 
@@ -92,11 +91,14 @@ class AtendimentoEntity
      *
      * @return  self
      */ 
-    public function setAcao(Acao $acao)
+    public function setAcao($acao)
     {
-        $this->acao = $acao;
-
-        return $this;
+        if (empty($acao)) {
+            throw new \InvalidArgumentException('A ação é obrigatória', 99);
+        } else {
+            $this->acao = $acao;
+            return $this;
+        }
     }
 
     /**
@@ -114,9 +116,12 @@ class AtendimentoEntity
      */ 
     public function setPessoa($pessoa)
     {
-        $this->pessoa = $pessoa;
-
-        return $this;
+        if (empty($pessoa)) {
+            throw new \InvalidArgumentException('O usuário é obrigatório', 99);
+        } else {
+            $this->pessoa = $pessoa;
+            return $this;
+        }
     }
 
     /**
@@ -134,8 +139,18 @@ class AtendimentoEntity
      */ 
     public function setDataAtendimento($dataAtendimento)
     {
-        $this->dataAtendimento = $dataAtendimento;
-
+        if (empty($dataAtendimento)) {
+            throw new \InvalidArgumentException('A data do atendimento é obrigatória', 99);
+        } else {
+            if (substr_count($dataAtendimento, "/") == 2) {
+                list($dia, $mes, $ano) = explode("/", $dataAtendimento);
+                $this->dataAtendimento = new \DateTime(
+                    date_format(date_create($ano."-".$mes."-".$dia), "Y-m-d")
+                );
+            } else {
+                throw new \InvalidArgumentException('A data é inválida', 99);
+            }
+        }
         return $this;
     }
 
@@ -154,9 +169,12 @@ class AtendimentoEntity
      */ 
     public function setTexto($texto)
     {
-        $this->texto = $texto;
-
-        return $this;
+        if (empty($texto)) {
+            throw new \InvalidArgumentException('O texto do atendimento é obrigatório', 99);
+        } else {
+            $this->texto = $texto;
+            return $this;
+        }
     }
 
     /**
@@ -175,7 +193,6 @@ class AtendimentoEntity
     public function setUsuarioInclusao($usuarioInclusao)
     {
         $this->usuarioInclusao = $usuarioInclusao;
-
         return $this;
     }
 
@@ -203,7 +220,6 @@ class AtendimentoEntity
     public function setUsuarioAlteracao($usuarioAlteracao)
     {
         $this->usuarioAlteracao = $usuarioAlteracao;
-
         return $this;
     }
 

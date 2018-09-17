@@ -152,6 +152,22 @@ class AcaoService
         return $acoes;
     }
 
+    public function findByTipo($tipo)
+    {
+        $acoes = $this->em->createQuery(
+            'select a, v, p, ta, tu, pa, fa, di from \PNSL\Social\Entity\AcaoEntity a 
+            join a.voluntario v 
+            join v.pessoa p
+            join a.tipo ta
+            join a.turno tu
+            join a.publicoAlvo pa
+            join a.faixaEtaria fa
+            join a.diaSemana di
+            where ta.descricao = :tipo'
+        )->setParameter('tipo', $tipo)->getArrayResult();
+        return $acoes;
+    }
+
     public function addTurma($acao, $usuario)
     {
         $acao = $this->em->getReference(
@@ -176,7 +192,7 @@ class AcaoService
             return false;
         }
     }
-
+    
     public function findTurmaByAcao(int $id)
     {
         $turma = $this->em->createQuery(
@@ -203,5 +219,58 @@ class AcaoService
         } else {
             return false;
         }
+    }
+
+    public function consolidarTipo()
+    {
+        $acoes = $this->em->createQuery(
+            'select ta.descricao, count(a.id) as qtd from \PNSL\Social\Entity\AcaoEntity a 
+            join a.tipo ta
+            group by ta.id'
+        )->getArrayResult();
+        return $acoes;
+    }
+
+    public function consolidarTurno()
+    {
+        $acoes = $this->em->createQuery(
+            'select tu.descricao, count(a.id) as qtd from \PNSL\Social\Entity\AcaoEntity a 
+            join a.turno tu
+            group by tu.id'
+        )->getArrayResult();
+        return $acoes;
+    }
+
+    public function consolidarPublicoAlvo()
+    {
+        $acoes = $this->em->createQuery(
+            'select pa.descricao, count(a.id) as qtd from \PNSL\Social\Entity\AcaoEntity a 
+            join a.publicoAlvo pa
+            join a.faixaEtaria fa
+            join a.diaSemana di
+            group by pa.id'
+        )->getArrayResult();
+        return $acoes;
+    }
+
+    public function consolidarFaixaEtaria()
+    {
+        $acoes = $this->em->createQuery(
+            'select fa.descricao, count(a.id) as qtd from \PNSL\Social\Entity\AcaoEntity a 
+            join a.faixaEtaria fa
+            join a.diaSemana di
+            group by fa.id'
+        )->getArrayResult();
+        return $acoes;
+    }
+
+    public function consolidarFaixaEtaria()
+    {
+        $acoes = $this->em->createQuery(
+            'select di.descricao, count(a.id) as qtd from \PNSL\Social\Entity\AcaoEntity a 
+            join a.diaSemana di
+            group by di.id'
+        )->getArrayResult();
+        return $acoes;
     }
 }

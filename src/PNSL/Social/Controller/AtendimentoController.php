@@ -37,9 +37,18 @@ class AtendimentoController implements ControllerProviderInterface
 
         $ctrl->get(
             '/', function () use ($app) {
+                $acoes = $app['acao_service']->findByTipo('Individual');
+                $usuarios = $app['pessoa_service']->findUsuarios();
+                $atendimentos = $app['atendimento_service']->fetchAll();
+// echo "<pre>";
+// print_r($atendimentos[0]);
+// echo "</pre>";
+// exit;
                 return $app['twig']->render(
                     'cadastroAtendimento.twig',
-                    array(), 
+                    array('acoes'=>$acoes,
+                    'usuarios'=>$usuarios,
+                    'atendimentos'=>$atendimentos), 
                     new Response('Ok', 200)
                 );
             }
@@ -48,54 +57,93 @@ class AtendimentoController implements ControllerProviderInterface
         $ctrl->post(
             '/salvar', function (Request $req) use ($app) {
                 $dados = $req->request->all();
-                $atendimento_id = $app['atendimento_service']->save($dados);
-                if ($atendimento_id > 0) {
-                    return new Response(
-                        $app->json(['resultado'=>"Atendimento cadastrado com sucesso!"], 201)
+                $atendimento = $app['atendimento_service']->save($dados);
+                if ($atendimento) {
+                    return $app->redirect(
+                        $app['url_generator']
+                        ->generate('atendimentoCadastrar')
                     );
                 } else {
                     return $app->abort(
-                        404, "Ops... não foi possível cadastrar a atendimento"
+                        500, "Ops... não foi possível cadastrar a atendimento"
                     ); 
                 }
             }
         )->bind('atendimentoSalvar');
 
         $ctrl->get(
-            '/listar', function ($dominio) use ($app) {
-                $registros = $app['atendimento_service']->fetchAll();
-                if ($registros) {
-                    return new Response(
-                        $app->json(
-                            $registros, 201, ['Content-Type' => 'application/json']
-                        )
-                    );
+            '/editar/{id}', function ($id) use ($app) {
+                if ($id) {
+                    $atendimento = $app['atendimento_service']->findById($id);
+                    if ($atendimento) {
+                        $acoes = $app['acao_service']->findByTipo('Individual');
+                        $usuarios = $app['pessoa_service']->findUsuarios();
+                        $atendimentos = $app['atendimento_service']->fetchAll();
+                        return $app['twig']->render(
+                            'cadastroAtendimento.twig',
+                            array('acoes'=>$acoes,
+                            'usuarios'=>$usuarios,
+                            'atendimentos'=>$atendimentos,
+                            'atendimento'=>$atendimento), 
+                            new Response('Ok', 200)
+                        );
+                    } else {
+                        return $app->redirect(
+                            $app['url_generator']
+                            ->generate('atendimentoCadastrar')
+                        );
+                    }
+                    
                 } else {
                     return $app->abort(
-                        404, 
-                        "Ops... nenhum atendimento cadastrado"
-                    );
-                }             
+                        500, 
+                        "O atendimento que vc escolheu não existe. Tente novamente."
+                    ); 
+                }
             }
-        )->bind('atendimentoListar');
+        )->bind('atendimentoEditar')->assert('id', '\d+');
 
-        $ctrl->delete(
+        $ctrl->get(
             '/excluir/{id}', function ($id) use ($app) {
                 if ($id) {
                     $excluiu = $app['atendimento_service']->delete($id);
-                    return new Response(
-                        $app->json(
-                            $excluiu, 201, ['Content-Type' => 'application/json']
-                        )
+                    return $app->redirect(
+                        $app['url_generator']
+                        ->generate('atendimentoCadastrar')
                     );
                 } else {
                     return $app->abort(
-                        404, 
+                        500, 
                         "A atendimento que vc escolheu não existe. Tente novamente."
                     ); 
                 }
             }
         )->bind('atendimentoExcluir')->assert('id', '\d+');
+
+        $ctrl->get(
+            '/certificar/{id}', function ($id) use ($app) {
+                if ($id) {
+                    $atendimento = $app['atendimento_service']->findById($id);
+                    if ($atendimento) {
+                        return $app['twig']->render(
+                            'certificadoComparecimento.twig',
+                            array('atendimento'=>$atendimento), 
+                            new Response('OK', 200)
+                        );
+                    } else {
+                        return $app->redirect(
+                            $app['url_generator']
+                            ->generate('atendimentoCadastrar')
+                        );
+                    }
+                } else {
+                    return $app->abort(
+                        500, 
+                        "Não consegui gerar o certificado"
+                    ); 
+                }
+            }
+        )->bind('atendimentoCertificar')->assert('id', '\d+');
         
         return $ctrl;
     }

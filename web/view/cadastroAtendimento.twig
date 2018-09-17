@@ -13,27 +13,31 @@
             <form name="frmCadastro" action="{{ path('atendimentoSalvar')}}" method="POST">
                 <fieldset>
                 <legend><i class="glyphicon glyphicon-menu-right"></i><b>Ação social</b></legend>
-                    <div class="form-group">
-                        <select class="form-control" id="acao_social" required>
+                    <select class="form-control" name="acao" required>
                             <option value="">Selecione</option>
+                            {% for acao in acoes %}
+                            <option value="{{ acao.id }}" {% if atendimento is defined and atendimento.acao.id == acao.id %}selected{% endif %}>{{ acao.nome }}</option>
+                            {% endfor %}
                         </select>
-                    </div>
                 </fieldset>
                 <fieldset>
                 <legend><i class="glyphicon glyphicon-menu-right"></i><b>Dados do atendimento</b></legend>
                     <div class="form-group col-sm-9">
                         <label for="usuario">Usuário</label>
-                        <select class="form-control" id="usuario" required>
+                        <select class="form-control" name="usuario" required>
                             <option value="">Selecione</option>
+                            {% for usuario in usuarios %}
+                            <option value="{{ usuario.id }}" {% if atendimento is defined and atendimento.pessoa.id == usuario.id %}selected{% endif %}>{{ usuario.nome }}</option>
+                            {% endfor %}
                         </select>
                     </div>
                     <div class="form-group col-sm-3">
                         <label for="data">Data</label>
-                        <input type="date" id="data" class="form-control" placeholder="dd/mm/aaaa" required>
+                        <input type="date" name="data" class="form-control" placeholder="dd/mm/aaaa" value="{% if atendimento is defined %}{{ atendimento.dataAtendimento | date('d/m/Y') }}{% endif %}" required>
                     </div>
                     <div class="form-group">
                         <label for="atendimento">Atendimento</label>
-                        <textarea id="atendimento" class="form-control" rows=10 placeholder="Descreva o atendimento" required></textarea>
+                        <textarea name="atendimento" class="form-control" rows=10 placeholder="Descreva o atendimento" required>{% if atendimento is defined %}{{ atendimento.texto }}{% endif %}</textarea>
                     </div>
                 </fieldset>
                 <div class="form-group col-sm-12 text-center">
@@ -44,7 +48,45 @@
                         <i class="glyphicon glyphicon-remove"> Limpar</i>
                     </button>
                 </div>
+                <input type="hidden" id="id" name="id" value="{% if atendimento is defined %}{{ atendimento.id }}{% endif %}">
             </form>
         </div>
+        {% if resultado is defined %}
+        <div class="col-sm-12 text-center alert alert-success">
+            {{ resultado }}
+        </div>
+        {% endif %}
+        {% if atendimentos is defined %}
+        <div class="row col-sm-8 col-sm-offset-2">
+            <table class="table table-responsive table-hover">
+            <caption>Atendimentos cadastrados</caption>
+                <thead class="thead-light">
+                    <tr>
+                        <th class="col-sm-4">Voluntário</th>
+                        <th class="col-sm-2">Usuário</th>
+                        <th class="col-sm-4">Data</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if atendimentos  | length > 0 %}
+                    {% for atendimento in atendimentos %}
+                     <tr>
+                        <td>{{ atendimento.pessoa.nome }}</td>
+                        <td>{{ atendimento.acao.voluntario.pessoa.nome }}</td>
+                        <td>{{ atendimento.dataAtendimento | date('d/m/Y') }}</td>
+                        <td><center><a data-toggle="tooltip" data-placement="top" title="Alteração" href="{{ path('atendimentoEditar',{'id':atendimento.id}) }}"><span class="glyphicon glyphicon-pencil"></span></a></center></td>
+                        <td><center><a data-toggle="tooltip" data-placement="top" title="Exclusão" href="{{ path('atendimentoExcluir',{'id':atendimento.id}) }}"><span class="glyphicon glyphicon-trash"></span></a></center></td>
+                        <td><center><a data-toggle="tooltip" data-placement="top" title="Atestado de Comparecimento" href="{{ path('atendimentoCertificar',{'id':atendimento.id}) }}"><span class="glyphicon glyphicon-map-marker"></span></a></center></td>
+                    </tr>
+                    {% endfor %}
+                    {% else %}
+                    <tr>
+                        <td colspan="5">Nenhum atendimento cadastrado</td>
+                    </tr>
+                    {% endif %}                    
+                </tbody>
+            </table>
+        </div> 
+        {% endif %}
     </div>
 {% endblock %}

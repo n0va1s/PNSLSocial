@@ -168,8 +168,7 @@ class AcaoController implements ControllerProviderInterface
                     if ($acao) {
                         return $app['twig']->render(
                             'certificadoVoluntario.twig',
-                            array('acao'=>$acao,
-                            'usuario'=>$usuario), 
+                            array('acao'=>$acao), 
                             new Response('OK', 200)
                         );
                     } else {

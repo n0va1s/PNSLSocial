@@ -232,4 +232,68 @@ class PessoaService
         )->setParameter('tipo', 'VOL')->getArrayResult();
         return $pessoas;
     }
+
+    public function consolidarIdade()
+    {
+        $pessoas = $this->em->createQuery(
+            'select YEAR(p.dataNascimento), count(p.id) as qtd
+             from \PNSL\Social\Entity\PessoaEntity p 
+             group YEAR(p.dataNascimento)'
+        )->getArrayResult();
+        return $pessoas;
+    }
+
+    public function consolidarEstadoCivil()
+    {
+        $pessoas = $this->em->createQuery(
+            'select ec.descricao, count(p.id) as qtd
+             from \PNSL\Social\Entity\PessoaEntity p 
+              inner join p.estadoCivil ec
+              inner join p.tipoTelefone tt
+              left join p.parentesco pa
+             group by ec.id'
+        )->getArrayResult();
+        return $pessoas;
+    }
+
+    public function consolidarParentesco()
+    {
+        $pessoas = $this->em->createQuery(
+            'select pa.descricao, count(p.id) as qtd
+             from \PNSL\Social\Entity\PessoaEntity p 
+              left join p.parentesco pa
+             group by pa.id'
+        )->getArrayResult();
+        return $pessoas;
+    }
+
+    public function consolidarSexo()
+    {
+        $pessoas = $this->em->createQuery(
+            'select p.sexo, count(p.id) as qtd
+             from \PNSL\Social\Entity\PessoaEntity p 
+             group by p.sexo'
+        )->getArrayResult();
+        return $pessoas;
+    }
+
+    public function consolidarTipoPessoa()
+    {
+        $pessoas = $this->em->createQuery(
+            'select p.tipoPessoa, count(p.id) as qtd
+             from \PNSL\Social\Entity\PessoaEntity p 
+             group by p.tipoPessoa'
+        )->getArrayResult();
+        return $pessoas;
+    }
+
+    public function consolidarUF()
+    {
+        $pessoas = $this->em->createQuery(
+            'select p.uf, count(p.id) as qtd
+             from \PNSL\Social\Entity\PessoaEntity p 
+             group by p.uf'
+        )->getArrayResult();
+        return $pessoas;
+    }
 }
