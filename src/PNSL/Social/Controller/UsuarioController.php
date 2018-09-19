@@ -43,6 +43,8 @@ class UsuarioController implements ControllerProviderInterface
 
         $ctrl->get(
             '/', function () use ($app) {
+                $tipos_pessoa = $app['tipo_service']->findByGrupo('PES');
+                $sexos = $app['tipo_service']->findByGrupo('SEX');
                 $estados_civis = $app['tipo_service']->findByGrupo('CIV');
                 $tipos_telefone = $app['tipo_service']->findByGrupo('FON');
                 $parentescos = $app['tipo_service']->findByGrupo('PRT');
@@ -52,7 +54,9 @@ class UsuarioController implements ControllerProviderInterface
                 $usuarios = $app['pessoa_service']->fetchAll();
                 return $app['twig']->render(
                     'cadastroUsuario.twig',
-                    array('estados_civis'=>$estados_civis, 
+                    array('tipos_pessoa'=>$tipos_pessoa,
+                    'sexos'=>$sexos,
+                    'estados_civis'=>$estados_civis, 
                     'tipos_telefone'=>$tipos_telefone,
                     'parentescos'=>$parentescos,
                     'turnos'=>$turnos,
@@ -88,6 +92,8 @@ class UsuarioController implements ControllerProviderInterface
                 if ($id) {
                     $usuario = $app['pessoa_service']->findById($id);
                     if ($usuario) {                        
+                        $tipos_pessoa = $app['tipo_service']->findByGrupo('PES');
+                        $sexos = $app['tipo_service']->findByGrupo('SEX');
                         $estados_civis = $app['tipo_service']->findByGrupo('CIV');
                         $tipos_telefone = $app['tipo_service']->findByGrupo('FON');
                         $parentescos = $app['tipo_service']->findByGrupo('PRT');
@@ -97,7 +103,9 @@ class UsuarioController implements ControllerProviderInterface
                         $usuarios = $app['pessoa_service']->fetchAll();
                         return $app['twig']->render(
                             'cadastroUsuario.twig',
-                            array('estados_civis'=>$estados_civis, 
+                            array('tipos_pessoa'=>$tipos_pessoa,
+                            'sexos'=>$sexos,
+                            'estados_civis'=>$estados_civis, 
                             'tipos_telefone'=>$tipos_telefone,
                             'parentescos'=>$parentescos,
                             'turnos'=>$turnos,

@@ -264,7 +264,7 @@ class AcaoService
         return $acoes;
     }
 
-    public function consolidarFaixaEtaria()
+    public function consolidarDiaSemana()
     {
         $acoes = $this->em->createQuery(
             'select di.descricao, count(a.id) as qtd from \PNSL\Social\Entity\AcaoEntity a 
@@ -272,5 +272,33 @@ class AcaoService
             group by di.id'
         )->getArrayResult();
         return $acoes;
+    }
+
+    public function consolidarAcao()
+    {
+        $qtd = $this->em->createQuery(
+            'select count(a.id) as qtd from \PNSL\Social\Entity\AcaoEntity a'
+        )->getOneOrNullResult();
+        return $qtd;
+    }
+
+    public function consolidarTurma()
+    {
+        $qtd = $this->em->createQuery(
+            'select count(a.id) as qtd from \PNSL\Social\Entity\AcaoEntity a
+            join a.tipo t
+            where t.descricao = :tipo'
+        )->setParameter('tipo', 'Grupo')->getOneOrNullResult();
+        return $qtd;
+    }
+
+    public function consolidarAtendimento()
+    {
+        $qtd = $this->em->createQuery(
+            'select count(a.id) as qtd from \PNSL\Social\Entity\AcaoEntity a
+            join a.tipo t
+            where t.descricao = :tipo'
+        )->setParameter('tipo', 'Individual')->getOneOrNullResult();
+        return $qtd;
     }
 }

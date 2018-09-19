@@ -41,13 +41,15 @@ class VoluntarioController implements ControllerProviderInterface
 
         $ctrl->get(
             '/', function () use ($app) {
+                $tipos_pessoa = $app['tipo_service']->findByGrupo('PES');
                 $estados_civis = $app['tipo_service']->findByGrupo('CIV');
                 $tipos_telefone = $app['tipo_service']->findByGrupo('FON');
                 $ufs = $app['tipo_service']->findByGrupo('UF');
                 $voluntarios = $app['voluntario_service']->fetchAll();
                 return $app['twig']->render(
                     'cadastroVoluntario.twig',
-                    array('estados_civis'=>$estados_civis, 
+                    array('tipos_pessoa'=>$tipos_pessoa,
+                    'estados_civis'=>$estados_civis, 
                     'tipos_telefone'=>$tipos_telefone,
                     'ufs'=>$ufs,
                     'voluntarios'=>$voluntarios), 
@@ -80,13 +82,15 @@ class VoluntarioController implements ControllerProviderInterface
                 if ($id) {
                     $voluntario = $app['voluntario_service']->findById($id);
                     if ($voluntario) {                        
+                        $tipos_pessoa = $app['tipo_service']->findByGrupo('PES');
                         $estados_civis = $app['tipo_service']->findByGrupo('CIV');
                         $tipos_telefone = $app['tipo_service']->findByGrupo('FON');
                         $ufs = $app['tipo_service']->findByGrupo('UF');
                     
                         return $app['twig']->render(
                             'cadastroVoluntario.twig',
-                            array('estados_civis'=>$estados_civis, 
+                            array('tipos_pessoa'=>$tipos_pessoa,
+                            'estados_civis'=>$estados_civis, 
                             'tipos_telefone'=>$tipos_telefone,
                             'ufs'=>$ufs,
                             'voluntario'=>$voluntario), 

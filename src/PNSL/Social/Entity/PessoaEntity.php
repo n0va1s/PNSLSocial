@@ -19,7 +19,8 @@ class PessoaEntity
     /** @ORM\Column(type="string", length=255, name="nom_pessoa", nullable=false) */
     private $nome;
 
-    /** @ORM\Column(type="string", name="tip_sexo", columnDefinition="CHAR(1) NOT NULL") */
+     /** @ORM\ManyToOne(targetEntity="TipoEntity")
+     *  @ORM\JoinColumn(name="seq_tipo_sexo", referencedColumnName="seq_tipo", nullable=false) */
     private $sexo;
 
     /** @ORM\ManyToOne(targetEntity="TipoEntity")
@@ -38,7 +39,8 @@ class PessoaEntity
     /** @ORM\Column(type="string", length=255, name="des_nacionalidade", nullable=false) */
     private $nacionalidade;
 
-    /** @ORM\Column(type="string", name="tip_pessoa", columnDefinition="CHAR(3) NOT NULL") */
+    /** @ORM\ManyToOne(targetEntity="TipoEntity")
+     *  @ORM\JoinColumn(name="seq_tipo_pessoa", referencedColumnName="seq_tipo", nullable=false) */
     private $tipoPessoa;
 
     /** @ORM\Column(type="string", length=255, name="end_des_logradouro", nullable=false, nullable=false) */
@@ -47,7 +49,8 @@ class PessoaEntity
     /** @ORM\Column(type="string", length=50, name="end_nom_cidade", nullable=false, nullable=false) */
     private $cidade;
 
-    /** @ORM\Column(type="string", name="end_sig_UF", columnDefinition="CHAR(2) NOT NULL") */
+    /** @ORM\ManyToOne(targetEntity="TipoEntity")
+     *  @ORM\JoinColumn(name="seq_tipo_uf", referencedColumnName="seq_tipo", nullable=false) */
     private $uf;
     
     /** @ORM\Column(type="string", length=10, name="end_num_CEP", nullable=false) */

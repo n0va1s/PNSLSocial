@@ -151,7 +151,6 @@ $app->error(function (\Exception $e, Request $request, $code) use ($app) {
 $app->get('/', function () use ($app) {
     return $app['twig']->render('inicio.twig');
 })->bind('index');
-
 $app->mount('/relatorio', new PNSL\Social\Controller\RelatorioController($em));
 $app->mount('/atendimento', new PNSL\Social\Controller\AtendimentoController($em));
 $app->mount('/frequencia', new PNSL\Social\Controller\FrequenciaController($em));

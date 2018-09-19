@@ -12,57 +12,102 @@
                     <h2 class="text-center"></span>&nbsp;Prestação de contas anual</h2>
                 </header>
                 <p>
-                    A <b>Casa São José</b> inscrita sob o CNPJ: <b>999.999.0001/99</b>, presidida por 
-                    <b>Pe. Norbey Londono Buitrago</b> declara para os devidos fins que
-                    as informações abaixo são verdadeiras e dizem respeito ao ano de <b>2017</b>.
+                    A <b>Associação Cristã do Lago Norte - ACLN</b>inscrita sob o CNPJ: <b>999.999.0001/99</b>, representada pela Casa São José, 
+                    presidida pelo <b>Pe. Norbey Londono Buitrago</b> declara para os devidos fins que
+                    as informações abaixo são verdadeiras e dizem respeito ao ano de <b>{{"now"|date("Y")}}</b>.
                 </p>
-                <table class="table table-responsive table-hover">
-                    <caption>Impacto social</caption>
-                        <thead class="thead-light">
-                            <tr>
-                                <th class="col-sm-5">Item</th>
-                                <th class="col-sm-5">Valor</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Administrativo</td>
-                                <td>6</td>
-                            </tr>
-                            <tr>
-                                <td>Voluntários</td>
-                                <td>10</td>
-                            </tr>
-                            <tr>
-                                <td>Ações sociais</td>
-                                <td>15</td>
-                            </tr>
-                            <tr>
-                                <td>Usuários</td>
-                                <td>129</td>
-                            </tr>
-                            <tr>
-                                <td>Homens</td>
-                                <td>22</td>
-                            </tr>
-                            <tr>
-                                <td>Mulheres</td>
-                                <td>49</td>
-                            </tr>
-                            <tr>
-                                <td>Adolescentes</td>
-                                <td>30</td>
-                            </tr>
-                            <tr>
-                                <td>Crianças</td>
-                                <td>20</td>
-                            </tr>
-                            <tr>
-                                <td>Bebês</td>
-                                <td>8</td>
-                            </tr>
-                        </tbody>
-                </table>              
+                <div class="col-sm-6">
+                    <table class="table table-responsive table-hover">
+                        <caption>Ações</caption>
+                            <thead class="thead-light">
+                                <tr>
+                                    <th class="col-sm-5">Item</th>
+                                    <th class="col-sm-5">Valor</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for tipo in resultado.tipo %}
+                                <tr>
+                                    <td>{{tipo.descricao}}</td>
+                                    <td>{{tipo.qtd}}</td>
+                                </tr>
+                                {% endfor %}
+                                {% for turno in resultado.turno %}
+                                <tr>
+                                    <td>{{turno.descricao}}</td>
+                                    <td>{{turno.qtd}}</td>
+                                </tr>
+                                {% endfor %}
+                                {% for publicoAlvo in resultado.publico_alvo %}
+                                <tr>
+                                    <td>{{publicoAlvo.descricao}}</td>
+                                    <td>{{publicoAlvo.qtd}}</td>
+                                </tr>
+                                {% endfor %}
+                                {% for faixaEtaria in resultado.faixa_etaria %}
+                                <tr>
+                                    <td>{{faixaEtaria.descricao}}</td>
+                                    <td>{{faixaEtaria.qtd}}</td>
+                                </tr>
+                                {% endfor %}
+                                {% for diaSemana in resultado.dia_semana %}
+                                <tr>
+                                    <td>{{diaSemana.descricao}}</td>
+                                    <td>{{diaSemana.qtd}}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                    </table>              
+                </div>
+                <div class="col-sm-6">
+                    <table class="table table-responsive table-hover">
+                        <caption>Pessoas</caption>
+                            <thead class="thead-light">
+                                <tr>
+                                    <th class="col-sm-5">Item</th>
+                                    <th class="col-sm-5">Valor</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for idade in resultado.idade %}
+                                <tr>
+                                    <td>{{"now"|date("Y") - idade.dataNascimento | date('Y')}}</td>
+                                    <td>{{idade.qtd}}</td>
+                                </tr>
+                                {% endfor %}
+                                {% for estadoCivil in resultado.estado_civil %}
+                                <tr>
+                                    <td>{{estadoCivil.descricao}}</td>
+                                    <td>{{estadoCivil.qtd}}</td>
+                                </tr>
+                                {% endfor %}
+                                {% for parentesco in resultado.parentesco %}
+                                <tr>
+                                    <td>{{parentesco.descricao}}</td>
+                                    <td>{{parentesco.qtd}}</td>
+                                </tr>
+                                {% endfor %}
+                                {% for sexo in resultado.sexo %}
+                                <tr>
+                                    <td>{{sexo.sexo}}</td>
+                                    <td>{{sexo.qtd}}</td>
+                                </tr>
+                                {% endfor %}
+                                {% for tipoPessoa in resultado.tipo_pessoa %}
+                                <tr>
+                                    <td>{{tipoPessoa.tipoPessoa}}</td>
+                                    <td>{{tipoPessoa.qtd}}</td>
+                                </tr>
+                                {% endfor %}
+                                {% for uf in resultado.uf %}
+                                <tr>
+                                    <td>{{uf.uf}}</td>
+                                    <td>{{uf.qtd}}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                    </table>              
+                </div>
             </div>
         </div>        
     </div>
@@ -70,7 +115,7 @@
 
 {% block rodape %}
 <p class="text-center">
-    Emitido por <b>Fulano de Tal</b> as 21:43 do dia 10/04/2018
+    Emitido as {{"now"|date("d/m/Y h:i:s")}}
 </p>
 {% endblock rodape %}
 

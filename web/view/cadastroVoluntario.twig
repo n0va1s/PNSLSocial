@@ -13,11 +13,19 @@
             <form name="frmCadastro" action="{{ path('voluntarioSalvar')}}" method="POST">
                 <fieldset>
                 <legend><i class="glyphicon glyphicon-menu-right"></i><b>Dados pessoais</b></legend>
+                    <div class="form-group col-sm-2">
+                        <label for="tipo_pessoa">Tipo</label>
+                        <select class="form-control" name="tipo_pessoa" disabled>
+                            {% for tipo in tipos_pessoa %}
+                            <option value="{{ tipo.id }}" {% if tipo.descricao == 'Voluntário' %} selected {% endif %}>{{ tipo.descricao }}</option>
+                            {% endfor %} 
+                        </select>
+                    </div>
                     <div class="form-group col-sm-3">
                         <label for="CPF_pessoa">CPF</label>
                         <input type="text" name="CPF_pessoa" class="form-control" placeholder="999.999.999-99" required autofocus value="{% if voluntario is defined %}{{ voluntario.pessoa.CPF }}{% endif %}">
                     </div>
-                    <div class="form-group col-sm-9">
+                    <div class="form-group col-sm-7">
                         <label for="nome_pessoa">Nome</label>
                         <input type="text" name="nome_pessoa" class="form-control" placeholder="Seu nome completo" required value="{% if voluntario is defined %}{{ voluntario.pessoa.nome }}{% endif %}">
                     </div>
@@ -121,7 +129,6 @@
                         <i class="glyphicon glyphicon-remove"> Limpar</i>
                     </button>
                 </div>
-                <input type="hidden" name="tipo_pessoa" value="VOL">
                 <input type="hidden" name="id" value="{% if voluntario is defined %}{{ voluntario.pessoa.id }}{% endif %}">                
             </form>
             {% if resultado is defined %}

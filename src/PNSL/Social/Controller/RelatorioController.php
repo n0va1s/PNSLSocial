@@ -33,16 +33,20 @@ class RelatorioController implements ControllerProviderInterface
 
         $ctrl->get(
             '/anual/html', function () use ($app) {
-                $acoes_tipo = $app['acao_service']->consolidarTipo();
-                $pessoas_estado_civil = $app['pessoa_service']->consolidarEstadoCivil();
-// echo "<pre>";
-// print_r($acoes_tipo);
-// echo "</pre>";
-// exit;                
+                $resultado['tipo'] = $app['acao_service']->consolidarTipo();
+                $resultado['turno'] = $app['acao_service']->consolidarTurno();
+                $resultado['publico_alvo'] = $app['acao_service']->consolidarPublicoAlvo();
+                $resultado['faixa_etaria'] = $app['acao_service']->consolidarFaixaEtaria();
+                $resultado['dia_semana'] = $app['acao_service']->consolidarDiaSemana();
+                $resultado['idade'] = $app['pessoa_service']->consolidarIdade();
+                $resultado['estado_civil'] = $app['pessoa_service']->consolidarEstadoCivil();
+                $resultado['parentesco'] = $app['pessoa_service']->consolidarParentesco();
+                $resultado['sexo'] = $app['pessoa_service']->consolidarSexo();
+                $resultado['tipo_pessoa'] = $app['pessoa_service']->consolidarTipoPessoa();
+                $resultado['uf'] = $app['pessoa_service']->consolidarUF();
                 return $app['twig']->render(
                     'relatorioPrestacaoConta.twig',
-                    array('acoes'=>$acoes,
-                    'pessoas'=>pessoas), 
+                    array('resultado'=>$resultado), 
                     new Response('Ok', 200)
                 );
             }

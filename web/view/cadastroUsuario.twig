@@ -13,11 +13,19 @@
             <form name="frmCadastro" action="{{ path('usuarioSalvar')}}" method="POST">
                 <fieldset>
                 <legend><i class="glyphicon glyphicon-menu-right"></i><b>Dados pessoais</b></legend>
+                    <div class="form-group col-sm-2">
+                        <label for="tipo_pessoa">Tipo</label>
+                        <select class="form-control" name="tipo_pessoa" disabled>
+                            {% for tipo in tipos_pessoa %}
+                            <option value="{{ tipo.id }}" {% if tipo.descricao == 'Usuário' %} selected {% endif %}>{{ tipo.descricao }}</option>
+                            {% endfor %} 
+                        </select>
+                    </div>
                     <div class="form-group col-sm-3">
                         <label for="CPF_pessoa">CPF</label>
                         <input type="text" name="CPF_pessoa" class="form-control" placeholder="999.999.999-99" required autofocus value="{% if usuario is defined %}{{ usuario.CPF }}{% endif %}">
                     </div>
-                    <div class="form-group col-sm-9">
+                    <div class="form-group col-sm-7">
                         <label for="nome_pessoa">Nome</label>
                         <input type="text" name="nome_pessoa" class="form-control" placeholder="Seu nome completo" required value="{% if usuario is defined %}{{ usuario.nome }}{% endif %}">
                     </div>
@@ -43,15 +51,15 @@
                         <label for="nacionalidade_pessoa">Nacionalidade</label>
                         <input type="text" name="nacionalidade_pessoa" class="form-control" placeholder="Brasíleira" required value="{% if usuario is defined %}{{ usuario.nacionalidade }}{% endif %}">
                     </div>
-                    <div class="form-group form-check-inline col-sm-2">
+                    <div class="form-group col-sm-2">
                         <label for="sexo_pessoa" class="form-check-label">Sexo</label><br />
-                        <label class="form-check-label">M
-                            <input type="radio" name="sexo_pessoa" class="form-check-input" value="M" {% if usuario is defined and usuario.sexo == 'M' %} checked="true" {% endif %}>
-                        </label>
-                        <label class="form-check-label">F
-                            <input type="radio" name="sexo_pessoa" class="form-check-input" value="F" {% if usuario is defined and usuario.sexo == 'F' %} checked="true" {% endif %}>
-                        </label>
-                    </div>                    
+                        <select class="form-control" name="sexo_pessoa">
+                            <option value="">Selecione</option>
+                            {% for sexo in sexos %}
+                            <option value="{{ sexo.id }}" {% if usuario is defined and usuario.sexo.id == sexo.id %} selected {% endif %}>{{ sexo.descricao }}</option>
+                            {% endfor %} 
+                        </select>
+                    </div>
                     <div class="form-group col-sm-7">
                         <label for="profissao_pessoa">Profissão</label>
                         <input type="text" name="profissao_pessoa" class="form-control" placeholder="Costureira" value="{% if usuario is defined %}{{ usuario.profissao }}{% endif %}">
@@ -240,7 +248,6 @@
                     </button>
                 </div>
                 <input type="hidden" name="id" value="{% if usuario is defined %}{{ usuario.id }}{% endif %}">                
-                <input type="hidden" name="tipo_pessoa" value="USU">
             </form>
         </div>
         {% if mensagem is defined %}
@@ -257,7 +264,6 @@
                         <th class="col-sm-6">Nome</th>
                         <th class="col-sm-2">Telefone</th>
                         <th class="col-sm-2">Email</th>
-                        <th class="col-sm-2">Tipo</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -267,7 +273,6 @@
                         <td>{{ usuario.nome }}</td>
                         <td>{{ usuario.telefone }}</td>
                         <td>{{ usuario.email }}</td>
-                        <td>{{ usuario.tipoPessoa }}</td>
                         <td><a data-toggle="tooltip" data-placement="top" title="Alteração" href="{{ path('usuarioEditar',{'id':usuario.id}) }}"><span class="text-center glyphicon glyphicon-pencil"></span></a></td>
                         <td><a data-toggle="tooltip" data-placement="top" title="Exclusão" href="{{ path('usuarioExcluir',{'id':usuario.id}) }}"><span class="text-center glyphicon glyphicon-trash"></span></a></td>
                     </tr>

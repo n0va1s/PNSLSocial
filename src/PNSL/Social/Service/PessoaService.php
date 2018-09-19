@@ -236,9 +236,9 @@ class PessoaService
     public function consolidarIdade()
     {
         $pessoas = $this->em->createQuery(
-            'select YEAR(p.dataNascimento), count(p.id) as qtd
-             from \PNSL\Social\Entity\PessoaEntity p 
-             group YEAR(p.dataNascimento)'
+            "select p.dataNascimento, count(p.id) as qtd
+             from \PNSL\Social\Entity\PessoaEntity p
+             group by p.dataNascimento"
         )->getArrayResult();
         return $pessoas;
     }
@@ -270,9 +270,10 @@ class PessoaService
     public function consolidarSexo()
     {
         $pessoas = $this->em->createQuery(
-            'select p.sexo, count(p.id) as qtd
+            'select s.descricao, count(p.id) as qtd
              from \PNSL\Social\Entity\PessoaEntity p 
-             group by p.sexo'
+             join p.sexo s
+             group by s.descricao'
         )->getArrayResult();
         return $pessoas;
     }
@@ -280,9 +281,10 @@ class PessoaService
     public function consolidarTipoPessoa()
     {
         $pessoas = $this->em->createQuery(
-            'select p.tipoPessoa, count(p.id) as qtd
+            'select t.descricao, count(p.id) as qtd
              from \PNSL\Social\Entity\PessoaEntity p 
-             group by p.tipoPessoa'
+             join p.tipoPessoa t
+             group by t.descricao'
         )->getArrayResult();
         return $pessoas;
     }
@@ -290,10 +292,20 @@ class PessoaService
     public function consolidarUF()
     {
         $pessoas = $this->em->createQuery(
-            'select p.uf, count(p.id) as qtd
+            'select u.descricao, count(p.id) as qtd
              from \PNSL\Social\Entity\PessoaEntity p 
-             group by p.uf'
+             join p.uf u
+             group by u.descricao'
         )->getArrayResult();
         return $pessoas;
+    }
+
+    public function consolidarPessoa()
+    {
+        $qtd = $this->em->createQuery(
+            'select count(p.id) as qtd
+             from \PNSL\Social\Entity\PessoaEntity p'
+        )->getOneOrNullResult();
+        return $qtd;
     }
 }
