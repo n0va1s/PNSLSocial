@@ -175,3 +175,6 @@ INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Quinta','SEM');
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Sexta','SEM');
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Sábado','SEM');
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Domingo','SEM');
+
+#Acesso
+INSERT INTO acesso(seq_pessoa, nom_usuario,pwd_usuario, tip_perfil) VALUES (1,'jp.trabalho@gmail.com','admin321', 'ROLE_ADMIN');

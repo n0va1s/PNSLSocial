@@ -8,41 +8,53 @@ use Symfony\Component\Security\Core\User\User;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\EntityManager;
  
 class UserProvider implements UserProviderInterface
 {
     private $em;
     private $passwordEncoder;
  
-    public function __construct(\Doctrine\ORM\EntityManager $em)
+    public function __construct(EntityManager $em)
     {
         $this->em = $em;
     }
 
     public function loadUserByUsername($username)
     {
-        $query = $this->em->createQueryBuilder();
-        $query->select("u")
-              ->from('Api\User\UserEntity', 'u')
-              ->where("u.username = :username")
-              ->setParameter('username', $username);
-        $query = $query->getQuery();
-        $user = $query->getSingleResult();
+        $user = $this->em->createQuery(
+            'select a from \PNSL\Social\Entity\AcessoEntity a 
+            where a.nome = :nome'
+        )->setParameter('nome', $username)->getOneOrNullResult();
 
         if (!$user) {
-            throw new UsernameNotFoundException(sprintf('Usuário "%s" não encontrado. 
-                                                        Verifique se vc digitou corretamente.', $username));
+            throw new UsernameNotFoundException(
+                sprintf(
+                    'Usuário "%s" não encontrado. 
+                    Verifique se vc digitou corretamente.', 
+                    $username
+                )
+            );
         }
-        return new User($user->username, $user->password, explode(',', $user->roles), true, true, true, true);
+        return new User(
+            $user->username, 
+            $user->password, 
+            explode(',', $user->roles), 
+            true, true, true, true
+        );
     }
  
     public function refreshUser(UserInterface $user)
     {
         if (!$user instanceof User) {
-            throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', get_class($user)));
+            throw new UnsupportedUserException(
+                sprintf(
+                    'Instância de "%s" não é suportado.', 
+                    get_class($user)
+                )
+            );
         }
- 
-        return $this->loadUserByUsername($user->getUsername());
+         return $this->loadUserByUsername($user->getUsername());
     }
  
     public function supportsClass($class)
@@ -55,12 +67,11 @@ class UserProvider implements UserProviderInterface
         $user = new User($username, $password, array('ROLE_ADMIN'), true, true, true, true);
         $criptoPassword = $this->encodePassword($user);
 
-        $user = new \Api\User\UserEntity();
-        $user->username = $username;
-        $user->plainPassword = $password;
-        $user->password = $criptoPassword;
-        $user->roles = array('ROLE_ADMIN');
-   
+        $acesso = new \PNSL\Social\Entity\AcessoEntity();
+        $acesso->nome = $username;
+        $acesso->senha = $criptoPassword;
+        $acesso->grupo = array('ROLE_ADMIN');
+
         $this->em->persist($user);
         $this->em->flush();
     }

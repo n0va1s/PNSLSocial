@@ -1,35 +1,30 @@
 {% extends 'leiaute.twig' %}
 
-{% block topo %}
-<!-- Page Header -->
-<!-- Set your background image for this header on the line below. -->
-<header class="page-header" style="background-image: url('{{ asset('topo_reduzido.png', 'img') }}')">
-</header>
-{% endblock %}
-
 {% block conteudo %}
 <div class="container">
-    <div class="row">
-        <div class="col-lg-4 col-lg-offset-4">
-            <form class="form-signin" name="frmLogin" action="{{ path('login_check')}}">
-                <h4 class="form-signin-heading">Já é cadastrado?</h4>
+    <div class="row col-sm-8 col-sm-offset-2">
+        <form class="form-signin" name="frmLogin" action="{{ path('restrito_autorizacao')}}">
+            <h4 class="form-signin-heading col-sm-6 col-sm-offset-4">Já é cadastrado?</h4>
+            <div class="form-group col-sm-6 col-sm-offset-4">
                 <label for="email" class="sr-only">Email</label>
-                <input type="email" id="email" class="form-control" placeholder="Email" value="{{ last_username }}" required  data-validation-required-message="Informe o email cadastrado" autofocus>
+                <input type="email" name="_username" class="form-control" placeholder="Email" value="{{ last_username }}" required  data-validation-required-message="Informe o email cadastrado" autofocus>
+            </div>
+            <div class="form-group col-sm-6 col-sm-offset-4">   
                 <label for="senha" class="sr-only">Senha</label>
-                <input type="password" id="senha" class="form-control" placeholder="Senha" required data-validation-required-message="Informe a senha cadastrada">
-                <!--<div class="checkbox">
-                    <label><input type="checkbox" value="remember-me"> Remember me</label>
-                </div>-->
-                <br />
-                <center>
-                    <button class="btn btn-primary" type="submit">Acesse</button>
-                    <a href="{{ app.url_generator.generate('loginResponsavel') }}"><button class="btn btn-primary" type="submit">Me cadastrar</button></a>
-                <center>
-            </form>
-            {% if error %}
-                <div class="error">{{ error }}</div>
-            {% endif %}
-        </div>
+                <input type="password" name="_password" class="form-control" placeholder="Senha" required data-validation-required-message="Informe a senha cadastrada">
+            </div>    
+            <div class="form-group col-sm-6 col-sm-offset-4 text-center">
+                <button type="submit" class="btn btn-primary">
+                    <i class="glyphicon glyphicon-ok"> Acessar</i>
+                </button>
+                <button type="button" class="btn btn-default">
+                    <i class="glyphicon glyphicon-remove"> Limpar</i>
+                </button>
+            </div>
+        </form>
+        {% if error %}
+            <div class="error">{{ error }}</div>
+        {% endif %}
     </div>
 </div> 
 {% endblock %}

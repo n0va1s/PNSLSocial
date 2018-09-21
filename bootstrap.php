@@ -13,6 +13,7 @@ use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\ClassLoader;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\HttpFoundation\Request;
+use PNSL\Social\Provider\UserProvider;
 
 //Buscar as variaveis do arquivo de configuracao
 $env = getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : 'production';
@@ -101,61 +102,91 @@ $app->register(new Silex\Provider\SwiftmailerServiceProvider(), array(
 $app['swiftmailer.use_spool'] = false;
 
 $app->register(new Silex\Provider\SessionServiceProvider());
-/*
-$app->register(new Silex\Provider\SecurityServiceProvider(), array(
-    'security.firewalls' => array(
-        'login_path' => array(
-            'pattern' => '^/login$',
-            'anonymous' => true
+
+$app['security.firewalls'] = array(
+    'restrito' => array(
+        'pattern' => '^/restrito/',
+        'http' => true,
+        'form' => array(
+            'login_path' => '/login', 
+            'check_path' => '/restrito/autorizacao'
         ),
-        'default' => array(
-            'pattern' => '^/.*$',
-            'anonymous' => true,
-            'form' => array(
-                'login_path' => '/login',
-                'check_path' => '/login_check',
-            ),
-            'logout' => array(
-                'logout_path' => '/logout',
-                'invalidate_session' => false
-            ),
-            'users' => function ($app) use ($em) {
-                return new \n0va1s\QuadroMagico\Provider\UserProvider($em);
-            },
-        )
+        'logout' => array(
+            'logout_path' => '/restrito/logout', 
+            'invalidate_session' => true
+        ),
+        'users' => function () use ($em) {
+            //return new UserProvider($em);
+        },
     ),
-    'security.access_rules' => array(
-        array('^/login$', 'IS_AUTHENTICATED_ANONYMOUSLY'),
-        array('^/.+$', 'ROLE_ADMIN')
-    )
-));
-*/
-//Para tratar os erros comuns da aplicacao
-/*
-$app->error(function (\Exception $e, Request $request, $code) use ($app) {
-    if ($app['debug']) {
-        return;
-    }
-    switch ($code) {
-        case 404:
-            $message = 'Ops... essa página não existe';
-            break;
-        default:
-            $message = 'Hum... estamos passando por problemas técnicos. Tente mais tarde.';
-    }
-    return new Response($message);
-});
-*/
+    'publico' => array(
+        'anonymous' => true,
+    ),
+);
+
+$app['security.role_hierarchy'] = array(
+    'ROLE_ADMIN' => array('ROLE_USER', 'ROLE_ALLOWED_TO_SWITCH'),
+);
+
+$app['security.access_rules'] = array(
+    array('^/restrito', 'ROLE_ADMIN', 'https'),
+    array('^.*$', 'ROLE_USER'),
+);
+
+$app['security.default_encoder'] = function ($app) {
+    return $app['security.encoder.pbkdf2'];
+};
+
+$app->register(new Silex\Provider\SecurityServiceProvider());
+$app->boot();
+
+// Para tratar os erros comuns da aplicacao
+// $app->error(function (\Exception $e, Request $request, $code) use ($app) {
+//     if ($app['debug']) {
+//         return;
+//     }
+//     switch ($code) {
+//         case 404:
+//             $message = 'Ops... essa página não existe';
+//             break;
+//         default:
+//             $message = 'Hum... estamos passando por problemas técnicos. Tente mais tarde.';
+//     }
+//     return new Response($message);
+// });
 
 //Menu
-$app->get('/', function () use ($app) {
-    return $app['twig']->render('inicio.twig');
-})->bind('index');
-$app->mount('/relatorio', new PNSL\Social\Controller\RelatorioController($em));
-$app->mount('/atendimento', new PNSL\Social\Controller\AtendimentoController($em));
-$app->mount('/frequencia', new PNSL\Social\Controller\FrequenciaController($em));
-$app->mount('/acao', new PNSL\Social\Controller\AcaoController($em));
-$app->mount('/voluntario', new PNSL\Social\Controller\VoluntarioController($em));
-$app->mount('/usuario', new PNSL\Social\Controller\UsuarioController($em));
-$app->mount('/configuracao', new PNSL\Social\Controller\TipoController($em));
+$app->get(
+    '/', function () use ($app) {
+        return $app['twig']->render('inicio.twig');
+    }
+)->bind('index');
+
+$app->get(
+    '/login', function(Request $request) use ($app) {
+        return $app['twig']->render(
+            'login.twig', array(
+                'error'         => $app['security.last_error']($request),
+                'last_username' => $app['session']->get('_security.last_username'),
+            )
+        );
+    }
+)->bind('login');
+
+$app->get(
+    '/restrito/autorizacao', function(Request $request) use ($app) {
+        return $app['twig']->render(
+            'areaRestrita.twig', array()
+        );
+    }
+)->bind('autorizacao');
+//Area restrita
+$app->mount('/restrito/relatorio', new PNSL\Social\Controller\RelatorioController($em));
+$app->mount('/restrito/atendimento', new PNSL\Social\Controller\AtendimentoController($em));
+$app->mount('/restrito/frequencia', new PNSL\Social\Controller\FrequenciaController($em));
+$app->mount('/restrito/acao', new PNSL\Social\Controller\AcaoController($em));
+$app->mount('/restrito/voluntario', new PNSL\Social\Controller\VoluntarioController($em));
+$app->mount('/restrito/usuario', new PNSL\Social\Controller\UsuarioController($em));
+$app->mount('/restrito/configuracao', new PNSL\Social\Controller\TipoController($em));
+//Area publica
 $app->mount('/site', new PNSL\Social\Controller\SiteController($em));
