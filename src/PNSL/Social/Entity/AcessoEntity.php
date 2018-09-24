@@ -12,13 +12,13 @@ class AcessoEntity
      *  @ORM\JoinColumn(name="seq_pessoa", referencedColumnName="seq_pessoa", nullable=false, onDelete="CASCADE") */
     private $pessoa;
 
-    /** @ORM\Column(type="string", name="nom_usuario", length=50, unique=true) */
+    /** @ORM\Column(type="string", name="nom_usuario", length=100, unique=true) */
     private $nome;
 
     /** @ORM\Column(type="string", name="pwd_usuario", length=100) */
     private $senha;
 
-    /** @ORM\Column(type="string", name="tip_perfil", length=3) */
+    /** @ORM\Column(type="string", name="tip_perfil", length=255) */
     private $perfil;
 
     /** @ORM\Column(type="string", length=50, name="usu_inc", nullable=false) */

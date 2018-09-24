@@ -71,73 +71,87 @@ if ('cli' !== php_sapi_name()) {
 $app = new \Silex\Application();
 $app['debug'] = $file_config['log.enabled'];
 
-$app->register(new Silex\Provider\TwigServiceProvider(), array(
-    'twig.path' => __DIR__.'/web/view',
-    'twig.options' => array('cache' => __DIR__.'/web/cache'),
-));
-
-$app->register(new Silex\Provider\AssetServiceProvider(), array(
-    'assets.version' => 'v1',
-    'assets.version_format' => '%s?version=%s',
-    'assets.named_packages' => array(
-        'css' => array('version' => 'css2', 'base_path' => $file_config['path.css']),
-        'img' => array('base_path' => $file_config['path.img']),
-        'js' => array('base_path' => $file_config['path.js']),
-        'file' => array('base_path' => $file_config['path.file']),
-    ),
-));
-
-$app->register(new Silex\Provider\SwiftmailerServiceProvider(), array(
-    'swiftmailer.options' => array(
-        'host'       => $file_config['mail.host'],
-        'port'       => $file_config['mail.port'],
-        'username'   => $file_config['mail.username'],
-        'password'   => $file_config['mail.password'],
-        'encryption' => $file_config['mail.encryption'],
-        'auth_mode'  => $file_config['mail.auth_mode'],
+$app->register(
+    new Silex\Provider\TwigServiceProvider(), 
+    array(
+        'twig.path' => __DIR__.'/web/view',
+        'twig.options' => array('cache' => __DIR__.'/web/cache'),
     )
-));
+);
+
+$app->register(
+    new Silex\Provider\AssetServiceProvider(), 
+    array(
+        'assets.version' => 'v1',
+        'assets.version_format' => '%s?version=%s',
+        'assets.named_packages' => array(
+            'css' => array('version' => 'css2', 'base_path' => $file_config['path.css']),
+            'img' => array('base_path' => $file_config['path.img']),
+            'js' => array('base_path' => $file_config['path.js']),
+            'file' => array('base_path' => $file_config['path.file']),
+        ),
+    )
+);
+
+$app->register(
+    new Silex\Provider\SwiftmailerServiceProvider(), 
+    array(
+        'swiftmailer.options' => array(
+            'host'       => $file_config['mail.host'],
+            'port'       => $file_config['mail.port'],
+            'username'   => $file_config['mail.username'],
+            'password'   => $file_config['mail.password'],
+            'encryption' => $file_config['mail.encryption'],
+            'auth_mode'  => $file_config['mail.auth_mode'],
+        )
+    )
+);
 
 //Para nao guardar os emails na fila
 $app['swiftmailer.use_spool'] = false;
 
 $app->register(new Silex\Provider\SessionServiceProvider());
 
-$app['security.firewalls'] = array(
-    'restrito' => array(
-        'pattern' => '^/restrito/',
-        'http' => true,
-        'form' => array(
-            'login_path' => '/login', 
-            'check_path' => '/restrito/autorizacao'
+$app->register(
+    new Silex\Provider\SecurityServiceProvider(), 
+    array(
+        'security.firewalls' => array(
+            'login' => array(
+                'pattern' => '^/login$',
+            ),
+            'restrito' => array(
+                'pattern' => '^/restrito/*.*$',
+                'form' => array(
+                    'login_path' => '/login', 
+                    'check_path' => '/restrito/autenticacao'
+                ),
+                'logout' => array(
+                    'logout_path' => '/restrito/logout', 
+                    'invalidate_session' => true
+                ),
+                'users' => function () use ($em) {
+                    return new UserProvider($em);
+                },
+            ),
+            'publico' => array(
+                'anonymous' => true,
+            ),
         ),
-        'logout' => array(
-            'logout_path' => '/restrito/logout', 
-            'invalidate_session' => true
+        'security.role_hierarchy' => array(
+            'ROLE_ADMIN' => array('ROLE_USER', 'ROLE_ALLOWED_TO_SWITCH')
         ),
-        'users' => function () use ($em) {
-            //return new UserProvider($em);
-        },
-    ),
-    'publico' => array(
-        'anonymous' => true,
-    ),
-);
-
-$app['security.role_hierarchy'] = array(
-    'ROLE_ADMIN' => array('ROLE_USER', 'ROLE_ALLOWED_TO_SWITCH'),
-);
-
-$app['security.access_rules'] = array(
-    array('^/restrito', 'ROLE_ADMIN', 'https'),
-    array('^.*$', 'ROLE_USER'),
+        'security.access_rules' => array(
+            array('^/restrito/*.*$', 'ROLE_ADMIN'),
+            // array('^/restrito/*.*$', 'ROLE_ADMIN', 'https'),
+            array('^.*$', 'ROLE_USER'),
+        )
+    )
 );
 
 $app['security.default_encoder'] = function ($app) {
     return $app['security.encoder.pbkdf2'];
 };
 
-$app->register(new Silex\Provider\SecurityServiceProvider());
 $app->boot();
 
 // Para tratar os erros comuns da aplicacao
@@ -173,13 +187,18 @@ $app->get(
     }
 )->bind('login');
 
-$app->get(
-    '/restrito/autorizacao', function(Request $request) use ($app) {
+$app->post(
+    '/restrito/autenticacao', function(Request $req) use ($app) {
+        $dados = $req->request->all();
+echo "<pre>";
+print_r($dados);
+echo "</pre>";
+exit;        
         return $app['twig']->render(
             'areaRestrita.twig', array()
         );
     }
-)->bind('autorizacao');
+)->bind('autenticacao');
 //Area restrita
 $app->mount('/restrito/relatorio', new PNSL\Social\Controller\RelatorioController($em));
 $app->mount('/restrito/atendimento', new PNSL\Social\Controller\AtendimentoController($em));

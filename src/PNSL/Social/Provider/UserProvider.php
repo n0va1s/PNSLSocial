@@ -1,5 +1,5 @@
 <?php
-namespace n0va1s\QuadroMagico\Provider;
+namespace PNSL\Social\Provider;
  
 use Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
@@ -15,7 +15,7 @@ class UserProvider implements UserProviderInterface
     private $em;
     private $passwordEncoder;
  
-    public function __construct(EntityManager $em)
+    public function  __construct(EntityManager $em)
     {
         $this->em = $em;
     }
@@ -37,9 +37,9 @@ class UserProvider implements UserProviderInterface
             );
         }
         return new User(
-            $user->username, 
-            $user->password, 
-            explode(',', $user->roles), 
+            $user->getNome(), 
+            $user->getSenha(), 
+            explode(',', $user->getPerfil()), 
             true, true, true, true
         );
     }
@@ -54,7 +54,7 @@ class UserProvider implements UserProviderInterface
                 )
             );
         }
-         return $this->loadUserByUsername($user->getUsername());
+         return $this->loadUserByUsername($user->getNome());
     }
  
     public function supportsClass($class)
@@ -64,15 +64,14 @@ class UserProvider implements UserProviderInterface
 
     public function createAdminUser($username, $password)
     {
-        $user = new User($username, $password, array('ROLE_ADMIN'), true, true, true, true);
+        //$user = new User($username, $password, array('ROLE_ADMIN'), true, true, true, true);
         $criptoPassword = $this->encodePassword($user);
-
+        
         $acesso = new \PNSL\Social\Entity\AcessoEntity();
-        $acesso->nome = $username;
-        $acesso->senha = $criptoPassword;
-        $acesso->grupo = array('ROLE_ADMIN');
-
-        $this->em->persist($user);
+        $acesso->setNome($username);
+        $acesso->setSenha($criptoPassword);
+        $acesso->setPerfil('ROLE_ADMIN');
+        $this->em->persist($acesso);
         $this->em->flush();
     }
 
@@ -109,10 +108,10 @@ class UserProvider implements UserProviderInterface
             $user->id = isset($userArr['id']) ? $userArr['id'] : null;
         }
 
-        $username = isset($userArr['username']) ? $userArr['username'] : null;
-        $password = isset($userArr['password']) ? $userArr['password'] : null;
-        $roles = isset($userArr['roles']) ? explode(',', $userArr['roles']) : array();
-        $createdAt = isset($userArr['created_at']) ? \DateTime::createFromFormat(self::DATE_FORMAT, $userArr['created_at']) : null;
+        $username = isset($userArr['nome']) ? $userArr['nome'] : null;
+        $password = isset($userArr['senha']) ? $userArr['senha'] : null;
+        $roles = isset($userArr['perfil']) ? explode(',', $userArr['perfil']) : array();
+        $createdAt = isset($userArr['created_at']) ? \DateTime::createFromFormat(self::DATE_FORMAT, date('Y-m-d H:i:s')) : null;
 
         if ($username) {
             $user->username = $username;
