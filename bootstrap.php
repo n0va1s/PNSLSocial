@@ -110,17 +110,21 @@ $app->register(
 //Para nao guardar os emails na fila
 $app['swiftmailer.use_spool'] = false;
 
+//Quando se usa um formulario de login deve-se usar SessionServiceProvider
 $app->register(new Silex\Provider\SessionServiceProvider());
-
 $app->register(
     new Silex\Provider\SecurityServiceProvider(), 
     array(
         'security.firewalls' => array(
             'login' => array(
-                'pattern' => '^/login$',
+                'pattern' => '^/login$'
+            ),
+            'site' => array(
+                'pattern' => '^/site/*$',
+                'anonymous' => true,
             ),
             'restrito' => array(
-                'pattern' => '^/restrito/*.*$',
+                'pattern' => '^/restrito/*$',
                 'form' => array(
                     'login_path' => '/login', 
                     'check_path' => '/restrito/autenticacao'
@@ -132,9 +136,6 @@ $app->register(
                 'users' => function () use ($em) {
                     return new UserProvider($em);
                 },
-            ),
-            'publico' => array(
-                'anonymous' => true,
             ),
         ),
         'security.role_hierarchy' => array(
@@ -187,18 +188,16 @@ $app->get(
     }
 )->bind('login');
 
-$app->post(
-    '/restrito/autenticacao', function(Request $req) use ($app) {
-        $dados = $req->request->all();
-echo "<pre>";
-print_r($dados);
-echo "</pre>";
-exit;        
-        return $app['twig']->render(
-            'areaRestrita.twig', array()
-        );
-    }
-)->bind('autenticacao');
+// $app->post(
+//     '/restrito/autorizacao', function(Request $req) use ($app) {
+//         $dados = $req->request->all();
+
+//         return $app->redirect(
+//             $app['url_generator']
+//             ->generate('areaRestrita')
+//         );
+//     }
+// )->bind('autorizacao');
 //Area restrita
 $app->mount('/restrito/relatorio', new PNSL\Social\Controller\RelatorioController($em));
 $app->mount('/restrito/atendimento', new PNSL\Social\Controller\AtendimentoController($em));
