@@ -258,8 +258,22 @@ class PessoaEntity
      */ 
     public function setRG($RG)
     {
-        $this->RG = $RG;
-
+        if (!is_numeric($RG)) {
+            if (substr_count($RG, ".") > 0) {
+                $RG_saneado = str_replace(".", "", $RG);
+            } else {
+                $RG_saneado = $RG;
+            }
+            if (substr_count($RG_saneado, "-") > 0) {
+                $RG_saneado = str_replace("-", "", $RG_saneado);
+            }
+            if (substr_count($RG_saneado, " ") > 0) {
+                $RG_saneado = str_replace(" ", "", $RG_saneado);
+            }
+            $this->RG = $RG_saneado;
+        } else {
+            $this->RG = $RG;
+        }
         return $this;
     }
 
@@ -281,7 +295,22 @@ class PessoaEntity
         if (empty($CPF)) {
             throw new \InvalidArgumentException('O CPF é obrigatório', 99);
         } else {
-            $this->CPF = $CPF;
+            if (!is_numeric($CPF)) {
+                if (substr_count($CPF, ".") > 0) {
+                    $CPF_saneado = str_replace(".", "", $CPF);
+                } else {
+                    $CPF_saneado = $CPF;
+                }
+                if (substr_count($CPF_saneado, "-") > 0) {
+                    $CPF_saneado = str_replace("-", "", $CPF_saneado);
+                }
+                if (substr_count($CPF_saneado, " ") > 0) {
+                    $CPF_saneado = str_replace(" ", "", $CPF_saneado);
+                }
+                $this->CPF = $CPF_saneado;
+            } else {
+                $this->CPF = $CPF;
+            }
             return $this;
         }
     }
@@ -419,7 +448,22 @@ class PessoaEntity
         if (empty($CEP)) {
             throw new \InvalidArgumentException('O CEP é obrigatório', 99);
         } else {
-            $this->CEP = $CEP;
+            if (!is_numeric($CEP)) {
+                if (substr_count($CEP, ".") > 0) {
+                    $CEP_saneado = str_replace(".", "", $CEP);
+                } else {
+                    $CEP_saneado = $CEP;
+                }
+                if (substr_count($CEP_saneado, "-") > 0) {
+                    $CEP_saneado = str_replace("-", "", $CEP_saneado);
+                }
+                if (substr_count($CEP_saneado, " ") > 0) {
+                    $CEP_saneado = str_replace(" ", "", $CEP_saneado);
+                }
+                $this->CEP = $CEP_saneado;
+            } else {
+                $this->CEP = $CEP;
+            }
             return $this;
         }
     }
@@ -469,7 +513,28 @@ class PessoaEntity
         if (empty($telefone)) {
             throw new \InvalidArgumentException('O telefone é obrigatório', 99);
         } else {
-            $this->telefone = $telefone;
+            if (!is_numeric($telefone)) {
+                if (substr_count($telefone, ".") > 0) {
+                    $telefone_saneado = str_replace(".", "", $telefone);
+                } else {
+                    $telefone_saneado = $telefone;
+                }
+                if (substr_count($telefone_saneado, "-") > 0) {
+                    $telefone_saneado = str_replace("-", "", $telefone_saneado);
+                }
+                if (substr_count($telefone_saneado, " ") > 0) {
+                    $telefone_saneado = str_replace(" ", "", $telefone_saneado);
+                }
+                if (substr_count($telefone_saneado, ")") > 0) {
+                    $telefone_saneado = str_replace(")", "", $telefone_saneado);
+                }
+                if (substr_count($telefone_saneado, "(") > 0) {
+                    $telefone_saneado = str_replace("(", "", $telefone_saneado);
+                }
+                $this->telefone = $telefone_saneado;
+            } else {
+                $this->telefone = $telefone;
+            }
             return $this;
         }
     }

@@ -17,6 +17,10 @@ class PessoaService
     
     public function save($dados)
     {
+// echo "<pre>";
+// print_r($dados);
+// echo "</pre>";
+// exit;        
         if (is_array($dados)) {
             if (empty($dados['id'])) {
                 $pessoa = new PessoaEntity();
@@ -25,16 +29,31 @@ class PessoaService
                 $pessoa->setDataNascimento($dados['nascimento_pessoa']);
                 $pessoa->setRG($dados['RG_pessoa']);
                 $pessoa->setNacionalidade($dados['nacionalidade_pessoa']);
-                $pessoa->setSexo($dados['sexo_pessoa']);
+                $pessoa->setSexo(
+                    $this->em->getReference(
+                        '\PNSL\Social\Entity\TipoEntity', 
+                        $dados['sexo_pessoa']
+                    )
+                );
                 $pessoa->setProfissao($dados['profissao_pessoa']);
                 $pessoa->setNIS($dados['NIS_pessoa']);
                 $pessoa->setEndereco($dados['endereco_pessoa']);
                 $pessoa->setCidade($dados['cidade_pessoa']);
-                $pessoa->setUF($dados['UF_pessoa']);
+                $pessoa->setUF(
+                    $this->em->getReference(
+                        '\PNSL\Social\Entity\TipoEntity', 
+                        $dados['UF_pessoa']
+                    )
+                );
                 $pessoa->setCEP($dados['CEP_pessoa']);
                 $pessoa->setTelefone($dados['telefone_pessoa']);
                 $pessoa->setEmail($dados['email_pessoa']);
-                $pessoa->setTipoPessoa($dados['tipo_pessoa']);
+                $pessoa->setTipoPessoa(
+                    $this->em->getReference(
+                        '\PNSL\Social\Entity\TipoEntity', 
+                        $dados['tipo_pessoa']
+                    )
+                );
                 $pessoa->setUsuarioInclusao('usuarioInclusao');
                 $pessoa->setUsuarioAlteracao('usuarioAlteracao');
                 $pessoa->setEstadoCivil(
@@ -57,16 +76,31 @@ class PessoaService
                     $responsavel->setDataNascimento($dados['nascimento_responsavel']);
                     $responsavel->setRG($dados['RG_responsavel']);
                     $responsavel->setNacionalidade($dados['nacionalidade_responsavel']);
-                    $responsavel->setSexo($dados['sexo_responsavel']);
+                    $responsavel->setSexo(
+                        $this->em->getReference(
+                            '\PNSL\Social\Entity\TipoEntity', 
+                            $dados['sexo_responsavel']
+                        )
+                    );
                     $responsavel->setProfissao($dados['profissao_responsavel']);
                     $responsavel->setNIS($dados['NIS_responsavel']);
                     $responsavel->setEndereco($dados['endereco_responsavel']);
                     $responsavel->setCidade($dados['cidade_responsavel']);
-                    $responsavel->setUF($dados['UF_responsavel']);
+                    $responsavel->setUF(
+                        $this->em->getReference(
+                            '\PNSL\Social\Entity\TipoEntity', 
+                            $dados['UF_responsavel']
+                        )
+                    );
                     $responsavel->setCEP($dados['CEP_responsavel']);
                     $responsavel->setTelefone($dados['telefone_responsavel']);
                     $responsavel->setEmail($dados['email_responsavel']);
-                    $responsavel->setTipoPessoa('RSP');
+                    $responsavel->setTipoPessoa(
+                        $this->em->getReference(
+                            '\PNSL\Social\Entity\TipoEntity', 
+                            $dados['tipo_responsavel']
+                        )
+                    );
                     $responsavel->setUsuarioInclusao('usuarioInclusao');
                     $responsavel->setUsuarioAlteracao('usuarioAlteracao');
                     $responsavel->setEstadoCivil(
@@ -102,16 +136,31 @@ class PessoaService
                 $pessoa->setDataNascimento($dados['nascimento_pessoa']);
                 $pessoa->setRG($dados['RG_pessoa']);
                 $pessoa->setNacionalidade($dados['nacionalidade_pessoa']);
-                $pessoa->setSexo($dados['sexo_pessoa']);
+                $pessoa->setSexo(
+                    $this->em->getReference(
+                        '\PNSL\Social\Entity\TipoEntity', 
+                        $dados['sexo_pessoa']
+                    )
+                );
                 $pessoa->setProfissao($dados['profissao_pessoa']);
                 $pessoa->setNIS($dados['NIS_pessoa']);
                 $pessoa->setEndereco($dados['endereco_pessoa']);
                 $pessoa->setCidade($dados['cidade_pessoa']);
-                $pessoa->setUF($dados['UF_pessoa']);
+                $pessoa->setUF(
+                    $this->em->getReference(
+                        '\PNSL\Social\Entity\TipoEntity', 
+                        $dados['UF_pessoa']
+                    )
+                );
                 $pessoa->setCEP($dados['CEP_pessoa']);
                 $pessoa->setTelefone($dados['telefone_pessoa']);
                 $pessoa->setEmail($dados['email_pessoa']);
-                $pessoa->setTipoPessoa($dados['tipo_pessoa']);
+                $pessoa->setTipoPessoa(
+                    $this->em->getReference(
+                        '\PNSL\Social\Entity\TipoEntity', 
+                        $dados['tipo_pessoa']
+                    )
+                );
                 $pessoa->setUsuarioAlteracao('usuarioAlt');
                 $pessoa->setEstadoCivil(
                     $this->em->getReference(
@@ -134,16 +183,31 @@ class PessoaService
                 $responsavel->setDataNascimento($dados['nascimento_responsavel']);
                 $responsavel->setRG($dados['RG_responsavel']);
                 $responsavel->setNacionalidade($dados['nacionalidade_responsavel']);
-                $responsavel->setSexo($dados['sexo_responsavel']);
+                $responsavel->setSexo(
+                    $this->em->getReference(
+                        '\PNSL\Social\Entity\TipoEntity', 
+                        $dados['sexo_responsavel']
+                    )
+                );
                 $responsavel->setProfissao($dados['profissao_responsavel']);
                 $responsavel->setNIS($dados['NIS_responsavel']);
                 $responsavel->setEndereco($dados['endereco_responsavel']);
                 $responsavel->setCidade($dados['cidade_responsavel']);
-                $responsavel->setUF($dados['UF_responsavel']);
+                $responsavel->setUF(
+                    $this->em->getReference(
+                        '\PNSL\Social\Entity\TipoEntity', 
+                        $dados['UF_responsavel']
+                    )
+                );
                 $responsavel->setCEP($dados['CEP_responsavel']);
                 $responsavel->setTelefone($dados['telefone_responsavel']);
                 $responsavel->setEmail($dados['email_responsavel']);
-                $responsavel->setTipoPessoa('RSP');
+                $responsavel->setTipoPessoa(
+                    $this->em->getReference(
+                        '\PNSL\Social\Entity\TipoEntity', 
+                        $dados['tipo_responsavel']
+                    )
+                );
                 $responsavel->setUsuarioInclusao('usuarioInclusao');
                 $responsavel->setUsuarioAlteracao('usuarioAlteracao');
                 $responsavel->setEstadoCivil(
@@ -197,11 +261,14 @@ class PessoaService
     public function findById(int $id)
     {
         $pessoa = $this->em->createQuery(
-            'select p, ec, tt, pa
+            'select p, ec, tt, pa, uf, tp, se
               from \PNSL\Social\Entity\PessoaEntity p 
                 inner join p.estadoCivil ec
                 inner join p.tipoTelefone tt
                 inner join p.parentesco pa
+                inner join p.sexo se
+                inner join p.uf uf
+                inner join p.tipoPessoa tp
              where p.id = :id'
         )->setParameter('id', $id)->getOneOrNullResult();
         return $pessoa;
@@ -210,11 +277,14 @@ class PessoaService
     public function findUsuarios()
     {
         $pessoas = $this->em->createQuery(
-            'select p, ec, tt, pa
+            'select p, ec, tt, pa, uf, tp, se
               from \PNSL\Social\Entity\PessoaEntity p 
                 inner join p.estadoCivil ec
                 inner join p.tipoTelefone tt
                 left join p.parentesco pa
+                inner join p.sexo se
+                inner join p.uf uf
+                inner join p.tipoPessoa tp
              where p.tipoPessoa <> :tipo'
         )->setParameter('tipo', 'VOL')->getArrayResult();
         return $pessoas;
@@ -223,11 +293,14 @@ class PessoaService
     public function findVoluntarios()
     {
         $pessoas = $this->em->createQuery(
-            'select p, ec, tt, pa
+            'select p, ec, tt, pa, se, uf, tp
               from \PNSL\Social\Entity\PessoaEntity p 
                 inner join p.estadoCivil ec
                 inner join p.tipoTelefone tt
                 left join p.parentesco pa
+                inner join p.sexo se
+                inner join p.uf uf
+                inner join p.tipoPessoa tp
              where p.tipoPessoa = :tipo'
         )->setParameter('tipo', 'VOL')->getArrayResult();
         return $pessoas;

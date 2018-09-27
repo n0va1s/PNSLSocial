@@ -2,39 +2,73 @@
 
 {% block conteudo %}
 <div class="container">
-    <div class="row">
-        <div class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2">
-            <form name="frmContato" action="" method="POST" class="form-inline">
-                <h4>Quer falar com a gente?</h4>
-                <div class="form-group col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                    <label for="nome" class="sr-only">Nome</label>
-                    <input type="text" name="nome" class="form-control col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4" placeholder="Nome" required data-validation-required-message="Por favor informe seu nome" autofocus>
-                </div>
-                <div class="form-group col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                    <label for="email" class="sr-only">Email</label>
-                    <input type="email" name="email" class="form-control col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4" placeholder="Email" required data-validation-required-message="Por favor informe seu email">
-                </div>
-                <div class="form-group col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                    <label for="celular" class="sr-only">Celular</label>
-                    <input type="tel" name="celular" class="form-control col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4" placeholder="Celular" required data-validation-required-message="Por favor informe seu celular para tirarmos dúvidas">
-                </div>
-                <div class="form-group col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                    <label for="mensagem" class="sr-only">Mensagem</label>
-                    <textarea rows="5" name="mensagem" class="form-control col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" placeholder="Mensagem" required data-validation-required-message="Esqueceu a mensagem"></textarea>
-                </div>
-                <!--<div class="checkbox">
-                    <label><input type="checkbox" value="remember-me"> Remember me</label>
-                </div>-->
-                <br />
-                <div>&nbsp;</div>
-                <center><button class="btn btn-primary" type="submit">Enviar</button></center>
-            </form>
-            {% if mensagem is defined %}
-            <div class="alert alert-success">
-                {{ mensagem }}
-            </div>
-            {% endif %}
+        <div class="row col-sm-8 col-sm-offset-2">
+            <header>
+                <h2><span class="glyphicon glyphicon-question-sign"></span>&nbsp;Contato</h2>
+                <small>quer falar com a gente? Mandar sugestões? Elogios?</small>
+            </header>
         </div>
+        <div class="row col-sm-8 col-sm-offset-2">
+        <form name="frmContato" action="" method="POST" class="form-inline">
+            <div class="form-group col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                <label for="nome" class="sr-only">Nome</label>
+                <input type="text" name="nome" class="form-control col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4" placeholder="Nome" required data-validation-required-message="Por favor informe seu nome" autofocus>
+            </div>
+            <div class="form-group col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                <label for="email" class="sr-only">Email</label>
+                <input type="email" name="email" class="form-control col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4" placeholder="Email" required data-validation-required-message="Por favor informe seu email">
+            </div>
+            <div class="form-group col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                <label for="celular" class="sr-only">Celular</label>
+                <input type="tel" name="celular" class="form-control col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4" placeholder="Celular" required data-validation-required-message="Por favor informe seu celular para tirarmos dúvidas">
+            </div>
+            <div class="form-group col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <label for="mensagem" class="sr-only">Mensagem</label>
+                <textarea rows="5" name="mensagem" class="form-control col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" placeholder="Mensagem" required data-validation-required-message="Esqueceu a mensagem"></textarea>
+            </div>
+            <!--<div class="checkbox">
+                <label><input type="checkbox" value="remember-me"> Remember me</label>
+            </div>-->
+            <br />
+            <div>&nbsp;</div>
+            <center><button class="btn btn-primary" type="submit">Enviar</button></center>
+        </form>
+        {% if mensagem is defined %}
+        <div class="alert alert-success">
+            {{ mensagem }}
+        </div>
+        {% endif %}
+    </div>
+    <div class="col-sm-8 col-sm-offset-2">
+        <p class="copyright text-muted">Outros contatos</p>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <a href="https://www.facebook.com/casa-sao-jose/">
+                    <span class="fa-stack fa-lg">
+                        <i class="fa fa-circle fa-stack-2x"></i>
+                        <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                    </span>Facebook
+                </a>
+            </li>
+            <li class="list-group-item">
+                <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="glyphicon glyphicon-envelope fa-stack-1x fa-inverse"></i>
+                </span>aclnsaojose13@gmail.com
+            </li>
+            <li class="list-group-item">
+                <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="glyphicon glyphicon-phone-alt fa-stack-1x fa-inverse"></i>
+                </span>(61) 3468-1949 / 98642-1260
+            </li>
+            <li class="list-group-item">
+                <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="glyphicon glyphicon-map-marker fa-stack-1x fa-inverse"></i>
+                </span>Quadra 01 Conjunto D Lote 03, Varjão - DF
+            </li>                    
+        </ul>
     </div>
 </div>
 {% endblock %}

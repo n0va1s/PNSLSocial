@@ -20,16 +20,6 @@ class SiteController implements ControllerProviderInterface
         $ctrl = $app['controllers_factory'];
 
         $ctrl->get(
-            '/area-restrita', function () use ($app) {
-                return $app['twig']->render(
-                    'areaRestrita.twig',
-                    array(), 
-                    new Response('Ok', 200)
-                );
-            }
-        )->bind('areaRestrita');
-
-        $ctrl->get(
             '/nosso-impacto', function () use ($app) {
                 $acoes = $app['acao_service']->fetchAll();
                 $resultado['acao'] = $app['acao_service']->consolidarAcao();

@@ -14,6 +14,7 @@ use Doctrine\Common\ClassLoader;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\HttpFoundation\Request;
 use PNSL\Social\Provider\UserProvider;
+use Symfony\Component\HttpFoundation\Response;
 
 //Buscar as variaveis do arquivo de configuracao
 $env = getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : 'production';
@@ -141,11 +142,12 @@ $app->register(
         'security.role_hierarchy' => array(
             'ROLE_ADMIN' => array('ROLE_USER', 'ROLE_ALLOWED_TO_SWITCH')
         ),
+        /*
         'security.access_rules' => array(
             array('^/restrito/*.*$', 'ROLE_ADMIN'),
             // array('^/restrito/*.*$', 'ROLE_ADMIN', 'https'),
             array('^.*$', 'ROLE_USER'),
-        )
+        )*/
     )
 );
 
@@ -188,6 +190,17 @@ $app->get(
     }
 )->bind('login');
 
+//Rota padrao apos o login
+$app->get(
+    '/restrito/menu', function () use ($app) {
+        return $app['twig']->render(
+            'areaRestrita.twig',
+            array(), 
+            new Response('Ok', 200)
+        );
+    }
+)->bind('areaRestrita');
+
 // $app->post(
 //     '/restrito/autorizacao', function(Request $req) use ($app) {
 //         $dados = $req->request->all();
@@ -206,5 +219,6 @@ $app->mount('/restrito/acao', new PNSL\Social\Controller\AcaoController($em));
 $app->mount('/restrito/voluntario', new PNSL\Social\Controller\VoluntarioController($em));
 $app->mount('/restrito/usuario', new PNSL\Social\Controller\UsuarioController($em));
 $app->mount('/restrito/configuracao', new PNSL\Social\Controller\TipoController($em));
+
 //Area publica
 $app->mount('/site', new PNSL\Social\Controller\SiteController($em));

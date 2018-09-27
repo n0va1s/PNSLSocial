@@ -15,11 +15,12 @@
                 <legend><i class="glyphicon glyphicon-menu-right"></i><b>Dados pessoais</b></legend>
                     <div class="form-group col-sm-2">
                         <label for="tipo_pessoa">Tipo</label>
-                        <select class="form-control" name="tipo_pessoa" disabled>
-                            {% for tipo in tipos_pessoa %}
-                            <option value="{{ tipo.id }}" {% if tipo.descricao == 'Voluntário' %} selected {% endif %}>{{ tipo.descricao }}</option>
-                            {% endfor %} 
-                        </select>
+                        {% for tipo in tipos_pessoa %}
+                            {% if tipo.descricao == 'Voluntário' %}
+                            <label>{{ tipo.descricao }}</label>
+                            <input type="hidden" name="tipo_pessoa" value="{{ tipo.id }}">
+                            {% endif %}
+                        {% endfor %}
                     </div>
                     <div class="form-group col-sm-3">
                         <label for="CPF_pessoa">CPF</label>
@@ -53,20 +54,15 @@
                     </div>
                     <div class="form-group form-check-inline col-sm-2">
                         <label for="sexo_pessoa" class="form-check-label">Sexo</label><br />
-                        <label class="form-check-label">M
-                            <input type="radio" name="sexo_pessoa" class="form-check-input" value="M" {% if voluntario is defined and voluntario.pessoa.sexo == 'M' %} checked="true" {% endif %}>
+                        {% for sexo in sexos %}
+                        <label class="form-check-label">{{sexo.descricao}}
+                            <input type="radio" name="sexo_pessoa" class="form-check-input" value="{{sexo.id}}" {% if voluntario is defined and voluntario.pessoa.sexo == 'M' %} checked="true" {% endif %}>
                         </label>
-                        <label class="form-check-label">F
-                            <input type="radio" name="sexo_pessoa" class="form-check-input" value="F" {% if voluntario is defined and voluntario.pessoa.sexo == 'F' %} checked="true" {% endif %}>
-                        </label>
+                        {% endfor %}
                     </div>                    
                     <div class="form-group col-sm-7">
                         <label for="profissao_pessoa">Profissão</label>
                         <input type="text" name="profissao_pessoa" class="form-control" placeholder="Costureira" value="{% if voluntario is defined %}{{ voluntario.pessoa.profissao }}{% endif %}">
-                    </div>
-                    <div class="form-group col-sm-3">
-                        <label for="NIS_pessoa">NIS</label>
-                        <input type="text" name="NIS_pessoa" class="form-control" placeholder="999999999999" value="{% if voluntario is defined %}{{ voluntario.pessoa.NIS }}{% endif %}">
                     </div>
                 </fieldset>
                 <fieldset>
@@ -117,7 +113,7 @@
                 <fieldset>
                 <legend><i class="glyphicon glyphicon-menu-right"></i><b>Dados do voluntário</b></legend>
                     <div class="form-group col-sm-12">
-                        <label for="conhecimento">Conhecimentos</label>
+                        <label for="conhecimento">O que mais vc gosta de fazer</label>
                         <textarea class="form-control" name="conhecimento" rows="5" placeholder="Fazer bolos, tirar leite, contabilidade, corrida de rua" required>{% if voluntario is defined %}{{ voluntario.conhecimento }}{% endif %}</textarea>
                     </div>
                 </fieldset>
