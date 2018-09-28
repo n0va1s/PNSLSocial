@@ -67,7 +67,7 @@ class PessoaEntity
     private $tipoTelefone;
 
     /** @ORM\ManyToOne(targetEntity="TipoEntity")
-     *  @ORM\JoinColumn(name="seq_tipo_renda", referencedColumnName="seq_tipo", nullable=false) */
+     *  @ORM\JoinColumn(name="seq_tipo_renda", referencedColumnName="seq_tipo") */
     private $tipoRenda;
 
     /** @ORM\Column(type="integer", name="qtd_familiar", nullable=true) */
@@ -80,7 +80,7 @@ class PessoaEntity
     private $registro;
 
     /** @ORM\ManyToOne(targetEntity="TipoEntity")
-     *  @ORM\JoinColumn(name="seq_tipo_registro", referencedColumnName="seq_tipo", nullable=false) */
+     *  @ORM\JoinColumn(name="seq_tipo_registro", referencedColumnName="seq_tipo") */
     private $tipoRegistro;
 
     /**
