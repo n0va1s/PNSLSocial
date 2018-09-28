@@ -44,10 +44,15 @@ class AcaoService
             '\PNSL\Social\Entity\TipoEntity', 
             $dados['turno']
         );
+        $local = $this->em->getReference(
+            '\PNSL\Social\Entity\TipoEntity', 
+            $dados['local']
+        );
 
         if (empty($dados['id'])) {
             $acao = new AcaoEntity();
             $acao->setNome($dados['acao']);
+            $acao->setProposito($dados['proposito']);
             $acao->setInicio($dados['inicio']);
             $acao->setTermino($dados['termino']);
             $acao->setPublicoAlvo($publico_alvo);
@@ -58,6 +63,7 @@ class AcaoService
             $acao->setSaida($dados['saida']);
             $acao->setDiaSemana($dia_semana);
             $acao->setTurno($turno);
+            $acao->setLocal($local);
             $acao->setVoluntario($voluntario);
             $acao->setTipo($tipo_acao);
             $acao->setUsuarioInclusao('usuarioInc');
@@ -69,6 +75,7 @@ class AcaoService
                 $dados['id']
             );
             $acao->setNome($dados['acao']);
+            $acao->setProposito($dados['proposito']);
             $acao->setInicio($dados['inicio']);
             $acao->setTermino($dados['termino']);
             $acao->setPublicoAlvo($publico_alvo);
@@ -79,6 +86,7 @@ class AcaoService
             $acao->setSaida($dados['saida']);
             $acao->setDiaSemana($dia_semana);
             $acao->setTurno($turno);
+            $acao->setLocal($local);
             $acao->setVoluntario($voluntario);
             $acao->setTipo($tipo_acao);
             $acao->setUsuarioAlteracao('usuarioAlt');

@@ -13,22 +13,27 @@
             <form name="frmCadastro" action="{{ path('usuarioSalvar')}}" method="POST">
                 <fieldset>
                 <legend><i class="glyphicon glyphicon-menu-right"></i><b>Dados pessoais</b></legend>
-                    <div class="form-group col-sm-2">
-                        <label for="tipo_pessoa">Tipo</label>
-                        <select class="form-control" name="tipo_pessoa" disabled>
-                            {% for tipo in tipos_pessoa %}
-                            <option value="{{ tipo.id }}" {% if tipo.descricao == 'Usuário' %} selected {% endif %}>{{ tipo.descricao }}</option>
-                            {% endfor %} 
-                        </select>
-                    </div>
+                    {% for tipo in tipos_pessoa %}
+                        {% if tipo.descricao == 'Usuário' %}
+                        <input type="hidden" name="tipo_pessoa" value="{{ tipo.id }}">
+                        {% endif %}
+                    {% endfor %}
                     <div class="form-group col-sm-3">
                         <label for="CPF_pessoa">CPF</label>
                         <input type="text" name="CPF_pessoa" class="form-control" placeholder="999.999.999-99" required autofocus value="{% if usuario is defined %}{{ usuario.CPF }}{% endif %}">
                     </div>
-                    <div class="form-group col-sm-7">
+                    <div class="form-group col-sm-6">
                         <label for="nome_pessoa">Nome</label>
                         <input type="text" name="nome_pessoa" class="form-control" placeholder="Seu nome completo" required value="{% if usuario is defined %}{{ usuario.nome }}{% endif %}">
                     </div>
+                    <div class="form-group form-check-inline col-sm-2 col-sm-offset-1">
+                        <label for="sexo_pessoa" class="form-check-label">Sexo</label><br />
+                        {% for sexo in sexos %}
+                        <label class="form-check-label">{{sexo.descricao}}
+                            <input type="radio" name="sexo_pessoa" class="form-check-input" value="{{sexo.id}}" {% if voluntario is defined and voluntario.pessoa.sexo == 'M' %} checked="true" {% endif %}>
+                        </label>
+                        {% endfor %}
+                    </div>                    
                     <div class="clearfix"></div>
                     <div class="form-group col-sm-3">
                         <label for="nascimento_pessoa">Nascimento</label>
@@ -51,22 +56,35 @@
                         <label for="nacionalidade_pessoa">Nacionalidade</label>
                         <input type="text" name="nacionalidade_pessoa" class="form-control" placeholder="Brasíleira" required value="{% if usuario is defined %}{{ usuario.nacionalidade }}{% endif %}">
                     </div>
-                    <div class="form-group col-sm-2">
-                        <label for="sexo_pessoa" class="form-check-label">Sexo</label><br />
-                        <select class="form-control" name="sexo_pessoa">
+                    <div class="form-group col-sm-3">
+                        <label for="tipo_renda_pessoa">Renda</label>
+                        <select class="form-control" name="tipo_renda_pessoa">
                             <option value="">Selecione</option>
-                            {% for sexo in sexos %}
-                            <option value="{{ sexo.id }}" {% if usuario is defined and usuario.sexo.id == sexo.id %} selected {% endif %}>{{ sexo.descricao }}</option>
-                            {% endfor %} 
+                            {% for tipo_renda_familiar in tipos_renda_familiar %}
+                            <option value="{{ tipo_renda_familiar.id }}" {% if voluntario is defined and voluntario.pessoa.tipoRendaFamiliar.id == tipo_renda_familiar.id %} selected {% endif %}>{{ tipo_renda_familiar.descricao }}</option>
+                            {% endfor %}
                         </select>
                     </div>
-                    <div class="form-group col-sm-7">
-                        <label for="profissao_pessoa">Profissão</label>
-                        <input type="text" name="profissao_pessoa" class="form-control" placeholder="Costureira" value="{% if usuario is defined %}{{ usuario.profissao }}{% endif %}">
+                    <div class="form-group col-sm-2">
+                        <label for="familiar_pessoa">Familiares</label>
+                        <input type="text" name="familiar_pessoa" class="form-control" placeholder="9" value="{% if voluntario is defined %}{{ voluntario.pessoa.familiar }}{% endif %}">
                     </div>
                     <div class="form-group col-sm-3">
-                        <label for="NIS_pessoa">NIS</label>
-                        <input type="text" name="NIS_pessoa" class="form-control" placeholder="999999999999" value="{% if usuario is defined %}{{ usuario.NIS }}{% endif %}">
+                        <label for="profissao_pessoa">Profissão</label>
+                        <input type="text" name="profissao_pessoa" class="form-control" placeholder="Costureira" value="{% if voluntario is defined %}{{ voluntario.pessoa.profissao }}{% endif %}">
+                    </div>
+                    <div class="form-group col-sm-2">
+                        <label for="registro_pessoa">Registro</label>
+                        <input type="text" name="registro_pessoa" class="form-control" placeholder="99999-0" value="{% if voluntario is defined %}{{ voluntario.pessoa.registro }}{% endif %}">
+                    </div>
+                    <div class="form-group col-sm-2">
+                        <label for="tipo_registro_pessoa">Tipo</label>
+                        <select class="form-control" name="tipo_registro_pessoa">
+                            <option value="">Selecione</option>
+                            {% for tipo_registro in tipos_registro %}
+                            <option value="{{ tipo_registro.id }}" {% if voluntario is defined and voluntario.pessoa.tipoRegistro.id == tipo_registro.id %} selected {% endif %}>{{ tipo_registro.descricao }}</option>
+                            {% endfor %}
+                        </select>
                     </div>
                 </fieldset>
                 <fieldset>
@@ -114,11 +132,53 @@
                     </div>
                 </fieldset>
                 <fieldset>
+                <legend><i class="glyphicon glyphicon-menu-right"></i><b>Dados escolares</b></legend>
+                    <div class="form-group col-sm-6">
+                        <label for="escola">Escola</label>
+                        <input type="text" name="escola" class="form-control" placeholder="Nome da escola" value="{% if usuario is defined %}{{ usuario.escola.escola }}{% endif %}">
+                    </div>
+                    <div class="form-group col-sm-2">
+                        <label for="ano">Ano</label>
+                        <input type="text" name="ano" class="form-control" placeholder="9999" value="{% if usuario is defined %}{{ usuario.escola.ano }}{% endif %}">
+                    </div>
+                    <div class="form-group col-sm-2">
+                        <label for="turno">Turno</label>
+                        <select class="form-control" name="turno">
+                            <option value="">Selecione</option>
+                            {% for turno in turnos %}
+                            <option value="{{ turno.id }}" {% if usuario is defined and usuario.escola.turno.id == turno.id %} selected {% endif %}>{{ turno.descricao }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group col-sm-2">
+                        <label for="grau">Grau</label>
+                        <select class="form-control" name="grau">
+                            <option value="">Selecione</option>
+                            {% for grau in graus %}
+                            <option value="{{ grau.id }}" {% if usuario is defined and usuario.escola.grau.id == grau.id %} selected {% endif %}>{{ grau.descricao }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </fieldset>
+                <fieldset>
                 <legend><i class="glyphicon glyphicon-menu-right"></i><b>Dados da família</b></legend>
                     <div class="form-group col-sm-6">
                         <label for="nome_responsavel">Responsável</label>
                         <input type="text" name="nome_responsavel" class="form-control" placeholder="Nome do responsável">
+                        {% for tipo in tipos_pessoa %}
+                        {% if tipo.descricao == 'Responsável' %}
+                        <input type="hidden" name="tipo_responsavel" value="{{ tipo.id }}">
+                        {% endif %}
+                    {% endfor %}                        
                     </div>
+                    <div class="form-group form-check-inline col-sm-2 col-sm-offset-1">
+                        <label for="sexo_responsavel" class="form-check-label">Sexo</label><br />
+                        {% for sexo in sexos %}
+                        <label class="form-check-label">{{sexo.descricao}}
+                            <input type="radio" name="responsavel" class="form-check-input" value="{{sexo.id}}" {% if voluntario is defined and voluntario.pessoa.sexo == 'M' %} checked="true" {% endif %}>
+                        </label>
+                        {% endfor %}
+                    </div>                    
                     <div class="form-group col-sm-3">
                         <label for="parentesco_responsavel">Parentesco</label>
                         <select class="form-control" name="parentesco_responsavel">
@@ -128,7 +188,7 @@
                             {% endfor %} 
                         </select>
                     </div>
-                    <div class="form-group col-sm-3">
+                    <div class="form-group col-sm-2">
                         <label for="estado_civil_responsavel" class="form-check-label">Estado Civil</label><br />
                         <select class="form-control" name="estado_civil_responsavel">
                             <option value="">Selecione</option>
@@ -137,23 +197,22 @@
                             {% endfor %} 
                         </select>
                     </div>
-                    <div class="form-group form-check-inline col-sm-2">
-                        <label for="sexo_responsavel" class="form-check-label">Sexo</label><br />
-                        <label class="form-check-label">M
-                            <input type="radio" name="sexo_responsavel" class="form-check-input" value="M">
-                        </label>
-                        <label class="form-check-label">F
-                            <input type="radio" name="sexo_responsavel" class="form-check-input" value="F">
-                        </label>
-                    </div>
-                    
-                    <div class="form-group col-sm-7">
+                    <div class="form-group col-sm-4">
                         <label for="profissao_responsavel">Profissão</label>
-                        <input type="text" name="profissao_responsavel" class="form-control" placeholder="Costureira" value="{% if usuario is defined %}{{ usuario.profissao }}{% endif %}">
+                        <input type="text" name="profissao_responsavel" class="form-control" placeholder="Costureira" value="{% if voluntario is defined %}{{ voluntario.pessoa.profissao }}{% endif %}">
                     </div>
                     <div class="form-group col-sm-3">
-                        <label for="NIS_responsavel">NIS</label>
-                        <input type="text" name="NIS_responsavel" class="form-control" placeholder="999999999999" value="{% if usuario is defined %}{{ usuario.NIS }}{% endif %}">
+                        <label for="registro_responsavel">Registro</label>
+                        <input type="text" name="registro_responsavel" class="form-control" placeholder="99999-0" value="{% if voluntario is defined %}{{ voluntario.pessoa.registro }}{% endif %}">
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <label for="tipo_registro_responsavel">Tipo</label>
+                        <select class="form-control" name="tipo_registro_responsavel">
+                            <option value="">Selecione</option>
+                            {% for tipo_registro in tipos_registro %}
+                            <option value="{{ tipo_registro.id }}" {% if voluntario is defined and voluntario.pessoa.tipoRegistro.id == tipo_registro.id %} selected {% endif %}>{{ tipo_registro.descricao }}</option>
+                            {% endfor %}
+                        </select>
                     </div>
                     <div class="form-group col-sm-3">
                         <label for="telefone_responsavel">Telefone</label>
@@ -208,35 +267,6 @@
                     <div class="form-group col-sm-2">
                         <label for="CEP_responsavel">CEP</label>
                         <input type="text" name="CEP_responsavel" class="form-control" placeholder="70000000">
-                    </div>
-                </fieldset>
-                <fieldset>
-                <legend><i class="glyphicon glyphicon-menu-right"></i><b>Dados escolares</b></legend>
-                    <div class="form-group col-sm-6">
-                        <label for="escola">Escola</label>
-                        <input type="text" name="escola" class="form-control" placeholder="Nome da escola" value="{% if usuario is defined %}{{ usuario.escola.escola }}{% endif %}">
-                    </div>
-                    <div class="form-group col-sm-2">
-                        <label for="ano">Ano</label>
-                        <input type="text" name="ano" class="form-control" placeholder="9999" value="{% if usuario is defined %}{{ usuario.escola.ano }}{% endif %}">
-                    </div>
-                    <div class="form-group col-sm-2">
-                        <label for="turno">Turno</label>
-                        <select class="form-control" name="turno">
-                            <option value="">Selecione</option>
-                            {% for turno in turnos %}
-                            <option value="{{ turno.id }}" {% if usuario is defined and usuario.escola.turno.id == turno.id %} selected {% endif %}>{{ turno.descricao }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <div class="form-group col-sm-2">
-                        <label for="grau">Grau</label>
-                        <select class="form-control" name="grau">
-                            <option value="">Selecione</option>
-                            {% for grau in graus %}
-                            <option value="{{ grau.id }}" {% if usuario is defined and usuario.escola.grau.id == grau.id %} selected {% endif %}>{{ grau.descricao }}</option>
-                            {% endfor %}
-                        </select>
                     </div>
                 </fieldset>
                 <div class="form-group col-sm-12 text-center">

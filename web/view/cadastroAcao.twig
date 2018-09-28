@@ -13,17 +13,30 @@
             <form name="frmCadastro" action="{{ path('acaoSalvar')}}" method="POST">
                 <fieldset>
                 <legend><i class="glyphicon glyphicon-menu-right"></i><b>Dados básicos</b></legend>
-                    <div class="form-group col-sm-6">
+                    <div class="form-group col-sm-5">
                         <label for="acao">Nome</label>
                         <input type="text" name="acao" class="form-control" placeholder="O nome da ação social" value="{% if acao is defined %}{{ acao.nome }}{% endif %}" required>
                     </div>
-                    <div class="form-group form-check-inline col-sm-5 col-sm-offset-1">
+                    <div class="form-group col-sm-2">
+                        <label for="local" class="form-check-label">Local</label><br />
+                        <select class="form-control" name="local" required>
+                            <option value="">Selecione</option>
+                            {% for local in locais %}
+                            <option value="{{ local.id }}" {% if acao is defined and acao.local.id == publico.id %} selected {% endif %}>{{ local.descricao }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group form-check-inline col-sm-4 col-sm-offset-1">
                         <label for="dia" class="form-check-label">Tipo</label><br />
                         {% for tipo in tipos_acao %}
                         <label class="form-check-label">{{ tipo.descricao }}
                             <input type="radio" name="tipo_acao" name="tipo_acao" class="form-check-input" required value="{{ tipo.id }}" {% if acao is defined and acao.tipo.id == tipo.id %} checked="true" {% endif %}>
                         </label>
                         {% endfor %} 
+                    </div>
+                    <div class="form-group col-sm-12">
+                        <label for="proposito">Propósito</label>
+                        <textarea class="form-control" name="proposito" rows="5" placeholder="Empoderar e trabalhar a autoestima por meio da dança" required>{% if voluntario is defined %}{{ acao.proposito }}{% endif %}</textarea>
                     </div>
                     <div class="clearfix"></div>
                     <div class="form-group col-sm-3">

@@ -45,6 +45,34 @@ class SiteController implements ControllerProviderInterface
             }
         )->bind('contato');
 
+        $ctrl->get(
+            '/contato/enviar', function (Request $req) use ($app) {
+                $dados = $req->request->all();
+                //so envia email se estiver configurado no config.ini
+                if (isset($file_config['mail.enabled'])) {
+                    $validator = new EmailValidator();
+                    if ($validator->isValid($dados['email'], new RFCValidation())) {
+                        $message = (new \Swift_Message())->setCharset('utf-8');
+                        $message->setSubject('[Contato] '.$dados['nome']);
+                        $message->setFrom(
+                            [$dados['email'] => 'casasaojose.net']
+                        );
+                        $message->setTo(['contato@casasaojose.net']);
+                        $message->setBody(
+                            $dados['mensagem'].' - Celular: '.$dados['celular']
+                        );
+                        $app['mailer']->send($message);
+                    }
+                }
+
+                return $app['twig']->render(
+                    'contato.twig',
+                    array('mensagem'=>'Mensagem enviada. Obrigado!'), 
+                    new Response('Ok', 200)
+                );
+            }
+        )->bind('email');
+
         return $ctrl;
     }
 }

@@ -108,5 +108,13 @@ INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('De 10 a 20 salários','RND');
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('De 4 a 10 salários','RND');
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('De 2 a 4 salários','RND');
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Até 2 salários','RND');
+#Tipo de registro
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('CREA','REG');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('OAB','REG');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('CREFITO','REG');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('CRM','REG');
+#Local
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Matriz','LOC');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Casa SJ','LOC');
 #Acesso
 INSERT INTO acesso(seq_pessoa, nom_usuario,pwd_usuario, tip_perfil) VALUES (1,'jp.trabalho@gmail.com','admin321', 'ROLE_ADMIN');

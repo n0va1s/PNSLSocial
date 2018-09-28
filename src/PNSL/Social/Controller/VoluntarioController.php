@@ -46,6 +46,7 @@ class VoluntarioController implements ControllerProviderInterface
                 $sexos = $app['tipo_service']->findByGrupo('SEX');
                 $tipos_telefone = $app['tipo_service']->findByGrupo('FON');
                 $ufs = $app['tipo_service']->findByGrupo('UF');
+                $tipos_registro = $app['tipo_service']->findByGrupo('REG');
                 $voluntarios = $app['voluntario_service']->fetchAll();
                 return $app['twig']->render(
                     'cadastroVoluntario.twig',
@@ -54,6 +55,7 @@ class VoluntarioController implements ControllerProviderInterface
                     'sexos'=>$sexos, 
                     'tipos_telefone'=>$tipos_telefone,
                     'ufs'=>$ufs,
+                    'tipos_registro'=>$tipos_registro,
                     'voluntarios'=>$voluntarios), 
                     new Response('OK', 200)
                 );
@@ -89,7 +91,7 @@ class VoluntarioController implements ControllerProviderInterface
                         $sexos = $app['tipo_service']->findByGrupo('SEX');
                         $tipos_telefone = $app['tipo_service']->findByGrupo('FON');
                         $ufs = $app['tipo_service']->findByGrupo('UF');
-                    
+                        $tipos_registro = $app['tipo_service']->findByGrupo('REG');
                         return $app['twig']->render(
                             'cadastroVoluntario.twig',
                             array('tipos_pessoa'=>$tipos_pessoa,
@@ -97,6 +99,7 @@ class VoluntarioController implements ControllerProviderInterface
                             'sexos'=>$sexos, 
                             'tipos_telefone'=>$tipos_telefone,
                             'ufs'=>$ufs,
+                            'tipos_registro'=>$tipos_registro,
                             'voluntario'=>$voluntario), 
                             new Response('OK', 200)
                         );

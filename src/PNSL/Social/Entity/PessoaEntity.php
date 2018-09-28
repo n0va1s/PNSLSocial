@@ -66,11 +66,22 @@ class PessoaEntity
      *  @ORM\JoinColumn(name="seq_tipo_telefone", referencedColumnName="seq_tipo", nullable=false) */
     private $tipoTelefone;
 
+    /** @ORM\ManyToOne(targetEntity="TipoEntity")
+     *  @ORM\JoinColumn(name="seq_tipo_renda", referencedColumnName="seq_tipo", nullable=false) */
+    private $tipoRenda;
+
+    /** @ORM\Column(type="integer", name="qtd_familiar", nullable=true) */
+    private $familiar;
+
     /** @ORM\Column(type="string", length=100, name="nom_profissao", nullable=true) */
     private $profissao;
 
-    /** @ORM\Column(type="string", length=15, name="num_NIS", nullable=true) */
-    private $NIS;
+    /** @ORM\Column(type="string", length=15, name="num_registro", nullable=true) */
+    private $registro;
+
+    /** @ORM\ManyToOne(targetEntity="TipoEntity")
+     *  @ORM\JoinColumn(name="seq_tipo_registro", referencedColumnName="seq_tipo", nullable=false) */
+    private $tipoRegistro;
 
     /**
      * @ORM\OneToOne(targetEntity="PessoaEntity")
@@ -563,6 +574,46 @@ class PessoaEntity
     }
 
     /**
+     * Get the value of tipoRenda
+     */ 
+    public function getTipoRenda()
+    {
+        return $this->tipoRenda;
+    }
+
+    /**
+     * Set the value of tipoRenda
+     *
+     * @return  self
+     */ 
+    public function setTipoRenda($tipoRenda)
+    {
+        $this->tipoRenda = $tipoRenda;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of familiar
+     */ 
+    public function getFamiliar()
+    {
+        return $this->familiar;
+    }
+
+    /**
+     * Set the value of familiar
+     *
+     * @return  self
+     */ 
+    public function setFamiliar($familiar)
+    {
+        $this->familiar = $familiar;
+
+        return $this;
+    }
+
+    /**
      * Get the value of profissao
      */ 
     public function getProfissao()
@@ -578,25 +629,47 @@ class PessoaEntity
     public function setProfissao($profissao)
     {
         $this->profissao = $profissao;
+
         return $this;
     }
 
     /**
-     * Get the value of NIS
+     * Get the value of registro
      */ 
-    public function getNIS()
+    public function getRegistro()
     {
-        return $this->NIS;
+        return $this->registro;
     }
 
     /**
-     * Set the value of NIS
+     * Set the value of registro
      *
      * @return  self
      */ 
-    public function setNIS($NIS)
+    public function setRegistro($registro)
     {
-        $this->NIS = $NIS;
+        $this->registro = $registro;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of tipoRegistro
+     */ 
+    public function getTipoRegistro()
+    {
+        return $this->tipoRegistro;
+    }
+
+    /**
+     * Set the value of tipoRegistro
+     *
+     * @return  self
+     */ 
+    public function setTipoRegistro($tipoRegistro)
+    {
+        $this->tipoRegistro = $tipoRegistro;
+
         return $this;
     }
 

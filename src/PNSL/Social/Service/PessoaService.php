@@ -35,8 +35,21 @@ class PessoaService
                         $dados['sexo_pessoa']
                     )
                 );
+                $pessoa->setTipoRenda(
+                    $this->em->getReference(
+                        '\PNSL\Social\Entity\TipoEntity', 
+                        $dados['tipo_renda_pessoa']
+                    )
+                );
+                $pessoa->setFamiliar($dados['familiar_pessoa']);
                 $pessoa->setProfissao($dados['profissao_pessoa']);
-                $pessoa->setNIS($dados['NIS_pessoa']);
+                $pessoa->setRegistro($dados['registro_pessoa']);
+                $pessoa->setTipoRegistro(
+                    $this->em->getReference(
+                        '\PNSL\Social\Entity\TipoEntity', 
+                        $dados['tipo_registro_pessoa']
+                    )
+                );
                 $pessoa->setEndereco($dados['endereco_pessoa']);
                 $pessoa->setCidade($dados['cidade_pessoa']);
                 $pessoa->setUF(
@@ -82,8 +95,23 @@ class PessoaService
                             $dados['sexo_responsavel']
                         )
                     );
+                    //Usei a mesma renda do usuario
+                    $responsavel->setTipoRenda(
+                        $this->em->getReference(
+                            '\PNSL\Social\Entity\TipoEntity', 
+                            $dados['tipo_renda_pessoa']
+                        )
+                    );
+                    //Usei o mesmo do usuario
+                    $responsavel->setFamiliar($dados['familiar_pessoa']);
                     $responsavel->setProfissao($dados['profissao_responsavel']);
-                    $responsavel->setNIS($dados['NIS_responsavel']);
+                    $responsavel->setRegistro($dados['registro_responsavel']);
+                    $responsavel->setTipoRegistro(
+                        $this->em->getReference(
+                            '\PNSL\Social\Entity\TipoEntity', 
+                            $dados['tipo_registro_responsavel']
+                        )
+                    );
                     $responsavel->setEndereco($dados['endereco_responsavel']);
                     $responsavel->setCidade($dados['cidade_responsavel']);
                     $responsavel->setUF(
@@ -142,8 +170,21 @@ class PessoaService
                         $dados['sexo_pessoa']
                     )
                 );
+                $pessoa->setTipoRenda(
+                    $this->em->getReference(
+                        '\PNSL\Social\Entity\TipoEntity', 
+                        $dados['tipo_renda_pessoa']
+                    )
+                );
+                $pessoa->setFamiliar($dados['familiar_pessoa']);
                 $pessoa->setProfissao($dados['profissao_pessoa']);
-                $pessoa->setNIS($dados['NIS_pessoa']);
+                $pessoa->setRegistro($dados['registro_pessoa']);
+                $pessoa->setTipoRegistro(
+                    $this->em->getReference(
+                        '\PNSL\Social\Entity\TipoEntity', 
+                        $dados['tipo_registro_pessoa']
+                    )
+                );
                 $pessoa->setEndereco($dados['endereco_pessoa']);
                 $pessoa->setCidade($dados['cidade_pessoa']);
                 $pessoa->setUF(
@@ -189,8 +230,23 @@ class PessoaService
                         $dados['sexo_responsavel']
                     )
                 );
+                //Usei a mesma renda do usuario
+                $responsavel->setTipoRenda(
+                    $this->em->getReference(
+                        '\PNSL\Social\Entity\TipoEntity', 
+                        $dados['tipo_renda_pessoa']
+                    )
+                );
+                //Usei o mesmo do usuario
+                $responsavel->setFamiliar($dados['familiar_pessoa']);
                 $responsavel->setProfissao($dados['profissao_responsavel']);
-                $responsavel->setNIS($dados['NIS_responsavel']);
+                $responsavel->setRegistro($dados['registro_responsavel']);
+                $responsavel->setTipoRegistro(
+                    $this->em->getReference(
+                        '\PNSL\Social\Entity\TipoEntity', 
+                        $dados['tipo_registro_responsavel']
+                    )
+                );
                 $responsavel->setEndereco($dados['endereco_responsavel']);
                 $responsavel->setCidade($dados['cidade_responsavel']);
                 $responsavel->setUF(

@@ -44,6 +44,7 @@ class AcaoController implements ControllerProviderInterface
                 $faixas_etarias = $app['tipo_service']->findByGrupo('ETA');
                 $turnos = $app['tipo_service']->findByGrupo('TRN');
                 $dias = $app['tipo_service']->findByGrupo('SEM');
+                $locais = $app['tipo_service']->findByGrupo('LOC');
                 $voluntarios = $app['voluntario_service']->fetchAll();
                 $usuarios = $app['pessoa_service']->findUsuarios();
                 $acoes = $app['acao_service']->fetchAll();
@@ -54,6 +55,7 @@ class AcaoController implements ControllerProviderInterface
                     'faixas_etarias'=>$faixas_etarias,
                     'turnos'=>$turnos,
                     'dias'=>$dias,
+                    'locais'=>$locais,
                     'voluntarios'=>$voluntarios,
                     'usuarios'=>$usuarios,
                     'acoes'=>$acoes), 
@@ -109,6 +111,7 @@ class AcaoController implements ControllerProviderInterface
                         $faixas_etarias = $app['tipo_service']->findByGrupo('ETA');
                         $turnos = $app['tipo_service']->findByGrupo('TRN');
                         $dias = $app['tipo_service']->findByGrupo('SEM');
+                        $locais = $app['tipo_service']->findByGrupo('LOC');
                         $voluntarios = $app['voluntario_service']->fetchAll();
                         $usuarios = $app['pessoa_service']->findUsuarios();
                         return $app['twig']->render(
@@ -118,6 +121,7 @@ class AcaoController implements ControllerProviderInterface
                             'faixas_etarias'=>$faixas_etarias,
                             'turnos'=>$turnos,
                             'dias'=>$dias,
+                            'locais'=>$locais,
                             'voluntarios'=>$voluntarios,
                             'usuarios'=>$usuarios,
                             'acao'=>$acao), 

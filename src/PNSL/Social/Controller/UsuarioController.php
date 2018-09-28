@@ -51,6 +51,8 @@ class UsuarioController implements ControllerProviderInterface
                 $turnos = $app['tipo_service']->findByGrupo('TRN');
                 $graus = $app['tipo_service']->findByGrupo('GRA');
                 $ufs = $app['tipo_service']->findByGrupo('UF');
+                $tipos_renda_familiar = $app['tipo_service']->findByGrupo('RND');
+                $tipos_registro = $app['tipo_service']->findByGrupo('REG');
                 $usuarios = $app['pessoa_service']->fetchAll();
                 return $app['twig']->render(
                     'cadastroUsuario.twig',
@@ -62,6 +64,8 @@ class UsuarioController implements ControllerProviderInterface
                     'turnos'=>$turnos,
                     'graus'=>$graus,
                     'ufs'=>$ufs,
+                    'tipos_renda_familiar'=>$tipos_renda_familiar,
+                    'tipos_registro'=>$tipos_registro,
                     'usuarios'=>$usuarios), 
                     new Response('OK', 200)
                 );
@@ -100,6 +104,8 @@ class UsuarioController implements ControllerProviderInterface
                         $turnos = $app['tipo_service']->findByGrupo('TRN');
                         $graus = $app['tipo_service']->findByGrupo('GRA');
                         $ufs = $app['tipo_service']->findByGrupo('UF');
+                        $tipos_renda_familiar = $app['tipo_service']->findByGrupo('RND');
+                        $tipos_registro = $app['tipo_service']->findByGrupo('RND');
                         $usuarios = $app['pessoa_service']->fetchAll();
                         return $app['twig']->render(
                             'cadastroUsuario.twig',
@@ -111,6 +117,8 @@ class UsuarioController implements ControllerProviderInterface
                             'turnos'=>$turnos,
                             'graus'=>$graus,
                             'ufs'=>$ufs,
+                            'tipos_renda_familiar'=>$tipos_renda_familiar,
+                            'tipos_registro'=>$tipos_registro,
                             'usuario'=>$usuario,
                             'usuarios'=>$usuarios), 
                             new Response('OK', 200)

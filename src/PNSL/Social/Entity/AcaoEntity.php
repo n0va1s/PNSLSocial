@@ -20,6 +20,9 @@ class AcaoEntity
     /** @ORM\Column(type="string", length=255, name="nom_acao") */
     private $nome;
 
+    /** @ORM\Column(type="text", name="txt_proposito", nullable=true) */
+    private $proposito;
+
     /** @ORM\Column(type="datetime", name="dat_inicio") */
     private $inicio;
 
@@ -73,6 +76,12 @@ class AcaoEntity
      * @ORM\JoinColumn(name="seq_tipo_acao", referencedColumnName="seq_tipo") 
      */
     private $tipo;
+
+    /** 
+     * @ORM\ManyToOne(targetEntity="TipoEntity")
+     * @ORM\JoinColumn(name="seq_tipo_local", referencedColumnName="seq_tipo") 
+     */
+    private $local;
 
     /** @ORM\OneToMany(targetEntity="AtendimentoEntity", mappedBy="acao") */
     private $atendimentos;
@@ -147,6 +156,26 @@ class AcaoEntity
             return $this;
         }
         
+    }
+
+    /**
+     * Get the value of proposito
+     */ 
+    public function getProposito()
+    {
+        return $this->proposito;
+    }
+
+    /**
+     * Set the value of proposito
+     *
+     * @return  self
+     */ 
+    public function setProposito($proposito)
+    {
+        $this->proposito = $proposito;
+
+        return $this;
     }
 
     /**
@@ -440,6 +469,26 @@ class AcaoEntity
             $this->tipo = $tipo;
             return $this;
         }
+    }
+
+    /**
+     * Get the value of local
+     */ 
+    public function getLocal()
+    {
+        return $this->local;
+    }
+
+    /**
+     * Set the value of local
+     *
+     * @return  self
+     */ 
+    public function setLocal($local)
+    {
+        $this->local = $local;
+
+        return $this;
     }
 
     /**

@@ -60,9 +60,22 @@
                         </label>
                         {% endfor %}
                     </div>                    
-                    <div class="form-group col-sm-7">
+                    <div class="form-group col-sm-4">
                         <label for="profissao_pessoa">Profissão</label>
                         <input type="text" name="profissao_pessoa" class="form-control" placeholder="Costureira" value="{% if voluntario is defined %}{{ voluntario.pessoa.profissao }}{% endif %}">
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <label for="registro_pessoa">Registro</label>
+                        <input type="text" name="registro_pessoa" class="form-control" placeholder="99999-0" value="{% if voluntario is defined %}{{ voluntario.pessoa.registro }}{% endif %}">
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <label for="tipo_registro_pessoa">Tipo</label>
+                        <select class="form-control" name="tipo_registro_pessoa">
+                            <option value="">Selecione</option>
+                            {% for tipo_registro in tipos_registro %}
+                            <option value="{{ tipo_registro.id }}" {% if voluntario is defined and voluntario.pessoa.tipoRegistro.id == tipo_registro.id %} selected {% endif %}>{{ tipo_registro.descricao }}</option>
+                            {% endfor %}
+                        </select>
                     </div>
                 </fieldset>
                 <fieldset>
@@ -80,7 +93,7 @@
                         <select class="form-control" name="UF_pessoa" required>
                             <option value="">Selecione</option>
                             {% for uf in ufs %}
-                            <option value="{{ uf.id }}" {% if pessoa is defined and pessoa.uf.id == uf.id %} selected {% endif %}>{{ uf.descricao }}</option>
+                            <option value="{{ uf.id }}" {% if voluntario is defined and voluntario.uf.id == uf.id %} selected {% endif %}>{{ uf.descricao }}</option>
                             {% endfor %}
                         </select>
                     </div>
@@ -113,7 +126,7 @@
                 <fieldset>
                 <legend><i class="glyphicon glyphicon-menu-right"></i><b>Dados do voluntário</b></legend>
                     <div class="form-group col-sm-12">
-                        <label for="conhecimento">O que mais vc gosta de fazer</label>
+                        <label for="conhecimento">Conhecimentos</label>
                         <textarea class="form-control" name="conhecimento" rows="5" placeholder="Fazer bolos, tirar leite, contabilidade, corrida de rua" required>{% if voluntario is defined %}{{ voluntario.conhecimento }}{% endif %}</textarea>
                     </div>
                 </fieldset>
