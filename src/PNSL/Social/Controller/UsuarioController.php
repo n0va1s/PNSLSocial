@@ -53,6 +53,7 @@ class UsuarioController implements ControllerProviderInterface
                 $ufs = $app['tipo_service']->findByGrupo('UF');
                 $tipos_renda_familiar = $app['tipo_service']->findByGrupo('RND');
                 $tipos_registro = $app['tipo_service']->findByGrupo('REG');
+                $tipos_origem = $app['tipo_service']->findByGrupo('ORG');
                 $usuarios = $app['pessoa_service']->fetchAll();
                 return $app['twig']->render(
                     'cadastroUsuario.twig',
@@ -66,6 +67,7 @@ class UsuarioController implements ControllerProviderInterface
                     'ufs'=>$ufs,
                     'tipos_renda_familiar'=>$tipos_renda_familiar,
                     'tipos_registro'=>$tipos_registro,
+                    'tipos_origem'=>$tipos_origem,
                     'usuarios'=>$usuarios), 
                     new Response('OK', 200)
                 );
@@ -106,6 +108,7 @@ class UsuarioController implements ControllerProviderInterface
                         $ufs = $app['tipo_service']->findByGrupo('UF');
                         $tipos_renda_familiar = $app['tipo_service']->findByGrupo('RND');
                         $tipos_registro = $app['tipo_service']->findByGrupo('RND');
+                        $tipos_origem = $app['tipo_service']->findByGrupo('ORG');
                         $usuarios = $app['pessoa_service']->fetchAll();
                         return $app['twig']->render(
                             'cadastroUsuario.twig',
@@ -119,6 +122,7 @@ class UsuarioController implements ControllerProviderInterface
                             'ufs'=>$ufs,
                             'tipos_renda_familiar'=>$tipos_renda_familiar,
                             'tipos_registro'=>$tipos_registro,
+                            'tipos_origem'=>$tipos_origem,
                             'usuario'=>$usuario,
                             'usuarios'=>$usuarios), 
                             new Response('OK', 200)

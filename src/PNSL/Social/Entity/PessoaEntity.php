@@ -67,7 +67,7 @@ class PessoaEntity
     private $tipoTelefone;
 
     /** @ORM\ManyToOne(targetEntity="TipoEntity")
-     *  @ORM\JoinColumn(name="seq_tipo_renda", referencedColumnName="seq_tipo") */
+     *  @ORM\JoinColumn(name="seq_tipo_renda", referencedColumnName="seq_tipo", nullable=true) */
     private $tipoRenda;
 
     /** @ORM\Column(type="integer", name="qtd_familiar", nullable=true) */
@@ -75,13 +75,6 @@ class PessoaEntity
 
     /** @ORM\Column(type="string", length=100, name="nom_profissao", nullable=true) */
     private $profissao;
-
-    /** @ORM\Column(type="string", length=15, name="num_registro", nullable=true) */
-    private $registro;
-
-    /** @ORM\ManyToOne(targetEntity="TipoEntity")
-     *  @ORM\JoinColumn(name="seq_tipo_registro", referencedColumnName="seq_tipo") */
-    private $tipoRegistro;
 
     /**
      * @ORM\OneToOne(targetEntity="PessoaEntity")
@@ -92,6 +85,10 @@ class PessoaEntity
     /** @ORM\OneToOne(targetEntity="TipoEntity")
      *  @ORM\JoinColumn(name="seq_tipo_parentesco", referencedColumnName="seq_tipo", nullable=true) */
     private $parentesco;
+
+    /** @ORM\ManyToOne(targetEntity="TipoEntity")
+     *  @ORM\JoinColumn(name="seq_tipo_origem", referencedColumnName="seq_tipo", nullable=true) */
+    private $tipoOrigem;
 
     /** @ORM\OneToOne(targetEntity="VoluntarioEntity", mappedBy="pessoa", cascade={"remove"}) */
     private $voluntario;
@@ -241,9 +238,13 @@ class PessoaEntity
         if (empty($dataNascimento)) {
             throw new \InvalidArgumentException('A data de nascimento é obrigatória', 99);
         } else {
-            //TODO:verificar o tipo da data
             if (substr_count($dataNascimento, "/") == 2) {
                 list($dia, $mes, $ano) = explode("/", $dataNascimento);
+                $this->dataNascimento = new \DateTime(
+                    date_format(date_create($ano."-".$mes."-".$dia), "Y-m-d")
+                );
+            } elseif (substr_count($dataNascimento, "-") == 2) {
+                list($dia, $mes, $ano) = explode("-", $dataNascimento);
                 $this->dataNascimento = new \DateTime(
                     date_format(date_create($ano."-".$mes."-".$dia), "Y-m-d")
                 );
@@ -632,47 +633,7 @@ class PessoaEntity
 
         return $this;
     }
-
-    /**
-     * Get the value of registro
-     */ 
-    public function getRegistro()
-    {
-        return $this->registro;
-    }
-
-    /**
-     * Set the value of registro
-     *
-     * @return  self
-     */ 
-    public function setRegistro($registro)
-    {
-        $this->registro = $registro;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of tipoRegistro
-     */ 
-    public function getTipoRegistro()
-    {
-        return $this->tipoRegistro;
-    }
-
-    /**
-     * Set the value of tipoRegistro
-     *
-     * @return  self
-     */ 
-    public function setTipoRegistro($tipoRegistro)
-    {
-        $this->tipoRegistro = $tipoRegistro;
-
-        return $this;
-    }
-
+    
     /**
      * Get the value of responsavel
      */ 
@@ -708,6 +669,26 @@ class PessoaEntity
     public function setParentesco($parentesco)
     {
         $this->parentesco = $parentesco;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of tipoOrigem
+     */ 
+    public function getTipoOrigem()
+    {
+        return $this->tipoOrigem;
+    }
+
+    /**
+     * Set the value of tipoOrigem
+     *
+     * @return  self
+     */ 
+    public function setTipoOrigem($tipoOrigem)
+    {
+        $this->tipoOrigem = $tipoOrigem;
 
         return $this;
     }

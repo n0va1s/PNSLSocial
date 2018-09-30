@@ -16,7 +16,14 @@ class VoluntarioEntity
      * @ORM\JoinColumn(name="seq_pessoa", referencedColumnName="seq_pessoa", nullable=false) */
     private $pessoa;
     
-     /** @ORM\Column(type="text", name="txt_conhecimento", nullable=true) */
+    /** @ORM\Column(type="string", length=15, name="num_registro", nullable=true) */
+    private $registro;
+
+    /** @ORM\ManyToOne(targetEntity="TipoEntity")
+     *  @ORM\JoinColumn(name="seq_tipo_registro", referencedColumnName="seq_tipo", nullable=true) */
+    private $tipoRegistro;
+
+    /** @ORM\Column(type="text", name="txt_conhecimento", nullable=true) */
      private $conhecimento;
 
     /** @ORM\Column(type="string", name="ind_assinou_termo", columnDefinition="CHAR(1) NOT NULL", options={"default":"N"}) */
@@ -69,45 +76,43 @@ class VoluntarioEntity
     }
 
     /**
-     * Get the value of profissao
+     * Get the value of registro
      */ 
-    public function getProfissao()
+    public function getRegistro()
     {
-        return $this->profissao;
+        return $this->registro;
     }
 
     /**
-     * Set the value of profissao
+     * Set the value of registro
      *
      * @return  self
      */ 
-    public function setProfissao($profissao)
+    public function setRegistro($registro)
     {
-        $this->profissao = $profissao;
+        $this->registro = $registro;
+
         return $this;
     }
 
     /**
-     * Get the value of estadoCivil
+     * Get the value of tipoRegistro
      */ 
-    public function getEstadoCivil()
+    public function getTipoRegistro()
     {
-        return $this->estadoCivil;
+        return $this->tipoRegistro;
     }
 
     /**
-     * Set the value of estadoCivil
+     * Set the value of tipoRegistro
      *
      * @return  self
      */ 
-    public function setEstadoCivil($estadoCivil)
+    public function setTipoRegistro($tipoRegistro)
     {
-        if (empty($estadoCivil)) {
-            throw new \InvalidArgumentException('O estado civil é obrigatório', 99);
-        } else {
-            $this->estadoCivil = $estadoCivil;
-            return $this;
-        }
+        $this->tipoRegistro = $tipoRegistro;
+
+        return $this;
     }
 
     /**

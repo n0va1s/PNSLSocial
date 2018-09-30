@@ -56,7 +56,7 @@
                         <label for="nacionalidade_pessoa">Nacionalidade</label>
                         <input type="text" name="nacionalidade_pessoa" class="form-control" placeholder="Brasíleira" required value="{% if usuario is defined %}{{ usuario.nacionalidade }}{% endif %}">
                     </div>
-                    <div class="form-group col-sm-3">
+                    <div class="form-group col-sm-4">
                         <label for="tipo_renda_pessoa">Renda</label>
                         <select class="form-control" name="tipo_renda_pessoa">
                             <option value="">Selecione</option>
@@ -69,20 +69,12 @@
                         <label for="familiar_pessoa">Familiares</label>
                         <input type="text" name="familiar_pessoa" class="form-control" placeholder="9" value="{% if voluntario is defined %}{{ voluntario.pessoa.familiar }}{% endif %}">
                     </div>
-                    <div class="form-group col-sm-3">
-                        <label for="profissao_pessoa">Profissão</label>
-                        <input type="text" name="profissao_pessoa" class="form-control" placeholder="Costureira" value="{% if voluntario is defined %}{{ voluntario.pessoa.profissao }}{% endif %}">
-                    </div>
-                    <div class="form-group col-sm-2">
-                        <label for="registro_pessoa">Registro</label>
-                        <input type="text" name="registro_pessoa" class="form-control" placeholder="99999-0" value="{% if voluntario is defined %}{{ voluntario.pessoa.registro }}{% endif %}">
-                    </div>
-                    <div class="form-group col-sm-2">
-                        <label for="tipo_registro_pessoa">Tipo</label>
-                        <select class="form-control" name="tipo_registro_pessoa">
+                    <div class="form-group col-sm-6">
+                        <label for="tipo_como_soube">Como soube</label>
+                        <select class="form-control" name="tipo_como_soube">
                             <option value="">Selecione</option>
-                            {% for tipo_registro in tipos_registro %}
-                            <option value="{{ tipo_registro.id }}" {% if voluntario is defined and voluntario.pessoa.tipoRegistro.id == tipo_registro.id %} selected {% endif %}>{{ tipo_registro.descricao }}</option>
+                            {% for tipo_origem in tipos_origem %}
+                            <option value="{{ tipo_origem.id }}" {% if voluntario is defined and voluntario.pessoa.tipoOrigem.id == tipo_origem.id %} selected {% endif %}>{{ tipo_origem.descricao }}</option>
                             {% endfor %}
                         </select>
                     </div>
@@ -162,6 +154,15 @@
                 </fieldset>
                 <fieldset>
                 <legend><i class="glyphicon glyphicon-menu-right"></i><b>Dados da família</b></legend>
+                    {% for tipo in tipos_pessoa %}
+                        {% if tipo.descricao == 'Responsável' %}
+                        <input type="hidden" name="tipo_responsavel" value="{{ tipo.id }}">
+                        {% endif %}
+                    {% endfor %}
+                    <div class="form-group col-sm-3">
+                        <label for="CPF_responsavel">CPF</label>
+                        <input type="text" name="CPF_responsavel" class="form-control" placeholder="999.999.999-99">
+                    </div>
                     <div class="form-group col-sm-6">
                         <label for="nome_responsavel">Responsável</label>
                         <input type="text" name="nome_responsavel" class="form-control" placeholder="Nome do responsável">
@@ -175,11 +176,12 @@
                         <label for="sexo_responsavel" class="form-check-label">Sexo</label><br />
                         {% for sexo in sexos %}
                         <label class="form-check-label">{{sexo.descricao}}
-                            <input type="radio" name="responsavel" class="form-check-input" value="{{sexo.id}}" {% if voluntario is defined and voluntario.pessoa.sexo == 'M' %} checked="true" {% endif %}>
+                            <input type="radio" name="sexo_responsavel" class="form-check-input" value="{{sexo.id}}" {% if voluntario is defined and voluntario.pessoa.sexo == 'M' %} checked="true" {% endif %}>
                         </label>
                         {% endfor %}
-                    </div>                    
-                    <div class="form-group col-sm-3">
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="form-group col-sm-4">
                         <label for="parentesco_responsavel">Parentesco</label>
                         <select class="form-control" name="parentesco_responsavel">
                             <option value="">Selecione</option>
@@ -187,8 +189,8 @@
                             <option value="{{ parentesco.id }}" {% if usuario is defined and usuario.parentesco.id == parentesco.id %} selected {% endif %}>{{ parentesco.descricao }}</option>
                             {% endfor %} 
                         </select>
-                    </div>
-                    <div class="form-group col-sm-2">
+                    </div>  
+                    <div class="form-group col-sm-4">
                         <label for="estado_civil_responsavel" class="form-check-label">Estado Civil</label><br />
                         <select class="form-control" name="estado_civil_responsavel">
                             <option value="">Selecione</option>
@@ -200,19 +202,6 @@
                     <div class="form-group col-sm-4">
                         <label for="profissao_responsavel">Profissão</label>
                         <input type="text" name="profissao_responsavel" class="form-control" placeholder="Costureira" value="{% if voluntario is defined %}{{ voluntario.pessoa.profissao }}{% endif %}">
-                    </div>
-                    <div class="form-group col-sm-3">
-                        <label for="registro_responsavel">Registro</label>
-                        <input type="text" name="registro_responsavel" class="form-control" placeholder="99999-0" value="{% if voluntario is defined %}{{ voluntario.pessoa.registro }}{% endif %}">
-                    </div>
-                    <div class="form-group col-sm-3">
-                        <label for="tipo_registro_responsavel">Tipo</label>
-                        <select class="form-control" name="tipo_registro_responsavel">
-                            <option value="">Selecione</option>
-                            {% for tipo_registro in tipos_registro %}
-                            <option value="{{ tipo_registro.id }}" {% if voluntario is defined and voluntario.pessoa.tipoRegistro.id == tipo_registro.id %} selected {% endif %}>{{ tipo_registro.descricao }}</option>
-                            {% endfor %}
-                        </select>
                     </div>
                     <div class="form-group col-sm-3">
                         <label for="telefone_responsavel">Telefone</label>
@@ -231,17 +220,13 @@
                         <label for="email_responsavel">Email</label>
                         <input type="email" name="email_responsavel" class="form-control" placeholder="xxx@email.com">
                     </div>
-                    <div class="form-group col-sm-3">
+                    <div class="form-group col-sm-4">
                         <label for="nascimento_responsavel">Nascimento</label>
                         <input type="date" name="nascimento_responsavel" class="form-control" placeholder="dd/mm/aaaa">
                     </div>
-                    <div class="form-group col-sm-2">
+                    <div class="form-group col-sm-4">
                         <label for="RG_responsavel">RG</label>
                         <input type="text" name="RG_responsavel" class="form-control" placeholder="9.999.999">
-                    </div>
-                    <div class="form-group col-sm-3">
-                        <label for="CPF_responsavel">CPF</label>
-                        <input type="text" name="CPF_responsavel" class="form-control" placeholder="999.999.999-99">
                     </div>
                     <div class="form-group col-sm-4">
                         <label for="nacionalidade_responsavel">Nacionalidade</label>

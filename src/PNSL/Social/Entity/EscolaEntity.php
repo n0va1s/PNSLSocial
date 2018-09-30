@@ -18,10 +18,12 @@ class EscolaEntity
     /** @ORM\Column(type="smallint", name="num_ano") */
     private $ano;
 
-    /** @ORM\Column(type="smallint", name="tip_turno") */
+    /** @ORM\ManyToOne(targetEntity="TipoEntity")
+     *  @ORM\JoinColumn(name="seq_tipo_turno", referencedColumnName="seq_tipo", nullable=false) */
     private $turno;
 
-    /** @ORM\Column(type="smallint", name="tip_grau") */
+    /** @ORM\ManyToOne(targetEntity="TipoEntity")
+     *  @ORM\JoinColumn(name="seq_tipo_grau", referencedColumnName="seq_tipo", nullable=false) */
     private $grau;
 
     /** @ORM\Column(type="string", length=50, name="usu_inc", nullable=false) */

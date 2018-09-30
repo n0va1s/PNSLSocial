@@ -23,8 +23,18 @@ class EscolaService
                 $escola->setPessoa($pessoa);
                 $escola->setEscola($dados['escola']);
                 $escola->setAno($dados['ano']);
-                $escola->setTurno($dados['turno']);
-                $escola->setGrau($dados['grau']);                    
+                $escola->setTurno(
+                    $this->em->getReference(
+                        '\PNSL\Social\Entity\TipoEntity', 
+                        $dados['turno']
+                    )
+                );
+                $escola->setGrau(
+                    $this->em->getReference(
+                        '\PNSL\Social\Entity\TipoEntity', 
+                        $dados['grau']
+                    )
+                );
                 $escola->setUsuarioInclusao('usuarioInc');
                 $escola->setUsuarioAlteracao('usuarioAlt');
                 $this->em->persist($escola);
@@ -43,8 +53,11 @@ class EscolaService
     public function fetchAll()
     {
         $pessoas = $this->em->createQuery(
-            'select p, v from \PNSL\Social\Entity\EscolaEntity e 
-            join e.pessoa p order by p.nome ASC'
+            'select p, e, g, t from \PNSL\Social\Entity\EscolaEntity e 
+            join e.pessoa p 
+            join e.grau g
+            join e.turno t 
+            order by p.nome ASC'
         )->getArrayResult();
         return $pessoas;
     }
@@ -52,10 +65,12 @@ class EscolaService
     public function findById(int $id)
     {
         $pessoa = $this->em->createQuery(
-            'select p, v, tt, es from \PNSL\Social\Entity\EscolaEntity e 
+            'select p, e, g, t from \PNSL\Social\Entity\EscolaEntity e 
             join e.pessoa p
+            join e.grau g
+            join e.turno t 
             where p.id = :id'
-        )->setParameter('id', $id)->getArrayResult();
-        return $pessoa[0]; //TODO: substituir o array pelo getSingleResult. Ao usar travou
+        )->setParameter('id', $id)->getOneOrNullResult();
+        return $pessoa; 
     }
 }

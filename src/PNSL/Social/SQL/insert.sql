@@ -116,5 +116,11 @@ INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('CRM','REG');
 #Local
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Matriz','LOC');
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Casa SJ','LOC');
+#Origem
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Centro de Assistência Social','ORG');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Conselho Tutelar','ORG');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Justiça','ORG');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Escola Pública','ORG');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Nossa Senhora do Lago','ORG');
 #Acesso
 INSERT INTO acesso(seq_pessoa, nom_usuario,pwd_usuario, tip_perfil) VALUES (1,'jp.trabalho@gmail.com','admin321', 'ROLE_ADMIN');

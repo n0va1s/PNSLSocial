@@ -21,6 +21,7 @@ class PessoaService
 // print_r($dados);
 // echo "</pre>";
 // exit;
+        //Pessoa
         if ($dados['sexo_pessoa']) {
             $sexo_pessoa = $this->em->getReference(
                 '\PNSL\Social\Entity\TipoEntity', 
@@ -33,22 +34,10 @@ class PessoaService
                 $dados['tipo_renda_pessoa']
             );
         }        
-        if ($dados['tipo_registro_pessoa']) {
-            $tipo_registro_pessoa = $this->em->getReference(
-                '\PNSL\Social\Entity\TipoEntity', 
-                $dados['tipo_registro_pessoa']
-            );
-        }
         if ($dados['UF_pessoa']) {
             $uf_pessoa = $this->em->getReference(
                 '\PNSL\Social\Entity\TipoEntity', 
                 $dados['UF_pessoa']
-            );
-        }
-        if ($dados['tipo_pessoa']) {
-            $tipo_pessoa = $this->em->getReference(
-                '\PNSL\Social\Entity\TipoEntity', 
-                $dados['tipo_pessoa']
             );
         }
         if ($dados['estado_civil_pessoa']) {
@@ -63,7 +52,74 @@ class PessoaService
                 $dados['tipo_telefone_pessoa']
             );
         }
-        
+        if ($dados['tipo_origem_pessoa']) {
+            $tipo_origem_pessoa = $this->em->getReference(
+                '\PNSL\Social\Entity\TipoEntity', 
+                $dados['tipo_origem_pessoa']
+            );
+        }
+        if ($dados['tipo_pessoa']) {
+            $tipo_pessoa = $this->em->getReference(
+                '\PNSL\Social\Entity\TipoEntity', 
+                $dados['tipo_pessoa']
+            );
+        }        
+        //Responsavel
+        if ($dados['sexo_responsavel']) {
+            $sexo_responsavel = $this->em->getReference(
+                '\PNSL\Social\Entity\TipoEntity', 
+                $dados['sexo_responsavel']
+            );
+        }
+        if ($dados['tipo_renda_responsavel']) {
+            $tipo_renda_responsavel = $this->em->getReference(
+                '\PNSL\Social\Entity\TipoEntity', 
+                $dados['tipo_renda_responsavel']
+            );
+        }        
+        if ($dados['tipo_registro_responsavel']) {
+            $tipo_registro_responsavel = $this->em->getReference(
+                '\PNSL\Social\Entity\TipoEntity', 
+                $dados['tipo_registro_responsavel']
+            );
+        }
+        if ($dados['UF_responsavel']) {
+            $uf_responsavel = $this->em->getReference(
+                '\PNSL\Social\Entity\TipoEntity', 
+                $dados['UF_responsavel']
+            );
+        }
+        if ($dados['tipo_responsavel']) {
+            $tipo_responsavel = $this->em->getReference(
+                '\PNSL\Social\Entity\TipoEntity', 
+                $dados['tipo_responsavel']
+            );
+        }
+        if ($dados['estado_civil_responsavel']) {
+            $estado_civil_responsavel = $this->em->getReference(
+                '\PNSL\Social\Entity\TipoEntity', 
+                $dados['estado_civil_responsavel']
+            );
+        }
+        if ($dados['tipo_telefone_responsavel']) {
+            $tipo_telefone_responsavel = $this->em->getReference(
+                '\PNSL\Social\Entity\TipoEntity', 
+                $dados['tipo_telefone_responsavel']
+            );
+        }
+        if ($dados['tipo_origem_responsavel']) {
+            $tipo_origem_responsavel = $this->em->getReference(
+                '\PNSL\Social\Entity\TipoEntity', 
+                $dados['tipo_origem_responsavel']
+            );
+        }
+        if ($dados['tipo_responsavel']) {
+            $tipo_responsavel = $this->em->getReference(
+                '\PNSL\Social\Entity\TipoEntity', 
+                $dados['tipo_responsavel']
+            );
+        }
+
         if (is_array($dados)) {
             if (empty($dados['id'])) {
                 $pessoa = new PessoaEntity();
@@ -72,23 +128,22 @@ class PessoaService
                 $pessoa->setDataNascimento($dados['nascimento_pessoa']);
                 $pessoa->setRG($dados['RG_pessoa']);
                 $pessoa->setNacionalidade($dados['nacionalidade_pessoa']);
+                $pessoa->setEstadoCivil($estado_civil_pessoa);
                 $pessoa->setSexo($sexo_pessoa);
                 $pessoa->setTipoRenda($tipo_renda_pessoa);
                 $pessoa->setFamiliar($dados['familiar_pessoa']);
                 $pessoa->setProfissao($dados['profissao_pessoa']);
-                $pessoa->setRegistro($dados['registro_pessoa']);
-                $pessoa->setTipoRegistro($tipo_registro_pessoa);
                 $pessoa->setEndereco($dados['endereco_pessoa']);
                 $pessoa->setCidade($dados['cidade_pessoa']);
                 $pessoa->setUF($uf_pessoa);
                 $pessoa->setCEP($dados['CEP_pessoa']);
+                $pessoa->setTipoTelefone($tipo_telefone_pessoa);
                 $pessoa->setTelefone($dados['telefone_pessoa']);
                 $pessoa->setEmail($dados['email_pessoa']);
                 $pessoa->setTipoPessoa($tipo_pessoa);
+                $pessoa->setTipoOrigem($tipo_origem_pessoa);
                 $pessoa->setUsuarioInclusao('usuarioInclusao');
                 $pessoa->setUsuarioAlteracao('usuarioAlteracao');
-                $pessoa->setEstadoCivil($estado_civil_pessoa);
-                $pessoa->setTipoTelefone($tipo_telefone_pessoa);
                 
                 if (!empty($dados['nome_responsavel'])) {
                     $responsavel = new PessoaEntity();
@@ -97,66 +152,23 @@ class PessoaService
                     $responsavel->setDataNascimento($dados['nascimento_responsavel']);
                     $responsavel->setRG($dados['RG_responsavel']);
                     $responsavel->setNacionalidade($dados['nacionalidade_responsavel']);
-                    $responsavel->setSexo(
-                        $this->em->getReference(
-                            '\PNSL\Social\Entity\TipoEntity', 
-                            $dados['sexo_responsavel']
-                        )
-                    );
-                    //Usei a mesma renda do usuario
-                    $responsavel->setTipoRenda(
-                        $this->em->getReference(
-                            '\PNSL\Social\Entity\TipoEntity', 
-                            $dados['tipo_renda_pessoa']
-                        )
-                    );
-                    //Usei o mesmo do usuario
-                    $responsavel->setFamiliar($dados['familiar_pessoa']);
+                    $responsavel->setEstadoCivil($estado_civil_responsavel);
+                    $responsavel->setSexo($sexo_responsavel);
+                    $responsavel->setTipoRenda($tipo_renda_responsavel);
+                    $responsavel->setFamiliar($dados['familiar_responsavel']);
                     $responsavel->setProfissao($dados['profissao_responsavel']);
-                    $responsavel->setRegistro($dados['registro_responsavel']);
-                    $responsavel->setTipoRegistro(
-                        $this->em->getReference(
-                            '\PNSL\Social\Entity\TipoEntity', 
-                            $dados['tipo_registro_responsavel']
-                        )
-                    );
                     $responsavel->setEndereco($dados['endereco_responsavel']);
                     $responsavel->setCidade($dados['cidade_responsavel']);
-                    $responsavel->setUF(
-                        $this->em->getReference(
-                            '\PNSL\Social\Entity\TipoEntity', 
-                            $dados['UF_responsavel']
-                        )
-                    );
+                    $responsavel->setUF($uf_responsavel);
                     $responsavel->setCEP($dados['CEP_responsavel']);
+                    $responsavel->setTipoTelefone($tipo_telefone_responsavel);
                     $responsavel->setTelefone($dados['telefone_responsavel']);
                     $responsavel->setEmail($dados['email_responsavel']);
-                    $responsavel->setTipoPessoa(
-                        $this->em->getReference(
-                            '\PNSL\Social\Entity\TipoEntity', 
-                            $dados['tipo_responsavel']
-                        )
-                    );
+                    $responsavel->setTipoPessoa($tipo_responsavel);                
+                    $responsavel->setTipoOrigem($tipo_origem_responsavel);
                     $responsavel->setUsuarioInclusao('usuarioInclusao');
                     $responsavel->setUsuarioAlteracao('usuarioAlteracao');
-                    $responsavel->setEstadoCivil(
-                        $this->em->getReference(
-                            '\PNSL\Social\Entity\TipoEntity', 
-                            $dados['estado_civil_responsavel']
-                        )
-                    );
-                    $responsavel->setParentesco(
-                        $this->em->getReference(
-                            '\PNSL\Social\Entity\TipoEntity', 
-                            $dados['parentesco_responsavel']
-                        )
-                    );
-                    $responsavel->setTipoTelefone(
-                        $this->em->getReference(
-                            '\PNSL\Social\Entity\TipoEntity', 
-                            $dados['tipo_telefone_responsavel']
-                        )
-                    );
+
                     $this->em->persist($responsavel);
                     $pessoa->setResponsavel($responsavel);
                     $this->em->flush();
@@ -172,126 +184,50 @@ class PessoaService
                 $pessoa->setDataNascimento($dados['nascimento_pessoa']);
                 $pessoa->setRG($dados['RG_pessoa']);
                 $pessoa->setNacionalidade($dados['nacionalidade_pessoa']);
-                $pessoa->setSexo(
-                    $this->em->getReference(
-                        '\PNSL\Social\Entity\TipoEntity', 
-                        $dados['sexo_pessoa']
-                    )
-                );
-                $pessoa->setTipoRenda(
-                    $this->em->getReference(
-                        '\PNSL\Social\Entity\TipoEntity', 
-                        $dados['tipo_renda_pessoa']
-                    )
-                );
+                $pessoa->setEstadoCivil($estado_civil_pessoa);
+                $pessoa->setSexo($sexo_pessoa);
+                $pessoa->setTipoRenda($tipo_renda_pessoa);
                 $pessoa->setFamiliar($dados['familiar_pessoa']);
                 $pessoa->setProfissao($dados['profissao_pessoa']);
-                $pessoa->setRegistro($dados['registro_pessoa']);
-                $pessoa->setTipoRegistro(
-                    $this->em->getReference(
-                        '\PNSL\Social\Entity\TipoEntity', 
-                        $dados['tipo_registro_pessoa']
-                    )
-                );
                 $pessoa->setEndereco($dados['endereco_pessoa']);
                 $pessoa->setCidade($dados['cidade_pessoa']);
-                $pessoa->setUF(
-                    $this->em->getReference(
-                        '\PNSL\Social\Entity\TipoEntity', 
-                        $dados['UF_pessoa']
-                    )
-                );
+                $pessoa->setUF($uf_pessoa);
                 $pessoa->setCEP($dados['CEP_pessoa']);
+                $pessoa->setTipoTelefone($tipo_telefone_pessoa);
                 $pessoa->setTelefone($dados['telefone_pessoa']);
                 $pessoa->setEmail($dados['email_pessoa']);
-                $pessoa->setTipoPessoa(
-                    $this->em->getReference(
-                        '\PNSL\Social\Entity\TipoEntity', 
-                        $dados['tipo_pessoa']
-                    )
-                );
-                $pessoa->setUsuarioAlteracao('usuarioAlt');
-                $pessoa->setEstadoCivil(
-                    $this->em->getReference(
-                        '\PNSL\Social\Entity\TipoEntity', 
-                        $dados['estado_civil_pessoa']
-                    )
-                );
-                $pessoa->setTipoTelefone(
-                    $this->em->getReference(
-                        '\PNSL\Social\Entity\TipoEntity', 
-                        $dados['tipo_telefone_pessoa']
-                    )
-                );                
-                $responsavel = $this->em->getReference(
-                    '\PNSL\Social\Entity\PessoaEntity', 
-                    $pessoa->getResponsavel()
-                );
-                $responsavel->setCPF($dados['CPF_responsavel']);
-                $responsavel->setNome($dados['nome_responsavel']);
-                $responsavel->setDataNascimento($dados['nascimento_responsavel']);
-                $responsavel->setRG($dados['RG_responsavel']);
-                $responsavel->setNacionalidade($dados['nacionalidade_responsavel']);
-                $responsavel->setSexo(
-                    $this->em->getReference(
-                        '\PNSL\Social\Entity\TipoEntity', 
-                        $dados['sexo_responsavel']
-                    )
-                );
-                //Usei a mesma renda do usuario
-                $responsavel->setTipoRenda(
-                    $this->em->getReference(
-                        '\PNSL\Social\Entity\TipoEntity', 
-                        $dados['tipo_renda_pessoa']
-                    )
-                );
-                //Usei o mesmo do usuario
-                $responsavel->setFamiliar($dados['familiar_pessoa']);
-                $responsavel->setProfissao($dados['profissao_responsavel']);
-                $responsavel->setRegistro($dados['registro_responsavel']);
-                $responsavel->setTipoRegistro(
-                    $this->em->getReference(
-                        '\PNSL\Social\Entity\TipoEntity', 
-                        $dados['tipo_registro_responsavel']
-                    )
-                );
-                $responsavel->setEndereco($dados['endereco_responsavel']);
-                $responsavel->setCidade($dados['cidade_responsavel']);
-                $responsavel->setUF(
-                    $this->em->getReference(
-                        '\PNSL\Social\Entity\TipoEntity', 
-                        $dados['UF_responsavel']
-                    )
-                );
-                $responsavel->setCEP($dados['CEP_responsavel']);
-                $responsavel->setTelefone($dados['telefone_responsavel']);
-                $responsavel->setEmail($dados['email_responsavel']);
-                $responsavel->setTipoPessoa(
-                    $this->em->getReference(
-                        '\PNSL\Social\Entity\TipoEntity', 
-                        $dados['tipo_responsavel']
-                    )
-                );
-                $responsavel->setUsuarioInclusao('usuarioInclusao');
-                $responsavel->setUsuarioAlteracao('usuarioAlteracao');
-                $responsavel->setEstadoCivil(
-                    $this->em->getReference(
-                        '\PNSL\Social\Entity\TipoEntity', 
-                        $dados['estado_civil_responsavel']
-                    )
-                );
-                $responsavel->setParentesco(
-                    $this->em->getReference(
-                        '\PNSL\Social\Entity\TipoEntity', 
-                        $dados['parentesco_responsavel']
-                    )
-                );
-                $responsavel->setTipoTelefone(
-                    $this->em->getReference(
-                        '\PNSL\Social\Entity\TipoEntity', 
-                        $dados['tipo_telefone_responsavel']
-                    )
-                );
+                $pessoa->setTipoPessoa($tipo_pessoa);                
+                $pessoa->setTipoOrigem($tipo_origem_pessoa);
+                $pessoa->setUsuarioInclusao('usuarioInclusao');
+                $pessoa->setUsuarioAlteracao('usuarioAlteracao');
+
+                if (!empty($dados['nome_responsavel'])) {
+                    $responsavel = $this->em->getReference(
+                        '\PNSL\Social\Entity\PessoaEntity', 
+                        $pessoa->getResponsavel()
+                    );
+                    $responsavel->setCPF($dados['CPF_responsavel']);
+                    $responsavel->setNome($dados['nome_responsavel']);
+                    $responsavel->setDataNascimento($dados['nascimento_responsavel']);
+                    $responsavel->setRG($dados['RG_responsavel']);
+                    $responsavel->setNacionalidade($dados['nacionalidade_responsavel']);
+                    $responsavel->setEstadoCivil($estado_civil_responsavel);
+                    $responsavel->setSexo($sexo_responsavel);
+                    $responsavel->setTipoRenda($tipo_renda_responsavel);
+                    $responsavel->setFamiliar($dados['familiar_responsavel']);
+                    $responsavel->setProfissao($dados['profissao_responsavel']);
+                    $responsavel->setEndereco($dados['endereco_responsavel']);
+                    $responsavel->setCidade($dados['cidade_responsavel']);
+                    $responsavel->setUF($uf_responsavel);
+                    $responsavel->setCEP($dados['CEP_responsavel']);
+                    $responsavel->setTipoTelefone($tipo_telefone_responsavel);
+                    $responsavel->setTelefone($dados['telefone_responsavel']);
+                    $responsavel->setEmail($dados['email_responsavel']);
+                    $responsavel->setTipoPessoa($tipo_responsavel);                
+                    $responsavel->setTipoOrigem($tipo_origem_responsavel);
+                    $responsavel->setUsuarioInclusao('usuarioInclusao');
+                    $responsavel->setUsuarioAlteracao('usuarioAlteracao');
+                }
             }
             //A transacao conclui no cadastro do usuario (Pessoa) caso nao
             //haja o cadastro do responsavel ou da escola
@@ -314,14 +250,6 @@ class PessoaService
         return $this->em->flush();
     }
     
-    public function fetchAll()
-    {
-        $pessoas = $this->em->createQuery(
-            'select p from \PNSL\Social\Entity\PessoaEntity p '
-        )->getArrayResult();
-        return $pessoas;
-    }
-    
     public function findById(int $id)
     {
         $pessoa = $this->em->createQuery(
@@ -338,7 +266,7 @@ class PessoaService
         return $pessoa;
     }
 
-    public function findUsuarios()
+    public function fetchAll()
     {
         $pessoas = $this->em->createQuery(
             'select p, ec, tt, pa, uf, tp, se
@@ -349,24 +277,8 @@ class PessoaService
                 inner join p.sexo se
                 inner join p.uf uf
                 inner join p.tipoPessoa tp
-             where p.tipoPessoa <> :tipo'
-        )->setParameter('tipo', 'VOL')->getArrayResult();
-        return $pessoas;
-    }
-
-    public function findVoluntarios()
-    {
-        $pessoas = $this->em->createQuery(
-            'select p, ec, tt, pa, se, uf, tp
-              from \PNSL\Social\Entity\PessoaEntity p 
-                inner join p.estadoCivil ec
-                inner join p.tipoTelefone tt
-                left join p.parentesco pa
-                inner join p.sexo se
-                inner join p.uf uf
-                inner join p.tipoPessoa tp
-             where p.tipoPessoa = :tipo'
-        )->setParameter('tipo', 'VOL')->getArrayResult();
+             where tp.descricao <> :tipo'
+        )->setParameter('tipo', 'Voluntário')->getArrayResult();
         return $pessoas;
     }
 

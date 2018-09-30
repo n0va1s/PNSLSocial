@@ -29,7 +29,7 @@
                     <div class="clearfix"></div>
                     <div class="form-group col-sm-3">
                         <label for="nascimento_pessoa">Nascimento</label>
-                        <input type="date" name="nascimento_pessoa" class="form-control" placeholder="dd/mm/aaaa" required value="{% if voluntario is defined %}{{ voluntario.pessoa.dataNascimento | date("d/m/Y") }}{% endif %}">
+                        <input type="date" name="nascimento_pessoa" class="form-control" placeholder="dd/mm/aaaa" required value="{% if voluntario is defined %}{{ voluntario.pessoa.dataNascimento.date | date("d/m/Y") }}{% endif %}">
                     </div>
                     <div class="form-group col-sm-2">
                         <label for="RG_pessoa">RG</label>
@@ -52,7 +52,7 @@
                         <label for="sexo_pessoa" class="form-check-label">Sexo</label><br />
                         {% for sexo in sexos %}
                         <label class="form-check-label">{{sexo.descricao}}
-                            <input type="radio" name="sexo_pessoa" class="form-check-input" value="{{sexo.id}}" {% if voluntario is defined and voluntario.pessoa.sexo == 'M' %} checked="true" {% endif %}>
+                            <input type="radio" name="sexo_pessoa" class="form-check-input" value="{{sexo.id}}" {% if voluntario is defined and voluntario.pessoa.sexo.descricao == 'M' %} checked="true" {% endif %}>
                         </label>
                         {% endfor %}
                     </div>                    
@@ -62,14 +62,14 @@
                     </div>
                     <div class="form-group col-sm-3">
                         <label for="registro_pessoa">Registro</label>
-                        <input type="text" name="registro_pessoa" class="form-control" placeholder="99999-0" value="{% if voluntario is defined %}{{ voluntario.pessoa.registro }}{% endif %}">
+                        <input type="text" name="registro" class="form-control" placeholder="99999-0" value="{% if voluntario is defined %}{{ voluntario.registro }}{% endif %}">
                     </div>
                     <div class="form-group col-sm-3">
-                        <label for="tipo_registro_pessoa">Tipo</label>
-                        <select class="form-control" name="tipo_registro_pessoa">
+                        <label for="tipo_registro">Tipo</label>
+                        <select class="form-control" name="tipo_registro">
                             <option value="">Selecione</option>
                             {% for tipo_registro in tipos_registro %}
-                            <option value="{{ tipo_registro.id }}" {% if voluntario is defined and voluntario.pessoa.tipoRegistro.id == tipo_registro.id %} selected {% endif %}>{{ tipo_registro.descricao }}</option>
+                            <option value="{{ tipo_registro.id }}" {% if voluntario is defined and voluntario.tipoRegistro.id == tipo_registro.id %} selected {% endif %}>{{ tipo_registro.descricao }}</option>
                             {% endfor %}
                         </select>
                     </div>
@@ -89,7 +89,7 @@
                         <select class="form-control" name="UF_pessoa" required>
                             <option value="">Selecione</option>
                             {% for uf in ufs %}
-                            <option value="{{ uf.id }}" {% if voluntario is defined and voluntario.uf.id == uf.id %} selected {% endif %}>{{ uf.descricao }}</option>
+                            <option value="{{ uf.id }}" {% if voluntario is defined and voluntario.pessoa.uf.id == uf.id %} selected {% endif %}>{{ uf.descricao }}</option>
                             {% endfor %}
                         </select>
                     </div>

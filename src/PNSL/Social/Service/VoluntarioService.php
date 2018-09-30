@@ -17,9 +17,17 @@ class VoluntarioService
     
     public function save($pessoa, $dados)
     {
+        if ($dados['tipo_registro']) {
+            $tipo_registro = $this->em->getReference(
+                '\PNSL\Social\Entity\TipoEntity', 
+                $dados['tipo_registro']
+            );
+        }
         if (empty($dados['id'])) {
             $voluntario = new VoluntarioEntity();
             $voluntario->setPessoa($pessoa);
+            $voluntario->setRegistro($dados['registro']);
+            $voluntario->setTipoRegistro($tipo_registro);
             $voluntario->setConhecimento($dados['conhecimento']);
             $voluntario->setAssinouTermo('N');
             $voluntario->setUsuarioInclusao('usuarioInc');
@@ -28,6 +36,8 @@ class VoluntarioService
         } else {
             $voluntario = $this->em->getReference('\PNSL\Social\Entity\VoluntarioEntity', $dados['id']);
             $voluntario->setPessoa($pessoa);
+            $voluntario->setRegistro($dados['registro']);
+            $voluntario->setTipoRegistro($tipo_registro);
             $voluntario->setConhecimento($dados['conhecimento']);
             $voluntario->setAssinouTermo('N');
             $voluntario->setUsuarioAlteracao('usuarioAlt');
@@ -58,8 +68,10 @@ class VoluntarioService
     public function fetchAll()
     {
         $voluntarios = $this->em->createQuery(
-            'select p, v from \PNSL\Social\Entity\VoluntarioEntity v 
-            join v.pessoa p order by p.nome ASC'
+            'select p, v 
+            from \PNSL\Social\Entity\VoluntarioEntity v 
+            join v.pessoa p
+            order by p.nome ASC'
         )->getArrayResult();
         return $voluntarios;
     }
@@ -67,13 +79,19 @@ class VoluntarioService
     public function findById(int $id)
     {
         $voluntario = $this->em->createQuery(
-            'select p, v, tt, es from \PNSL\Social\Entity\VoluntarioEntity v 
+            'select p, v, s, e, t, u, f, r, g
+            from \PNSL\Social\Entity\VoluntarioEntity v 
             join v.pessoa p
-            join p.tipoTelefone tt
-            join p.estadoCivil es
+            join p.sexo s
+            join p.estadoCivil e
+            join p.tipoPessoa t
+            join p.uf u
+            join p.tipoTelefone f
+            left join p.tipoRenda r
+            left join v.tipoRegistro g
             where p.id = :id'
-        )->setParameter('id', $id)->getArrayResult();
-        return $voluntario[0]; //TODO: substituir o array pelo getSingleResult. Ao usar travou
+        )->setParameter('id', $id)->getOneOrNullResult();
+        return $voluntario;
     }
 
     public function assinarTermo(int $id)
