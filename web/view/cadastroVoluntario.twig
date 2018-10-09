@@ -52,7 +52,7 @@
                         <label for="sexo_pessoa" class="form-check-label">Sexo</label><br />
                         {% for sexo in sexos %}
                         <label class="form-check-label">{{sexo.descricao}}
-                            <input type="radio" name="sexo_pessoa" class="form-check-input" value="{{sexo.id}}" {% if voluntario is defined and voluntario.pessoa.sexo.descricao == 'M' %} checked="true" {% endif %}>
+                            <input type="radio" name="sexo_pessoa" class="form-check-input" value="{{sexo.id}}" {% if voluntario is defined and (voluntario.pessoa.sexo.descricao == 'M' or voluntario.pessoa.sexo.descricao == 'F')  %} checked="true" {% endif %}>
                         </label>
                         {% endfor %}
                     </div>                    
@@ -69,7 +69,8 @@
                         <select class="form-control" name="tipo_registro">
                             <option value="">Selecione</option>
                             {% for tipo_registro in tipos_registro %}
-                            <option value="{{ tipo_registro.id }}" {% if voluntario is defined and voluntario.tipoRegistro.id == tipo_registro.id %} selected {% endif %}>{{ tipo_registro.descricao }}</option>
+                            {{dump(tipo_registro)}}
+                            <option value="{{ tipo_registro.id }}" {% if voluntario.tipoRegistro.id is defined and voluntario.tipoRegistro.id == tipo_registro.id %} selected {% endif %}>{{ tipo_registro.descricao }}</option>
                             {% endfor %}
                         </select>
                     </div>

@@ -77,12 +77,12 @@ class PessoaEntity
     private $profissao;
 
     /**
-     * @ORM\OneToOne(targetEntity="PessoaEntity")
+     * @ORM\OneToOne(targetEntity="PessoaEntity", cascade={"persist"})
      * @ORM\JoinColumn(name="seq_responsavel", referencedColumnName="seq_pessoa", nullable=true)
      */
     private $responsavel;
 
-    /** @ORM\OneToOne(targetEntity="TipoEntity")
+    /** @ORM\ManyToOne(targetEntity="TipoEntity")
      *  @ORM\JoinColumn(name="seq_tipo_parentesco", referencedColumnName="seq_tipo", nullable=true) */
     private $parentesco;
 
@@ -92,6 +92,12 @@ class PessoaEntity
 
     /** @ORM\OneToOne(targetEntity="VoluntarioEntity", mappedBy="pessoa", cascade={"remove"}) */
     private $voluntario;
+
+    /**
+     * @ORM\OneToOne(targetEntity="EscolaEntity")
+     * @ORM\JoinColumn(name="seq_escola", referencedColumnName="seq_escola", nullable=true)
+     */
+    private $escola;
 
     /** @ORM\OneToMany(targetEntity="AtendimentoEntity", mappedBy="atendido") */
     private $atendimentos;
@@ -670,6 +676,25 @@ class PessoaEntity
     {
         $this->parentesco = $parentesco;
 
+        return $this;
+    }
+
+    /**
+     * Get the value of escola
+     */ 
+    public function getEscola()
+    {
+        return $this->escola;
+    }
+
+    /**
+     * Set the value of escola
+     *
+     * @return  self
+     */ 
+    public function setEscola($escola)
+    {
+        $this->escola = $escola;
         return $this;
     }
 

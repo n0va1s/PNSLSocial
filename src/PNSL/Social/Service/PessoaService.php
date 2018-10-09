@@ -17,107 +17,121 @@ class PessoaService
     
     public function save($dados)
     {
-// echo "<pre>";
-// print_r($dados);
-// echo "</pre>";
-// exit;
         //Pessoa
-        if ($dados['sexo_pessoa']) {
+        if (!empty($dados['sexo_pessoa'])) {
             $sexo_pessoa = $this->em->getReference(
                 '\PNSL\Social\Entity\TipoEntity', 
                 $dados['sexo_pessoa']
             );
         }
-        if ($dados['tipo_renda_pessoa']) {
+        if (!empty($dados['tipo_renda_pessoa'])) {
             $tipo_renda_pessoa = $this->em->getReference(
                 '\PNSL\Social\Entity\TipoEntity', 
                 $dados['tipo_renda_pessoa']
             );
         }        
-        if ($dados['UF_pessoa']) {
+        if (!empty($dados['UF_pessoa'])) {
             $uf_pessoa = $this->em->getReference(
                 '\PNSL\Social\Entity\TipoEntity', 
                 $dados['UF_pessoa']
             );
         }
-        if ($dados['estado_civil_pessoa']) {
+        if (!empty($dados['estado_civil_pessoa'])) {
             $estado_civil_pessoa = $this->em->getReference(
                 '\PNSL\Social\Entity\TipoEntity', 
                 $dados['estado_civil_pessoa']
             );
         }
-        if ($dados['tipo_telefone_pessoa']) {
+        if (!empty($dados['tipo_telefone_pessoa'])) {
             $tipo_telefone_pessoa = $this->em->getReference(
                 '\PNSL\Social\Entity\TipoEntity', 
                 $dados['tipo_telefone_pessoa']
             );
         }
-        if ($dados['tipo_origem_pessoa']) {
+        $tipo_origem_pessoa = null;
+        if (!empty($dados['tipo_origem_pessoa'])) {
             $tipo_origem_pessoa = $this->em->getReference(
                 '\PNSL\Social\Entity\TipoEntity', 
                 $dados['tipo_origem_pessoa']
             );
         }
-        if ($dados['tipo_pessoa']) {
+        if (!empty($dados['tipo_pessoa'])) {
             $tipo_pessoa = $this->em->getReference(
                 '\PNSL\Social\Entity\TipoEntity', 
                 $dados['tipo_pessoa']
             );
         }        
         //Responsavel
-        if ($dados['sexo_responsavel']) {
-            $sexo_responsavel = $this->em->getReference(
-                '\PNSL\Social\Entity\TipoEntity', 
-                $dados['sexo_responsavel']
-            );
+        if (!empty($dados['nome_responsavel'])) {
+            if ($dados['sexo_responsavel']) {
+                $sexo_responsavel = $this->em->getReference(
+                    '\PNSL\Social\Entity\TipoEntity', 
+                    $dados['sexo_responsavel']
+                );
+            }
+            if ($dados['tipo_renda_responsavel']) {
+                $tipo_renda_responsavel = $this->em->getReference(
+                    '\PNSL\Social\Entity\TipoEntity', 
+                    $dados['tipo_renda_responsavel']
+                );
+            }        
+            if ($dados['tipo_registro_responsavel']) {
+                $tipo_registro_responsavel = $this->em->getReference(
+                    '\PNSL\Social\Entity\TipoEntity', 
+                    $dados['tipo_registro_responsavel']
+                );
+            }
+            if ($dados['UF_responsavel']) {
+                $uf_responsavel = $this->em->getReference(
+                    '\PNSL\Social\Entity\TipoEntity', 
+                    $dados['UF_responsavel']
+                );
+            }
+            if ($dados['tipo_responsavel']) {
+                $tipo_responsavel = $this->em->getReference(
+                    '\PNSL\Social\Entity\TipoEntity', 
+                    $dados['tipo_responsavel']
+                );
+            }
+            if ($dados['estado_civil_responsavel']) {
+                $estado_civil_responsavel = $this->em->getReference(
+                    '\PNSL\Social\Entity\TipoEntity', 
+                    $dados['estado_civil_responsavel']
+                );
+            }
+            if ($dados['tipo_telefone_responsavel']) {
+                $tipo_telefone_responsavel = $this->em->getReference(
+                    '\PNSL\Social\Entity\TipoEntity', 
+                    $dados['tipo_telefone_responsavel']
+                );
+            }
+            if ($dados['tipo_origem_responsavel']) {
+                $tipo_origem_responsavel = $this->em->getReference(
+                    '\PNSL\Social\Entity\TipoEntity', 
+                    $dados['tipo_origem_responsavel']
+                );
+            }
+            if ($dados['tipo_responsavel']) {
+                $tipo_responsavel = $this->em->getReference(
+                    '\PNSL\Social\Entity\TipoEntity', 
+                    $dados['tipo_responsavel']
+                );
+            }
         }
-        if ($dados['tipo_renda_responsavel']) {
-            $tipo_renda_responsavel = $this->em->getReference(
-                '\PNSL\Social\Entity\TipoEntity', 
-                $dados['tipo_renda_responsavel']
-            );
-        }        
-        if ($dados['tipo_registro_responsavel']) {
-            $tipo_registro_responsavel = $this->em->getReference(
-                '\PNSL\Social\Entity\TipoEntity', 
-                $dados['tipo_registro_responsavel']
-            );
-        }
-        if ($dados['UF_responsavel']) {
-            $uf_responsavel = $this->em->getReference(
-                '\PNSL\Social\Entity\TipoEntity', 
-                $dados['UF_responsavel']
-            );
-        }
-        if ($dados['tipo_responsavel']) {
-            $tipo_responsavel = $this->em->getReference(
-                '\PNSL\Social\Entity\TipoEntity', 
-                $dados['tipo_responsavel']
-            );
-        }
-        if ($dados['estado_civil_responsavel']) {
-            $estado_civil_responsavel = $this->em->getReference(
-                '\PNSL\Social\Entity\TipoEntity', 
-                $dados['estado_civil_responsavel']
-            );
-        }
-        if ($dados['tipo_telefone_responsavel']) {
-            $tipo_telefone_responsavel = $this->em->getReference(
-                '\PNSL\Social\Entity\TipoEntity', 
-                $dados['tipo_telefone_responsavel']
-            );
-        }
-        if ($dados['tipo_origem_responsavel']) {
-            $tipo_origem_responsavel = $this->em->getReference(
-                '\PNSL\Social\Entity\TipoEntity', 
-                $dados['tipo_origem_responsavel']
-            );
-        }
-        if ($dados['tipo_responsavel']) {
-            $tipo_responsavel = $this->em->getReference(
-                '\PNSL\Social\Entity\TipoEntity', 
-                $dados['tipo_responsavel']
-            );
+        //Escola
+        if (!empty($dados['escola'])) {
+            if ($dados['turno']) {
+                $turno = $this->em->getReference(
+                    '\PNSL\Social\Entity\TipoEntity', 
+                    $dados['turno']
+                );
+            }
+            if ($dados['grau']) {
+                $grau = $this->em->getReference(
+                    '\PNSL\Social\Entity\TipoEntity', 
+                    $dados['grau']
+                );
+            }
         }
 
         if (is_array($dados)) {
@@ -170,8 +184,21 @@ class PessoaService
                     $responsavel->setUsuarioAlteracao('usuarioAlteracao');
 
                     $this->em->persist($responsavel);
-                    $pessoa->setResponsavel($responsavel);
                     $this->em->flush();
+                    $pessoa->setResponsavel($responsavel);
+
+                }
+                if (!empty($dados['escola'])) {
+                    $escola = new EscolaEntity();
+                    $escola->setEscola($dados['escola']);
+                    $escola->setAno($dados['ano']);
+                    $escola->setTurno($turno);
+                    $escola->setGrau($grau);
+                    $escola->setUsuarioInclusao('usuarioInc');
+                    $escola->setUsuarioAlteracao('usuarioAlt');
+                    $this->em->persist($escola);
+                    $this->em->flush();
+                    $pessoa->setEscola($escola);
                 }
                 $this->em->persist($pessoa);
             } else {
@@ -200,41 +227,73 @@ class PessoaService
                 $pessoa->setTipoOrigem($tipo_origem_pessoa);
                 $pessoa->setUsuarioInclusao('usuarioInclusao');
                 $pessoa->setUsuarioAlteracao('usuarioAlteracao');
-
-                if (!empty($dados['nome_responsavel'])) {
+                //Responsavel
+                if (!empty($pessoa->getResponsavel())) {
                     $responsavel = $this->em->getReference(
                         '\PNSL\Social\Entity\PessoaEntity', 
                         $pessoa->getResponsavel()
                     );
-                    $responsavel->setCPF($dados['CPF_responsavel']);
-                    $responsavel->setNome($dados['nome_responsavel']);
-                    $responsavel->setDataNascimento($dados['nascimento_responsavel']);
-                    $responsavel->setRG($dados['RG_responsavel']);
-                    $responsavel->setNacionalidade($dados['nacionalidade_responsavel']);
-                    $responsavel->setEstadoCivil($estado_civil_responsavel);
-                    $responsavel->setSexo($sexo_responsavel);
-                    $responsavel->setTipoRenda($tipo_renda_responsavel);
-                    $responsavel->setFamiliar($dados['familiar_responsavel']);
-                    $responsavel->setProfissao($dados['profissao_responsavel']);
-                    $responsavel->setEndereco($dados['endereco_responsavel']);
-                    $responsavel->setCidade($dados['cidade_responsavel']);
-                    $responsavel->setUF($uf_responsavel);
-                    $responsavel->setCEP($dados['CEP_responsavel']);
-                    $responsavel->setTipoTelefone($tipo_telefone_responsavel);
-                    $responsavel->setTelefone($dados['telefone_responsavel']);
-                    $responsavel->setEmail($dados['email_responsavel']);
-                    $responsavel->setTipoPessoa($tipo_responsavel);                
-                    $responsavel->setTipoOrigem($tipo_origem_responsavel);
+                    $acao_responsavel = 'A';
+                } else {
+                    $responsavel = new PessoaEntity();
                     $responsavel->setUsuarioInclusao('usuarioInclusao');
-                    $responsavel->setUsuarioAlteracao('usuarioAlteracao');
+                    $acao_responsavel = 'I';
                 }
+                $responsavel->setCPF($dados['CPF_responsavel']);
+                $responsavel->setNome($dados['nome_responsavel']);
+                $responsavel->setDataNascimento($dados['nascimento_responsavel']);
+                $responsavel->setRG($dados['RG_responsavel']);
+                $responsavel->setNacionalidade($dados['nacionalidade_responsavel']);
+                $responsavel->setEstadoCivil($estado_civil_responsavel);
+                $responsavel->setSexo($sexo_responsavel);
+                $responsavel->setTipoRenda($tipo_renda_responsavel);
+                $responsavel->setFamiliar($dados['familiar_responsavel']);
+                $responsavel->setProfissao($dados['profissao_responsavel']);
+                $responsavel->setEndereco($dados['endereco_responsavel']);
+                $responsavel->setCidade($dados['cidade_responsavel']);
+                $responsavel->setUF($uf_responsavel);
+                $responsavel->setCEP($dados['CEP_responsavel']);
+                $responsavel->setTipoTelefone($tipo_telefone_responsavel);
+                $responsavel->setTelefone($dados['telefone_responsavel']);
+                $responsavel->setEmail($dados['email_responsavel']);
+                $responsavel->setTipoPessoa($tipo_responsavel);                
+                $responsavel->setTipoOrigem($tipo_origem_responsavel);
+                $responsavel->setUsuarioAlteracao('usuarioAlteracao');
+                $pessoa->setResponsavel($responsavel);
+                //Escola
+                if (!empty($pessoa->getEscola())) {
+                    $escola = $this->em->getReference(
+                        '\PNSL\Social\Entity\EscolaEntity', 
+                        $pessoa->getEscola()->getId()
+                    );
+                    $acao_escola = 'A';
+                } else {
+                    $escola = new EscolaEntity();
+                    $escola->setUsuarioInclusao('usuarioInclusao');
+                    $acao_escola = 'I';
+                }
+                $escola->setNome($dados['escola']);
+                $escola->setAno($dados['ano']);
+                $escola->setTurno($turno);
+                $escola->setGrau($grau);
+                $escola->setUsuarioAlteracao('usuarioAlt');
+                $pessoa->setEscola($escola);
+                //Caso um responsavel ou escola estejam sendo 
+                //criados durante a alteracao da pessoa
+                if ($acao_responsavel === 'I' || $acao_escola === 'I') {
+                    $this->em->persist($pessoa);
+                }
+            }
+            //A transacao conclui no cadastro do usuario (Pessoa) caso não
+            //haja o cadastro do voluntario
+            if ($tipo_pessoa->getDescricao() <> 'Voluntário') {
+                $this->em->flush();
             }
             //A transacao conclui no cadastro do usuario (Pessoa) caso nao
             //haja o cadastro do responsavel ou da escola
-            if (empty($dados['nome_responsavel']) && empty($dados['escola'])) {
-                $this->em->flush();
-            }
-            
+            // if (empty($dados['nome_responsavel']) && empty($dados['escola'])) {
+            //     $this->em->flush();
+            // }
             return $pessoa;
         } else {
             return false;
@@ -253,14 +312,14 @@ class PessoaService
     public function findById(int $id)
     {
         $pessoa = $this->em->createQuery(
-            'select p, ec, tt, pa, uf, tp, se
+            'select p, ec, tt, se, uf, tp, es
               from \PNSL\Social\Entity\PessoaEntity p 
                 inner join p.estadoCivil ec
                 inner join p.tipoTelefone tt
-                inner join p.parentesco pa
                 inner join p.sexo se
                 inner join p.uf uf
                 inner join p.tipoPessoa tp
+                left join p.escola es
              where p.id = :id'
         )->setParameter('id', $id)->getOneOrNullResult();
         return $pessoa;
@@ -269,14 +328,14 @@ class PessoaService
     public function fetchAll()
     {
         $pessoas = $this->em->createQuery(
-            'select p, ec, tt, pa, uf, tp, se
+            'select p, ec, tt, se, uf, tp, es
               from \PNSL\Social\Entity\PessoaEntity p 
-                inner join p.estadoCivil ec
-                inner join p.tipoTelefone tt
-                left join p.parentesco pa
-                inner join p.sexo se
-                inner join p.uf uf
-                inner join p.tipoPessoa tp
+              inner join p.estadoCivil ec
+              inner join p.tipoTelefone tt
+              inner join p.sexo se
+              inner join p.uf uf
+              inner join p.tipoPessoa tp
+              left join p.escola es
              where tp.descricao <> :tipo'
         )->setParameter('tipo', 'Voluntário')->getArrayResult();
         return $pessoas;

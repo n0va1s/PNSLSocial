@@ -84,7 +84,10 @@ class UserProvider implements UserProviderInterface
     {
         $criptoPassword = null;
         if ($user->getPassword()) {
-            $criptoPassword = $this->passwordEncoder->encodePassword($user->getPassword(), $user->getSalt());
+            $criptoPassword = $this->passwordEncoder->encodePassword(
+                $user->getPassword(), 
+                $user->getSalt()
+            );
         }
         return $criptoPassword;
     }

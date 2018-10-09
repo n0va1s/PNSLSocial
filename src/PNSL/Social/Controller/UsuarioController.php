@@ -26,9 +26,9 @@ class UsuarioController implements ControllerProviderInterface
             return new PessoaService($this->em);
         };
 
-        $app['escola_service'] = function () {
-            return new EscolaService($this->em);
-        };
+        // $app['escola_service'] = function () {
+        //     return new EscolaService($this->em);
+        // };
 
         $ctrl->before(
             function (Request $request) {
@@ -78,7 +78,7 @@ class UsuarioController implements ControllerProviderInterface
             '/salvar', function (Request $req) use ($app) {
                 $dados = $req->request->all();
                 $pessoa = $app['pessoa_service']->save($dados);
-                $escola = $app['escola_service']->save($pessoa, $dados);
+                //$escola = $app['escola_service']->save($pessoa, $dados);
                 if ($pessoa) {
                     return $app->redirect(
                         $app['url_generator']

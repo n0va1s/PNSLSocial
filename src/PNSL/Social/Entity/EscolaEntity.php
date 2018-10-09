@@ -8,12 +8,15 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class EscolaEntity
 {
-    /** @ORM\Id @ORM\OneToOne(targetEntity="PessoaEntity")
-     *  @ORM\JoinColumn(name="seq_pessoa", referencedColumnName="seq_pessoa", nullable=false, onDelete="CASCADE") */
-    private $pessoa;
+    /**
+    * @ORM\Id
+    * @ORM\GeneratedValue
+    * @ORM\Column(type="integer", name="seq_escola")
+    */
+    private $id;
 
-    /** @ORM\Column(type="string", name="nom_usuario", length=100) */
-    private $escola;
+    /** @ORM\Column(type="string", name="nom_escola", length=100) */
+    private $nome;
 
     /** @ORM\Column(type="smallint", name="num_ano") */
     private $ano;
@@ -45,42 +48,42 @@ class EscolaEntity
     }
 
     /**
-     * Get the value of pessoa
+     * Get the value of Id
      */ 
-    public function getPessoa()
+    public function getId()
     {
-        return $this->pessoa;
+        return $this->id;
     }
 
     /**
-     * Set the value of pessoa
+     * Set the value of id
      *
      * @return  self
      */ 
-    public function setPessoa($pessoa)
+    public function setId($id)
     {
-        $this->pessoa = $pessoa;
+        $this->id = $id;
 
         return $this;
     }
 
 
     /**
-     * Get the value of escola
+     * Get the value of nome
      */ 
-    public function getEscola()
+    public function getNome()
     {
-        return $this->escola;
+        return $this->nome;
     }
 
     /**
-     * Set the value of escola
+     * Set the value of nome
      *
      * @return  self
      */ 
-    public function setEscola($escola)
+    public function setNome($nome)
     {
-        $this->escola = $escola;
+        $this->nome = $nome;
 
         return $this;
     }

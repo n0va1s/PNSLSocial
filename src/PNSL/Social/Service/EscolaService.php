@@ -20,7 +20,6 @@ class EscolaService
         if ($pessoa) {
             if (!empty($dados['escola'])) {
                 $escola = new EscolaEntity();
-                $escola->setPessoa($pessoa);
                 $escola->setEscola($dados['escola']);
                 $escola->setAno($dados['ano']);
                 $escola->setTurno(
@@ -37,6 +36,7 @@ class EscolaService
                 );
                 $escola->setUsuarioInclusao('usuarioInc');
                 $escola->setUsuarioAlteracao('usuarioAlt');
+                $escola->setPessoa($pessoa);
                 $this->em->persist($escola);
                 $this->em->flush();
                 return $escola;
