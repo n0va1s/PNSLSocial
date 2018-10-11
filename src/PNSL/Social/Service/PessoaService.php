@@ -190,7 +190,7 @@ class PessoaService
                 }
                 if (!empty($dados['escola'])) {
                     $escola = new EscolaEntity();
-                    $escola->setEscola($dados['escola']);
+                    $escola->setNome($dados['escola']);
                     $escola->setAno($dados['ano']);
                     $escola->setTurno($turno);
                     $escola->setGrau($grau);

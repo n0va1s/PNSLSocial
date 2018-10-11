@@ -113,6 +113,13 @@ $app['swiftmailer.use_spool'] = false;
 
 //Quando se usa um formulario de login deve-se usar SessionServiceProvider
 $app->register(new Silex\Provider\SessionServiceProvider());
+
+//$app['security.salt'] = $file_config['sec.salt'];
+
+// $app['app.token_authenticator'] = function ($app) {
+//     return new Security\JWTGuardAuthenticator($app['security.encoder_factory']);
+// };
+
 $app->register(
     new Silex\Provider\SecurityServiceProvider(), 
     array(
@@ -140,7 +147,7 @@ $app->register(
             ),
         ),
         'security.role_hierarchy' => array(
-            'ROLE_ADMIN' => array('ROLE_USER', 'ROLE_ALLOWED_TO_SWITCH')
+            'ROLE_ADMIN' => array('ROLE_USER')
         ),
         /*
         'security.access_rules' => array(

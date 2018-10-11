@@ -4,7 +4,7 @@ $(document).ready(function() {
         var usuario = $('#usuario').val();
         var acao = $('#id').val();
         $.ajax({
-            url: '/acao/usuario',
+            url: '/restrito/acao/usuario',
             method: 'POST',
             data: {acao: acao, usuario: usuario},
             success: function () {

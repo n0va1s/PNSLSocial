@@ -208,8 +208,12 @@ class AcaoService
             from \PNSL\Social\Entity\TurmaEntity t
             inner join t.pessoa p
             inner join t.acao a
-            where a.id = :id'
-        )->setParameter('id', $id)->getArrayResult();
+            where a.id = :id
+            and t.situacao = :situacao'
+        )
+        ->setParameter('id', $id)
+        ->setParameter('situacao', 'A')
+        ->getArrayResult();
         return $turma;
     }
 

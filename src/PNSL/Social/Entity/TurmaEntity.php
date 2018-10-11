@@ -213,42 +213,17 @@ class TurmaEntity
     }
 
     /**
-     * Set the value of usuarioExclusao
+     * Set the usuarioExclusao and actual date for dataExclusao
      *
      * @return  self
      */ 
-    public function setUsuarioExclusao($usuarioExclusao)
+    public function setLogExclusao($usuarioExclusao)
     {
-        $this->usuarioExclusao = $usuarioExclusao;
-        return $this;
-    }
-
-    /**
-     * Get the value of dataExclusao
-     */ 
-    public function getDataExclusao()
-    {
-        return $this->dataExclusao;
-    }
-
-    /**
-     * Set the value of dataExclusao
-     *
-     * @return  self
-     */ 
-    public function setDataExclusao($dataExclusao = null)
-    {
-        if (empty($dataExclusao)) {
-            $this->dataExclusao = new \Datetime();
+        if (!empty($usuarioExclusao)) {
+            $this->usuarioExclusao = $usuarioExclusao;
+            $this->dataExclusao = new \DateTime();
         } else {
-            if (substr_count($dataExclusao, "/") == 2) {
-                list($dia, $mes, $ano) = explode("/", $dataExclusao);
-                $this->dataExclusao = new \DateTime(
-                    date_format(date_create($ano."-".$mes."-".$dia), "Y-m-d")
-                );
-            } else {
-                throw new \InvalidArgumentException('A data é inválida', 99);
-            }
+            throw new \InvalidArgumentException('Usuário responsável pela exclusão é obrigatório', 99);
         }
         return $this;
     }

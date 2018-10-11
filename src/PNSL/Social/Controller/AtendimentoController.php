@@ -38,12 +38,8 @@ class AtendimentoController implements ControllerProviderInterface
         $ctrl->get(
             '/', function () use ($app) {
                 $acoes = $app['acao_service']->findByTipo('Individual');
-                $usuarios = $app['pessoa_service']->findUsuarios();
+                $usuarios = $app['pessoa_service']->fetchAll();
                 $atendimentos = $app['atendimento_service']->fetchAll();
-// echo "<pre>";
-// print_r($atendimentos[0]);
-// echo "</pre>";
-// exit;
                 return $app['twig']->render(
                     'cadastroAtendimento.twig',
                     array('acoes'=>$acoes,
@@ -77,7 +73,7 @@ class AtendimentoController implements ControllerProviderInterface
                     $atendimento = $app['atendimento_service']->findById($id);
                     if ($atendimento) {
                         $acoes = $app['acao_service']->findByTipo('Individual');
-                        $usuarios = $app['pessoa_service']->findUsuarios();
+                        $usuarios = $app['pessoa_service']->fetchAll();
                         $atendimentos = $app['atendimento_service']->fetchAll();
                         return $app['twig']->render(
                             'cadastroAtendimento.twig',

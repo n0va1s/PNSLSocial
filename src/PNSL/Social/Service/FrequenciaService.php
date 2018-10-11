@@ -36,6 +36,22 @@ class FrequenciaService
         }
         return true;
     }
+
+    public function evadir($id)
+    {
+        $matricula = $this->em->getReference(
+            '\PNSL\Social\Entity\TurmaEntity', 
+            $id
+        );
+        if ($matricula) {
+            $matricula->setSituacao('E');
+            $matricula->setLogExclusao('usuarioExc');
+            $this->em->persist($matricula);
+            return $this->em->flush();
+        } else {
+            return false;
+        }        
+    }
     
     public function delete(int $id)
     {
@@ -70,13 +86,12 @@ class FrequenciaService
     public function findByTurma(int $id)
     {
         $frequencia = $this->em->createQuery(
-            'select f, t, a, p, v
-            from \PNSL\Social\Entity\FrequenciaEntity f 
-            join f.turma t
+            'select t, a, p, v
+            from \PNSL\Social\Entity\TurmaEntity t
             join t.acao a
-            join a.voluntario v
             join t.pessoa p
-            where f.id = :id'
+            join a.voluntario v            
+            where t.id = :id'
         )->setParameter('id', $id)->getOneOrNullResult();
         return $frequencia;
     }

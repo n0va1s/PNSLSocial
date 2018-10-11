@@ -79,17 +79,17 @@
                         </thead>
                         <tbody>
                         {% if turma | length > 0 %}
-                            {% for aluno in turma %}
+                            {% for matricula in turma %}
                             <tr>
-                                <td>{{ aluno.pessoa.nome }}</td>
-                                <td>{{ aluno.pessoa.telefone }}</td>
+                                <td>{{ matricula.pessoa.nome }}</td>
+                                <td>{{ matricula.pessoa.telefone }}</td>
                                 <td>
                                     <input type="date" id="dataFrequencia[]" name="dataFrequencia[]" class="form-control" placeholder="dd/mm/aaaa" value="{{"now"|date("d/m/Y")}}">
-                                    <input type="hidden" id="turma[]" name="turma[]" value="{{ aluno.id }}">
+                                    <input type="hidden" id="turma[]" name="turma[]" value="{{ matricula.id }}">
                                 </td>
-                                <td><a data-toggle="tooltip" data-placement="top" title="Certificado" href="{{ path('frequenciaCertificar',{'id':aluno.id }) }}"><span class="glyphicon glyphicon-certificate"></span></a></td>
-                                <td><a data-toggle="tooltip" data-placement="top" title="Desistência" href="{{ path('frequenciaEvadir',{'id':aluno.id }) }}"><span class="glyphicon glyphicon-ban-circle"></span></a></td>
-                                <td><a data-toggle="tooltip" data-placement="top" title="Exclusão" href="{{ path('frequenciaExcluir',{'id':aluno.id}) }}"><span class="glyphicon glyphicon-trash"></span></a></td>
+                                <td><a data-toggle="tooltip" data-placement="top" title="Certificado" href="{{ path('frequenciaCertificar',{'id':matricula.id }) }}"><span class="glyphicon glyphicon-certificate"></span></a></td>
+                                <td><a data-toggle="tooltip" data-placement="top" title="Desistência" href="{{ path('frequenciaEvadir',{'id':matricula.id }) }}"><span class="glyphicon glyphicon-ban-circle"></span></a></td>
+                                <td><a data-toggle="tooltip" data-placement="top" title="Exclusão" href="{{ path('frequenciaExcluir',{'id':matricula.id}) }}"><span class="glyphicon glyphicon-trash"></span></a></td>
                             </tr>
                             {% endfor %}
                         </tbody>
