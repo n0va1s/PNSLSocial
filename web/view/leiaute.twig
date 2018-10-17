@@ -54,11 +54,6 @@
 
             <div class="collapse navbar-collapse" id="menu">
                 <ul class="nav navbar-nav navbar-right">
-                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                    <li>
-                        <a href="{{ app.url_generator.generate('areaRestrita') }}">Área restrita</a>
-                    </li>
-                    {% endif %}
                     <li>
                         <a href="{{ app.url_generator.generate('nossoImpacto') }}">Nosso impacto</a>
                     </li>
@@ -67,9 +62,9 @@
                     </li>
                     <li>
                     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                        <a href="{{ app.url_generator.generate('logout') }}">Sair</a>
+                        <a href="{{ path('admin_logout') }}">Logout</a>
                     {% else %}
-                        <a href="{{ app.url_generator.generate('login') }}">Acessar</a>
+                        <a href="{{ path('menu') }}">Área Restrita</a>
                     {% endif %}
                     </li>
                 </ul>
@@ -107,6 +102,7 @@
 <!-- Footer -->
 <footer>
     <p class="copyright text-muted">Associação Cristã do Lago Norte - ACLN - 2018</p>
+    <p class="copyright text-muted">Olá {{ user.username }}!</p>
 </footer>
 {% endblock %}
     <!-- jQuery -->

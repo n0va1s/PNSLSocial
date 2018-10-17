@@ -14,7 +14,11 @@ use Doctrine\Common\ClassLoader;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\HttpFoundation\Request;
 use PNSL\Social\Provider\UserProvider;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+use Monolog\Handler\FirePHPHandler;
 use Symfony\Component\HttpFoundation\Response;
+
 
 //Buscar as variaveis do arquivo de configuracao
 $env = getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : 'production';
@@ -73,10 +77,15 @@ $app = new \Silex\Application();
 $app['debug'] = $file_config['log.enabled'];
 
 $app->register(
+    new Silex\Provider\MonologServiceProvider(),
+    array('monolog.logfile' => 'php://stderr')
+);
+//$app['monolog']->debug('Monolog configurado');
+$app->register(
     new Silex\Provider\TwigServiceProvider(), 
     array(
         'twig.path' => __DIR__.'/web/view',
-        'twig.options' => array('cache' => __DIR__.'/web/cache'),
+        //'twig.options' => array('cache' => __DIR__.'/web/cache'),
     )
 );
 
@@ -114,13 +123,22 @@ $app['swiftmailer.use_spool'] = false;
 //Quando se usa um formulario de login deve-se usar SessionServiceProvider
 $app->register(new Silex\Provider\SessionServiceProvider());
 
-//$app['security.salt'] = $file_config['sec.salt'];
+$app['security.salt'] = $file_config['sec.salt'];
 
-// $app['app.token_authenticator'] = function ($app) {
-//     return new Security\JWTGuardAuthenticator($app['security.encoder_factory']);
-// };
+$app->register(new Silex\Provider\SecurityServiceProvider());
 
-$app->register(
+$app['security.firewalls'] = array(
+    'admin' => array(
+        'pattern' => '^/admin',
+        'form' => array('login_path' => '/login', 'check_path' => '/admin/login_check'),
+        'logout' => array('logout_path' => '/admin/logout', 'invalidate_session' => true),
+        'users' => function () use ($em) {
+            return new UserProvider($em);
+        },
+    ),
+);
+
+/*$app->register(
     new Silex\Provider\SecurityServiceProvider(), 
     array(
         'security.firewalls' => array(
@@ -135,7 +153,7 @@ $app->register(
                 'pattern' => '^/restrito/*$',
                 'form' => array(
                     'login_path' => '/login', 
-                    'check_path' => '/restrito/autenticacao'
+                    'check_path' => '/restrito/login_check'
                 ),
                 'logout' => array(
                     'logout_path' => '/restrito/logout', 
@@ -146,38 +164,14 @@ $app->register(
                 },
             ),
         ),
-        'security.role_hierarchy' => array(
-            'ROLE_ADMIN' => array('ROLE_USER')
-        ),
-        /*
         'security.access_rules' => array(
             array('^/restrito/*.*$', 'ROLE_ADMIN'),
-            // array('^/restrito/*.*$', 'ROLE_ADMIN', 'https'),
-            array('^.*$', 'ROLE_USER'),
-        )*/
+            array('^/site/.*$', 'ROLE_USER'),
+        )
     )
-);
-
-$app['security.default_encoder'] = function ($app) {
-    return $app['security.encoder.pbkdf2'];
-};
+);*/
 
 $app->boot();
-
-// Para tratar os erros comuns da aplicacao
-// $app->error(function (\Exception $e, Request $request, $code) use ($app) {
-//     if ($app['debug']) {
-//         return;
-//     }
-//     switch ($code) {
-//         case 404:
-//             $message = 'Ops... essa página não existe';
-//             break;
-//         default:
-//             $message = 'Hum... estamos passando por problemas técnicos. Tente mais tarde.';
-//     }
-//     return new Response($message);
-// });
 
 //Menu
 $app->get(
@@ -186,46 +180,36 @@ $app->get(
     }
 )->bind('index');
 
-$app->get(
-    '/login', function(Request $request) use ($app) {
-        return $app['twig']->render(
-            'login.twig', array(
-                'error'         => $app['security.last_error']($request),
-                'last_username' => $app['session']->get('_security.last_username'),
-            )
-        );
-    }
-)->bind('login');
+$app->get('/login', function(Request $request) use ($app) {
+    return $app['twig']->render('login.twig', array(
+        'error'         => $app['security.last_error']($request),
+        'last_username' => $app['session']->get('_security.last_username'),
+    ));
+})->bind('login');
 
 //Rota padrao apos o login
 $app->get(
-    '/restrito/menu', function () use ($app) {
+    '/admin/menu', function () use ($app) {
+        $token = $app['security.token_storage']->getToken();
+        if (null !== $token) {
+            $user = $token->getUser();
+        }
         return $app['twig']->render(
             'areaRestrita.twig',
-            array(), 
+            array('user'=>$user), 
             new Response('Ok', 200)
         );
     }
-)->bind('areaRestrita');
+)->bind('menu');
 
-// $app->post(
-//     '/restrito/autorizacao', function(Request $req) use ($app) {
-//         $dados = $req->request->all();
-
-//         return $app->redirect(
-//             $app['url_generator']
-//             ->generate('areaRestrita')
-//         );
-//     }
-// )->bind('autorizacao');
 //Area restrita
-$app->mount('/restrito/relatorio', new PNSL\Social\Controller\RelatorioController($em));
-$app->mount('/restrito/atendimento', new PNSL\Social\Controller\AtendimentoController($em));
-$app->mount('/restrito/frequencia', new PNSL\Social\Controller\FrequenciaController($em));
-$app->mount('/restrito/acao', new PNSL\Social\Controller\AcaoController($em));
-$app->mount('/restrito/voluntario', new PNSL\Social\Controller\VoluntarioController($em));
-$app->mount('/restrito/usuario', new PNSL\Social\Controller\UsuarioController($em));
-$app->mount('/restrito/configuracao', new PNSL\Social\Controller\TipoController($em));
+$app->mount('/admin/relatorio', new PNSL\Social\Controller\RelatorioController($em));
+$app->mount('/admin/atendimento', new PNSL\Social\Controller\AtendimentoController($em));
+$app->mount('/admin/frequencia', new PNSL\Social\Controller\FrequenciaController($em));
+$app->mount('/admin/acao', new PNSL\Social\Controller\AcaoController($em));
+$app->mount('/admin/voluntario', new PNSL\Social\Controller\VoluntarioController($em));
+$app->mount('/admin/usuario', new PNSL\Social\Controller\UsuarioController($em));
+$app->mount('/admin/configuracao', new PNSL\Social\Controller\TipoController($em));
 
 //Area publica
 $app->mount('/site', new PNSL\Social\Controller\SiteController($em));

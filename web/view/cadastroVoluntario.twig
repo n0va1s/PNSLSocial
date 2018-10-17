@@ -69,7 +69,6 @@
                         <select class="form-control" name="tipo_registro">
                             <option value="">Selecione</option>
                             {% for tipo_registro in tipos_registro %}
-                            {{dump(tipo_registro)}}
                             <option value="{{ tipo_registro.id }}" {% if voluntario.tipoRegistro.id is defined and voluntario.tipoRegistro.id == tipo_registro.id %} selected {% endif %}>{{ tipo_registro.descricao }}</option>
                             {% endfor %}
                         </select>
