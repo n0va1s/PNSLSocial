@@ -90,8 +90,8 @@
                             {% for acao in acoes %}
                             <tr>
                                 <td>{{acao.nome}}</td>
-                                <td>{{acao.publicoAlvo}}</td>
-                                <td>{{acao.diaSemana}}</td>
+                                <td>{{acao.publicoAlvo.descricao}}</td>
+                                <td>{{acao.diaSemana.descricao}}</td>
                                 <td>{{acao.turno}}</td>
                                 <td>{{acao.entrada | date('h:i')}} - {{acao.saida | date('h:i')}}</td>
                             </tr>

@@ -58,8 +58,6 @@ class TurmaEntity
     public function __construct()
     {
         $this->frequencias = new ArrayCollection();
-        $this->dataInclusao = new \Datetime();
-        $this->dataAlteracao = new \Datetime();
     }
 
     /**
@@ -149,6 +147,22 @@ class TurmaEntity
             return $this;
         }
     }
+
+    /**
+     * Set the usuarioInclusao and actual date for dataInclusao
+     *
+     * @return  self
+     */ 
+    public function setLogInclusao($usuarioInclusao)
+    {
+        if (!empty($usuarioInclusao)) {
+            $this->usuarioInclusao = $usuarioInclusao;
+            $this->dataInclusao = new \DateTime();
+        } else {
+            throw new \InvalidArgumentException('Usuário responsável pela inclusão é obrigatório', 99);
+        }
+        return $this;
+    }
     
     /**
      * Get the value of usuarioInclusao
@@ -156,17 +170,6 @@ class TurmaEntity
     public function getUsuarioInclusao()
     {
         return $this->usuarioInclusao;
-    }
-
-    /**
-     * Set the value of usuarioInclusao
-     *
-     * @return  self
-     */ 
-    public function setUsuarioInclusao($usuarioInclusao)
-    {
-        $this->usuarioInclusao = $usuarioInclusao;
-        return $this;
     }
 
     /**
@@ -178,6 +181,22 @@ class TurmaEntity
     }    
 
     /**
+     * Set the usuarioAlteracao and actual date for dataAlteracao
+     *
+     * @return  self
+     */ 
+    public function setLogAlteracao($usuarioAlteracao)
+    {
+        if (!empty($usuarioAlteracao)) {
+            $this->usuarioAlteracao = $usuarioAlteracao;
+            $this->dataAlteracao = new \DateTime();
+        } else {
+            throw new \InvalidArgumentException('Usuário responsável pela alteração é obrigatório', 99);
+        }
+        return $this;
+    }
+
+    /**
      * Get the value of usuarioAlteracao
      */ 
     public function getUsuarioAlteracao()
@@ -186,30 +205,11 @@ class TurmaEntity
     }
 
     /**
-     * Set the value of usuarioAlteracao
-     *
-     * @return  self
-     */ 
-    public function setUsuarioAlteracao($usuarioAlteracao)
-    {
-        $this->usuarioAlteracao = $usuarioAlteracao;
-        return $this;
-    }
-
-    /**
      * Get the value of dataAlteracao
      */ 
     public function getDataAlteracao()
     {
         return $this->dataAlteracao;
-    }
-
-    /**
-     * Get the value of usuarioExclusao
-     */ 
-    public function getUsuarioExclusao()
-    {
-        return $this->usuarioExclusao;
     }
 
     /**
@@ -226,5 +226,21 @@ class TurmaEntity
             throw new \InvalidArgumentException('Usuário responsável pela exclusão é obrigatório', 99);
         }
         return $this;
+    }
+
+    /**
+     * Get the value of usuarioExclusao
+     */ 
+    public function getUsuarioExclusao()
+    {
+        return $this->usuarioExclusao;
+    }
+
+    /**
+     * Get the value of dataExclusao
+     */ 
+    public function getDataExclusao()
+    {
+        return $this->dataExclusao;
     }
 }

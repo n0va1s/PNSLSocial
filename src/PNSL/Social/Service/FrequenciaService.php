@@ -25,8 +25,8 @@ class FrequenciaService
             if ($turma) {
                 $frequencia = new FrequenciaEntity();
                 $frequencia->setData($valor['data']);
-                $frequencia->setUsuarioInclusao('usuarioInc');
-                $frequencia->setUsuarioAlteracao('usuarioAlt');
+                $frequencia->setLogInclusao('usuarioInc');
+                $frequencia->setLogAlteracao('usuarioAlt');
                 $this->em->persist($frequencia);
                 $frequencia->setTurma($turma);
                 $this->em->flush();

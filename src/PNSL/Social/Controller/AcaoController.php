@@ -25,7 +25,7 @@ class AcaoController implements ControllerProviderInterface
         $app['acao_service'] = function () {
             return new AcaoService($this->em);
         };
-        
+
         $ctrl->before(
             function (Request $request) {
                 if (0 === strpos($request->headers->get('Content-Type'), 'application/json')) {

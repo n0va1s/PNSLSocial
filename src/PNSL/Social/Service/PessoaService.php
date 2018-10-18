@@ -156,8 +156,8 @@ class PessoaService
                 $pessoa->setEmail($dados['email_pessoa']);
                 $pessoa->setTipoPessoa($tipo_pessoa);
                 $pessoa->setTipoOrigem($tipo_origem_pessoa);
-                $pessoa->setUsuarioInclusao('usuarioInclusao');
-                $pessoa->setUsuarioAlteracao('usuarioAlteracao');
+                $pessoa->setLogInclusao('usuarioInclusao');
+                $pessoa->setLogAlteracao('usuarioAlteracao');
                 
                 if (!empty($dados['nome_responsavel'])) {
                     $responsavel = new PessoaEntity();
@@ -180,8 +180,8 @@ class PessoaService
                     $responsavel->setEmail($dados['email_responsavel']);
                     $responsavel->setTipoPessoa($tipo_responsavel);                
                     $responsavel->setTipoOrigem($tipo_origem_responsavel);
-                    $responsavel->setUsuarioInclusao('usuarioInclusao');
-                    $responsavel->setUsuarioAlteracao('usuarioAlteracao');
+                    $responsavel->setLogInclusao('usuarioInclusao');
+                    $responsavel->setLogAlteracao('usuarioAlteracao');
 
                     $this->em->persist($responsavel);
                     $this->em->flush();
@@ -194,8 +194,8 @@ class PessoaService
                     $escola->setAno($dados['ano']);
                     $escola->setTurno($turno);
                     $escola->setGrau($grau);
-                    $escola->setUsuarioInclusao('usuarioInc');
-                    $escola->setUsuarioAlteracao('usuarioAlt');
+                    $escola->setLogInclusao('usuarioInc');
+                    $escola->setLogAlteracao('usuarioAlt');
                     $this->em->persist($escola);
                     $this->em->flush();
                     $pessoa->setEscola($escola);
@@ -225,8 +225,8 @@ class PessoaService
                 $pessoa->setEmail($dados['email_pessoa']);
                 $pessoa->setTipoPessoa($tipo_pessoa);                
                 $pessoa->setTipoOrigem($tipo_origem_pessoa);
-                $pessoa->setUsuarioInclusao('usuarioInclusao');
-                $pessoa->setUsuarioAlteracao('usuarioAlteracao');
+                $pessoa->setLogInclusao('usuarioInclusao');
+                $pessoa->setLogAlteracao('usuarioAlteracao');
                 //Responsavel
                 if (!empty($pessoa->getResponsavel())) {
                     $responsavel = $this->em->getReference(
@@ -236,7 +236,7 @@ class PessoaService
                     $acao_responsavel = 'A';
                 } else {
                     $responsavel = new PessoaEntity();
-                    $responsavel->setUsuarioInclusao('usuarioInclusao');
+                    $responsavel->setLogInclusao('usuarioInclusao');
                     $acao_responsavel = 'I';
                 }
                 $responsavel->setCPF($dados['CPF_responsavel']);
@@ -258,7 +258,7 @@ class PessoaService
                 $responsavel->setEmail($dados['email_responsavel']);
                 $responsavel->setTipoPessoa($tipo_responsavel);                
                 $responsavel->setTipoOrigem($tipo_origem_responsavel);
-                $responsavel->setUsuarioAlteracao('usuarioAlteracao');
+                $responsavel->setLogAlteracao('usuarioAlteracao');
                 $pessoa->setResponsavel($responsavel);
                 //Escola
                 if (!empty($pessoa->getEscola())) {
@@ -269,14 +269,14 @@ class PessoaService
                     $acao_escola = 'A';
                 } else {
                     $escola = new EscolaEntity();
-                    $escola->setUsuarioInclusao('usuarioInclusao');
+                    $escola->setLogInclusao('usuarioInclusao');
                     $acao_escola = 'I';
                 }
                 $escola->setNome($dados['escola']);
                 $escola->setAno($dados['ano']);
                 $escola->setTurno($turno);
                 $escola->setGrau($grau);
-                $escola->setUsuarioAlteracao('usuarioAlt');
+                $escola->setLogAlteracao('usuarioAlt');
                 $pessoa->setEscola($escola);
                 //Caso um responsavel ou escola estejam sendo 
                 //criados durante a alteracao da pessoa

@@ -53,12 +53,6 @@ class AtendimentoEntity
     /** @ORM\Column(type="datetime", name="dat_exc", nullable=true) */
     private $dataExclusao;
 
-    public function __construct()
-    {
-        $this->dataInclusao = new \Datetime();
-        $this->dataAlteracao = new \Datetime();
-    }
-    
     /**
      * Get the value of id
      */ 
@@ -178,6 +172,22 @@ class AtendimentoEntity
     }
 
     /**
+     * Set the usuarioInclusao and actual date for dataInclusao
+     *
+     * @return  self
+     */ 
+    public function setLogInclusao($usuarioInclusao)
+    {
+        if (!empty($usuarioInclusao)) {
+            $this->usuarioInclusao = $usuarioInclusao;
+            $this->dataInclusao = new \DateTime();
+        } else {
+            throw new \InvalidArgumentException('Usuário responsável pela inclusão é obrigatório', 99);
+        }
+        return $this;
+    }
+    
+    /**
      * Get the value of usuarioInclusao
      */ 
     public function getUsuarioInclusao()
@@ -186,22 +196,27 @@ class AtendimentoEntity
     }
 
     /**
-     * Set the value of usuarioInclusao
-     *
-     * @return  self
-     */ 
-    public function setUsuarioInclusao($usuarioInclusao)
-    {
-        $this->usuarioInclusao = $usuarioInclusao;
-        return $this;
-    }
-
-    /**
      * Get the value of dataInclusao
      */ 
     public function getDataInclusao()
     {
         return $this->dataInclusao;
+    }    
+
+    /**
+     * Set the usuarioAlteracao and actual date for dataAlteracao
+     *
+     * @return  self
+     */ 
+    public function setLogAlteracao($usuarioAlteracao)
+    {
+        if (!empty($usuarioAlteracao)) {
+            $this->usuarioAlteracao = $usuarioAlteracao;
+            $this->dataAlteracao = new \DateTime();
+        } else {
+            throw new \InvalidArgumentException('Usuário responsável pela alteração é obrigatório', 99);
+        }
+        return $this;
     }
 
     /**
@@ -213,22 +228,27 @@ class AtendimentoEntity
     }
 
     /**
-     * Set the value of usuarioAlteracao
-     *
-     * @return  self
-     */ 
-    public function setUsuarioAlteracao($usuarioAlteracao)
-    {
-        $this->usuarioAlteracao = $usuarioAlteracao;
-        return $this;
-    }
-
-    /**
      * Get the value of dataAlteracao
      */ 
     public function getDataAlteracao()
     {
         return $this->dataAlteracao;
+    }
+
+    /**
+     * Set the usuarioExclusao and actual date for dataExclusao
+     *
+     * @return  self
+     */ 
+    public function setLogExclusao($usuarioExclusao)
+    {
+        if (!empty($usuarioExclusao)) {
+            $this->usuarioExclusao = $usuarioExclusao;
+            $this->dataExclusao = new \DateTime();
+        } else {
+            throw new \InvalidArgumentException('Usuário responsável pela exclusão é obrigatório', 99);
+        }
+        return $this;
     }
 
     /**
@@ -240,43 +260,10 @@ class AtendimentoEntity
     }
 
     /**
-     * Set the value of usuarioExclusao
-     *
-     * @return  self
-     */ 
-    public function setUsuarioExclusao($usuarioExclusao)
-    {
-        $this->usuarioExclusao = $usuarioExclusao;
-        return $this;
-    }
-
-    /**
      * Get the value of dataExclusao
      */ 
     public function getDataExclusao()
     {
         return $this->dataExclusao;
-    }
-
-    /**
-     * Set the value of dataExclusao
-     *
-     * @return  self
-     */ 
-    public function setDataExclusao($dataExclusao = null)
-    {
-        if (empty($dataExclusao)) {
-            $this->dataExclusao = new \Datetime();
-        } else {
-            if (substr_count($dataExclusao, "/") == 2) {
-                list($dia, $mes, $ano) = explode("/", $dataExclusao);
-                $this->dataExclusao = new \DateTime(
-                    date_format(date_create($ano."-".$mes."-".$dia), "Y-m-d")
-                );
-            } else {
-                throw new \InvalidArgumentException('A data é inválida', 99);
-            }
-        }
-        return $this;
     }
 }

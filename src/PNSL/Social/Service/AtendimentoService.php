@@ -32,8 +32,8 @@ class AtendimentoService
             $atendimento->setPessoa($usuario);
             $atendimento->setDataAtendimento($dados['data']);
             $atendimento->setTexto($dados['atendimento']);
-            $atendimento->setUsuarioInclusao('usuarioInc');
-            $atendimento->setUsuarioAlteracao('usuarioAlt');
+            $atendimento->setLogInclusao('usuarioInc');
+            $atendimento->setLogAlteracao('usuarioAlt');
             $this->em->persist($atendimento);
         } else {
             $atendimento = $this->em->getReference(
@@ -44,7 +44,7 @@ class AtendimentoService
             $atendimento->setPessoa($usuario);
             $atendimento->setDataAtendimento($dados['data']);
             $atendimento->setTexto($dados['atendimento']);
-            $atendimento->setUsuarioAlteracao('usuarioAlt');
+            $atendimento->setLogAlteracao('usuarioAlt');
         }
         if ($atendimento) {
             $this->em->flush();

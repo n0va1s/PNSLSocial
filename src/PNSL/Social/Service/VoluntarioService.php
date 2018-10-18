@@ -30,8 +30,8 @@ class VoluntarioService
             $voluntario->setTipoRegistro($tipo_registro);
             $voluntario->setConhecimento($dados['conhecimento']);
             $voluntario->setAssinouTermo('N');
-            $voluntario->setUsuarioInclusao('usuarioInc');
-            $voluntario->setUsuarioAlteracao('usuarioAlt');
+            $voluntario->setLogInclusao('usuarioInc');
+            $voluntario->setLogAlteracao('usuarioAlt');
             $this->em->persist($voluntario);
         } else {
             $voluntario = $this->em->getReference('\PNSL\Social\Entity\VoluntarioEntity', $dados['id']);
@@ -40,7 +40,7 @@ class VoluntarioService
             $voluntario->setTipoRegistro($tipo_registro);
             $voluntario->setConhecimento($dados['conhecimento']);
             $voluntario->setAssinouTermo('N');
-            $voluntario->setUsuarioAlteracao('usuarioAlt');
+            $voluntario->setLogAlteracao('usuarioAlt');
         }
         //Insere no banco de dados a pessoa e o voluntario
         $this->em->flush();
@@ -102,7 +102,7 @@ class VoluntarioService
             );
             if ($voluntario) {
                 $voluntario->setAssinouTermo('S');
-                $voluntario->setUsuarioAlteracao('usuarioAlt2');
+                $voluntario->setLogAlteracao('usuarioAlt2');
                 $this->em->persist($voluntario);
                 $this->em->flush();
                 return true;

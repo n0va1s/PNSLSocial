@@ -26,15 +26,15 @@ class AcessoService
                 $acesso->setNome(utf8_encode($dados['nome']));
                 $acesso->setSenha(utf8_encode($dados['senha']));
                 $acesso->setPerfil($dados['perfil']);
-                $acesso->setUsuarioInclusao(utf8_encode($dados['usuario']));
-                $acesso->setUsuarioAlteracao(utf8_encode($dados['usuario']));
+                $acesso->setLogInclusao($dados['usuario']);
+                $acesso->setLogAlteracao($dados['usuario']);
                 $this->em->persist($acesso);
             } else {
                 $acesso = $this->em->getReference('\PNSL\Social\Entity\AcessoEntity', $id);
                 $acesso->setNome(utf8_encode($dados['nome']));
                 $acesso->setSenha(utf8_encode($dados['senha']));
                 $acesso->setPerfil($dados['perfil']);
-                $acesso->setUsuarioAlteracao(utf8_encode($dados['usuario']));
+                $acesso->setLogAlteracao($dados['usuario']);
             }
             $this->em->flush();
             return true;

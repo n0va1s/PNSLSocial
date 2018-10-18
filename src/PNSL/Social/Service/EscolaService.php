@@ -34,8 +34,8 @@ class EscolaService
                         $dados['grau']
                     )
                 );
-                $escola->setUsuarioInclusao('usuarioInc');
-                $escola->setUsuarioAlteracao('usuarioAlt');
+                $escola->setLogInclusao('usuarioInc');
+                $escola->setLogAlteracao('usuarioAlt');
                 $escola->setPessoa($pessoa);
                 $this->em->persist($escola);
                 $this->em->flush();

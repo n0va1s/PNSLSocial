@@ -66,8 +66,8 @@ class AcaoService
             $acao->setLocal($local);
             $acao->setVoluntario($voluntario);
             $acao->setTipo($tipo_acao);
-            $acao->setUsuarioInclusao('usuarioInc');
-            $acao->setUsuarioAlteracao('usuarioAlt');
+            $acao->setLogInclusao('usuarioInc');
+            $acao->setLogAlteracao('usuarioAlt');
             $this->em->persist($acao);
         } else {
             $acao = $this->em->getReference(
@@ -89,7 +89,7 @@ class AcaoService
             $acao->setLocal($local);
             $acao->setVoluntario($voluntario);
             $acao->setTipo($tipo_acao);
-            $acao->setUsuarioAlteracao('usuarioAlt');
+            $acao->setLogAlteracao('usuarioAlt');
         }
 
         $this->em->flush();
@@ -117,7 +117,9 @@ class AcaoService
     public function fetchAll()
     {
         $acoes = $this->em->createQuery(
-            'select a, v, p from \PNSL\Social\Entity\AcaoEntity a 
+            'select a, b, d, v, p from \PNSL\Social\Entity\AcaoEntity a 
+            join a.publicoAlvo b
+            join a.diaSemana d
             join a.voluntario v
             join v.pessoa p'
         )->getArrayResult();
@@ -190,8 +192,8 @@ class AcaoService
         $turma->setAcao($acao);
         $turma->setPessoa($usuario);
         $turma->setSituacao('A');
-        $turma->setUsuarioInclusao('usuarioInc');
-        $turma->setUsuarioAlteracao('usuarioAlt');
+        $turma->setLogInclusao('usuarioInc');
+        $turma->setLogAlteracao('usuarioAlt');
         $this->em->persist($turma);
         $this->em->flush();
         if ($turma) {
@@ -222,8 +224,7 @@ class AcaoService
         $turma = $this->em->getReference(
             '\PNSL\Social\Entity\TurmaEntity', $id
         );
-        $turma->setUsuarioExclusao('usuarioExc');
-        $turma->setDataExclusao();
+        $turma->setLogExclusao('usuarioExc');
         $this->em->persist($turma);
         $this->em->flush();
         if ($turma) {

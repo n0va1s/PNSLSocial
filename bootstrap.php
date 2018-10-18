@@ -138,39 +138,6 @@ $app['security.firewalls'] = array(
     ),
 );
 
-/*$app->register(
-    new Silex\Provider\SecurityServiceProvider(), 
-    array(
-        'security.firewalls' => array(
-            'login' => array(
-                'pattern' => '^/login$'
-            ),
-            'site' => array(
-                'pattern' => '^/site/*$',
-                'anonymous' => true,
-            ),
-            'restrito' => array(
-                'pattern' => '^/restrito/*$',
-                'form' => array(
-                    'login_path' => '/login', 
-                    'check_path' => '/restrito/login_check'
-                ),
-                'logout' => array(
-                    'logout_path' => '/restrito/logout', 
-                    'invalidate_session' => true
-                ),
-                'users' => function () use ($em) {
-                    return new UserProvider($em);
-                },
-            ),
-        ),
-        'security.access_rules' => array(
-            array('^/restrito/*.*$', 'ROLE_ADMIN'),
-            array('^/site/.*$', 'ROLE_USER'),
-        )
-    )
-);*/
-
 $app->boot();
 
 //Menu
@@ -190,6 +157,7 @@ $app->get('/login', function(Request $request) use ($app) {
 //Rota padrao apos o login
 $app->get(
     '/admin/menu', function () use ($app) {
+        //Usuario logado
         $token = $app['security.token_storage']->getToken();
         if (null !== $token) {
             $user = $token->getUser();
