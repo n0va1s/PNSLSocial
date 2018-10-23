@@ -1,5 +1,6 @@
 <?php
 namespace PNSL\Social\Controller;
+
 use Silex\Application;
 use Silex\Api\ControllerProviderInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,6 +22,7 @@ class VoluntarioController implements ControllerProviderInterface
     {
         //if ($app['security.authorization_checker']->isGranted('ROLE_ADMIN')) {
         $ctrl = $app['controllers_factory'];
+     
         $app['pessoa_service'] = function () {
             return new PessoaService($this->em);
         };

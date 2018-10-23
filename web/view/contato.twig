@@ -9,7 +9,7 @@
             </header>
         </div>
         <div class="row col-sm-8 col-sm-offset-2">
-        <form name="frmContato" action="" method="POST" class="form-inline">
+        <form name="frmContato" action="{{ path('email')}}" method="POST">
             <div class="form-group col-sm-4">
                 <label for="nome" class="sr-only">Nome</label>
                 <input type="text" name="nome" class="form-control" placeholder="Nome" required data-validation-required-message="Por favor informe seu nome" autofocus>
@@ -29,12 +29,17 @@
             <!--<div class="checkbox">
                 <label><input type="checkbox" value="remember-me"> Remember me</label>
             </div>-->
-            <br />
-            <div>&nbsp;</div>
-            <center><button class="btn btn-primary" type="submit">Enviar</button></center>
+            <div class="form-group col-sm-12 text-center">
+                <button type="submit" class="btn btn-primary">
+                    <i class="glyphicon glyphicon-ok"> Enviar</i>
+                </button>
+                <button type="button" class="btn btn-default">
+                    <i class="glyphicon glyphicon-remove"> Limpar</i>
+                </button>
+            </div>
         </form>
         {% if mensagem is defined %}
-        <div class="alert alert-success">
+        <div class="col-sm-12 alert alert-success text-center">
             {{ mensagem }}
         </div>
         {% endif %}

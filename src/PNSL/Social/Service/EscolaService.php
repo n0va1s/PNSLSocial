@@ -1,5 +1,6 @@
 <?php
 namespace PNSL\Social\Service;
+
 use \Doctrine\ORM\EntityManager;
 use \Doctrine\ORM\Query;
 use \Doctrine\ORM\Tools\Pagination\Paginator;
@@ -34,8 +35,8 @@ class EscolaService
                         $dados['grau']
                     )
                 );
-                $escola->setLogInclusao('usuarioInc');
-                $escola->setLogAlteracao('usuarioAlt');
+                $escola->setLogInclusao($dados['usuario']);
+                $escola->setLogAlteracao($dados['usuario']);
                 $escola->setPessoa($pessoa);
                 $this->em->persist($escola);
                 $this->em->flush();

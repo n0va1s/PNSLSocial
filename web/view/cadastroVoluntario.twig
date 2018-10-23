@@ -135,6 +135,7 @@
                     </button>
                 </div>
                 <input type="hidden" name="id" value="{% if voluntario is defined %}{{ voluntario.pessoa.id }}{% endif %}">                
+                <input type="hidden" id="usuario" name="usuario" value="{{ app.user.username }}">
             </form>
             {% if resultado is defined %}
             <div class="col-sm-12 text-center alert alert-success">

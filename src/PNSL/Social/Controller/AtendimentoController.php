@@ -1,5 +1,6 @@
 <?php
 namespace PNSL\Social\Controller;
+
 use Silex\Application;
 use Silex\Api\ControllerProviderInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,6 +21,7 @@ class AtendimentoController implements ControllerProviderInterface
     {
         //if ($app['security.authorization_checker']->isGranted('ROLE_ADMIN')) {
         $ctrl = $app['controllers_factory'];
+
         $app['atendimento_service'] = function () {
             return new AtendimentoService($this->em);
         };

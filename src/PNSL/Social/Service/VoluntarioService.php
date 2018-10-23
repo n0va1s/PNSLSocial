@@ -1,5 +1,6 @@
 <?php
 namespace PNSL\Social\Service;
+
 use \Doctrine\ORM\EntityManager;
 use \Doctrine\ORM\Query;
 use \Doctrine\ORM\Tools\Pagination\Paginator;
@@ -30,8 +31,8 @@ class VoluntarioService
             $voluntario->setTipoRegistro($tipo_registro);
             $voluntario->setConhecimento($dados['conhecimento']);
             $voluntario->setAssinouTermo('N');
-            $voluntario->setLogInclusao('usuarioInc');
-            $voluntario->setLogAlteracao('usuarioAlt');
+            $voluntario->setLogInclusao($dados['usuario']);
+            $voluntario->setLogAlteracao($dados['usuario']);
             $this->em->persist($voluntario);
         } else {
             $voluntario = $this->em->getReference('\PNSL\Social\Entity\VoluntarioEntity', $dados['id']);
@@ -40,7 +41,7 @@ class VoluntarioService
             $voluntario->setTipoRegistro($tipo_registro);
             $voluntario->setConhecimento($dados['conhecimento']);
             $voluntario->setAssinouTermo('N');
-            $voluntario->setLogAlteracao('usuarioAlt');
+            $voluntario->setLogAlteracao($dados['usuario']);
         }
         //Insere no banco de dados a pessoa e o voluntario
         $this->em->flush();

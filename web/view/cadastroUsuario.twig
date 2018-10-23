@@ -267,6 +267,7 @@
                     </button>
                 </div>
                 <input type="hidden" name="id" value="{% if usuario is defined %}{{ usuario.id }}{% endif %}">                
+                <input type="hidden" id="usuario" name="usuario" value="{{ app.user.username }}">
             </form>
         </div>
         {% if mensagem is defined %}

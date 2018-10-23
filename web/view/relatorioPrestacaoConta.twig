@@ -115,7 +115,7 @@
 
 {% block rodape %}
 <p class="text-center">
-    Emitido as {{"now"|date("d/m/Y h:i:s")}}
+    Emitido as {{"now"|date("d/m/Y h:i:s")}} por {{ app.user.username }}>
 </p>
 {% endblock rodape %}
 

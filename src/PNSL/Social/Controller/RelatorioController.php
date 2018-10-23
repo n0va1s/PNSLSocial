@@ -1,5 +1,6 @@
 <?php
 namespace PNSL\Social\Controller;
+
 use Silex\Application;
 use Silex\Api\ControllerProviderInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,6 +20,10 @@ class RelatorioController implements ControllerProviderInterface
     {
         //if ($app['security.authorization_checker']->isGranted('ROLE_ADMIN')) {
         $ctrl = $app['controllers_factory'];
+
+        $app['relatorio_service'] = function () {
+            return new RelatorioService($this->em);
+        };
         
         $ctrl->before(
             function (Request $request) {

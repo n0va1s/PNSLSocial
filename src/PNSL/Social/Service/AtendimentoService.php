@@ -1,5 +1,6 @@
 <?php
 namespace PNSL\Social\Service;
+
 use \Doctrine\ORM\EntityManager;
 use \Doctrine\ORM\Query;
 use \Doctrine\ORM\Tools\Pagination\Paginator;
@@ -32,8 +33,8 @@ class AtendimentoService
             $atendimento->setPessoa($usuario);
             $atendimento->setDataAtendimento($dados['data']);
             $atendimento->setTexto($dados['atendimento']);
-            $atendimento->setLogInclusao('usuarioInc');
-            $atendimento->setLogAlteracao('usuarioAlt');
+            $atendimento->setLogInclusao($dados['usuario']);
+            $atendimento->setLogAlteracao($dados['usuario']);
             $this->em->persist($atendimento);
         } else {
             $atendimento = $this->em->getReference(
@@ -44,7 +45,7 @@ class AtendimentoService
             $atendimento->setPessoa($usuario);
             $atendimento->setDataAtendimento($dados['data']);
             $atendimento->setTexto($dados['atendimento']);
-            $atendimento->setLogAlteracao('usuarioAlt');
+            $atendimento->setLogAlteracao($dados['usuario']);
         }
         if ($atendimento) {
             $this->em->flush();

@@ -1,5 +1,6 @@
 <?php
 namespace PNSL\Social\Service;
+
 use \Doctrine\ORM\EntityManager;
 use \Doctrine\ORM\Query;
 use \Doctrine\ORM\Tools\Pagination\Paginator;
@@ -25,8 +26,8 @@ class FrequenciaService
             if ($turma) {
                 $frequencia = new FrequenciaEntity();
                 $frequencia->setData($valor['data']);
-                $frequencia->setLogInclusao('usuarioInc');
-                $frequencia->setLogAlteracao('usuarioAlt');
+                $frequencia->setLogInclusao($dados['usuario']);
+                $frequencia->setLogAlteracao($dados['usuario']);
                 $this->em->persist($frequencia);
                 $frequencia->setTurma($turma);
                 $this->em->flush();
@@ -45,7 +46,7 @@ class FrequenciaService
         );
         if ($matricula) {
             $matricula->setSituacao('E');
-            $matricula->setLogExclusao('usuarioExc');
+            $matricula->setLogExclusao($dados['usuario']);
             $this->em->persist($matricula);
             return $this->em->flush();
         } else {

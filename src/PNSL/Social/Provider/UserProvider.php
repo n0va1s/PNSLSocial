@@ -9,12 +9,12 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\EntityManager;
- 
+
 class UserProvider implements UserProviderInterface
 {
     private $em;
     
-    public function  __construct(EntityManager $em)
+    public function __construct(EntityManager $em)
     {
         $this->em = $em;
     }

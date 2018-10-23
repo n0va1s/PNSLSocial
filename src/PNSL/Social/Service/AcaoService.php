@@ -1,5 +1,6 @@
 <?php
 namespace PNSL\Social\Service;
+
 use \Doctrine\ORM\EntityManager;
 use \Doctrine\ORM\Query;
 use \Doctrine\ORM\Tools\Pagination\Paginator;
@@ -66,8 +67,8 @@ class AcaoService
             $acao->setLocal($local);
             $acao->setVoluntario($voluntario);
             $acao->setTipo($tipo_acao);
-            $acao->setLogInclusao('usuarioInc');
-            $acao->setLogAlteracao('usuarioAlt');
+            $acao->setLogInclusao($dados['usuario']);
+            $acao->setLogAlteracao($dados['usuario']);
             $this->em->persist($acao);
         } else {
             $acao = $this->em->getReference(
@@ -89,7 +90,7 @@ class AcaoService
             $acao->setLocal($local);
             $acao->setVoluntario($voluntario);
             $acao->setTipo($tipo_acao);
-            $acao->setLogAlteracao('usuarioAlt');
+            $acao->setLogAlteracao($dados['usuario']);
         }
 
         $this->em->flush();
@@ -192,8 +193,8 @@ class AcaoService
         $turma->setAcao($acao);
         $turma->setPessoa($usuario);
         $turma->setSituacao('A');
-        $turma->setLogInclusao('usuarioInc');
-        $turma->setLogAlteracao('usuarioAlt');
+        $turma->setLogInclusao($this->usuarioLogado);
+        $turma->setLogAlteracao($this->$usuarioLogado);
         $this->em->persist($turma);
         $this->em->flush();
         if ($turma) {
@@ -224,7 +225,7 @@ class AcaoService
         $turma = $this->em->getReference(
             '\PNSL\Social\Entity\TurmaEntity', $id
         );
-        $turma->setLogExclusao('usuarioExc');
+        $turma->setLogExclusao($dados['usuario']);
         $this->em->persist($turma);
         $this->em->flush();
         if ($turma) {

@@ -64,15 +64,6 @@ $em = EntityManager::create(
     $evm
 );
 
-/*
-ini_set('display_errors', 1);
-error_reporting(-1);
-ErrorHandler::register();
-if ('cli' !== php_sapi_name()) {
-    ExceptionHandler::register();
-}
-*/
-
 $app = new \Silex\Application();
 $app['debug'] = $file_config['log.enabled'];
 
@@ -103,30 +94,24 @@ $app->register(
     )
 );
 
-$app->register(
-    new Silex\Provider\SwiftmailerServiceProvider(), 
-    array(
-        'swiftmailer.options' => array(
-            'host'       => $file_config['mail.host'],
-            'port'       => $file_config['mail.port'],
-            'username'   => $file_config['mail.username'],
-            'password'   => $file_config['mail.password'],
-            'encryption' => $file_config['mail.encryption'],
-            'auth_mode'  => $file_config['mail.auth_mode'],
-        )
-    )
+//Mail
+$app->register(new Silex\Provider\SwiftmailerServiceProvider());
+$app['swiftmailer.options'] = array(
+    'host' => $file_config['mail.host'],
+    'port' => $file_config['mail.port'],
+    'username' => $file_config['mail.username'],
+    'password' => $file_config['mail.password'],
+    'encryption' => $file_config['mail.encryption'],
+    'auth_mode' => $file_config['mail.auth_mode']
 );
-
 //Para nao guardar os emails na fila
 $app['swiftmailer.use_spool'] = false;
 
 //Quando se usa um formulario de login deve-se usar SessionServiceProvider
 $app->register(new Silex\Provider\SessionServiceProvider());
-
+//Seguranca
 $app['security.salt'] = $file_config['sec.salt'];
-
 $app->register(new Silex\Provider\SecurityServiceProvider());
-
 $app['security.firewalls'] = array(
     'admin' => array(
         'pattern' => '^/admin',
@@ -137,7 +122,6 @@ $app['security.firewalls'] = array(
         },
     ),
 );
-
 $app->boot();
 
 //Menu
@@ -147,21 +131,20 @@ $app->get(
     }
 )->bind('index');
 
-$app->get('/login', function(Request $request) use ($app) {
-    return $app['twig']->render('login.twig', array(
-        'error'         => $app['security.last_error']($request),
-        'last_username' => $app['session']->get('_security.last_username'),
-    ));
-})->bind('login');
+$app->get(
+    '/login', function (Request $request) use ($app) {
+        return $app['twig']->render(
+            'login.twig', array(
+            'error'         => $app['security.last_error']($request),
+            'last_username' => $app['session']->get('_security.last_username'),
+            )
+        );
+    }
+)->bind('login');
 
 //Rota padrao apos o login
 $app->get(
     '/admin/menu', function () use ($app) {
-        //Usuario logado
-        $token = $app['security.token_storage']->getToken();
-        if (null !== $token) {
-            $user = $token->getUser();
-        }
         return $app['twig']->render(
             'areaRestrita.twig',
             array('user'=>$user), 
@@ -171,13 +154,37 @@ $app->get(
 )->bind('menu');
 
 //Area restrita
-$app->mount('/admin/relatorio', new PNSL\Social\Controller\RelatorioController($em));
-$app->mount('/admin/atendimento', new PNSL\Social\Controller\AtendimentoController($em));
-$app->mount('/admin/frequencia', new PNSL\Social\Controller\FrequenciaController($em));
-$app->mount('/admin/acao', new PNSL\Social\Controller\AcaoController($em));
-$app->mount('/admin/voluntario', new PNSL\Social\Controller\VoluntarioController($em));
-$app->mount('/admin/usuario', new PNSL\Social\Controller\UsuarioController($em));
-$app->mount('/admin/configuracao', new PNSL\Social\Controller\TipoController($em));
+$app->mount(
+    '/admin/relatorio', 
+    new PNSL\Social\Controller\RelatorioController($em)
+);
+$app->mount(
+    '/admin/atendimento', 
+    new PNSL\Social\Controller\AtendimentoController($em)
+);
+$app->mount(
+    '/admin/frequencia', 
+    new PNSL\Social\Controller\FrequenciaController($em)
+);
+$app->mount(
+    '/admin/acao', 
+    new PNSL\Social\Controller\AcaoController($em)
+);
+$app->mount(
+    '/admin/voluntario', 
+    new PNSL\Social\Controller\VoluntarioController($em)
+);
+$app->mount(
+    '/admin/usuario', 
+    new PNSL\Social\Controller\UsuarioController($em)
+);
+$app->mount(
+    '/admin/configuracao', 
+    new PNSL\Social\Controller\TipoController($em)
+);
 
 //Area publica
-$app->mount('/site', new PNSL\Social\Controller\SiteController($em));
+$app->mount(
+    '/site', 
+    new PNSL\Social\Controller\SiteController($em)
+);
