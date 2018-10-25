@@ -55,6 +55,11 @@
             <div class="collapse navbar-collapse" id="menu">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                        <a href="{{ path('menu') }}">Área Restrita</a>
+                    {% endif %}
+                    </li>
+                    <li>
                         <a href="{{ app.url_generator.generate('nossoImpacto') }}">Nosso impacto</a>
                     </li>
                     <li>
