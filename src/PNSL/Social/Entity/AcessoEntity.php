@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 class AcessoEntity
 {
     /** @ORM\Id @ORM\OneToOne(targetEntity="PessoaEntity")
-     *  @ORM\JoinColumn(name="seq_pessoa", referencedColumnName="seq_pessoa", nullable=false, onDelete="CASCADE") */
+     *  @ORM\JoinColumn(name="seq_pessoa", referencedColumnName="seq_pessoa", nullable=false) */
     private $pessoa;
 
     /** @ORM\Column(type="string", name="nom_usuario", length=100, unique=true) */
@@ -18,7 +18,10 @@ class AcessoEntity
     /** @ORM\Column(type="string", name="pwd_usuario", length=100) */
     private $senha;
 
-    /** @ORM\Column(type="string", name="tip_perfil", length=255) */
+    /** 
+     * @ORM\ManyToOne(targetEntity="TipoEntity")
+     * @ORM\JoinColumn(name="seq_tipo_perfil", referencedColumnName="seq_tipo") 
+     */
     private $perfil;
 
     /** @ORM\Column(type="string", length=50, name="usu_inc", nullable=false) */

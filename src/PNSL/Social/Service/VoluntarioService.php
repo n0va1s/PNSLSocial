@@ -76,6 +76,22 @@ class VoluntarioService
         )->getArrayResult();
         return $voluntarios;
     }
+
+    public function listNoAccess()
+    {
+        $voluntarios = $this->em->createQuery(
+            'select p, v 
+            from \PNSL\Social\Entity\VoluntarioEntity v 
+            join v.pessoa p
+            where p.id NOT IN (
+                select p1.id 
+                from \PNSL\Social\Entity\AcessoEntity a
+                join a.pessoa p1
+                ) 
+            order by p.nome ASC'
+        )->getArrayResult();
+        return $voluntarios;
+    }
     
     public function findById(int $id)
     {

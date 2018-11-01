@@ -122,6 +122,9 @@ $app['security.firewalls'] = array(
         },
     ),
 );
+$app['security.role_hierarchy'] = array(
+    'ROLE_ROOT' => array('ROLE_ADMIN', 'ROLE_USER'),
+);
 $app->boot();
 
 //Menu
@@ -147,7 +150,7 @@ $app->get(
     '/admin/menu', function () use ($app) {
         return $app['twig']->render(
             'areaRestrita.twig',
-            array('user'=>$user), 
+            array(), 
             new Response('Ok', 200)
         );
     }
@@ -181,6 +184,10 @@ $app->mount(
 $app->mount(
     '/admin/configuracao', 
     new PNSL\Social\Controller\TipoController($em)
+);
+$app->mount(
+    '/admin/acesso', 
+    new PNSL\Social\Controller\AcessoController($em)
 );
 
 //Area publica

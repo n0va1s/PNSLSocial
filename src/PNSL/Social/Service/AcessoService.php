@@ -19,22 +19,32 @@ class AcessoService
     {
         $acesso = $this->em->getReference(
             '\PNSL\Social\Entity\AcessoEntity', 
-            $dados['seq_acesso']
+            $dados['id']
         );
         if ($acesso) {
-            if (empty($acesso->getId)) {
+            $pessoa = $this->em->getReference(
+                '\PNSL\Social\Entity\PessoaEntity', 
+                $dados['voluntario']
+            );
+            $perfil = $this->em->getReference(
+                '\PNSL\Social\Entity\TipoEntity', 
+                $dados['perfil']
+            );
+            if (empty($dados['id'])) {
                 $acesso = new AcessoEntity();
-                $acesso->setNome(utf8_encode($dados['nome']));
-                $acesso->setSenha(utf8_encode($dados['senha']));
-                $acesso->setPerfil($dados['perfil']);
+                $acesso->setPessoa($pessoa);
+                $acesso->setNome($dados['login']);
+                $acesso->setSenha($dados['password']);
+                $acesso->setPerfil($perfil);
                 $acesso->setLogInclusao($dados['usuario']);
                 $acesso->setLogAlteracao($dados['usuario']);
                 $this->em->persist($acesso);
+                
             } else {
-                $acesso = $this->em->getReference('\PNSL\Social\Entity\AcessoEntity', $id);
-                $acesso->setNome(utf8_encode($dados['nome']));
-                $acesso->setSenha(utf8_encode($dados['senha']));
-                $acesso->setPerfil($dados['perfil']);
+                $acesso->setPessoa($pessoa);
+                $acesso->setNome($dados['login']);
+                $acesso->setSenha($dados['password']);
+                $acesso->setPerfil($perfil);
                 $acesso->setLogAlteracao($dados['usuario']);
             }
             $this->em->flush();
@@ -56,7 +66,9 @@ class AcessoService
     public function fetchAll()
     {
         $acessos = $this->em->createQuery(
-            'select a from \PNSL\Social\Entity\AcessoEntity a '
+            'select a, p
+            from \PNSL\Social\Entity\AcessoEntity a
+            join a.perfil p'
         )->getArrayResult();
         return $acessos;
     }
@@ -64,8 +76,12 @@ class AcessoService
     public function findById(int $id)
     {
         $acesso = $this->em->createQuery(
-            'select p from \PNSL\Social\Entity\AcessoEntity a where a.id = :id'
-        )->setParameter('id', $id)->getArrayResult();
+            'select a, p, f
+            from \PNSL\Social\Entity\AcessoEntity a 
+            join a.pessoa p
+            join a.perfil f
+            where a.pessoa = :id'
+        )->setParameter('id', $id)->getOneOrNullResult();
         return $acesso;
     }
 }

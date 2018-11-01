@@ -122,5 +122,38 @@ INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Conselho Tutelar','ORG');
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Justiça','ORG');
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Escola Pública','ORG');
 INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('Nossa Senhora do Lago','ORG');
+#Papeis
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('ROLE_USER','RLE');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('ROLE_ADMIN','RLE');
+INSERT INTO tipo(des_tipo,grp_tipo) VALUES ('ROLE_ROOT','RLE');
 #Acesso
-INSERT INTO acesso(seq_pessoa, nom_usuario,pwd_usuario, tip_perfil) VALUES (1,'jp.trabalho@gmail.com','admin321', 'ROLE_ADMIN');
+INSERT INTO pessoa(
+    seq_tipo_sexo, seq_tipo_estado_civil, seq_tipo_pessoa, seq_tipo_uf, seq_tipo_telefone, 
+    seq_tipo_renda, seq_responsavel, seq_tipo_parentesco, seq_tipo_origem, seq_escola, 
+    nom_pessoa, dat_nascimento, num_rg, num_cpf, des_nacionalidade, 
+    end_des_logradouro, end_nom_cidade, end_num_CEP, eml_principal, tel_principal, 
+    qtd_familiar, nom_profissao, usu_inc, dat_inc, usu_alt, 
+    dat_alt, usu_exc, dat_exc) 
+VALUES (18,15,23,49,20,
+        null,null,null,null,null,
+        'Root da casasaojose.net.br','2018-11-01',null,'12345678911','Sistema',
+        'localhost','Processador 2','70000000','root@casasaojose.net.br','61999998888',
+        0,'Root do Sistema','carga',CURRENT_DATE,'carga',
+        CURRENT_DATE,null,null);
+INSERT INTO acesso(seq_pessoa, nom_usuario,pwd_usuario, tip_perfil,usu_inc, dat_inc, usu_alt, dat_alt) 
+VALUES (1,'root@casasaojose.net.br','$2y$10$3i9/lVd8UOFIJ6PAMFt8gu3/r5g0qeCJvoSlLCsvMTythye19F77a', 'ROLE_ADMIN','carga',CURRENT_DATE, 'carga', CURRENT_DATE);
+INSERT INTO pessoa(
+    seq_tipo_sexo, seq_tipo_estado_civil, seq_tipo_pessoa, seq_tipo_uf, seq_tipo_telefone, 
+    seq_tipo_renda, seq_responsavel, seq_tipo_parentesco, seq_tipo_origem, seq_escola, 
+    nom_pessoa, dat_nascimento, num_rg, num_cpf, des_nacionalidade, 
+    end_des_logradouro, end_nom_cidade, end_num_CEP, eml_principal, tel_principal, 
+    qtd_familiar, nom_profissao, usu_inc, dat_inc, usu_alt, 
+    dat_alt, usu_exc, dat_exc) 
+VALUES (18,15,23,49,20,
+        null,null,null,null,null,
+        'Admin da casasaojose.net.br','2018-11-01',null,'98765432199','Sistema',
+        'localhost','Processador 2','70000000','admin@casasaojose.net.br','61999998888',
+        0,'Admin do Sistema','carga',CURRENT_DATE,'carga',
+        CURRENT_DATE,null,null);
+INSERT INTO acesso(seq_pessoa, nom_usuario,pwd_usuario, tip_perfil,usu_inc, dat_inc, usu_alt, dat_alt) 
+VALUES (2,'admin@casasaojose.net.br','$2y$10$3i9/lVd8UOFIJ6PAMFt8gu3/r5g0qeCJvoSlLCsvMTythye19F77a', 'ROLE_ADMIN','carga',CURRENT_DATE, 'carga', CURRENT_DATE);

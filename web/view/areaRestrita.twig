@@ -56,5 +56,23 @@
             </div>
         </a>
     </div>
+    {% if is_granted('ROLE_ROOT') %}
+    <div class="row slideanim text-center">
+        <a href="{{ path('tipoCadastrar') }}">
+            <div class="col-sm-4">
+                <span class="fa fa-wrench fa-3x"></span>
+                <h4>Configuração</h4>
+                <p>configuração do sistema</p>
+            </div>
+        </a>
+        <a href="{{ path('acessoCadastrar') }}">
+            <div class="col-sm-4">
+                <span class="fa fa-lock fa-3x"></span>
+                <h4>Acesso</h4>
+                <p>perfis de acesso ao sistema</p>
+            </div>
+        </a>
+    </div>
+    {% endif %}
 </div>
 {% endblock %}

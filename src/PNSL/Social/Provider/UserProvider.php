@@ -22,10 +22,11 @@ class UserProvider implements UserProviderInterface
     public function loadUserByUsername($username)
     {
         $user = $this->em->createQuery(
-            'select a from \PNSL\Social\Entity\AcessoEntity a 
+            'select a, p 
+            from \PNSL\Social\Entity\AcessoEntity a
+            join a.perfil p 
             where a.nome = :nome'
         )->setParameter('nome', $username)->getOneOrNullResult();
-
         if (!$user) {
             throw new UsernameNotFoundException(
                 sprintf(
@@ -38,7 +39,8 @@ class UserProvider implements UserProviderInterface
         return new User(
             $user->getNome(), 
             $user->getSenha(), 
-            explode(',', $user->getPerfil()), 
+            //explode(',', $user->getPerfil()), 
+            explode(',', $user->getPerfil()->getDescricao()), 
             true, true, true, true
         );
     }
