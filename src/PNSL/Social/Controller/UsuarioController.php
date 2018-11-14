@@ -156,6 +156,32 @@ class UsuarioController implements ControllerProviderInterface
                 }
             }
         )->bind('usuarioExcluir')->assert('id', '\d+');
+
+        $ctrl->get(
+            '/obter/{cpf}', function ($cpf) use ($app) {
+                if ($cpf) {
+                    $usuario = $app['pessoa_service']->findByCpf($cpf);
+                    $arrUsuario = $app['pessoa_service']->toArray($usuario);
+                    if ($arrUsuario) {
+                        return $app->json(
+                            $arrUsuario, 
+                            201, 
+                            ['Content-Type' => 'application/json']
+                        );
+                    } else {
+                        return $app->abort(
+                            404, 
+                            "Ops... pessoa não encontrada"
+                        );
+                    }                    
+                } else {
+                    return $app->abort(
+                        404, 
+                        "Ops... CPF não informado"
+                    );
+                }
+            }
+        )->bind('usuarioObter')->assert('cpf', '\d+');
         
         return $ctrl;
     }

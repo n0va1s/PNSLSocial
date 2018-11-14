@@ -20,24 +20,32 @@
                     {% endfor %}
                     <div class="form-group col-sm-3">
                         <label for="CPF_pessoa">CPF</label>
-                        <input type="text" name="CPF_pessoa" class="form-control" placeholder="999.999.999-99" required autofocus value="{% if voluntario is defined %}{{ voluntario.pessoa.CPF }}{% endif %}">
+                        <input type="text" name="CPF_pessoa" id="CPF_pessoa" class="form-control" placeholder="999.999.999-99" required autofocus value="{% if voluntario is defined %}{{ voluntario.pessoa.CPF }}{% endif %}">
                     </div>
-                    <div class="form-group col-sm-9">
+                    <div class="form-group col-sm-1">
+                        <label>&nbsp;</label>
+                        <div class="input-group-append">
+                            <button type="button" id="btnPessoa" class="btn btn-primary">
+                                <i class="glyphicon glyphicon-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-8">
                         <label for="nome_pessoa">Nome</label>
-                        <input type="text" name="nome_pessoa" class="form-control" placeholder="Seu nome completo" required value="{% if voluntario is defined %}{{ voluntario.pessoa.nome }}{% endif %}">
+                        <input type="text" name="nome_pessoa" id="nome_pessoa" class="form-control" placeholder="Seu nome completo" required value="{% if voluntario is defined %}{{ voluntario.pessoa.nome }}{% endif %}">
                     </div>
                     <div class="clearfix"></div>
                     <div class="form-group col-sm-3">
                         <label for="nascimento_pessoa">Nascimento</label>
-                        <input type="date" name="nascimento_pessoa" class="form-control" placeholder="dd/mm/aaaa" required value="{% if voluntario is defined %}{{ voluntario.pessoa.dataNascimento.date | date("d/m/Y") }}{% endif %}">
+                        <input type="date" name="nascimento_pessoa" id="nascimento_pessoa" class="form-control" placeholder="dd/mm/aaaa" required value="{% if voluntario is defined %}{{ voluntario.pessoa.dataNascimento.date | date("d/m/Y") }}{% endif %}">
                     </div>
                     <div class="form-group col-sm-2">
                         <label for="RG_pessoa">RG</label>
-                        <input type="text" name="RG_pessoa" class="form-control" placeholder="9.999.999" value="{% if voluntario is defined %}{{ voluntario.pessoa.RG }}{% endif %}">
+                        <input type="text" name="RG_pessoa" id="RG_pessoa" class="form-control" placeholder="9.999.999" value="{% if voluntario is defined %}{{ voluntario.pessoa.RG }}{% endif %}">
                     </div>
                     <div class="form-group col-sm-3">
                         <label for="estado_civil_pessoa" class="form-check-label">Estado Civil</label><br />
-                        <select class="form-control" name="estado_civil_pessoa" required>
+                        <select class="form-control" name="estado_civil_pessoa" id="estado_civil_pessoa" required>
                             <option value="">Selecione</option>
                             {% for estado_civil in estados_civis %}
                             <option value="{{ estado_civil.id }}" {% if voluntario is defined and voluntario.pessoa.estadoCivil.id == estado_civil.id %} selected {% endif %}>{{ estado_civil.descricao }}</option>
@@ -46,19 +54,19 @@
                     </div>
                     <div class="form-group col-sm-4">
                         <label for="nacionalidade_pessoa">Nacionalidade</label>
-                        <input type="text" name="nacionalidade_pessoa" class="form-control" placeholder="Brasíleira" required value="{% if voluntario is defined %}{{ voluntario.pessoa.nacionalidade }}{% endif %}">
+                        <input type="text" name="nacionalidade_pessoa" id="nacionalidade_pessoa" class="form-control" placeholder="Brasíleira" required value="{% if voluntario is defined %}{{ voluntario.pessoa.nacionalidade }}{% endif %}">
                     </div>
                     <div class="form-group form-check-inline col-sm-2">
                         <label for="sexo_pessoa" class="form-check-label">Sexo</label><br />
                         {% for sexo in sexos %}
                         <label class="form-check-label">{{sexo.descricao}}
-                            <input type="radio" name="sexo_pessoa" class="form-check-input" value="{{sexo.id}}" {% if voluntario is defined and (voluntario.pessoa.sexo.descricao == 'M' or voluntario.pessoa.sexo.descricao == 'F')  %} checked="true" {% endif %}>
+                            <input type="radio" name="sexo_pessoa" id="sexo_pessoa" class="form-check-input" value="{{sexo.id}}" {% if voluntario is defined and (voluntario.pessoa.sexo.descricao == 'M' or voluntario.pessoa.sexo.descricao == 'F')  %} checked="true" {% endif %}>
                         </label>
                         {% endfor %}
                     </div>                    
                     <div class="form-group col-sm-4">
                         <label for="profissao_pessoa">Profissão</label>
-                        <input type="text" name="profissao_pessoa" class="form-control" placeholder="Costureira" value="{% if voluntario is defined %}{{ voluntario.pessoa.profissao }}{% endif %}">
+                        <input type="text" name="profissao_pessoa" id="profissao_pessoa" class="form-control" placeholder="Costureira" value="{% if voluntario is defined %}{{ voluntario.pessoa.profissao }}{% endif %}">
                     </div>
                     <div class="form-group col-sm-3">
                         <label for="registro_pessoa">Registro</label>
@@ -78,15 +86,15 @@
                 <legend><i class="glyphicon glyphicon-menu-right"></i><b>Endereço</b></legend>
                     <div class="form-group col-sm-5">
                         <label for="endereco_pessoa">Endereço</label>
-                        <input type="text" name="endereco_pessoa" class="form-control" placeholder="SQN 915 Bloco A Apt 108" required value="{% if voluntario is defined %}{{ voluntario.pessoa.endereco }}{% endif %}">
+                        <input type="text" name="endereco_pessoa" id="endereco_pessoa" class="form-control" placeholder="SQN 915 Bloco A Apt 108" required value="{% if voluntario is defined %}{{ voluntario.pessoa.endereco }}{% endif %}">
                     </div>
                     <div class="form-group col-sm-4">
                         <label for="cidade_pessoa">Cidade</label>
-                        <input type="text" name="cidade_pessoa" class="form-control" placeholder="Asa Norte" required value="{% if voluntario is defined %}{{ voluntario.pessoa.cidade }}{% endif %}">
+                        <input type="text" name="cidade_pessoa" id="cidade_pessoa" class="form-control" placeholder="Asa Norte" required value="{% if voluntario is defined %}{{ voluntario.pessoa.cidade }}{% endif %}">
                     </div>
                     <div class="form-group col-sm-1">
                         <label for="UF_pessoa">UF</label>
-                        <select class="form-control" name="UF_pessoa" required>
+                        <select class="form-control" name="UF_pessoa" id="UF_pessoa" required>
                             <option value="">Selecione</option>
                             {% for uf in ufs %}
                             <option value="{{ uf.id }}" {% if voluntario is defined and voluntario.pessoa.uf.id == uf.id %} selected {% endif %}>{{ uf.descricao }}</option>
@@ -95,18 +103,18 @@
                     </div>
                     <div class="form-group col-sm-2">
                         <label for="CEP_pessoa">CEP</label>
-                        <input type="text" name="CEP_pessoa" class="form-control" placeholder="70000000" required value="{% if voluntario is defined %}{{ voluntario.pessoa.CEP }}{% endif %}">
+                        <input type="text" name="CEP_pessoa" id="CEP_pessoa" class="form-control" placeholder="70000000" required value="{% if voluntario is defined %}{{ voluntario.pessoa.CEP }}{% endif %}">
                     </div>
                 </fieldset>
                 <fieldset>
                 <legend><i class="glyphicon glyphicon-menu-right"></i><b>Contato</b></legend>
                     <div class="form-group col-sm-4">
                         <label for="telefone_pessoa">Telefone</label>
-                        <input type="text" name="telefone_pessoa" class="form-control" placeholder="61999998888" required value="{% if voluntario is defined %}{{ voluntario.pessoa.telefone }}{% endif %}">
+                        <input type="text" name="telefone_pessoa" id="telefone_pessoa" class="form-control" placeholder="61999998888" required value="{% if voluntario is defined %}{{ voluntario.pessoa.telefone }}{% endif %}">
                     </div>
                     <div class="form-group col-sm-2">
                         <label for="tipo_telefone_pessoa">Tipo</label>
-                        <select class="form-control" name="tipo_telefone_pessoa" required>
+                        <select class="form-control" name="tipo_telefone_pessoa" id="tipo_telefone_pessoa" required>
                             <option value="">Selecione</option>
                             {% for tipo_telefone in tipos_telefone %}
                             <option value="{{ tipo_telefone.id }}" {% if voluntario is defined and voluntario.pessoa.tipoTelefone.id == tipo_telefone.id %} selected {% endif %}>{{ tipo_telefone.descricao }}</option>
@@ -115,7 +123,7 @@
                     </div>
                     <div class="form-group col-sm-6">
                         <label for="email_pessoa">Email</label>
-                        <input type="email" name="email_pessoa" class="form-control" placeholder="xxx@email.com" required value="{% if voluntario is defined %}{{ voluntario.pessoa.email }}{% endif %}">
+                        <input type="email" name="email_pessoa" id="email_pessoa" class="form-control" placeholder="xxx@email.com" required value="{% if voluntario is defined %}{{ voluntario.pessoa.email }}{% endif %}">
                     </div>
                     </fieldset>
                 </fieldset>

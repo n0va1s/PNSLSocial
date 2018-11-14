@@ -326,6 +326,22 @@ class PessoaService
         return $pessoa;
     }
 
+    public function findByCpf($cpf)
+    {
+        $pessoa = $this->em->createQuery(
+            'select p, ec, tt, se, uf, tp, es
+              from \PNSL\Social\Entity\PessoaEntity p 
+                inner join p.estadoCivil ec
+                inner join p.tipoTelefone tt
+                inner join p.sexo se
+                inner join p.uf uf
+                inner join p.tipoPessoa tp
+                left join p.escola es
+             where p.CPF = :cpf'
+        )->setParameter('cpf', $cpf)->getOneOrNullResult();
+        return $pessoa;
+    }
+
     public function fetchAll()
     {
         $pessoas = $this->em->createQuery(
@@ -416,5 +432,30 @@ class PessoaService
              from \PNSL\Social\Entity\PessoaEntity p'
         )->getOneOrNullResult();
         return $qtd;
+    }
+
+    public function toArray($pessoa)
+    {
+        return  array(
+            'id'            =>$pessoa->getId(),
+            'nome'          =>$pessoa->getNome(),
+            'sexo'          =>$pessoa->getSexo()->getId(),
+            'estadoCivil'   =>$pessoa->getEstadoCivil()->getId(),
+            'dataNascimento'=>$pessoa->getDataNascimento(),
+            'RG'            =>$pessoa->getRG(),
+            'CPF'           =>$pessoa->getCPF(),
+            'nacionalidade' =>$pessoa->getNacionalidade(),
+            'tipoPessoa'    =>$pessoa->getTipoPessoa()->getId(),
+            'endereco'      =>$pessoa->getEndereco(),
+            'cidade'        =>$pessoa->getCidade(),
+            'UF'            =>$pessoa->getUF()->getId(),
+            'CEP'           =>$pessoa->getCEP(),
+            'email'         =>$pessoa->getEmail(),
+            'telefone'      =>$pessoa->getTelefone(),
+            'tipoTelefone'  =>$pessoa->getTipoTelefone()->getId(),
+            'tipoRenda'     =>$pessoa->getTipoRenda()->getId(),
+            'familiar'      =>$pessoa->getFamiliar(),
+            'profissao'     =>$pessoa->getProfissao()
+        );
     }
 }

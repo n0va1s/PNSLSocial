@@ -1,16 +1,15 @@
 {
     "require": {
-        "silex/silex": "~2.0",
-        "monolog/monolog": "^1.22",
-        "twig/twig": "^2.2",
-        "symfony/security": "~3.0",
-        "symfony/twig-bridge": "~3.0",
-        "doctrine/dbal": "~2.5",
-        "doctrine/orm": "~2.5",
+        "silex/silex": "~2.2",
+        "monolog/monolog": "^1.4",
+        "twig/twig": "~2.0",
+        "symfony/security": "~2.8",
+        "symfony/twig-bridge": "~2.8",
+        "doctrine/orm": "~2.2",
         "gedmo/doctrine-extensions": "~2.4",
-        "symfony/debug": "~3.0",
-        "symfony/asset": "~3.0",
-        "swiftmailer/swiftmailer": "~6.0"
+        "symfony/debug": "~2.8",
+        "symfony/asset": "~2.8",
+        "swiftmailer/swiftmailer": "~5.0"
     },
     "config": {
         "bin-dir": "bin/"
@@ -21,14 +20,14 @@
     	}
     },
     "require-dev": {
-        "symfony/browser-kit": "~3.0",
-        "symfony/css-selector": "~3.0",
+        "symfony/browser-kit": "~2.8",
+        "symfony/css-selector": "~2.8",
         "heroku/heroku-buildpack-php": "*",
         "facebook/webdriver": "~1.5",
         "phpunit/phpunit-selenium": "~4.0",
         "phpunit/phpunit": "~4.0",
         "squizlabs/php_codesniffer": "~3.0",
         "friendsofphp/php-cs-fixer": "~2.0",
-        "doctrine/doctrine-fixtures-bundle": "~3.0"
+        "doctrine/doctrine-fixtures-bundle": "~2.8"
     }
 }
