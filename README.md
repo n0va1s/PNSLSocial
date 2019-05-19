@@ -8,9 +8,10 @@ Uma plataforma para gerenciar as ações de instituições sociais.
 **É** um sistema <br />
 **Diferente** daquelas planilhas salvas em vários lugares e enviadas por email, permite a gestão de: voluntários, usuários, ação social, frequência, atendimento, emitir certificados e prestar as contas anuais.
 
-# Desenvolvedores
-Felipe Toscano <br />
-João Paulo Novais
+# Equipe
+Felipe Toscano (DEV) <br />
+João Paulo Novais (DEV) <br />
+Leandro Freitas (DEVOPS)
 
 # Instalação
 * Baixe arquivos
