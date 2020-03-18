@@ -117,14 +117,20 @@ $app['security.firewalls'] = array(
         'pattern' => '^/admin',
         'form' => array('login_path' => '/login', 'check_path' => '/admin/login_check'),
         'logout' => array('logout_path' => '/admin/logout', 'invalidate_session' => true),
+        'users' => array(
+            'admin@casasaojose.net.br' => array('ROLE_ADMIN', '$2y$10$3i9/lVd8UOFIJ6PAMFt8gu3/r5g0qeCJvoSlLCsvMTythye19F77a'),
+        ),
+        /*
         'users' => function () use ($em) {
             return new UserProvider($em);
         },
+        */
     ),
 );
 $app['security.role_hierarchy'] = array(
     'ROLE_ROOT' => array('ROLE_ADMIN', 'ROLE_USER'),
 );
+
 $app->boot();
 
 //Menu

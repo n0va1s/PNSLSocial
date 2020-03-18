@@ -36,6 +36,7 @@ class UserProvider implements UserProviderInterface
                 )
             );
         }
+
         return new User(
             $user->getNome(), 
             $user->getSenha(), 
